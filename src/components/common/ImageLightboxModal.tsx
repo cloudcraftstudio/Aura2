@@ -19,7 +19,9 @@ interface ImageLightboxModalProps {
 
 const AsyncThumbnail: React.FC<{ src: string; alt: string; className: string }> = ({ src, alt, className }) => {
   const { resolvedSrc } = useAsyncMedia(src);
-  return <img src={resolvedSrc || src} alt={alt} className={className} referrerPolicy="no-referrer" />;
+  const targetSrc = (resolvedSrc || src || '').trim();
+  if (!targetSrc) return null;
+  return <img src={targetSrc} alt={alt} className={className} referrerPolicy="no-referrer" />;
 };
 
 export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
@@ -87,15 +89,18 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose, handleNext, handlePrev]);
 
-  const currentImage = images[currentIndex] || images[0];
-  const { resolvedSrc: currentResolvedSrc } = useAsyncMedia(currentImage || '');
+  const validImages = (images || []).filter((img) => typeof img === 'string' && img.trim().length > 0);
+  const currentImage = validImages[currentIndex] || validImages[0] || '';
+  const { resolvedSrc: currentResolvedSrc } = useAsyncMedia(currentImage);
 
-  if (!isOpen || images.length === 0) return null;
+  if (!isOpen || validImages.length === 0 || !currentImage) return null;
 
   const handleDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
+    const activeUrl = currentResolvedSrc || currentImage;
+    if (!activeUrl) return;
     const link = document.createElement('a');
-    link.href = currentResolvedSrc || currentImage;
+    link.href = activeUrl;
     link.download = `aura-photo-${Date.now()}.jpg`;
     link.target = '_blank';
     link.rel = 'noreferrer';
@@ -274,9 +279,9 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
           {/* Author Header */}
           <div className="p-4 border-b border-neutral-800/80 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {authorAvatar ? (
+              {authorAvatar && authorAvatar.trim() ? (
                 <img
-                  src={authorAvatar}
+                  src={authorAvatar.trim()}
                   alt={authorName || 'Author'}
                   className="w-10 h-10 rounded-full object-cover border border-neutral-700"
                 />

@@ -234,18 +234,25 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
       {/* Media Photo & Direct Video Responsive Display */}
       {post.mediaUrls && post.mediaUrls.length > 0 && (() => {
+        const nonBlankMedia = post.mediaUrls.filter(
+          (url) => typeof url === 'string' && url.trim().length > 0
+        );
+        if (nonBlankMedia.length === 0) return null;
+
         const contentVideos = extractVideosFromText(post.content);
         const contentVideoUrls = new Set(contentVideos.map((v) => v.url));
 
-        const externalVideoMedia = post.mediaUrls.filter((url) => {
+        const externalVideoMedia = nonBlankMedia.filter((url) => {
           const yt = extractVideosFromText(url);
           return yt.length > 0 && yt[0].type !== 'direct' && !contentVideoUrls.has(url);
         });
 
-        const nativeMedia = post.mediaUrls.filter((url) => {
+        const nativeMedia = nonBlankMedia.filter((url) => {
           const yt = extractVideosFromText(url);
           return yt.length === 0 || yt[0].type === 'direct';
         });
+
+        if (externalVideoMedia.length === 0 && nativeMedia.length === 0) return null;
 
         return (
           <div className="mb-2 space-y-2">

@@ -16,6 +16,14 @@ export function initializeBibleDB(dbPath: string): Database.Database {
   const schema = fs.readFileSync(schemaPath, 'utf-8');
   
   db.exec(schema);
+
+  // Safe auto-migration for channels and series
+  try {
+    db.exec('ALTER TABLE sermons_podcasts ADD COLUMN channel TEXT;');
+  } catch {}
+  try {
+    db.exec('ALTER TABLE sermons_podcasts ADD COLUMN seriesPart INTEGER;');
+  } catch {}
   
   const bibleDB = new BibleStudyDB(dbPath);
   seedBibleCourses(bibleDB);

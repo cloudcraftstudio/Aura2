@@ -896,7 +896,7 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({
                 <div className="p-5 flex items-center justify-between relative z-10">
                   <div className="flex items-center gap-3">
                     <Avatar
-                      src={user?.avatarUrl || ''}
+                      src={user?.avatarUrl || undefined}
                       name={user?.name || 'You'}
                       size="md"
                     />
@@ -961,57 +961,62 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({
                 )}
 
                 {/* Live Photos & Videos Grid Preview */}
-                {mediaUrls.length > 0 && (
-                  <div className="px-5 pb-3.5 relative z-10">
-                    {mediaUrls.length === 1 ? (
-                      <div className="relative max-h-[420px] w-full rounded-2xl overflow-hidden border border-white/10 bg-black/50 flex items-center justify-center">
-                        {isDirectVideoUrl(mediaUrls[0]) ? (
-                          <AsyncMedia
-                            mediaType="video"
-                            src={mediaUrls[0]}
-                            controls
-                            className="w-full max-h-[420px] object-contain"
-                          />
-                        ) : (
-                          <AsyncMedia
-                            mediaType="image"
-                            src={mediaUrls[0]}
-                            alt="Post media"
-                            className="w-full max-h-[420px] object-cover"
-                          />
-                        )}
-                      </div>
-                    ) : (
-                      <div
-                        className={`grid gap-2 ${
-                          mediaUrls.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'
-                        }`}
-                      >
-                        {mediaUrls.map((url, i) => (
-                          <div
-                            key={i}
-                            className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/50"
-                          >
-                            {isDirectVideoUrl(url) ? (
-                              <AsyncMedia
-                                mediaType="video"
-                                src={url}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <AsyncMedia
-                                mediaType="image"
-                                src={url}
-                                alt={`Post media ${i + 1}`}
-                                className="w-full h-full object-cover"
-                              />
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                )}
+                {(() => {
+                  const validMediaUrls = mediaUrls.filter((u) => typeof u === 'string' && u.trim().length > 0);
+                  if (validMediaUrls.length === 0) return null;
+
+                  return (
+                    <div className="px-5 pb-3.5 relative z-10">
+                      {validMediaUrls.length === 1 ? (
+                        <div className="relative max-h-[420px] w-full rounded-2xl overflow-hidden border border-white/10 bg-black/50 flex items-center justify-center">
+                          {isDirectVideoUrl(validMediaUrls[0]) ? (
+                            <AsyncMedia
+                              mediaType="video"
+                              src={validMediaUrls[0]}
+                              controls
+                              className="w-full max-h-[420px] object-contain"
+                            />
+                          ) : (
+                            <AsyncMedia
+                              mediaType="image"
+                              src={validMediaUrls[0]}
+                              alt="Post media"
+                              className="w-full max-h-[420px] object-cover"
+                            />
+                          )}
+                        </div>
+                      ) : (
+                        <div
+                          className={`grid gap-2 ${
+                            validMediaUrls.length === 2 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'
+                          }`}
+                        >
+                          {validMediaUrls.map((url, i) => (
+                            <div
+                              key={i}
+                              className="relative aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black/50"
+                            >
+                              {isDirectVideoUrl(url) ? (
+                                <AsyncMedia
+                                  mediaType="video"
+                                  src={url}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <AsyncMedia
+                                  mediaType="image"
+                                  src={url}
+                                  alt={`Post media ${i + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
 
                 {/* Interactive Action Bar Preview */}
                 <div className="px-5 py-3 border-t border-white/10 flex items-center justify-between text-slate-400 text-xs relative z-10">

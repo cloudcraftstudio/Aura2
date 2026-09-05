@@ -773,18 +773,7 @@ async function startServer() {
     console.error('Failed to initialize Recovery routes:', err);
   }
 
-  // --- VITE MIDDLEWARE SETUP ---
-  const isProd = process.env.NODE_ENV === "production" || !process.env.VITE_DEV;
-  if (!isProd) {
-    const { createServer: createViteServer } = await import("vite");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    // App OTA Update Endpoint
+  // --- APP OTA UPDATE & APK ROUTES ---
   app.get("/api/app-update/version", (req, res) => {
     try {
       const manifestPath = path.join(process.cwd(), "public", "update-manifest.json");
@@ -808,9 +797,24 @@ async function startServer() {
     res.status(404).send("APK not found");
   });
 
-  app.use(express.static(distPath));
+  // --- VITE MIDDLEWARE SETUP ---
+  if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: "spa",
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), 'dist');
+    app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send("Application build not found. Please build the frontend first.");
+      }
     });
   }
 

@@ -48,6 +48,7 @@ export const Avatar: React.FC<AvatarProps> = ({
     : 'U';
 
   const safeId = displayName.toLowerCase().replace(/\s+/g, '-');
+  const validSrc = src && typeof src === 'string' && src.trim().length > 0 ? src.trim() : null;
 
   return (
     <div
@@ -58,10 +59,10 @@ export const Avatar: React.FC<AvatarProps> = ({
       } ${className}`}
     >
       <div className="w-full h-full rounded-full overflow-hidden border border-white/20 bg-slate-800 flex items-center justify-center text-slate-200 font-medium">
-        {src ? (
+        {validSrc ? (
           <img
-            src={src}
-            alt={name}
+            src={validSrc}
+            alt={displayName}
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover"
             onError={(e) => {

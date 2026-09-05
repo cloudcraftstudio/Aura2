@@ -146,20 +146,6 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               <span>Daily Motivation Word</span>
             </button>
 
-            {/* Refresh App */}
-            <button
-              onClick={() => {
-                soundEffects.tap();
-                window.location.reload();
-              }}
-              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-500/10 border border-slate-500/20 text-slate-300 hover:bg-slate-500/20 hover:text-white transition-all text-xs font-bold shadow-[0_0_15px_rgba(100,116,139,0.2)]"
-            >
-              <div className="flex items-center gap-2.5">
-                <RefreshCw className="w-5 h-5 text-slate-400" />
-                <span>Refresh App</span>
-              </div>
-            </button>
-            
             {/* My Journey */}
             <button
               onClick={() => handleAction(() => {
@@ -337,7 +323,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-emerald-300 hover:text-white hover:bg-emerald-600/20 border border-emerald-500/20 transition-all text-xs font-semibold"
             >
               <RefreshCw className="w-4 h-4 text-emerald-400" />
-              <span>Refresh App & Sync</span>
+              <span>Refresh and Save App</span>
             </button>
           </div>
         </div>

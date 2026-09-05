@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { X,
   Play,
   Pause,
@@ -14,7 +14,12 @@ import { X,
   Volume2,
   ExternalLink,
   Flame,
-  Radio
+  Radio,
+  FolderPlus,
+  Tv,
+  Film,
+  Layers,
+  ChevronRight
 } from "lucide-react";
 
 export interface SermonItem {
@@ -24,7 +29,9 @@ export interface SermonItem {
   speakerSlug?: string;
   speakerTitle?: string;
   speakerImage?: string;
+  channel?: string;
   series?: string;
+  seriesPart?: number;
   scriptureRef?: string;
   description?: string;
   summary?: string;
@@ -67,6 +74,30 @@ export function PodcastFeed({
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Channels & Series state
+  const [selectedChannel, setSelectedChannel] = useState<string>("all");
+  const [selectedSeries, setSelectedSeries] = useState<string>("all");
+  const [activeSeriesContainer, setActiveSeriesContainer] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOpenSermon = (e: Event) => {
+      const custom = e as CustomEvent<{ sermonId?: string; videoId?: string; sermon?: SermonItem; series?: string }>;
+      if (custom.detail?.series) {
+        setSelectedSeries(custom.detail.series);
+        setActiveSeriesContainer(custom.detail.series);
+      }
+      if (custom.detail?.sermon) {
+        if (custom.detail.sermon.format === "video") {
+          setSelectedVideo(custom.detail.sermon);
+        } else {
+          handlePlayAudio(custom.detail.sermon);
+        }
+      }
+    };
+    window.addEventListener("open_sermon", handleOpenSermon);
+    return () => window.removeEventListener("open_sermon", handleOpenSermon);
+  }, []);
+
   const fetchAllSermons = async () => {
     setLoading(true);
     let combined: SermonItem[] = [];
@@ -83,6 +114,9 @@ export function PodcastFeed({
           const videoStream = item.mp4Url || (isVideo ? item.mediaUrl : "");
           return {
             ...item,
+            channel: item.channel || "SermonIndex Global",
+            series: item.series || (item.title && item.title.includes(" - ") ? item.title.split(" - ")[0].trim() : undefined),
+            seriesPart: item.seriesPart,
             format: isVideo ? "video" : "audio",
             mediaUrl: isVideo ? videoStream : audioStream,
             mp3Url: audioStream,
@@ -104,6 +138,9 @@ export function PodcastFeed({
         const commData = await resComm.json();
         const normalizedComm = (Array.isArray(commData) ? commData : []).map((item: any) => ({
           ...item,
+          channel: item.channel || item.speaker || "Community Pulpit",
+          series: item.series,
+          seriesPart: item.seriesPart,
           format: item.format || (item.youtubeId ? "video" : "audio"),
           source: "community" as const,
         }));
@@ -125,7 +162,9 @@ export function PodcastFeed({
             id: item.id,
             title: item.title,
             speaker: item.speaker || "Community Speaker",
+            channel: item.channel || item.speaker || "Aura Community Studio",
             series: item.series,
+            seriesPart: item.seriesPart,
             scriptureRef: item.scriptureRef,
             summary: item.description,
             format: (isVideo ? "video" : "audio") as "video" | "audio",
@@ -176,6 +215,29 @@ export function PodcastFeed({
     }
   };
 
+  // Channels and series available for the current format
+  const availableChannels = useMemo(() => {
+    const set = new Set<string>();
+    sermons
+      .filter((s) => s.format === formatFilter)
+      .forEach((s) => {
+        if (s.channel && s.channel.trim()) set.add(s.channel.trim());
+        else if (s.speaker && s.speaker.trim()) set.add(s.speaker.trim());
+      });
+    return Array.from(set).sort();
+  }, [sermons, formatFilter]);
+
+  const availableSeries = useMemo(() => {
+    const map = new Map<string, number>();
+    sermons
+      .filter((s) => s.format === formatFilter && s.series)
+      .forEach((s) => {
+        const ser = s.series!.trim();
+        map.set(ser, (map.get(ser) || 0) + 1);
+      });
+    return Array.from(map.entries()).sort((a, b) => b[1] - a[1]);
+  }, [sermons, formatFilter]);
+
   const filtered = sermons.filter((item) => {
     if (item.format !== formatFilter) return false;
     if (sourceFilter === "stories") {
@@ -187,16 +249,40 @@ export function PodcastFeed({
     } else if (sourceFilter !== "all" && item.source !== sourceFilter) {
       return false;
     }
+
+    // Channel filter
+    if (selectedChannel !== "all") {
+      const matchCh = item.channel?.toLowerCase() === selectedChannel.toLowerCase() ||
+                      item.speaker?.toLowerCase().includes(selectedChannel.toLowerCase());
+      if (!matchCh) return false;
+    }
+
+    // Series filter
+    if (selectedSeries !== "all") {
+      if (!item.series || item.series.toLowerCase() !== selectedSeries.toLowerCase()) {
+        return false;
+      }
+    }
+
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       const matchTitle = item.title?.toLowerCase().includes(q);
       const matchSpeaker = item.speaker?.toLowerCase().includes(q);
       const matchRef = item.scriptureRef?.toLowerCase().includes(q);
       const matchSeries = item.series?.toLowerCase().includes(q);
-      if (!matchTitle && !matchSpeaker && !matchRef && !matchSeries) return false;
+      const matchChannel = item.channel?.toLowerCase().includes(q);
+      if (!matchTitle && !matchSpeaker && !matchRef && !matchSeries && !matchChannel) return false;
     }
     return true;
   });
+
+  // Sermons inside the selected series container, sorted by part number
+  const seriesContainerItems = useMemo(() => {
+    if (selectedSeries === "all") return [];
+    return sermons
+      .filter((s) => s.series?.toLowerCase() === selectedSeries.toLowerCase())
+      .sort((a, b) => (a.seriesPart || 999) - (b.seriesPart || 999));
+  }, [sermons, selectedSeries]);
 
   return (
     <div className="space-y-6 pb-28">
@@ -257,77 +343,191 @@ export function PodcastFeed({
       </div>
 
       {/* FILTER, SEARCH & VIEW MODE BAR */}
-      <div className="sticky top-2 z-10 bg-[#0a0d14]/90 backdrop-blur-xl p-3.5 rounded-2xl border border-white/10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
-        {/* Source Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto p-0.5">
-          <button
-            type="button"
-            onClick={() => setSourceFilter("all")}
-            className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap " + (sourceFilter === "all" ? "bg-white/15 text-white shadow border border-white/20" : "text-slate-400 hover:text-white")}
-          >
-            All Sources
-          </button>
-          <button
-            type="button"
-            onClick={() => setSourceFilter("community")}
-            className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap " + (sourceFilter === "community" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white")}
-          >
-            Community
-          </button>
-          <button
-            type="button"
-            onClick={() => setSourceFilter("sermonindex")}
-            className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "sermonindex" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white")}
-          >
-            <Flame className="w-3.5 h-3.5 text-amber-300" />
-            <span>SermonIndex</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setSourceFilter("stories");
-              setFormatFilter("audio");
-            }}
-            className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "stories" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
-          >
-            <BookOpen className="w-3.5 h-3.5 text-amber-200" />
-            <span>Audio Stories</span>
-          </button>
-        </div>
-
-        {/* Search & Grid/List Switcher */}
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <div className="relative flex-1 sm:w-64">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search speaker, passage, title..."
-              className="w-full pl-9 pr-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10 flex-shrink-0">
+      <div className="space-y-2.5">
+        <div className="sticky top-2 z-10 bg-[#0a0d14]/90 backdrop-blur-xl p-3.5 rounded-2xl border border-white/10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3">
+          {/* Source Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto p-0.5">
             <button
               type="button"
-              onClick={() => setViewMode("grid")}
-              className={"p-1.5 rounded-lg transition-all " + (viewMode === "grid" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
-              title="Grid View"
+              onClick={() => setSourceFilter("all")}
+              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap " + (sourceFilter === "all" ? "bg-white/15 text-white shadow border border-white/20" : "text-slate-400 hover:text-white")}
             >
-              <LayoutGrid className="w-4 h-4" />
+              All Sources
             </button>
             <button
               type="button"
-              onClick={() => setViewMode("list")}
-              className={"p-1.5 rounded-lg transition-all " + (viewMode === "list" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
-              title="List View"
+              onClick={() => setSourceFilter("community")}
+              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap " + (sourceFilter === "community" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white")}
             >
-              <List className="w-4 h-4" />
+              Community
+            </button>
+            <button
+              type="button"
+              onClick={() => setSourceFilter("sermonindex")}
+              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "sermonindex" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white")}
+            >
+              <Flame className="w-3.5 h-3.5 text-amber-300" />
+              <span>SermonIndex</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSourceFilter("stories");
+                setFormatFilter("audio");
+              }}
+              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "stories" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-200" />
+              <span>Audio Stories</span>
             </button>
           </div>
+
+          {/* Search & Grid/List Switcher */}
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <div className="relative flex-1 sm:w-64">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search speaker, passage, title, channel..."
+                className="w-full pl-9 pr-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10 flex-shrink-0">
+              <button
+                type="button"
+                onClick={() => setViewMode("grid")}
+                className={"p-1.5 rounded-lg transition-all " + (viewMode === "grid" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                title="Grid View"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("list")}
+                className={"p-1.5 rounded-lg transition-all " + (viewMode === "list" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                title="List View"
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
+
+        {/* CHANNELS ROW */}
+        {availableChannels.length > 0 && (
+          <div className="bg-[#0b0f19]/80 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 flex-shrink-0 pr-2 border-r border-white/10">
+              <Tv className="w-3.5 h-3.5 text-blue-400" />
+              <span>Channels:</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSelectedChannel("all")}
+              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === "all" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
+            >
+              All Channels
+            </button>
+            {availableChannels.map((ch) => (
+              <button
+                key={ch}
+                type="button"
+                onClick={() => setSelectedChannel(ch)}
+                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === ch ? "bg-blue-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
+              >
+                {ch}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* SERIES CONTAINERS ROW */}
+        {availableSeries.length > 0 && (
+          <div className="bg-[#0b0f19]/80 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 flex-shrink-0 pr-2 border-r border-white/10">
+              <Layers className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Series:</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setSelectedSeries("all"); setActiveSeriesContainer(null); }}
+              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedSeries === "all" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
+            >
+              All Series
+            </button>
+            {availableSeries.map(([ser, count]) => (
+              <button
+                key={ser}
+                type="button"
+                onClick={() => { setSelectedSeries(ser); setActiveSeriesContainer(ser); }}
+                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 flex-shrink-0 " + (selectedSeries === ser ? "bg-indigo-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
+              >
+                <span>{ser}</span>
+                <span className={"text-[10px] px-1.5 py-0.2 rounded-full " + (selectedSeries === ser ? "bg-white/20 text-white" : "bg-white/10 text-slate-400")}>
+                  {count}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* ACTIVE SERIES CONTAINER SPOTLIGHT */}
+      {selectedSeries !== "all" && (
+        <div className="rounded-3xl p-5 bg-gradient-to-r from-indigo-950/70 via-slate-900 to-blue-950/70 border border-indigo-500/30 shadow-2xl space-y-4 animate-in fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-[11px] font-black uppercase tracking-wider border border-indigo-400/20">
+                <Layers className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Connected Series Container • {seriesContainerItems.length} Sermon{seriesContainerItems.length > 1 ? "s" : ""}</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white">{selectedSeries}</h2>
+              {seriesContainerItems[0]?.channel && (
+                <p className="text-xs text-slate-300 flex items-center gap-2">
+                  <span className="text-slate-400">Channel:</span>
+                  <span className="font-semibold text-white bg-white/10 px-2 py-0.5 rounded-md">{seriesContainerItems[0].channel}</span>
+                  {seriesContainerItems[0]?.speaker && <span className="text-slate-400">• {seriesContainerItems[0].speaker}</span>}
+                </p>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={() => { setSelectedSeries("all"); setActiveSeriesContainer(null); }}
+              className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all self-start sm:self-auto flex items-center gap-1.5"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Back to All Series</span>
+            </button>
+          </div>
+
+          {/* Container Playlist of connected parts */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
+            {seriesContainerItems.map((item, partIdx) => (
+              <div
+                key={item.id}
+                onClick={() => {
+                  if (item.format === "video") setSelectedVideo(item);
+                  else handlePlayAudio(item);
+                }}
+                className="cursor-pointer bg-black/50 hover:bg-indigo-950/50 border border-white/10 hover:border-indigo-500/40 rounded-2xl p-3 transition-all flex items-center gap-3 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <Play className="w-4 h-4 fill-current ml-0.5" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider block">
+                    Part {item.seriesPart || partIdx + 1}
+                  </span>
+                  <h4 className="text-xs font-bold text-white truncate group-hover:text-indigo-300">{item.title}</h4>
+                  <p className="text-[10px] text-slate-400 truncate">{item.duration || "Full Exposition"}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* FEED CONTENT */}
       {loading ? (
@@ -401,6 +601,40 @@ export function PodcastFeed({
                           <span>{sermon.scriptureRef}</span>
                         </div>
                       )}
+
+                      {/* Channel & Series badges */}
+                      <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                        {sermon.channel && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedChannel(sermon.channel!);
+                            }}
+                            className="text-[10px] font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                            title="Filter by channel"
+                          >
+                            <Tv className="w-2.5 h-2.5 text-blue-400" />
+                            <span className="truncate max-w-[120px]">{sermon.channel}</span>
+                          </button>
+                        )}
+                        {sermon.series && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedSeries(sermon.series!);
+                              setActiveSeriesContainer(sermon.series!);
+                            }}
+                            className="text-[10px] font-bold text-indigo-300 hover:text-white bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                            title="Open Series Container"
+                          >
+                            <Layers className="w-2.5 h-2.5 text-indigo-400" />
+                            <span className="truncate max-w-[120px]">{sermon.series}</span>
+                            {sermon.seriesPart && <span className="text-indigo-200">Pt. {sermon.seriesPart}</span>}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -461,6 +695,40 @@ export function PodcastFeed({
                     {sermon.scriptureRef && (
                       <p className="text-xs font-semibold text-blue-300">{sermon.scriptureRef}</p>
                     )}
+
+                    {/* Channel & Series badges */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      {sermon.channel && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedChannel(sermon.channel!);
+                          }}
+                          className="text-[10px] font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                          title="Filter by channel"
+                        >
+                          <Tv className="w-2.5 h-2.5 text-blue-400" />
+                          <span className="truncate max-w-[120px]">{sermon.channel}</span>
+                        </button>
+                      )}
+                      {sermon.series && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedSeries(sermon.series!);
+                            setActiveSeriesContainer(sermon.series!);
+                          }}
+                          className="text-[10px] font-bold text-indigo-300 hover:text-white bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                          title="Open Series Container"
+                        >
+                          <Layers className="w-2.5 h-2.5 text-indigo-400" />
+                          <span className="truncate max-w-[120px]">{sermon.series}</span>
+                          {sermon.seriesPart && <span className="text-indigo-200">Pt. {sermon.seriesPart}</span>}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 

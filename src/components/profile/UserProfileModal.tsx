@@ -488,7 +488,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="rounded-2xl overflow-hidden border border-white/15 bg-slate-900/60 shadow-xl relative">
                 <div className="h-28 sm:h-32 w-full relative bg-slate-800">
                   <img
-                    src={bannerUrl || COVER_BANNER_PRESETS[0].url}
+                    src={(bannerUrl && bannerUrl.trim()) || COVER_BANNER_PRESETS[0].url}
                     alt="Cover Preview"
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
@@ -498,7 +498,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <div className="px-4 pb-3 flex items-end justify-between -mt-10 relative z-10">
                   <div className="flex items-end gap-3">
                     <div className="p-1 rounded-full bg-[#0c1024] ring-2 ring-white/20 shadow-xl">
-                      <Avatar src={avatarUrl || user?.avatarUrl || ''} name={name || user?.name || ''} size="lg" />
+                      <Avatar src={avatarUrl || user?.avatarUrl || undefined} name={name || user?.name || ''} size="lg" />
                     </div>
                     <div className="mb-1">
                       <h4 className="text-sm font-bold text-white leading-tight">{name || 'Your Name'}</h4>

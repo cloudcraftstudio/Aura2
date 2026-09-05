@@ -114,7 +114,13 @@ class NotificationService {
 
   // Register device for Android / Mobile background Push Notifications
   public async registerPushSubscription(userId: string) {
-    if (typeof window === "undefined" || !("serviceWorker" in navigator) || !("PushManager" in window)) {
+    if (
+      typeof window === "undefined" ||
+      !("Notification" in window) ||
+      Notification.permission !== "granted" ||
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window)
+    ) {
       return null;
     }
     try {
@@ -123,6 +129,7 @@ class NotificationService {
 
       if (!sub) {
         const res = await fetch("/api/push/vapid-key");
+        if (!res.ok) return null;
         const { publicKey } = await res.json();
         if (!publicKey) return null;
 
@@ -140,10 +147,17 @@ class NotificationService {
         body: JSON.stringify({ userId, subscription: sub.toJSON() }),
       });
 
-      console.log("Device successfully subscribed to background push notifications!");
       return sub;
-    } catch (err) {
-      console.warn("Background push registration failed:", err);
+    } catch (err: any) {
+      // Gracefully ignore expected browser security or user permission rejections
+      if (
+        err?.name === "NotAllowedError" ||
+        err?.message?.includes("permission denied") ||
+        err?.message?.includes("Permission denied")
+      ) {
+        return null;
+      }
+      console.debug("Background push registration notice:", err);
       return null;
     }
   }

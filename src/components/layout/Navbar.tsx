@@ -16,6 +16,7 @@ import { Avatar } from '../common/Avatar';
 import { DailyMotivationModal } from '../feed/DailyMotivationModal';
 import { SuperAdminDrawer } from './SuperAdminDrawer';
 import { AuraEnergyQuickPill } from '../aura/AuraEnergyQuickPill';
+import { SparkGridIcon } from '../common/SparkGridIcon';
 
 interface NavbarProps {
   activeTab: 'feed' | 'bible' | 'chat' | 'studio' | 'devotional' | 'recovery';
@@ -174,19 +175,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* User Profile Avatar / Super Menu Trigger */}
-          {user ? (
-            <button
-              onClick={() => setIsSuperDrawerOpen(true)}
-              className="p-0.5 rounded-full ring-2 ring-blue-500/50 hover:ring-blue-400 transition-all active:scale-95 flex-shrink-0"
-              title="Super Menu"
-            >
-              <Avatar src={user.avatarUrl} name={user.name} size="md" status={user.status} />
-            </button>
-          ) : (
+          {/* Spark Grid Super Enhanced Menu Trigger */}
+          <button
+            id="navbar-spark-grid-super-menu"
+            onClick={() => setIsSuperDrawerOpen(true)}
+            className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-br from-blue-600/15 via-indigo-600/20 to-purple-600/15 hover:from-blue-600/25 hover:to-purple-600/25 border border-blue-500/30 text-blue-400 hover:text-white transition-all active:scale-95 flex-shrink-0 shadow-lg shadow-blue-500/10 flex items-center justify-center group"
+            title="Super Enhanced Menu"
+            aria-label="Super Enhanced Menu"
+          >
+            <SparkGridIcon className="w-5 h-5 text-blue-400 group-hover:text-blue-200 transition-colors drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
+          </button>
+
+          {!user && (
             <button
               onClick={openAuthModal}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-blue-500/25 border border-blue-400/30"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-blue-500/25 border border-blue-400/30"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>

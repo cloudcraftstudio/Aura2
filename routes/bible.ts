@@ -304,7 +304,7 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
     try {
       if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
 
-      const { title, speaker, series, scriptureRef, description, duration, thumbnailUrl } = req.body;
+      const { title, speaker, series, seriesPart, channel, scriptureRef, description, duration, thumbnailUrl } = req.body;
       const mediaUrl = `/uploads/sermons/${req.file.filename}`;
       const ext = path.extname(req.file.originalname).toLowerCase();
       const mediaType = ['.mp3', '.m4a', '.wav'].includes(ext) ? 'audio' : 'video';
@@ -319,7 +319,9 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
         mediaUrl,
         duration ? parseInt(duration, 10) : undefined,
         new Date().toISOString().split('T')[0],
-        thumbnailUrl || undefined
+        thumbnailUrl || undefined,
+        channel || undefined,
+        seriesPart ? parseInt(seriesPart, 10) : undefined
       );
 
       res.status(201).json({ sermon, mediaUrl, url: mediaUrl });
@@ -351,7 +353,7 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
 
   // POST /api/bible/sermons - Create sermon metadata record
   router.post('/sermons', (req: Request, res: Response) => {
-    const { title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
+    const { title, speaker, series, seriesPart, channel, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });
 
     try {
@@ -365,7 +367,9 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
         mediaUrl || '',
         duration,
         dateRecorded || new Date().toISOString().split('T')[0],
-        thumbnailUrl || undefined
+        thumbnailUrl || undefined,
+        channel || undefined,
+        seriesPart ? parseInt(seriesPart, 10) : undefined
       );
       res.status(201).json(sermon);
     } catch (error) {

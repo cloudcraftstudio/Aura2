@@ -25,7 +25,9 @@ interface Sermon {
   title: string;
   scriptureRef?: string;
   speaker?: string;
+  channel?: string;
   series?: string;
+  seriesPart?: number;
   description?: string;
   mediaUrl?: string;
   mediaType?: 'audio' | 'video';
@@ -49,7 +51,9 @@ interface RecordedDraft {
   title: string;
   scriptureRef: string;
   speaker: string;
+  channel: string;
   series: string;
+  seriesPart: number;
   description: string;
 }
 
@@ -60,7 +64,11 @@ export function LiveSermonStudio() {
   const [recordingSeconds, setRecordingSeconds] = useState(0);
   const [sermonTitle, setSermonTitle] = useState('');
   const [speakerName, setSpeakerName] = useState('');
+  const [channelName, setChannelName] = useState('Aura Community Pulpit');
   const [seriesName, setSeriesName] = useState('');
+  const [isSeries, setIsSeries] = useState(false);
+  const [seriesPart, setSeriesPart] = useState(1);
+  const [selectedExistingSeries, setSelectedExistingSeries] = useState('');
   const [scriptureRef, setScriptureRef] = useState('');
   const [sermonNotes, setSermonNotes] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
@@ -68,6 +76,9 @@ export function LiveSermonStudio() {
   const [unsplashQuery, setUnsplashQuery] = useState("worship bible");
   const [unsplashResults, setUnsplashResults] = useState<Array<{ id: string; urls: { regular: string; thumb: string; small: string }; alt_description?: string; user?: { name: string } }>>([]);
   const [isSearchingUnsplash, setIsSearchingUnsplash] = useState(false);
+
+  // Archive view toggle
+  const [archiveViewMode, setArchiveViewMode] = useState<'all' | 'containers'>('all');
 
   const searchUnsplash = async (queryToSearch?: string) => {
     const q = (queryToSearch || unsplashQuery).trim();
@@ -98,6 +109,10 @@ export function LiveSermonStudio() {
   const [draftForVerification, setDraftForVerification] = useState<RecordedDraft | null>(null);
   const [isSavingVerification, setIsSavingVerification] = useState(false);
 
+  // Archive view toggle (all vs series containers)
+  const [archiveSubView, setArchiveSubView] = useState<'all' | 'containers'>('all');
+  const [expandedContainer, setExpandedContainer] = useState<string | null>(null);
+
   // Push to course modal state
   const [pushingSermon, setPushingSermon] = useState<Sermon | null>(null);
   const [targetCourseId, setTargetCourseId] = useState('');
@@ -110,9 +125,37 @@ export function LiveSermonStudio() {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [uploadTitle, setUploadTitle] = useState('');
   const [uploadSpeaker, setUploadSpeaker] = useState('');
+  const [uploadChannel, setUploadChannel] = useState('Aura Community Pulpit');
   const [uploadSeries, setUploadSeries] = useState('');
+  const [uploadIsSeries, setUploadIsSeries] = useState(false);
+  const [uploadSeriesPart, setUploadSeriesPart] = useState(1);
+  const [uploadExistingSeries, setUploadExistingSeries] = useState('');
   const [uploadScripture, setUploadScripture] = useState('');
   const [uploadDescription, setUploadDescription] = useState('');
+
+  // Extract all existing Series Containers from sermons
+  const existingSeriesContainers = React.useMemo(() => {
+    const map = new Map<string, { count: number; channel?: string; maxPart: number; items: Sermon[] }>();
+    sermons.forEach((s) => {
+      if (s.series && s.series.trim()) {
+        const ser = s.series.trim();
+        const cur = map.get(ser) || { count: 0, channel: s.channel, maxPart: 0, items: [] };
+        cur.count += 1;
+        cur.items.push(s);
+        if (s.channel && !cur.channel) cur.channel = s.channel;
+        const p = s.seriesPart || cur.count;
+        if (p > cur.maxPart) cur.maxPart = p;
+        map.set(ser, cur);
+      }
+    });
+    return Array.from(map.entries()).map(([name, data]) => ({
+      name,
+      count: data.count,
+      channel: data.channel || 'Aura Community Pulpit',
+      maxPart: data.maxPart,
+      items: data.items.sort((a, b) => (a.seriesPart || 0) - (b.seriesPart || 0))
+    }));
+  }, [sermons]);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -237,6 +280,7 @@ export function LiveSermonStudio() {
         const previewUrl = URL.createObjectURL(blob);
         const sizeMb = (blob.size / (1024 * 1024)).toFixed(2);
 
+        const targetSeries = isSeries ? (selectedExistingSeries || seriesName.trim()) : seriesName.trim();
         const draft: RecordedDraft = {
           blob,
           previewUrl,
@@ -246,7 +290,9 @@ export function LiveSermonStudio() {
           title: sermonTitle.trim() || `Live Sermon - ${new Date().toLocaleDateString()}`,
           scriptureRef: scriptureRef.trim(),
           speaker: speakerName.trim() || 'Pastor',
-          series: seriesName.trim() || 'Sunday Live',
+          channel: channelName.trim() || 'Aura Community Pulpit',
+          series: targetSeries || 'Sunday Live',
+          seriesPart: isSeries ? seriesPart : 1,
           description: sermonNotes.trim()
         };
 
@@ -297,7 +343,9 @@ export function LiveSermonStudio() {
       formData.append('title', cleanTitle);
       formData.append('scriptureRef', draftForVerification.scriptureRef || '');
       formData.append('speaker', draftForVerification.speaker || 'Pastor');
+      formData.append('channel', draftForVerification.channel || channelName || 'Aura Community Pulpit');
       formData.append('series', draftForVerification.series || 'Sunday Live');
+      formData.append('seriesPart', (draftForVerification.seriesPart || 1).toString());
       formData.append('description', draftForVerification.description || '');
       formData.append('duration', draftForVerification.duration.toString());
       formData.append('mediaType', 'video');
@@ -318,6 +366,8 @@ export function LiveSermonStudio() {
           setScriptureRef('');
           setSpeakerName('');
           setSeriesName('');
+          setIsSeries(false);
+          setSelectedExistingSeries('');
           setSermonNotes('');
           setActiveTab('archive');
         }
@@ -401,7 +451,9 @@ export function LiveSermonStudio() {
         body: JSON.stringify({
           title: editingSermon.title,
           speaker: editingSermon.speaker,
+          channel: editingSermon.channel,
           series: editingSermon.series,
+          seriesPart: editingSermon.seriesPart ? parseInt(editingSermon.seriesPart.toString(), 10) : undefined,
           scriptureRef: editingSermon.scriptureRef,
           description: editingSermon.description
         })
@@ -444,11 +496,14 @@ export function LiveSermonStudio() {
 
     setUploadProgress(true);
     try {
+      const activeUploadSeries = uploadIsSeries ? (uploadExistingSeries || uploadSeries) : uploadSeries;
       const formData = new FormData();
       formData.append('file', uploadFile);
       formData.append('title', uploadTitle || uploadFile.name.replace(/\.[^/.]+$/, ''));
       formData.append('speaker', uploadSpeaker);
-      formData.append('series', uploadSeries);
+      formData.append('channel', uploadChannel || 'Aura Community Pulpit');
+      formData.append('series', activeUploadSeries || 'Sunday Archive');
+      formData.append('seriesPart', (uploadIsSeries ? uploadSeriesPart : 1).toString());
       formData.append('scriptureRef', uploadScripture);
       formData.append('description', uploadDescription);
       if (thumbnailUrl) formData.append('thumbnailUrl', thumbnailUrl);
@@ -462,7 +517,11 @@ export function LiveSermonStudio() {
           setUploadFile(null);
           setUploadTitle('');
           setUploadSpeaker('');
+          setUploadChannel('Aura Community Pulpit');
           setUploadSeries('');
+          setUploadIsSeries(false);
+          setUploadExistingSeries('');
+          setUploadSeriesPart(1);
           setUploadScripture('');
           setUploadDescription('');
           setActiveTab('archive');
@@ -617,15 +676,131 @@ export function LiveSermonStudio() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Series Name</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Channel / Ministry</label>
                 <input
                   type="text"
-                  value={seriesName}
-                  onChange={e => setSeriesName(e.target.value)}
-                  placeholder="e.g. Sunday Live / Gospel Foundations"
+                  value={channelName}
+                  onChange={e => setChannelName(e.target.value)}
+                  placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
                   className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
                 />
               </div>
+            </div>
+
+            {/* Series Container Connection Suite */}
+            <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-white">Series & Video Container</h4>
+                    <p className="text-[11px] text-slate-400">Group this sermon into a multi-part series container</p>
+                  </div>
+                </div>
+
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isSeries}
+                    onChange={e => setIsSeries(e.target.checked)}
+                    className="sr-only peer"
+                  />
+                  <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                  <span className="ml-2 text-xs font-semibold text-slate-200">
+                    {isSeries ? 'Series Enabled' : 'Single Sermon'}
+                  </span>
+                </label>
+              </div>
+
+              {isSeries ? (
+                <div className="space-y-3 pt-2 border-t border-blue-500/20">
+                  {existingSeriesContainers.length > 0 && (
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        Connect to Existing Series Container:
+                      </label>
+                      <select
+                        value={selectedExistingSeries}
+                        onChange={e => {
+                          const val = e.target.value;
+                          setSelectedExistingSeries(val);
+                          if (val) {
+                            setSeriesName(val);
+                            const found = existingSeriesContainers.find(c => c.name === val);
+                            if (found) {
+                              setSeriesPart(found.maxPart + 1);
+                              if (found.channel) setChannelName(found.channel);
+                            }
+                          }
+                        }}
+                        className="w-full bg-[#0a1033] border border-blue-500/40 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                      >
+                        <option value="">-- Or type custom series name below --</option>
+                        {existingSeriesContainers.map(c => (
+                          <option key={c.name} value={c.name}>
+                            📁 {c.name} ({c.count} sermon{c.count === 1 ? '' : 's'} • {c.channel})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="sm:col-span-2">
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        Series Container Title *
+                      </label>
+                      <input
+                        type="text"
+                        value={seriesName}
+                        onChange={e => {
+                          setSeriesName(e.target.value);
+                          if (selectedExistingSeries && e.target.value !== selectedExistingSeries) {
+                            setSelectedExistingSeries('');
+                          }
+                        }}
+                        placeholder="e.g. Kingdom Authority & Spiritual Warfare"
+                        className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-slate-300 mb-1">
+                        Part / Episode #
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-blue-300 font-bold">Part</span>
+                        <input
+                          type="number"
+                          min={1}
+                          value={seriesPart}
+                          onChange={e => setSeriesPart(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                          className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {seriesName && (
+                    <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-400/30 flex items-start gap-2.5">
+                      <Layers className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                      <div className="text-xs text-slate-300 space-y-0.5">
+                        <p className="font-semibold text-blue-200">
+                          Container Preview: <span className="text-white">"{seriesName}"</span> • Part {seriesPart}
+                        </p>
+                        <p className="text-[11px] text-slate-400">
+                          This sermon will automatically be grouped into this series container alongside any existing and future episodes in the Podcasts & Sermons player.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-[11px] text-slate-400 italic">
+                  Recorded sermon will be saved as a standalone release. Check "Series Enabled" above to bundle into a series container.
+                </div>
+              )}
             </div>
 
             <div>
@@ -846,18 +1021,47 @@ export function LiveSermonStudio() {
       {/* 2. Sermon Archive Section */}
       {activeTab === 'archive' && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <p className="text-xs sm:text-sm text-slate-400">
-              Archived sermons are persistently saved in your database. Push any recording over to the{' '}
-              <strong className="text-blue-300">Scriptures (Podcasts & Sermons)</strong> tab for your community to stream!
-            </p>
-            <button
-              onClick={fetchSermons}
-              className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors p-1"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${loadingArchive ? 'animate-spin' : ''}`} />
-              <span>Refresh</span>
-            </button>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <p className="text-xs sm:text-sm text-slate-300">
+                Archived sermons are persistently saved in your database. Push any recording over to the{' '}
+                <strong className="text-blue-300">Scriptures (Podcasts & Sermons)</strong> tab for your community to stream!
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              {/* Toggle between All and Containers */}
+              <div className="flex bg-black/40 border border-blue-500/30 rounded-xl p-1">
+                <button
+                  onClick={() => setArchiveSubView('all')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    archiveSubView === 'all'
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  All ({sermons.length})
+                </button>
+                <button
+                  onClick={() => setArchiveSubView('containers')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    archiveSubView === 'containers'
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Layers className="w-3 h-3" />
+                  <span>Series Containers ({existingSeriesContainers.length})</span>
+                </button>
+              </div>
+
+              <button
+                onClick={fetchSermons}
+                className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors p-2 bg-white/5 rounded-xl border border-white/10"
+                title="Refresh"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loadingArchive ? 'animate-spin' : ''}`} />
+              </button>
+            </div>
           </div>
 
           {loadingArchive ? (
@@ -872,7 +1076,139 @@ export function LiveSermonStudio() {
                 Record your first live sermon in the 'Go Live / Record' tab, or upload video/audio files in the 'Upload Media' tab.
               </p>
             </div>
+          ) : archiveSubView === 'containers' ? (
+            /* Series Containers Subview */
+            <div className="space-y-4">
+              {existingSeriesContainers.length === 0 ? (
+                <div className="p-8 text-center bg-[#090d24]/60 border border-blue-500/20 rounded-2xl text-slate-400 text-xs">
+                  No sermons have been assigned to a series container yet. Edit existing sermons or record a new sermon with "Series Enabled" to create a container.
+                </div>
+              ) : (
+                existingSeriesContainers.map(container => {
+                  const isExpanded = expandedContainer === container.name;
+                  return (
+                    <div
+                      key={container.name}
+                      className="rounded-2xl border border-blue-500/30 bg-[#090d24]/90 overflow-hidden shadow-xl"
+                    >
+                      {/* Container Header */}
+                      <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-blue-950/40 to-indigo-950/20">
+                        <div className="flex items-start gap-3">
+                          <div className="p-2.5 rounded-xl bg-blue-600/20 border border-blue-400/30 text-blue-300 shrink-0">
+                            <Layers className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h3 className="text-base sm:text-lg font-bold text-white">
+                                {container.name}
+                              </h3>
+                              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">
+                                {container.count} {container.count === 1 ? 'Episode' : 'Episodes'}
+                              </span>
+                              <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+                                {container.channel}
+                              </span>
+                            </div>
+                            <p className="text-xs text-slate-400 mt-0.5">
+                              Latest recorded: Part {container.maxPart} • Connected in Podcasts & Sermons stream
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              setSelectedExistingSeries(container.name);
+                              setSeriesName(container.name);
+                              setChannelName(container.channel);
+                              setSeriesPart(container.maxPart + 1);
+                              setIsSeries(true);
+                              setActiveTab('live');
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all flex items-center gap-1"
+                          >
+                            <Sparkles className="w-3 h-3" />
+                            <span>Record Part {container.maxPart + 1}</span>
+                          </button>
+
+                          <button
+                            onClick={() => setExpandedContainer(isExpanded ? null : container.name)}
+                            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-bold transition-all"
+                          >
+                            {isExpanded ? 'Collapse' : `View ${container.count} Videos`}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Container Items List */}
+                      {isExpanded && (
+                        <div className="p-4 space-y-2.5 border-t border-white/10 bg-black/20">
+                          {container.items.map((item, idx) => {
+                            const isSelected = selectedSermon?.id === item.id;
+                            return (
+                              <div
+                                key={item.id}
+                                className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all ${
+                                  isSelected
+                                    ? 'bg-[#0e1642] border-blue-400'
+                                    : 'bg-white/5 border-white/5 hover:border-blue-500/30'
+                                }`}
+                              >
+                                <div className="space-y-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-2 py-0.5 rounded-md bg-blue-500/30 text-blue-200 text-xs font-extrabold">
+                                      Part {item.seriesPart || idx + 1}
+                                    </span>
+                                    <h4 className="text-xs sm:text-sm font-bold text-white">{item.title}</h4>
+                                    {item.duration && (
+                                      <span className="text-[11px] text-slate-400">
+                                        ({formatDuration(item.duration)})
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p className="text-[11px] text-slate-400">
+                                    {item.speaker && <span>{item.speaker}</span>}
+                                    {item.scriptureRef && <span className="text-indigo-300 font-medium"> • {item.scriptureRef}</span>}
+                                  </p>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => setSelectedSermon(isSelected ? null : item)}
+                                    className="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold flex items-center gap-1"
+                                  >
+                                    <Play className="w-3 h-3" />
+                                    <span>{isSelected ? 'Close' : 'Play'}</span>
+                                  </button>
+
+                                  <button
+                                    onClick={() => handlePushToScripturesTab(item)}
+                                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1 shadow"
+                                  >
+                                    <Send className="w-3 h-3" />
+                                    <span>Push</span>
+                                  </button>
+
+                                  <button
+                                    onClick={() => setEditingSermon(item)}
+                                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300"
+                                    title="Edit"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
           ) : (
+            /* All Sermons Subview */
             <div className="grid grid-cols-1 gap-4">
               {sermons.map(sermon => {
                 const isSelected = selectedSermon?.id === sermon.id;
@@ -895,6 +1231,17 @@ export function LiveSermonStudio() {
                           <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider border border-blue-500/30">
                             {sermon.mediaType || 'Video'}
                           </span>
+                          {sermon.channel && (
+                            <span className="px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+                              {sermon.channel}
+                            </span>
+                          )}
+                          {sermon.series && (
+                            <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-[10px] font-bold border border-indigo-500/30 flex items-center gap-1">
+                              <Layers className="w-2.5 h-2.5" />
+                              <span>{sermon.series}{sermon.seriesPart ? ` (Part ${sermon.seriesPart})` : ''}</span>
+                            </span>
+                          )}
                           {sermon.duration && (
                             <span className="text-xs text-slate-400 flex items-center gap-1 font-medium">
                               <Clock className="w-3 h-3" />
@@ -912,7 +1259,6 @@ export function LiveSermonStudio() {
 
                         <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
                           {sermon.speaker && <span>Speaker: {sermon.speaker}</span>}
-                          {sermon.series && <span>• Series: {sermon.series}</span>}
                           {sermon.dateRecorded && <span>• Date: {sermon.dateRecorded}</span>}
                         </div>
 
@@ -1063,15 +1409,131 @@ export function LiveSermonStudio() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Series</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Channel / Ministry</label>
               <input
                 type="text"
-                value={uploadSeries}
-                onChange={e => setUploadSeries(e.target.value)}
-                placeholder="e.g. Gospel Foundations"
+                value={uploadChannel}
+                onChange={e => setUploadChannel(e.target.value)}
+                placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
                 className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
               />
             </div>
+          </div>
+
+          {/* Series Container Connection Suite for Upload */}
+          <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300">
+                  <Layers className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="text-xs sm:text-sm font-bold text-white">Series & Video Container</h4>
+                  <p className="text-[11px] text-slate-400">Bundle this upload into a series container alongside other episodes</p>
+                </div>
+              </div>
+
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={uploadIsSeries}
+                  onChange={e => setUploadIsSeries(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                <span className="ml-2 text-xs font-semibold text-slate-200">
+                  {uploadIsSeries ? 'Series Enabled' : 'Single Sermon'}
+                </span>
+              </label>
+            </div>
+
+            {uploadIsSeries ? (
+              <div className="space-y-3 pt-2 border-t border-blue-500/20">
+                {existingSeriesContainers.length > 0 && (
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      Connect to Existing Series Container:
+                    </label>
+                    <select
+                      value={uploadExistingSeries}
+                      onChange={e => {
+                        const val = e.target.value;
+                        setUploadExistingSeries(val);
+                        if (val) {
+                          setUploadSeries(val);
+                          const found = existingSeriesContainers.find(c => c.name === val);
+                          if (found) {
+                            setUploadSeriesPart(found.maxPart + 1);
+                            if (found.channel) setUploadChannel(found.channel);
+                          }
+                        }
+                      }}
+                      className="w-full bg-[#0a1033] border border-blue-500/40 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    >
+                      <option value="">-- Or type custom series container name below --</option>
+                      {existingSeriesContainers.map(c => (
+                        <option key={c.name} value={c.name}>
+                          📁 {c.name} ({c.count} sermon{c.count === 1 ? '' : 's'} • {c.channel})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      Series Container Title *
+                    </label>
+                    <input
+                      type="text"
+                      value={uploadSeries}
+                      onChange={e => {
+                        setUploadSeries(e.target.value);
+                        if (uploadExistingSeries && e.target.value !== uploadExistingSeries) {
+                          setUploadExistingSeries('');
+                        }
+                      }}
+                      placeholder="e.g. Gospel Foundations"
+                      className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">
+                      Part / Episode #
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-blue-300 font-bold">Part</span>
+                      <input
+                        type="number"
+                        min={1}
+                        value={uploadSeriesPart}
+                        onChange={e => setUploadSeriesPart(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                        className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {uploadSeries && (
+                  <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-400/30 flex items-start gap-2.5">
+                    <Layers className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div className="text-xs text-slate-300 space-y-0.5">
+                      <p className="font-semibold text-blue-200">
+                        Container Preview: <span className="text-white">"{uploadSeries}"</span> • Part {uploadSeriesPart}
+                      </p>
+                      <p className="text-[11px] text-slate-400">
+                        This sermon upload will be placed directly into this container and ordered as Part {uploadSeriesPart}.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="text-[11px] text-slate-400 italic">
+                Upload will be saved as a standalone sermon. Enable "Series Enabled" above to bundle into a series container.
+              </div>
+            )}
           </div>
 
           <div>
@@ -1196,11 +1658,33 @@ export function LiveSermonStudio() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1">Series</label>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Channel / Ministry</label>
+                  <input
+                    type="text"
+                    value={editingSermon.channel || ''}
+                    onChange={e => setEditingSermon({ ...editingSermon, channel: e.target.value })}
+                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div className="col-span-2">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Series Container</label>
                   <input
                     type="text"
                     value={editingSermon.series || ''}
                     onChange={e => setEditingSermon({ ...editingSermon, series: e.target.value })}
+                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">Part #</label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={editingSermon.seriesPart || 1}
+                    onChange={e => setEditingSermon({ ...editingSermon, seriesPart: parseInt(e.target.value, 10) || 1 })}
                     className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   />
                 </div>
@@ -1338,7 +1822,27 @@ export function LiveSermonStudio() {
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-300 mb-1">
-                    Series Name
+                    Channel / Ministry
+                  </label>
+                  <input
+                    type="text"
+                    value={draftForVerification.channel || ''}
+                    onChange={e =>
+                      setDraftForVerification({
+                        ...draftForVerification,
+                        channel: e.target.value
+                      })
+                    }
+                    placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
+                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                <div className="col-span-2">
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Series Container Name
                   </label>
                   <input
                     type="text"
@@ -1351,6 +1855,23 @@ export function LiveSermonStudio() {
                     }
                     placeholder="e.g. Sunday Live / Gospel Foundations"
                     className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Part #
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    value={draftForVerification.seriesPart || 1}
+                    onChange={e =>
+                      setDraftForVerification({
+                        ...draftForVerification,
+                        seriesPart: parseInt(e.target.value, 10) || 1
+                      })
+                    }
+                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
                   />
                 </div>
               </div>

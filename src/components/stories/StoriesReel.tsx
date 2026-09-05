@@ -23,12 +23,13 @@ const PRESET_STORY_IMAGES = ALL_CHRISTIAN_PRESET_IMAGES;
 const STORY_EMOJIS = ['🙏', '✝️', '🕊️', '📖', '✨', '🔥', '💫', '💖'];
 
 const StoryCardMedia: React.FC<{
-  src: string;
+  src?: string | null;
   alt: string;
   className?: string;
 }> = ({ src, alt, className }) => {
   const { resolvedSrc, error } = useAsyncMedia(src);
-  if (!resolvedSrc || error) {
+  const safeSrc = (resolvedSrc || src || '').trim();
+  if (!safeSrc || error) {
     return (
       <div className="w-full h-full bg-gradient-to-br from-blue-950 via-indigo-950 to-purple-950 flex items-center justify-center p-2 text-center">
         <Sparkles className="w-6 h-6 text-blue-400/40" />
@@ -37,7 +38,7 @@ const StoryCardMedia: React.FC<{
   }
   return (
     <img
-      src={resolvedSrc}
+      src={safeSrc}
       alt={alt}
       referrerPolicy="no-referrer"
       className={className || "w-full h-full object-cover"}
@@ -159,16 +160,16 @@ export const StoriesReel: React.FC = () => {
         >
           {/* Top User Photo / Avatar Area */}
           <div className="w-full h-[124px] sm:h-[136px] overflow-hidden relative bg-gradient-to-b from-blue-900/40 via-indigo-950/60 to-[#090d20] flex items-center justify-center">
-            {user?.avatarUrl ? (
+            {user?.avatarUrl && user.avatarUrl.trim() ? (
               <img
-                src={user.avatarUrl}
+                src={user.avatarUrl.trim()}
                 alt={user.name}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
             ) : (
               <div className="w-14 h-14 rounded-full bg-blue-600/20 border border-blue-400/40 flex items-center justify-center text-blue-300">
-                <Avatar src={user?.avatarUrl} name={user?.name || 'You'} size="lg" />
+                <Avatar src={user?.avatarUrl || undefined} name={user?.name || 'You'} size="lg" />
               </div>
             )}
             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />

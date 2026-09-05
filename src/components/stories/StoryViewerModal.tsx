@@ -24,7 +24,7 @@ import { notificationService } from '../../services/notifications';
 import { useAsyncMedia } from '../../utils/useAsyncMedia';
 
 const StorySlideMedia: React.FC<{
-  src: string;
+  src?: string | null;
   alt: string;
   onError: () => void;
 }> = ({ src, alt, onError }) => {
@@ -34,11 +34,12 @@ const StorySlideMedia: React.FC<{
     if (error) onError();
   }, [error, onError]);
 
-  if (!resolvedSrc || error) return null;
+  const safeSrc = (resolvedSrc || src || '').trim();
+  if (!safeSrc || error) return null;
 
   return (
     <img
-      src={resolvedSrc}
+      src={safeSrc}
       alt={alt}
       referrerPolicy="no-referrer"
       onError={onError}
@@ -587,7 +588,13 @@ export const StoryViewerModal: React.FC<StoryViewerModalProps> = ({
                     }`}
                     title={s.userName}
                   >
-                    <img src={s.userAvatar} alt={s.userName} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    {s.userAvatar && s.userAvatar.trim() ? (
+                      <img src={s.userAvatar.trim()} alt={s.userName} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="w-full h-full bg-blue-600 text-[10px] text-white flex items-center justify-center font-bold">
+                        {s.userName ? s.userName[0].toUpperCase() : 'U'}
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>

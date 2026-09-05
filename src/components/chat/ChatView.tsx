@@ -693,10 +693,10 @@ export const ChatView: React.FC = () => {
                                 : 'bg-black/40 border-white/15 text-slate-200 shadow-md'
                             }`}
                           >
-                            {msg.storyReply.mediaUrl && (
+                            {msg.storyReply.mediaUrl && msg.storyReply.mediaUrl.trim() && (
                               <div className="w-10 h-12 rounded-lg overflow-hidden flex-shrink-0 border border-white/20 bg-black/60 shadow-sm">
                                 <img
-                                  src={msg.storyReply.mediaUrl}
+                                  src={msg.storyReply.mediaUrl.trim()}
                                   alt="Story"
                                   className="w-full h-full object-cover"
                                   referrerPolicy="no-referrer"
@@ -727,13 +727,13 @@ export const ChatView: React.FC = () => {
                           }`}
                         >
                           {/* Image Attachment */}
-                          {msg.mediaUrl && msg.mediaType === 'image' && (
+                          {msg.mediaUrl && msg.mediaUrl.trim() && msg.mediaType === 'image' && (
                             <div
                               onClick={() => setLightboxImage(msg.mediaUrl || null)}
                               className="rounded-xl overflow-hidden mb-2 border border-white/10 max-h-60 cursor-pointer group relative"
                             >
                               <img
-                                src={msg.mediaUrl}
+                                src={msg.mediaUrl.trim()}
                                 alt="Attachment"
                                 className="w-full h-full object-cover transition-transform group-hover:scale-105"
                                 referrerPolicy="no-referrer"
@@ -835,11 +835,11 @@ export const ChatView: React.FC = () => {
             </div>
 
             {/* Image Preview before send */}
-            {selectedImageAttachment && (
+            {selectedImageAttachment && selectedImageAttachment.trim() && (
               <div className="px-4 py-2 bg-white/5 border-t border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <img
-                    src={selectedImageAttachment}
+                    src={selectedImageAttachment.trim()}
                     alt="Preview"
                     className="w-10 h-10 rounded-lg object-cover border border-white/15"
                   />

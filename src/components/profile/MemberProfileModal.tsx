@@ -130,11 +130,13 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               >
                 <X className="w-5 h-5" />
               </button>
-              <img
-                src={zoomImage}
-                alt="Full View"
-                className="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border border-white/20"
-              />
+              {zoomImage && zoomImage.trim() ? (
+                <img
+                  src={zoomImage.trim()}
+                  alt="Full View"
+                  className="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border border-white/20"
+                />
+              ) : null}
             </motion.div>
           )}
         </AnimatePresence>
@@ -144,7 +146,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
           {/* Banner Section */}
           <div className="relative h-44 sm:h-52 w-full bg-slate-900 overflow-hidden flex-shrink-0 group">
             <img
-              src={coverUrl}
+              src={(coverUrl && coverUrl.trim()) || DEFAULT_COVER_IMAGE}
               alt="Cover Banner"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer"
@@ -404,10 +406,10 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
 
                       <p className="text-xs sm:text-sm text-white leading-relaxed whitespace-pre-line">{post.content}</p>
 
-                      {post.mediaUrls && post.mediaUrls.length > 0 && (
+                      {post.mediaUrls && post.mediaUrls[0] && post.mediaUrls[0].trim() && (
                         <div className="rounded-xl overflow-hidden max-h-56 bg-black/40 border border-white/10">
                           <img
-                            src={post.mediaUrls[0]}
+                            src={post.mediaUrls[0].trim()}
                             alt="Post media"
                             referrerPolicy="no-referrer"
                             className="w-full h-52 object-cover cursor-pointer hover:scale-105 transition-transform duration-300"

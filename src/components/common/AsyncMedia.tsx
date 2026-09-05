@@ -2,21 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { mediaCache } from '../../services/mediaCache';
 
 interface AsyncMediaProps extends React.MediaHTMLAttributes<HTMLMediaElement> {
-  src: string;
+  src?: string;
   mediaType: 'video' | 'image';
   alt?: string;
+  poster?: string;
 }
 
 export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, className, alt, controls, playsInline, autoPlay, poster }) => {
-  const [resolvedSrc, setResolvedSrc] = useState<string>(src);
+  const [resolvedSrc, setResolvedSrc] = useState<string>(src && typeof src === 'string' ? src.trim() : '');
   const [error, setError] = useState(false);
 
   useEffect(() => {
     let objectUrl = '';
     let isMounted = true;
 
-    if (src.startsWith('localmedia://')) {
-      const id = src.replace(/^localmedia:\/\/(video|image)\//, '');
+    if (!src || typeof src !== 'string' || src.trim() === '') {
+      setResolvedSrc('');
+      setError(false);
+      return;
+    }
+
+    const trimmedSrc = src.trim();
+
+    if (trimmedSrc.startsWith('localmedia://')) {
+      const id = trimmedSrc.replace(/^localmedia:\/\/(video|image)\//, '');
       mediaCache.getMedia(id).then(blob => {
         if (!isMounted) return;
         if (blob) {
@@ -29,7 +38,7 @@ export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, classNam
         if (isMounted) setError(true);
       });
     } else {
-      setResolvedSrc(src);
+      setResolvedSrc(trimmedSrc);
     }
 
     return () => {
@@ -46,6 +55,10 @@ export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, classNam
         <span className="text-zinc-500 text-xs">Media not found</span>
       </div>
     );
+  }
+
+  if (!resolvedSrc || resolvedSrc.trim() === '') {
+    return null;
   }
 
   if (mediaType === 'video') {

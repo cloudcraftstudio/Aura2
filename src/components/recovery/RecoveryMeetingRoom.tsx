@@ -21,11 +21,13 @@ import {
   Info,
   Maximize2,
   Minimize2,
-  Settings
+  Settings,
+  X
 } from 'lucide-react';
 import { RecoveryMeeting, MeetingParticipant, MeetingChatMessage, WebRTCSignalPayload } from '../../types/recovery';
 import { useAuth } from '../../context/AuthContext';
 import { soundEffects } from '../../services/audio';
+import { Avatar } from '../common/Avatar';
 
 interface RecoveryMeetingRoomProps {
   meeting: RecoveryMeeting;
@@ -565,16 +567,19 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
           {/* Toggle Chat Drawer */}
           <button
             onClick={() => setIsChatOpen(!isChatOpen)}
-            className={`p-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all relative ${
+            className={`px-3 py-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all relative ${
               isChatOpen
-                ? 'bg-blue-600/30 border-blue-400 text-blue-200'
+                ? 'bg-blue-600 border-blue-400 text-white shadow-md shadow-blue-500/30'
                 : 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'
             }`}
+            title={isChatOpen ? 'Hide Prayer Chat' : 'Open Prayer Chat'}
           >
-            <MessageSquare className="w-4 h-4 text-blue-400" />
-            <span className="hidden md:inline">Prayer Chat</span>
+            <MessageSquare className="w-4 h-4 text-blue-300" />
+            <span>Chat</span>
             {chatMessages.length > 0 && (
-              <span className="w-2 h-2 rounded-full bg-blue-400 absolute top-1 right-1" />
+              <span className="px-1.5 py-0.5 rounded-full bg-blue-400 text-slate-950 font-black text-[9px] leading-none">
+                {chatMessages.length}
+              </span>
             )}
           </button>
 
@@ -590,9 +595,9 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
       </header>
 
       {/* Main Video & Chat Workspace */}
-      <div className="flex-1 flex overflow-hidden relative">
+      <div className="flex-1 min-h-0 flex overflow-hidden relative">
         {/* Left: Video Tiles Grid */}
-        <div className="flex-1 p-3 sm:p-5 overflow-y-auto flex flex-col justify-center">
+        <div className="flex-1 min-h-0 p-3 sm:p-5 overflow-y-auto flex flex-col justify-center">
           <div
             className={`grid gap-3 sm:gap-4 w-full h-full max-h-[85vh] items-center ${
               participants.length <= 1
@@ -617,10 +622,11 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
               ) : (
                 <div className="flex flex-col items-center justify-center p-6 text-center">
                   <div className="relative mb-3">
-                    <img
-                      src={displayAvatar}
-                      alt={displayName}
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-blue-400/50 shadow-lg object-cover"
+                    <Avatar
+                      src={displayAvatar || undefined}
+                      name={displayName}
+                      size="xl"
+                      className="border-2 border-blue-400/50 shadow-lg"
                     />
                     {!isMuted && (
                       <div className="absolute -inset-1.5 rounded-full border-2 border-emerald-400/40 animate-ping pointer-events-none" />
@@ -684,10 +690,11 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                   ) : (
                     <div className="flex flex-col items-center justify-center p-6 text-center">
                       <div className="relative mb-3">
-                        <img
-                          src={participant.avatarUrl}
-                          alt={participant.userName}
-                          className="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-slate-600 shadow-lg object-cover"
+                        <Avatar
+                          src={participant.avatarUrl || undefined}
+                          name={participant.userName}
+                          size="xl"
+                          className="border-2 border-slate-600 shadow-lg"
                         />
                         {!participant.isMuted && (
                           <div className="absolute -inset-1.5 rounded-full border-2 border-emerald-400/40 animate-pulse pointer-events-none" />
@@ -728,22 +735,34 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
 
         {/* Right Drawer: Synchronized Real-Time Prayer & Fellowship Chat */}
         {isChatOpen && (
-          <aside className="w-full sm:w-80 md:w-96 bg-[#070a1c] border-l border-white/10 flex flex-col shrink-0 h-full">
-            <div className="p-3.5 border-b border-white/10 flex items-center justify-between">
+          <aside className="absolute inset-0 z-30 sm:relative sm:z-auto sm:w-80 md:w-96 bg-[#070a1c] border-l border-white/10 flex flex-col shrink-0 h-full min-h-0 overflow-hidden shadow-2xl sm:shadow-none">
+            <div className="p-3.5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#090d24]">
               <div className="flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-blue-400" />
                 <h3 className="text-xs font-black uppercase tracking-wider text-white">
                   Live Fellowship & Prayer
                 </h3>
               </div>
-              <span className="text-[11px] text-slate-400">
-                {chatMessages.length} messages
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-slate-400">
+                  {chatMessages.length} messages
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsChatOpen(false)}
+                  className="sm:hidden p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-all"
+                  title="Close Chat"
+                  aria-label="Close Chat"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Chat message filters */}
-            <div className="px-3 py-2 border-b border-white/5 flex items-center gap-1.5 overflow-x-auto text-[11px]">
+            <div className="px-3 py-2 border-b border-white/5 flex items-center gap-1.5 overflow-x-auto text-[11px] shrink-0 bg-[#070a1c]">
               <button
+                type="button"
                 onClick={() => setMessageType('chat')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'chat'
@@ -754,6 +773,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 💬 Chat
               </button>
               <button
+                type="button"
                 onClick={() => setMessageType('prayer_request')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'prayer_request'
@@ -764,6 +784,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 🙏 Prayer
               </button>
               <button
+                type="button"
                 onClick={() => setMessageType('scripture')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'scripture'
@@ -774,6 +795,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 ✝️ Scripture
               </button>
               <button
+                type="button"
                 onClick={() => setMessageType('amen')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'amen'
@@ -786,7 +808,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             </div>
 
             {/* Messages Scroll List */}
-            <div className="flex-1 p-3 space-y-3 overflow-y-auto text-xs">
+            <div className="flex-1 min-h-0 p-3 space-y-3 overflow-y-auto text-xs">
               {chatMessages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
                   <Heart className="w-8 h-8 text-blue-400/40 mb-2 animate-pulse" />
@@ -812,10 +834,10 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                     {/* Header */}
                     <div className="flex items-center justify-between gap-2 mb-1.5">
                       <div className="flex items-center gap-1.5">
-                        <img
-                          src={msg.senderAvatar}
-                          alt={msg.senderName}
-                          className="w-5 h-5 rounded-full object-cover"
+                        <Avatar
+                          src={msg.senderAvatar || undefined}
+                          name={msg.senderName}
+                          size="xs"
                         />
                         <span className="font-bold text-slate-200">{msg.senderName}</span>
                       </div>
@@ -846,6 +868,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                     {msg.type === 'prayer_request' && (
                       <div className="mt-2 pt-2 border-t border-amber-500/20 flex items-center justify-between">
                         <button
+                          type="button"
                           onClick={() => handlePrayWithPerson(msg.id)}
                           className="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-[11px] font-bold flex items-center gap-1.5 transition-all"
                         >
@@ -864,9 +887,10 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             </div>
 
             {/* Chat Input Form */}
-            <form onSubmit={handleSendMessage} className="p-3 border-t border-white/10 bg-black/40">
+            <form onSubmit={handleSendMessage} className="p-3 border-t border-white/10 bg-[#050817] shrink-0 relative z-10">
               <div className="flex items-center gap-2">
                 <input
+                  id="recovery-chat-input"
                   type="text"
                   value={messageInput}
                   onChange={e => setMessageInput(e.target.value)}
@@ -875,14 +899,20 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                       ? 'Type a prayer request...'
                       : messageType === 'scripture'
                       ? 'Share a verse...'
+                      : messageType === 'amen'
+                      ? 'Share an Amen or praise report...'
                       : 'Share fellowship encouragement...'
                   }
-                  className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 focus:bg-white/15 border border-white/20 focus:border-blue-400 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-400 transition-all shadow-inner"
+                  autoComplete="off"
                 />
                 <button
+                  id="recovery-chat-send-btn"
                   type="submit"
                   disabled={!messageInput.trim()}
-                  className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white transition-all shadow-md shadow-blue-500/30"
+                  className="p-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white transition-all shadow-md shadow-blue-500/30 flex items-center justify-center shrink-0"
+                  title="Send message"
+                  aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -926,7 +956,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
           </button>
         </div>
 
-        {/* Center: Fellowship Actions (Hand Raise, Audio-Only, Anonymity) */}
+        {/* Center: Fellowship Actions (Hand Raise, Chat, Audio-Only, Anonymity) */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Raise Hand Button */}
           <button
@@ -939,6 +969,25 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
           >
             <Hand className="w-4 h-4" />
             <span className="hidden sm:inline">{isHandRaised ? 'Hand Raised' : 'Raise Hand'}</span>
+          </button>
+
+          {/* Prayer Chat Toggle Button */}
+          <button
+            onClick={() => setIsChatOpen(!isChatOpen)}
+            className={`px-3.5 py-3 rounded-2xl flex items-center gap-2 font-bold text-xs transition-all shadow-md ${
+              isChatOpen
+                ? 'bg-blue-600 text-white shadow-blue-500/30 border border-blue-400'
+                : 'bg-white/10 hover:bg-white/15 text-slate-200 border border-white/10'
+            }`}
+            title="Toggle Prayer Chat"
+          >
+            <MessageSquare className="w-4 h-4 text-blue-300" />
+            <span className="hidden sm:inline">Prayer Chat</span>
+            {chatMessages.length > 0 && (
+              <span className="px-1.5 py-0.5 rounded-full bg-blue-400 text-slate-950 font-black text-[9px] leading-none">
+                {chatMessages.length}
+              </span>
+            )}
           </button>
 
           {/* Audio Only Mode (Privacy) */}
@@ -1077,7 +1126,11 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                       className="p-2 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between text-xs"
                     >
                       <div className="flex items-center gap-2">
-                        <img src={p.avatarUrl} alt={p.userName} className="w-6 h-6 rounded-full object-cover" />
+                        <Avatar
+                          src={p.avatarUrl || undefined}
+                          name={p.userName}
+                          size="xs"
+                        />
                         <span className="font-semibold text-white">{p.userName}</span>
                         {p.role === 'host' && (
                           <span className="px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-300 text-[10px]">

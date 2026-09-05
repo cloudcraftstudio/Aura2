@@ -53,6 +53,8 @@ export interface Sermon {
   title: string;
   speaker?: string;
   series?: string;
+  seriesPart?: number;
+  channel?: string;
   scriptureRef?: string;
   description?: string;
   mediaType?: 'audio' | 'video';
@@ -206,16 +208,16 @@ export class BibleStudyDB {
   }
 
   // Sermon operations
-  createSermon(title: string, speaker?: string, series?: string, scriptureRef?: string, description?: string, mediaType?: string, mediaUrl?: string, duration?: number, dateRecorded?: string, thumbnailUrl?: string): Sermon {
+  createSermon(title: string, speaker?: string, series?: string, scriptureRef?: string, description?: string, mediaType?: string, mediaUrl?: string, duration?: number, dateRecorded?: string, thumbnailUrl?: string, channel?: string, seriesPart?: number): Sermon {
     const id = randomUUID();
     const now = new Date().toISOString();
     
     const stmt = this.db.prepare(
-      'INSERT INTO sermons_podcasts (id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+      'INSERT INTO sermons_podcasts (id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, channel, seriesPart, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
-    stmt.run(id, title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, now, now);
+    stmt.run(id, title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, channel || null, seriesPart || null, now, now);
     
-    return { id, title, speaker, series, scriptureRef, description, mediaType: mediaType as any, mediaUrl, duration, dateRecorded, thumbnailUrl, createdAt: now, updatedAt: now };
+    return { id, title, speaker, series, scriptureRef, description, mediaType: mediaType as any, mediaUrl, duration, dateRecorded, thumbnailUrl, channel, seriesPart, createdAt: now, updatedAt: now };
   }
 
   getAllSermons(): Sermon[] {
@@ -250,6 +252,8 @@ export class BibleStudyDB {
     const title = updates.title !== undefined ? updates.title : existing.title;
     const speaker = updates.speaker !== undefined ? updates.speaker : existing.speaker;
     const series = updates.series !== undefined ? updates.series : existing.series;
+    const seriesPart = updates.seriesPart !== undefined ? updates.seriesPart : existing.seriesPart;
+    const channel = updates.channel !== undefined ? updates.channel : existing.channel;
     const scriptureRef = updates.scriptureRef !== undefined ? updates.scriptureRef : existing.scriptureRef;
     const description = updates.description !== undefined ? updates.description : existing.description;
     const mediaType = updates.mediaType !== undefined ? updates.mediaType : existing.mediaType;
@@ -261,9 +265,9 @@ export class BibleStudyDB {
     const now = new Date().toISOString();
 
     const stmt = this.db.prepare(
-      'UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, thumbnailUrl = ?, courseLessonId = ?, updatedAt = ? WHERE id = ?'
+      'UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, thumbnailUrl = ?, courseLessonId = ?, channel = ?, seriesPart = ?, updatedAt = ? WHERE id = ?'
     );
-    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, courseLessonId || null, now, id);
+    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, courseLessonId || null, channel || null, seriesPart || null, now, id);
 
     return this.getSermonById(id);
   }
