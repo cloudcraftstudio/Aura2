@@ -14,6 +14,7 @@ import { Play,
   Clock,
   Sparkles,
   Layers,
+  FolderSync,
   AlertCircle,
   FileVideo,
   Upload,
@@ -203,6 +204,30 @@ export function LiveSermonStudio() {
   const showToast = (text: string, type: 'success' | 'error' = 'success') => {
     setStatusMessage({ type, text });
     setTimeout(() => setStatusMessage(null), 4000);
+  };
+
+  const [isSyncingYoutube, setIsSyncingYoutube] = useState(false);
+
+  const handleSyncYoutubeFolder = async () => {
+    setIsSyncingYoutube(true);
+    try {
+      const res = await fetch('/api/bible/sermons/sync', { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        await fetchSermons();
+        if (data.addedCount > 0) {
+          showToast(`🎉 Imported ${data.addedCount} new video(s)! Check the sermons & containers below.`);
+        } else {
+          showToast(`Checked folder (${data.totalFiles} video(s) found, ${data.existingCount} already in database).`);
+        }
+      } else {
+        showToast(data.error || 'Failed to sync YouTube folder', 'error');
+      }
+    } catch (err: any) {
+      showToast(err.message || 'Error connecting to sync service', 'error');
+    } finally {
+      setIsSyncingYoutube(false);
+    }
   };
 
   const startLive = async () => {
@@ -1053,6 +1078,16 @@ export function LiveSermonStudio() {
                   <span>Series Containers ({existingSeriesContainers.length})</span>
                 </button>
               </div>
+
+              <button
+                onClick={handleSyncYoutubeFolder}
+                disabled={isSyncingYoutube}
+                className="flex items-center gap-1.5 text-xs text-red-300 hover:text-white px-3 py-2 bg-red-600/20 hover:bg-red-600/30 rounded-xl border border-red-500/30 transition-all disabled:opacity-50 font-semibold shadow-sm"
+                title="Scan public/uploads/youtube_series for YouTube videos now"
+              >
+                <FolderSync className={`w-3.5 h-3.5 text-red-400 ${isSyncingYoutube ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">{isSyncingYoutube ? 'Syncing...' : 'Sync YouTube Folder'}</span>
+              </button>
 
               <button
                 onClick={fetchSermons}

@@ -42,7 +42,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
   onOpenPermissions
 }) => {
   const { user, logout } = useAuth();
-  const { openPermissionsModal, openSaveToHomeModal, isStandalone, pwaStatus } = usePermissions();
+  const { openPermissionsModal, openSaveToHomeModal, openAndroidApkModal, isAndroid, isStandalone, pwaStatus } = usePermissions();
   const { openHub: openAuraHub, auraLevel } = useAuraEnergy();
 
   if (!isOpen) return null;
@@ -277,7 +277,21 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               </span>
             </button>
 
-            {!isAppInstalled && (
+            {/* Android Direct APK or Web App Install */}
+            {isAndroid ? (
+              <button
+                onClick={() => handleAction(() => openAndroidApkModal())}
+                className="w-full flex items-center justify-between p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 transition-all text-xs font-semibold"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Smartphone className="w-4 h-4 text-emerald-400" />
+                  <span>Download Aura Android APK</span>
+                </div>
+                <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  APK
+                </span>
+              </button>
+            ) : !isAppInstalled ? (
               <button
                 onClick={() => handleAction(() => openSaveToHomeModal())}
                 className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-purple-300 hover:bg-purple-600/20 transition-all text-xs font-semibold"
@@ -285,7 +299,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
                 <Smartphone className="w-4 h-4 text-purple-400" />
                 <span>Install Aura App</span>
               </button>
-            )}
+            ) : null}
 
             <button
               onClick={() =>

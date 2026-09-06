@@ -12,6 +12,7 @@ import fs from 'fs';
 import { SERMONAUDIO_FEED, SERMONAUDIO_SPEAKERS } from '../src/data/sermonaudioData';
 import { sermonIndexService, SERMONINDEX_SPEAKERS_CATALOG, SERMONINDEX_TOPICS_CATALOG } from '../services/sermonIndexService';
 import { synthesizeBibleAudio } from '../server/audioService';
+import { syncYoutubeSermons } from '../services/youtubeSyncService';
 
 const router = Router();
 const kjvLoader = new KJVLoader();
@@ -412,6 +413,25 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
       res.status(500).json({ error: 'Failed to delete sermon' });
     }
   });
+
+  // POST & GET /api/bible/sermons/sync - Trigger sync of YouTube sermons from local directory
+  const handleSync = (_req: Request, res: Response) => {
+    try {
+      const syncResult = syncYoutubeSermons(db);
+      res.json({
+        message: syncResult.addedCount > 0
+          ? `Successfully synced ${syncResult.addedCount} new YouTube sermons into database!`
+          : `Sync completed. No new sermon files found (${syncResult.existingCount} already catalogued).`,
+        ...syncResult
+      });
+    } catch (e: any) {
+      console.error('[Sync Route Error]:', e);
+      res.status(500).json({ error: e.message || 'Failed to sync sermons' });
+    }
+  };
+
+  router.post('/sermons/sync', handleSync);
+  router.get('/sermons/sync', handleSync);
 
   // POST /api/bible/sermons/:id/push-to-course - Push sermon into a course lesson
   router.post('/sermons/:id/push-to-course', (req: Request, res: Response) => {

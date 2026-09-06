@@ -27,6 +27,7 @@ import { ShareAppModal } from './components/common/ShareAppModal';
 import { PermissionBanner } from './components/permissions/PermissionBanner';
 import { PermissionsModal } from './components/permissions/PermissionsModal';
 import { SaveToHomeModal } from './components/permissions/SaveToHomeModal';
+import { AndroidApkModal } from './components/permissions/AndroidApkModal';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { AuraEnergyProvider } from './context/AuraEnergyContext';
 import { AuraLiveWallpaper } from './components/aura/AuraLiveWallpaper';
@@ -65,6 +66,7 @@ function MainApp() {
   });
   const { user, isAuthModalOpen, setIsAuthModalOpen } = useAuth();
   const { isNotificationsOpen, closeNotifications, openNotifications } = useNotifications();
+  const { isAndroidApkModalOpen, closeAndroidApkModal } = usePermissions();
 
   React.useEffect(() => {
     const handleTabNav = (e: Event) => {
@@ -183,6 +185,9 @@ function MainApp() {
 
       {/* Save to Home Screen & PWA Modal */}
       <SaveToHomeModal />
+
+      {/* Direct Android APK Install Warning & Procedure Modal */}
+      <AndroidApkModal isOpen={isAndroidApkModalOpen} onClose={closeAndroidApkModal} />
 
       {/* User Profile Modal (Self) */}
       {isProfileOpen && (

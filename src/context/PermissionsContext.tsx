@@ -13,9 +13,11 @@ interface PermissionsContextType {
   pwaStatus: PwaInstallState;
   isStandalone: boolean;
   isIos: boolean;
+  isAndroid: boolean;
   isBannerDismissed: boolean;
   isPermissionsModalOpen: boolean;
   isSaveToHomeModalOpen: boolean;
+  isAndroidApkModalOpen: boolean;
   
   // Actions
   requestCameraPermission: () => Promise<boolean>;
@@ -30,6 +32,8 @@ interface PermissionsContextType {
   closePermissionsModal: () => void;
   openSaveToHomeModal: () => void;
   closeSaveToHomeModal: () => void;
+  openAndroidApkModal: () => void;
+  closeAndroidApkModal: () => void;
   dismissBanner: () => void;
   restoreBanner: () => void;
   
@@ -50,6 +54,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [pwaStatus, setPwaStatus] = useState<PwaInstallState>('available');
   const [isStandalone, setIsStandalone] = useState<boolean>(false);
   const [isIos, setIsIos] = useState<boolean>(false);
+  const [isAndroid, setIsAndroid] = useState<boolean>(false);
   const [isBannerDismissed, setIsBannerDismissed] = useState<boolean>(() => {
     try {
       return localStorage.getItem(BANNER_DISMISSED_KEY) === 'true';
@@ -60,6 +65,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const [isPermissionsModalOpen, setIsPermissionsModalOpen] = useState(false);
   const [isSaveToHomeModalOpen, setIsSaveToHomeModalOpen] = useState(false);
+  const [isAndroidApkModalOpen, setIsAndroidApkModalOpen] = useState(false);
 
   // Store deferred PWA install prompt
   const deferredPromptRef = useRef<any>(null);
@@ -72,6 +78,10 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
     setIsIos(isIosDevice);
+
+    // Detect Android devices
+    const isAndroidDevice = /android/.test(userAgent);
+    setIsAndroid(isAndroidDevice);
 
     // Detect Standalone (already added to Home Screen)
     const isInStandaloneMode =
@@ -345,9 +355,11 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         pwaStatus,
         isStandalone,
         isIos,
+        isAndroid,
         isBannerDismissed,
         isPermissionsModalOpen,
         isSaveToHomeModalOpen,
+        isAndroidApkModalOpen,
         requestCameraPermission,
         requestMicPermission,
         requestMediaPermissions,
@@ -358,6 +370,8 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         closePermissionsModal: () => setIsPermissionsModalOpen(false),
         openSaveToHomeModal: () => setIsSaveToHomeModalOpen(true),
         closeSaveToHomeModal: () => setIsSaveToHomeModalOpen(false),
+        openAndroidApkModal: () => setIsAndroidApkModalOpen(true),
+        closeAndroidApkModal: () => setIsAndroidApkModalOpen(false),
         dismissBanner,
         restoreBanner,
         checkAllPermissions,

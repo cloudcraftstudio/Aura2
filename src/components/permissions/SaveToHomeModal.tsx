@@ -21,9 +21,11 @@ export const SaveToHomeModal: React.FC = () => {
     isSaveToHomeModalOpen,
     closeSaveToHomeModal,
     isIos,
+    isAndroid,
     isStandalone,
     pwaStatus,
     promptSaveToHome,
+    openAndroidApkModal,
   } = usePermissions();
 
   const [copiedLink, setCopiedLink] = useState(false);
@@ -172,15 +174,50 @@ export const SaveToHomeModal: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              <button
-                id="install-pwa-button"
-                type="button"
-                onClick={promptSaveToHome}
-                className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-sm shadow-xl shadow-blue-500/30 border border-blue-400/40 flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
-              >
-                <Download className="w-4 h-4" />
-                <span>Save / Install App to Home Screen</span>
-              </button>
+              {/* Android Native APK Option */}
+              <div className="p-4 rounded-2xl bg-gradient-to-tr from-emerald-950/50 via-slate-900/70 to-teal-950/40 border border-emerald-500/40 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs font-bold text-white">
+                      {isAndroid ? 'Android Device Detected' : 'Android Users: Direct APK'}
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    aura.apk
+                  </span>
+                </div>
+
+                <p className="text-[11px] text-slate-300 leading-relaxed">
+                  Install the full native Android APK package directly (<strong className="text-emerald-300">aura.apk</strong>). Includes instructions to easily proceed through Android&rsquo;s standard &ldquo;unknown source / install anyway&rdquo; security screen.
+                </p>
+
+                <button
+                  id="open-android-apk-popup-button"
+                  type="button"
+                  onClick={() => {
+                    closeSaveToHomeModal();
+                    openAndroidApkModal();
+                  }}
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 border border-emerald-400/40 flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-98"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download APK & View Install Instructions</span>
+                </button>
+              </div>
+
+              {/* Progressive Web App Button */}
+              <div className="pt-1">
+                <button
+                  id="install-pwa-button"
+                  type="button"
+                  onClick={promptSaveToHome}
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/40 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-98"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Save / Install Web PWA to Home Screen</span>
+                </button>
+              </div>
 
               <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 leading-relaxed">
                 <p className="font-semibold text-white mb-1">Android & Chrome Tip:</p>

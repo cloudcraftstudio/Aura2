@@ -12,6 +12,7 @@ import { createRecoveryRoutes } from './routes/recovery';
 import Database from 'better-sqlite3';
 import fs from 'fs';
 import { synthesizeBibleAudio } from './server/audioService';
+import { startYoutubeFolderWatcher } from './services/youtubeSyncService';
 
 async function startServer() {
   const app = express();
@@ -24,13 +25,29 @@ async function startServer() {
   // Serve uploaded sermon files
   
   // Stream uploaded videos & audio with HTTP 206 Partial Content (Byte Range Support)
-  app.get(["/uploads/sermons/:filename", "/public/uploads/sermons/:filename"], (req, res) => {
-    const filename = path.basename(req.params.filename);
-    const mediaPath = path.join(process.cwd(), "public", "uploads", "sermons", filename);
+  app.get(
+    [
+      "/uploads/sermons/:filename",
+      "/public/uploads/sermons/:filename",
+      "/uploads/youtube_series/:filename",
+      "/public/uploads/youtube_series/:filename",
+    ],
+    (req, res) => {
+      const filename = path.basename(req.params.filename);
+      const isYouTube = req.path.includes("youtube_series");
+      const folder = isYouTube ? "youtube_series" : "sermons";
+      let mediaPath = path.join(process.cwd(), "public", "uploads", folder, filename);
 
-    if (!fs.existsSync(mediaPath)) {
-      return res.status(404).json({ error: "Media file not found" });
-    }
+      if (!fs.existsSync(mediaPath) && isYouTube) {
+        const alt = path.join("/home/ubuntu/Aura-prod/public/uploads/youtube_series", filename);
+        if (fs.existsSync(alt)) {
+          mediaPath = alt;
+        }
+      }
+
+      if (!fs.existsSync(mediaPath)) {
+        return res.status(404).json({ error: "Media file not found" });
+      }
 
     const stat = fs.statSync(mediaPath);
     const fileSize = stat.size;
@@ -733,6 +750,9 @@ async function startServer() {
     const bibleDB = new BibleStudyDB(bibleDbPath);
     const bibleRoutes = createBibleRoutes(bibleDB);
     app.use('/api/bible', bibleRoutes);
+
+    // Start background watcher & instant scanner for YouTube series videos
+    startYoutubeFolderWatcher(bibleDB);
 
     // Live Sync for Contemporary & Community Ministries (Lighthouse Baptist Church, etc.)
     app.get('/api/bible/community/sermons', async (_req, res) => {

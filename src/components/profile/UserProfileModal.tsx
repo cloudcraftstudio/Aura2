@@ -17,6 +17,7 @@ import {
   Mic,
   Bell,
   Smartphone,
+  Download,
   CheckCircle2,
   Sliders,
   ChevronRight,
@@ -67,8 +68,10 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     notificationStatus,
     pwaStatus,
     isStandalone,
+    isAndroid,
     openPermissionsModal,
     openSaveToHomeModal,
+    openAndroidApkModal,
     sendTestCallNotification,
   } = usePermissions();
 
@@ -441,16 +444,74 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <div
                   onClick={() => {
                     stopCamera();
-                    openSaveToHomeModal();
+                    if (isAndroid) {
+                      openAndroidApkModal();
+                    } else {
+                      openSaveToHomeModal();
+                    }
                   }}
                   className="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer hover:bg-purple-900/40 transition-colors"
                 >
                   <Smartphone className="w-5 h-5 text-purple-400" />
                   <span className="text-[10px] text-purple-200 font-medium">Home App</span>
                   <span className="text-[9px] font-bold text-purple-300 underline">
-                    {isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Install PWA'}
+                    {isAndroid ? 'Android APK' : isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Install PWA'}
                   </span>
                 </div>
+              </div>
+            </div>
+
+            {/* Save or Install Aura App Card (With Android Direct APK Link) */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-purple-950/30 to-black/50 border border-emerald-500/30 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
+                    <Smartphone className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                      <span>Save & Install Aura App</span>
+                      {isAndroid && (
+                        <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                          Android Detected
+                        </span>
+                      )}
+                    </h4>
+                    <p className="text-[10px] text-slate-400">Direct Native APK or Progressive Web App</p>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-slate-300 leading-relaxed">
+                {isAndroid
+                  ? 'For recognized Android devices, download our direct native APK package (aura.apk). Includes instructions for the standard Android security screen.'
+                  : 'Install Aura to your phone home screen for instant full-screen access, background call rings, and zero browser bars.'}
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopCamera();
+                    openAndroidApkModal();
+                  }}
+                  className="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-600/25 border border-emerald-400/40 active:scale-98"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>Download Android APK</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopCamera();
+                    openSaveToHomeModal();
+                  }}
+                  className="py-2.5 px-3 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 border border-purple-500/40 text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-98"
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-purple-400" />
+                  <span>Save PWA to Home Screen</span>
+                </button>
               </div>
             </div>
 
@@ -927,14 +988,18 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <div
                     onClick={() => {
                       stopCamera();
-                      openSaveToHomeModal();
+                      if (isAndroid) {
+                        openAndroidApkModal();
+                      } else {
+                        openSaveToHomeModal();
+                      }
                     }}
                     className="p-2 rounded-xl bg-purple-950/30 border border-purple-500/30 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:bg-purple-900/40 transition-colors"
                   >
                     <Smartphone className="w-4 h-4 text-purple-400" />
                     <span className="text-[10px] text-purple-200 font-medium">Home App</span>
                     <span className="text-[9px] font-bold text-purple-300 underline">
-                      {isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Add App'}
+                      {isAndroid ? 'Android APK' : isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Add App'}
                     </span>
                   </div>
                 </div>
