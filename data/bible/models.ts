@@ -53,8 +53,6 @@ export interface Sermon {
   title: string;
   speaker?: string;
   series?: string;
-  seriesPart?: number;
-  channel?: string;
   scriptureRef?: string;
   description?: string;
   mediaType?: 'audio' | 'video';
@@ -65,6 +63,8 @@ export interface Sermon {
   createdAt: string;
   updatedAt: string;
   thumbnailUrl?: string;
+  channel?: string;
+  seriesPart?: number;
 }
 
 export class BibleStudyDB {
@@ -252,8 +252,6 @@ export class BibleStudyDB {
     const title = updates.title !== undefined ? updates.title : existing.title;
     const speaker = updates.speaker !== undefined ? updates.speaker : existing.speaker;
     const series = updates.series !== undefined ? updates.series : existing.series;
-    const seriesPart = updates.seriesPart !== undefined ? updates.seriesPart : existing.seriesPart;
-    const channel = updates.channel !== undefined ? updates.channel : existing.channel;
     const scriptureRef = updates.scriptureRef !== undefined ? updates.scriptureRef : existing.scriptureRef;
     const description = updates.description !== undefined ? updates.description : existing.description;
     const mediaType = updates.mediaType !== undefined ? updates.mediaType : existing.mediaType;
@@ -262,6 +260,8 @@ export class BibleStudyDB {
     const dateRecorded = updates.dateRecorded !== undefined ? updates.dateRecorded : existing.dateRecorded;
     const thumbnailUrl = updates.thumbnailUrl !== undefined ? updates.thumbnailUrl : existing.thumbnailUrl;
     const courseLessonId = updates.courseLessonId !== undefined ? updates.courseLessonId : existing.courseLessonId;
+    const channel = updates.channel !== undefined ? updates.channel : existing.channel;
+    const seriesPart = updates.seriesPart !== undefined ? updates.seriesPart : existing.seriesPart;
     const now = new Date().toISOString();
 
     const stmt = this.db.prepare(

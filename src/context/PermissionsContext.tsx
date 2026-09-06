@@ -128,14 +128,13 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if (typeof window === 'undefined') return;
 
     // Notification status check
-    if ('Notification' in window) {
-      if (Notification.permission === 'granted') {
-        setNotificationStatus('granted');
-      } else if (Notification.permission === 'denied') {
-        setNotificationStatus('denied');
-      } else {
-        setNotificationStatus('prompt');
-      }
+    const notifStatus = await notificationService.getPermissionStatus();
+    if (notifStatus === 'granted') {
+      setNotificationStatus('granted');
+    } else if (notifStatus === 'denied') {
+      setNotificationStatus('denied');
+    } else if (notifStatus === 'prompt' || notifStatus === 'default' || notifStatus === 'prompt-with-rationale') {
+      setNotificationStatus('prompt');
     } else {
       setNotificationStatus('unsupported');
     }
@@ -255,7 +254,8 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       });
       return true;
     } else {
-      setNotificationStatus(Notification.permission === 'denied' ? 'denied' : 'prompt');
+      const notifStatus = await notificationService.getPermissionStatus();
+      setNotificationStatus(notifStatus === 'denied' ? 'denied' : 'prompt');
       return false;
     }
   };

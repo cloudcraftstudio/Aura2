@@ -8,6 +8,10 @@
 		"classpath": "com.capacitorjs.plugins.filesystem.FilesystemPlugin"
 	},
 	{
+		"pkg": "@capacitor/push-notifications",
+		"classpath": "com.capacitorjs.plugins.pushnotifications.PushNotificationsPlugin"
+	},
+	{
 		"pkg": "@capgo/capacitor-incoming-call-kit",
 		"classpath": "app.capgo.incomingcallkit.IncomingCallKitPlugin"
 	},

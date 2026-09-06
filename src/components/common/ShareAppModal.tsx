@@ -25,6 +25,7 @@ export interface ShareAppModalProps {
   onClose: () => void;
   initialType?: 'general' | 'call' | 'chat';
   roomId?: string;
+  initialContent?: string;
 }
 
 export const ShareAppModal: React.FC<ShareAppModalProps> = ({
@@ -32,6 +33,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
   onClose,
   initialType = 'general',
   roomId,
+  initialContent,
 }) => {
   const { user } = useAuth();
   const [inviteType, setInviteType] = useState<'general' | 'call' | 'chat'>(initialType);
@@ -68,6 +70,9 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
 
   // Predefined share text based on context
   const getShareText = () => {
+    if (initialContent) {
+      return `${initialContent}\n\nJoin me on AURA: ${shareUrl}`;
+    }
     if (inviteType === 'call') {
       return `📞 Join my live WebRTC HD video call on AURA Social! Let's connect instantly: ${shareUrl}`;
     }
@@ -104,6 +109,18 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
     } catch (e) {
       console.warn('Copy failed:', e);
     }
+  };
+
+  const handlePostToFeed = () => {
+    onClose();
+    window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'feed' } }));
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('open_create_post', {
+          detail: { content: shareText },
+        })
+      );
+    }, 150);
   };
 
   const handleNativeShare = async () => {
@@ -193,10 +210,8 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
       icon: '✉️',
       color: 'bg-indigo-600 hover:bg-indigo-500',
       url: `mailto:?subject=${encodeURIComponent(
-        `Join me on AURA Social`
-      )}&body=${encodeURIComponent(
-        `Hey!\n\nI'm inviting you to join me on AURA Social. We can chat in real-time, post 24h stories, and jump on HD WebRTC video calls together!\n\nJoin here: ${shareUrl}\n\n— ${user?.name || 'AURA User'}`
-      )}`,
+        initialContent ? 'A shared thought from AURA' : 'Join me on AURA Social'
+      )}&body=${encodedText}`,
     },
     {
       name: 'Messages / SMS',
@@ -357,6 +372,17 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                   </button>
                 </div>
               </div>
+
+              {/* In-App Share: Post to Feed */}
+              {initialContent && (
+                <button
+                  onClick={handlePostToFeed}
+                  className="w-full py-2.5 px-4 mb-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Post to AURA Feed</span>
+                </button>
+              )}
 
               {/* Native Mobile Share Button */}
               {typeof navigator !== 'undefined' && 'share' in navigator && (

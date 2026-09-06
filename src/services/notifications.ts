@@ -1,8 +1,10 @@
 import { soundEffects } from './audio';
 import { AppNotification } from '../types';
+import { PushNotifications } from '@capacitor/push-notifications';
+import { Capacitor } from '@capacitor/core';
 
 class NotificationService {
-  private permission: NotificationPermission = 'default';
+  private permission: NotificationPermission | string = 'default';
   private listeners: ((notification: AppNotification) => void)[] = [];
 
   constructor() {
@@ -12,20 +14,50 @@ class NotificationService {
   }
 
   public async requestPermission(): Promise<boolean> {
-    if (typeof window === 'undefined' || !('Notification' in window)) {
-      return false;
-    }
-    try {
-      const result = await Notification.requestPermission();
-      this.permission = result;
-      return result === 'granted';
-    } catch (e) {
-      console.warn('Push notification permission error:', e);
-      return false;
+    if (Capacitor.isNativePlatform()) {
+      try {
+        let permStatus = await PushNotifications.checkPermissions();
+
+        if (permStatus.receive !== 'granted') {
+          permStatus = await PushNotifications.requestPermissions();
+        }
+
+        if (permStatus.receive !== 'granted') {
+          this.permission = 'denied';
+          return false;
+        }
+
+        await PushNotifications.register();
+        this.permission = 'granted';
+        return true;
+      } catch (e) {
+        console.warn('Capacitor Push Notifications request error:', e);
+        return false;
+      }
+    } else {
+      if (typeof window === 'undefined' || !('Notification' in window)) {
+        return false;
+      }
+      try {
+        const result = await Notification.requestPermission();
+        this.permission = result;
+        return result === 'granted';
+      } catch (e) {
+        console.warn('Push notification permission error:', e);
+        return false;
+      }
     }
   }
 
-  public getPermissionStatus(): NotificationPermission {
+  public async getPermissionStatus(): Promise<NotificationPermission | string> {
+    if (Capacitor.isNativePlatform()) {
+      try {
+        const status = await PushNotifications.checkPermissions();
+        return status.receive;
+      } catch (e) {
+        return 'denied';
+      }
+    }
     if (typeof window !== 'undefined' && 'Notification' in window) {
       return Notification.permission;
     }
@@ -114,6 +146,49 @@ class NotificationService {
 
   // Register device for Android / Mobile background Push Notifications
   public async registerPushSubscription(userId: string) {
+    if (Capacitor.isNativePlatform()) {
+      try {
+        await PushNotifications.addListener('registration', async (token) => {
+          console.log('Push registration success, token: ' + token.value);
+          // Send native token to server (the server will need to support FCM token format)
+          await fetch("/api/push/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+              userId, 
+              subscription: { 
+                endpoint: token.value, 
+                keys: { p256dh: 'fcm', auth: 'fcm' } 
+              } 
+            }),
+          });
+        });
+
+        await PushNotifications.addListener('registrationError', (error: any) => {
+          console.warn('Error on registration: ' + JSON.stringify(error));
+        });
+
+        await PushNotifications.addListener('pushNotificationReceived', (notification) => {
+          console.log('Push received: ' + JSON.stringify(notification));
+          this.notify({
+            type: 'system',
+            title: notification.title || 'Notification',
+            body: notification.body || '',
+          });
+        });
+
+        await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+          console.log('Push action performed: ' + JSON.stringify(notification));
+        });
+
+        await PushNotifications.register();
+        return { isNative: true };
+      } catch (err) {
+        console.warn('Capacitor native push registration failed:', err);
+        return null;
+      }
+    }
+
     if (
       typeof window === "undefined" ||
       !("Notification" in window) ||

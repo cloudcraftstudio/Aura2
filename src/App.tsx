@@ -28,6 +28,7 @@ import { PermissionBanner } from './components/permissions/PermissionBanner';
 import { PermissionsModal } from './components/permissions/PermissionsModal';
 import { SaveToHomeModal } from './components/permissions/SaveToHomeModal';
 import { AndroidApkModal } from './components/permissions/AndroidApkModal';
+import { AppUpdateModal } from './components/permissions/AppUpdateModal';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { AuraEnergyProvider } from './context/AuraEnergyContext';
 import { AuraLiveWallpaper } from './components/aura/AuraLiveWallpaper';
@@ -57,6 +58,7 @@ function MainApp() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [shareModalType, setShareModalType] = useState<'general' | 'call' | 'chat'>('general');
   const [shareRoomId, setShareRoomId] = useState<string | undefined>();
+  const [shareInitialContent, setShareInitialContent] = useState<string | undefined>();
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(() => {
     try {
       return !sessionStorage.getItem('aura_splash_entered');
@@ -76,13 +78,14 @@ function MainApp() {
       }
     };
     const handleOpenShare = (e: Event) => {
-      const customEvent = e as CustomEvent<{ type?: 'general' | 'call' | 'chat'; roomId?: string }>;
+      const customEvent = e as CustomEvent<{ type?: 'general' | 'call' | 'chat'; roomId?: string; initialContent?: string }>;
       if (customEvent.detail?.type) {
         setShareModalType(customEvent.detail.type);
       } else {
         setShareModalType('general');
       }
       setShareRoomId(customEvent.detail?.roomId);
+      setShareInitialContent(customEvent.detail?.initialContent);
       setIsShareModalOpen(true);
     };
     const handleOpenUserProfile = (e: Event) => {
@@ -105,6 +108,7 @@ function MainApp() {
   const handleOpenShareModal = (type: 'general' | 'call' | 'chat' = 'general', roomId?: string) => {
     setShareModalType(type);
     setShareRoomId(roomId);
+    setShareInitialContent(undefined);
     setIsShareModalOpen(true);
   };
 
@@ -189,6 +193,9 @@ function MainApp() {
       {/* Direct Android APK Install Warning & Procedure Modal */}
       <AndroidApkModal isOpen={isAndroidApkModalOpen} onClose={closeAndroidApkModal} />
 
+      {/* Native App Updates OTA Checking Modal */}
+      <AppUpdateModal />
+
       {/* User Profile Modal (Self) */}
       {isProfileOpen && (
         <UserProfileModal
@@ -224,6 +231,7 @@ function MainApp() {
         onClose={() => setIsShareModalOpen(false)}
         initialType={shareModalType}
         roomId={shareRoomId}
+        initialContent={shareInitialContent}
       />
 
       {/* Authentication / Onboarding Modal */}

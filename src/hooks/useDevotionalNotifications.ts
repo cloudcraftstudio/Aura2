@@ -9,9 +9,13 @@ export const useDevotionalNotifications = () => {
 
   useEffect(() => {
     // Check permission
-    if (notificationService.getPermissionStatus() === 'default') {
-      notificationService.requestPermission();
-    }
+    const initNotifications = async () => {
+      const status = await notificationService.getPermissionStatus();
+      if (status === 'prompt' || status === 'default') {
+        notificationService.requestPermission();
+      }
+    };
+    initNotifications();
 
     const checkTime = () => {
       const now = new Date();

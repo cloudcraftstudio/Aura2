@@ -238,6 +238,14 @@ export const PermissionsModal: React.FC = () => {
                   <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Allowed
                   </span>
+                ) : cameraStatus === 'denied' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/30">
+                    Blocked
+                  </span>
+                ) : cameraStatus === 'unsupported' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-slate-400 bg-slate-500/20 px-2.5 py-1 rounded-full border border-slate-500/30">
+                    N/A
+                  </span>
                 ) : (
                   <button
                     type="button"
@@ -295,6 +303,14 @@ export const PermissionsModal: React.FC = () => {
                 {micStatus === 'granted' ? (
                   <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Allowed
+                  </span>
+                ) : micStatus === 'denied' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/30">
+                    Blocked
+                  </span>
+                ) : micStatus === 'unsupported' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-slate-400 bg-slate-500/20 px-2.5 py-1 rounded-full border border-slate-500/30">
+                    N/A
                   </span>
                 ) : (
                   <button
@@ -367,6 +383,14 @@ export const PermissionsModal: React.FC = () => {
                 {notificationStatus === 'granted' ? (
                   <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Allowed
+                  </span>
+                ) : notificationStatus === 'denied' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/30">
+                    Blocked
+                  </span>
+                ) : notificationStatus === 'unsupported' ? (
+                  <span className="flex items-center gap-1 text-[11px] font-bold text-slate-400 bg-slate-500/20 px-2.5 py-1 rounded-full border border-slate-500/30">
+                    N/A
                   </span>
                 ) : (
                   <button

@@ -179,8 +179,8 @@ async function getLiveMinistryFeed() {
 
 // server.ts
 var import_web_push = __toESM(require("web-push"), 1);
-var import_express3 = __toESM(require("express"), 1);
-var import_path5 = __toESM(require("path"), 1);
+var import_express4 = __toESM(require("express"), 1);
+var import_path6 = __toESM(require("path"), 1);
 
 // server/db.ts
 var import_fs = __toESM(require("fs"), 1);
@@ -2054,7 +2054,7 @@ var SERMONINDEX_CURATED_ARCHIVE = [
     youtubeId: "uuabITeO4l8",
     mediaUrl: "",
     mp4Url: "",
-    mp3Url: "https://actions.google.com/sounds/v1/ambiences/daytime_forest_bonfire.ogg",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230101.mp3",
     url: "https://www.youtube.com/watch?v=cncEb_7d7q0",
     topics: [{ name: "Gospel", slug: "gospel" }, { name: "Regeneration", slug: "regeneration" }],
     scriptureRef: "Matthew 7:13-27",
@@ -2081,6 +2081,26 @@ var SERMONINDEX_CURATED_ARCHIVE = [
     thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&auto=format&fit=crop&q=80"
   },
   {
+    id: "si-ravenhill-why-revival-tarries",
+    title: "Why Revival Tarries: The Secret Closet of Prayer",
+    speaker: "Leonard Ravenhill",
+    speakerSlug: "leonard-ravenhill",
+    speakerTitle: "Revivalist & Author",
+    speakerImage: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=400&auto=format&fit=crop&q=80",
+    summary: "Ravenhill's fiery prophetic call: 'No man is greater than his prayer life.' An urgent summons to brokenness, intercession, and holy desperation.",
+    duration: "54:12",
+    durationSeconds: 3252,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230104.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230104.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230104.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Prayer", slug: "prayer" }, { name: "Revival", slug: "revival" }, { name: "Holiness", slug: "holiness" }],
+    scriptureRef: "James 5:16-18",
+    thumbnailUrl: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop&q=80"
+  },
+  {
     id: "si-tozer-holiness-god",
     title: "The Holiness of God (Audio Classic)",
     speaker: "A.W. Tozer",
@@ -2099,6 +2119,146 @@ var SERMONINDEX_CURATED_ARCHIVE = [
     topics: [{ name: "Holiness", slug: "holiness" }, { name: "Worship", slug: "worship" }],
     scriptureRef: "Isaiah 6:1-5",
     thumbnailUrl: "https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-tozer-pursuit-of-god",
+    title: "The Pursuit of God: Following Hard After Christ",
+    speaker: "A.W. Tozer",
+    speakerSlug: "aw-tozer",
+    speakerTitle: "Pastor & Author",
+    speakerImage: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&auto=format&fit=crop&q=80",
+    summary: "Tozer expounds Psalm 63: 'My soul followeth hard after thee: thy right hand upholdeth me.' Cultivating intimate spiritual communion with God.",
+    duration: "45:30",
+    durationSeconds: 2730,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230105.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230105.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230105.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Spiritual Life", slug: "spiritual-life" }, { name: "Worship", slug: "worship" }, { name: "Faith", slug: "faith" }],
+    scriptureRef: "Psalm 63:1-8",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-story-corrie-ten-boom",
+    title: "Audio Story: Deliverance in Ravensbr\xFCck & The Power of Forgiveness",
+    speaker: "Corrie ten Boom",
+    speakerSlug: "corrie-ten-boom",
+    speakerTitle: "Holocaust Survivor & Evangelist",
+    speakerImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
+    summary: "In this historic audio testimony, Corrie recounts the horrors of the concentration camp, the miraculous smuggled Bible in Barracks 28, and coming face to face after the war with her cruelest SS guard.",
+    duration: "34:20",
+    durationSeconds: 2060,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230106.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230106.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230106.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Audio Stories", slug: "audio-stories" }, { name: "Forgiveness", slug: "forgiveness" }, { name: "Suffering", slug: "suffering" }],
+    scriptureRef: "Romans 8:35-39",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-reidhead-ten-shekels",
+    title: "Ten Shekels and a Shirt (The Historic 1965 Audio Master)",
+    speaker: "Paris Reidhead",
+    speakerSlug: "paris-reidhead",
+    speakerTitle: "Missionary Statesman",
+    speakerImage: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=400&auto=format&fit=crop&q=80",
+    summary: "Universally recognized as one of the greatest sermons of the 20th century. Based on Judges 17, Reidhead demolishes humanism in the pulpit and demonstrates that God exists for His own glory, not for man's utility.",
+    duration: "50:18",
+    durationSeconds: 3018,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230107.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230107.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230107.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "The Glory of God", slug: "glory-of-god" }, { name: "Surrender", slug: "surrender" }, { name: "Repentance", slug: "repentance" }],
+    scriptureRef: "Judges 17:1-13",
+    thumbnailUrl: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-wilkerson-call-to-anguish",
+    title: "A Call to Anguish: Weeping Between the Porch and the Altar",
+    speaker: "David Wilkerson",
+    speakerSlug: "david-wilkerson",
+    speakerTitle: "Pastor, Times Square Church NYC",
+    speakerImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&auto=format&fit=crop&q=80",
+    summary: "Pastor Wilkerson's legendary 1999 prophetic address confronting complacency in the Church. 'Anguish means extreme pain and distress. Does your soul weep over what breaks the heart of God?'",
+    duration: "43:45",
+    durationSeconds: 2625,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230108.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230108.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230108.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Prayer", slug: "prayer" }, { name: "Repentance", slug: "repentance" }, { name: "Revival", slug: "revival" }],
+    scriptureRef: "Nehemiah 1:1-4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-story-spurgeon-snowstorm",
+    title: "Audio Story: The Snowstorm and the Convert of Colchester",
+    speaker: "Charles H. Spurgeon",
+    speakerSlug: "charles-spurgeon",
+    speakerTitle: "The Prince of Preachers",
+    speakerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80",
+    summary: "The stirring audio biographical story of Spurgeon at age 15, stranded in a blizzard on January 6, 1850, walking into a humble Primitive Methodist chapel where a tailor looked at him and cried: 'Young man, look to Jesus Christ!'",
+    duration: "28:10",
+    durationSeconds: 1690,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230109.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230109.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230109.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Audio Stories", slug: "audio-stories" }, { name: "Gospel", slug: "gospel" }, { name: "Faith", slug: "faith" }],
+    scriptureRef: "Isaiah 45:22",
+    thumbnailUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-story-george-muller",
+    title: "Audio Story: George M\xFCller and the Miracles of Bristol",
+    speaker: "Historic Missionary Archive",
+    speakerSlug: "george-muller",
+    speakerTitle: "Pioneer of Faith",
+    speakerImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80",
+    summary: "The astonishing true audio story of George M\xFCller, who cared for over 10,000 orphans without ever asking a person for a single penny, relying solely upon secret, persevering prayer to God.",
+    duration: "37:50",
+    durationSeconds: 2270,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230110.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230110.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230110.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Audio Stories", slug: "audio-stories" }, { name: "Faith", slug: "faith" }, { name: "Prayer", slug: "prayer" }],
+    scriptureRef: "Psalm 81:10",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&auto=format&fit=crop&q=80"
+  },
+  {
+    id: "si-story-hudson-taylor",
+    title: "Audio Story: Hudson Taylor & The China Inland Mission",
+    speaker: "Historic Missionary Archive",
+    speakerSlug: "hudson-taylor",
+    speakerTitle: "China Missionary Pioneer",
+    speakerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80",
+    summary: "The inspiring journey of Hudson Taylor learning the spiritual secret of abiding in Christ and stepping out into inland China with unwavering confidence that 'God's work done in God's way will never lack God's supplies.'",
+    duration: "32:40",
+    durationSeconds: 1960,
+    mediaType: "audio",
+    mediaUrl: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230111.mp3",
+    mp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230111.mp3",
+    cdnMp3Url: "https://traffic.libsyn.com/secure/renewingyourmind/RYM20230111.mp3",
+    youtubeId: "",
+    url: "https://www.sermonindex.net",
+    topics: [{ name: "Audio Stories", slug: "audio-stories" }, { name: "Missions", slug: "missions" }, { name: "Faith", slug: "faith" }],
+    scriptureRef: "John 15:4-5",
+    thumbnailUrl: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&auto=format&fit=crop&q=80"
   },
   {
     id: "si-sproul-trauma-holiness",
@@ -2728,6 +2888,16 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
       res.status(500).json({ error: err.message || "Error generating audio" });
     }
   });
+  router.post("/upload", upload.single("file"), (req, res) => {
+    try {
+      if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+      const url = `/uploads/sermons/${req.file.filename}`;
+      res.json({ url, filename: req.file.filename, size: req.file.size });
+    } catch (err) {
+      console.error("File upload error:", err);
+      res.status(500).json({ error: "Failed to upload file" });
+    }
+  });
   router.post("/media/upload", upload.single("file"), (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ error: "No file uploaded" });
@@ -2747,7 +2917,7 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
         (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
         thumbnailUrl || void 0
       );
-      res.status(201).json({ sermon, mediaUrl });
+      res.status(201).json({ sermon, mediaUrl, url: mediaUrl });
     } catch (error) {
       console.error("Failed to upload media:", error);
       res.status(500).json({ error: "Failed to upload media" });
@@ -2772,7 +2942,7 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
     }
   });
   router.post("/sermons", (req, res) => {
-    const { title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded } = req.body;
+    const { title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
     if (!title) return res.status(400).json({ error: "Title is required" });
     try {
       const sermon = db2.createSermon(
@@ -2784,7 +2954,8 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
         mediaType || "video",
         mediaUrl || "",
         duration,
-        dateRecorded || (/* @__PURE__ */ new Date()).toISOString().split("T")[0]
+        dateRecorded || (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+        thumbnailUrl || void 0
       );
       res.status(201).json(sermon);
     } catch (error) {
@@ -3074,12 +3245,13 @@ var BibleStudyDB = class {
     const mediaUrl = updates.mediaUrl !== void 0 ? updates.mediaUrl : existing.mediaUrl;
     const duration = updates.duration !== void 0 ? updates.duration : existing.duration;
     const dateRecorded = updates.dateRecorded !== void 0 ? updates.dateRecorded : existing.dateRecorded;
+    const thumbnailUrl = updates.thumbnailUrl !== void 0 ? updates.thumbnailUrl : existing.thumbnailUrl;
     const courseLessonId = updates.courseLessonId !== void 0 ? updates.courseLessonId : existing.courseLessonId;
     const now = (/* @__PURE__ */ new Date()).toISOString();
     const stmt = this.db.prepare(
-      "UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, courseLessonId = ?, updatedAt = ? WHERE id = ?"
+      "UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, thumbnailUrl = ?, courseLessonId = ?, updatedAt = ? WHERE id = ?"
     );
-    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, courseLessonId || null, now, id);
+    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, courseLessonId || null, now, id);
     return this.getSermonById(id);
   }
   deleteSermon(id) {
@@ -3456,24 +3628,1190 @@ var AuthService = class {
   }
 };
 
+// routes/recovery.ts
+var import_express3 = require("express");
+
+// server/recoveryService.ts
+var import_fs5 = __toESM(require("fs"), 1);
+var import_path5 = __toESM(require("path"), 1);
+var RECOVERY_DATA_FILE = import_path5.default.join(process.cwd(), "data", "recovery_data.json");
+var liveParticipants = /* @__PURE__ */ new Map();
+var liveSignals = /* @__PURE__ */ new Map();
+function getInitialMeetings() {
+  const now = /* @__PURE__ */ new Date();
+  const nextMeetingDate = new Date(now.getTime() + 1e3 * 60 * 60 * 2.5);
+  const liveMeetingDate = new Date(now.getTime() - 1e3 * 60 * 15);
+  return [
+    {
+      id: "meeting_live_freedom",
+      title: "Path to Freedom \u2014 Open Recovery Gathering",
+      description: "A welcoming Christ-centered open fellowship for all overcoming addiction, habitual strongholds, and compulsive struggles. Real testimonies, Scripture truth, and small group fellowship.",
+      scheduledAt: nextMeetingDate.toISOString(),
+      durationMinutes: 60,
+      recurringInfo: "Every Thursday & Sunday at 7:00 PM EST",
+      hostId: "user_tex",
+      hostName: "Tex",
+      hostAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=lightsouttattootex@gmail.com",
+      topic: "Step 4: Truth, Humility & Moral Inventory in Christ",
+      scriptureFocus: "James 5:16 & Romans 12:2",
+      format: "open_discussion",
+      status: "scheduled",
+      attendeeCount: 14,
+      isFeatured: true,
+      tags: ["Open Discussion", "Step 4", "Fellowship", "Prayer"],
+      meetingRoomId: "room_freedom_main",
+      guidelines: [
+        "Anonymity & Confidentiality: What is said in the room stays in the room.",
+        "Christ-Centered: We look to Jesus as our supreme Higher Power & Healer.",
+        "No Crosstalk or Judgment: Give each brother and sister uninterrupted time to share.",
+        "Camera is optional: Audio-only and anonymous display name are fully supported."
+      ]
+    },
+    {
+      id: "meeting_daily_dawn",
+      title: "Daily Sunrise Victory Check-In",
+      description: "Morning prayer, Scripture armor of God, and daily sobriety pledges before starting the workday.",
+      scheduledAt: new Date(now.getTime() + 1e3 * 60 * 60 * 18).toISOString(),
+      durationMinutes: 30,
+      recurringInfo: "Monday - Saturday at 7:00 AM EST",
+      hostId: "user_kimberly",
+      hostName: "Kimberly Coffman",
+      hostAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=savdbygrace360@gmail.com",
+      topic: "Putting on the Full Armor of God (Ephesians 6)",
+      scriptureFocus: "Ephesians 6:10-18",
+      format: "speaker_testimony",
+      status: "scheduled",
+      attendeeCount: 22,
+      isFeatured: false,
+      tags: ["Morning Armor", "Prayer", "Sobriety Pledge"],
+      meetingRoomId: "room_daily_dawn",
+      guidelines: [
+        "Short 2-minute shares to allow everyone time.",
+        "Focus on today\u2019s surrender to Christ."
+      ]
+    },
+    {
+      id: "meeting_mens_iron",
+      title: "Men of Valor: Purity & Integrity Circle",
+      description: "Strictly confidential men\u2019s discipleship for breaking free from pornography, sexual brokenness, and digital triggers.",
+      scheduledAt: new Date(now.getTime() + 1e3 * 60 * 60 * 42).toISOString(),
+      durationMinutes: 60,
+      recurringInfo: "Tuesday Evenings at 8:30 PM EST",
+      hostId: "user_skylor",
+      hostName: "Skylor Bright",
+      hostAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=skylor@aura.social",
+      topic: "Covenant Eyes, Heart Purity, and Overcoming the Flesh",
+      scriptureFocus: "Job 31:1 & Psalm 119:9",
+      format: "step_study",
+      status: "scheduled",
+      attendeeCount: 18,
+      isFeatured: false,
+      tags: ["Men Only", "Purity", "Accountability"],
+      meetingRoomId: "room_mens_iron",
+      guidelines: [
+        "Radical honesty without graphic details.",
+        "Focus on Gospel grace and practical boundaries."
+      ]
+    }
+  ];
+}
+function getInitialCircles() {
+  return [
+    {
+      id: "circle_overcomers",
+      name: "Substance Freedom & Overcomers",
+      focus: "Alcohol, Opioids, Chemical Dependency",
+      description: "Brothers and sisters walking in daily sobriety through the blood of the Lamb and mutual accountability.",
+      membersCount: 48,
+      bannerUrl: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=800&auto=format&fit=crop&q=80",
+      isJoined: true,
+      recentCheckins: [
+        {
+          id: "chk_1",
+          userId: "user_marcus",
+          userName: "Marcus S.",
+          userAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Marcus",
+          streakDays: 184,
+          message: "Day 184 clean today! Felt a wave of old anxiety at work, but stepped out, prayed Psalm 23, and called my partner. Jesus gave immediate peace!",
+          timestamp: Date.now() - 1e3 * 60 * 45,
+          encouragementCount: 14,
+          encouragedByUserIds: ["user_tex", "user_kimberly"]
+        },
+        {
+          id: "chk_2",
+          userId: "user_david",
+          userName: "David W.",
+          userAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=DavidW",
+          streakDays: 45,
+          message: "Hit 45 days today by the grace of God. Grateful for this fellowship and the meeting yesterday.",
+          timestamp: Date.now() - 1e3 * 60 * 120,
+          encouragementCount: 9,
+          encouragedByUserIds: ["user_tex"]
+        }
+      ]
+    },
+    {
+      id: "circle_purity",
+      name: "Purity, Heart & Thought Life",
+      focus: "Pornography, Lust, Digital Distraction",
+      description: "Taking every thought captive to the obedience of Christ and breaking digital strongholds together.",
+      membersCount: 62,
+      bannerUrl: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop&q=80",
+      isJoined: true,
+      recentCheckins: [
+        {
+          id: "chk_3",
+          userId: "user_john",
+          userName: "John K.",
+          userAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=JohnK",
+          streakDays: 30,
+          message: "Reached my 30-day milestone! Deleted social media off my phone and the mental fog has lifted.",
+          timestamp: Date.now() - 1e3 * 60 * 90,
+          encouragementCount: 19,
+          encouragedByUserIds: ["user_tex", "user_skylor"]
+        }
+      ]
+    },
+    {
+      id: "circle_anxiety_habits",
+      name: "Grace Over Anxiety & Compulsive Habits",
+      focus: "Stress Eating, Anxiety Compulsions, Worry",
+      description: "Replacing anxious rituals with prayer, fasting, and biblical peace that surpasses understanding.",
+      membersCount: 39,
+      bannerUrl: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&auto=format&fit=crop&q=80",
+      isJoined: false,
+      recentCheckins: [
+        {
+          id: "chk_4",
+          userId: "user_rachel",
+          userName: "Rachel M.",
+          userAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=RachelM",
+          streakDays: 14,
+          message: "2 weeks of taking my worries to the prayer closet instead of compulsive eating late at night. Praise Jesus!",
+          timestamp: Date.now() - 1e3 * 60 * 180,
+          encouragementCount: 8,
+          encouragedByUserIds: []
+        }
+      ]
+    }
+  ];
+}
+var RecoveryService = class {
+  constructor() {
+    this.state = this.loadState();
+  }
+  loadState() {
+    try {
+      if (import_fs5.default.existsSync(RECOVERY_DATA_FILE)) {
+        const raw = import_fs5.default.readFileSync(RECOVERY_DATA_FILE, "utf-8");
+        const parsed = JSON.parse(raw);
+        if (parsed.meetings && parsed.meetings.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn("[RecoveryService] Failed to parse recovery_data.json, using defaults:", e);
+    }
+    const defaultState = {
+      meetings: getInitialMeetings(),
+      meetingChats: {
+        meeting_live_freedom: [
+          {
+            id: "msg_welcome_1",
+            meetingId: "meeting_live_freedom",
+            senderId: "system",
+            senderName: "Path to Freedom Host",
+            senderAvatar: "/icons/icon-192.svg",
+            type: "system",
+            content: "Welcome to the Path to Freedom Recovery Gathering. We are anchored in Jesus Christ. Please keep microphone muted while another shares.",
+            timestamp: Date.now() - 1e3 * 60 * 10,
+            prayingCount: 0,
+            prayedByUserIds: []
+          },
+          {
+            id: "msg_prayer_1",
+            meetingId: "meeting_live_freedom",
+            senderId: "user_marcus",
+            senderName: "Marcus S.",
+            senderAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Marcus",
+            type: "prayer_request",
+            content: "Please pray for my brother who is facing withdrawal right now. Praying for peace and Christ\u2019s supernatural comfort in his body.",
+            timestamp: Date.now() - 1e3 * 60 * 7,
+            prayingCount: 6,
+            prayedByUserIds: ["user_tex", "user_kimberly"]
+          },
+          {
+            id: "msg_scripture_1",
+            meetingId: "meeting_live_freedom",
+            senderId: "user_kimberly",
+            senderName: "Kimberly Coffman",
+            senderAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=savdbygrace360@gmail.com",
+            type: "scripture",
+            content: "\u201CConfess your faults one to another, and pray one for another, that ye may be healed.\u201D \u2014 James 5:16",
+            timestamp: Date.now() - 1e3 * 60 * 4,
+            prayingCount: 8,
+            prayedByUserIds: ["user_tex"]
+          }
+        ]
+      },
+      userPrinciples: {},
+      userJournals: {},
+      circles: getInitialCircles()
+    };
+    this.saveState(defaultState);
+    return defaultState;
+  }
+  saveState(stateToSave) {
+    try {
+      const dir = import_path5.default.dirname(RECOVERY_DATA_FILE);
+      if (!import_fs5.default.existsSync(dir)) {
+        import_fs5.default.mkdirSync(dir, { recursive: true });
+      }
+      import_fs5.default.writeFileSync(RECOVERY_DATA_FILE, JSON.stringify(stateToSave || this.state, null, 2), "utf-8");
+    } catch (e) {
+      console.error("[RecoveryService] Failed to save recovery_data.json:", e);
+    }
+  }
+  // --- MEETINGS ---
+  getMeetings() {
+    return this.state.meetings;
+  }
+  getMeetingById(id) {
+    return this.state.meetings.find((m) => m.id === id);
+  }
+  createMeeting(data) {
+    const id = "meeting_" + Date.now();
+    const newMeeting = {
+      id,
+      title: data.title || "Path to Freedom Fellowship",
+      description: data.description || "Christ-centered recovery meeting.",
+      scheduledAt: data.scheduledAt || new Date(Date.now() + 1e3 * 60 * 60).toISOString(),
+      durationMinutes: data.durationMinutes || 60,
+      recurringInfo: data.recurringInfo || "Weekly",
+      hostId: data.hostId || "user_tex",
+      hostName: data.hostName || "Tex",
+      hostAvatar: data.hostAvatar || "https://api.dicebear.com/7.x/bottts/svg?seed=lightsouttattootex@gmail.com",
+      topic: data.topic || "Biblical Surrender and Recovery",
+      scriptureFocus: data.scriptureFocus || "Romans 8:1-2",
+      format: data.format || "open_discussion",
+      status: data.status || "scheduled",
+      attendeeCount: 1,
+      isFeatured: data.isFeatured || false,
+      tags: data.tags || ["Fellowship", "Prayer"],
+      meetingRoomId: "room_" + id,
+      guidelines: [
+        "Confidentiality & Anonymity respected.",
+        "Keep shares focused on Christ and personal experience.",
+        "Respectful listening without interruptions."
+      ]
+    };
+    this.state.meetings.unshift(newMeeting);
+    this.saveState();
+    return newMeeting;
+  }
+  updateMeetingStatus(id, status) {
+    const meeting = this.state.meetings.find((m) => m.id === id);
+    if (!meeting) return null;
+    meeting.status = status;
+    this.saveState();
+    return meeting;
+  }
+  // --- PARTICIPANTS & SIGNALING ---
+  joinMeeting(meetingId, participant) {
+    if (!liveParticipants.has(meetingId)) {
+      liveParticipants.set(meetingId, /* @__PURE__ */ new Map());
+    }
+    const roomMap = liveParticipants.get(meetingId);
+    roomMap.set(participant.userId, participant);
+    const meeting = this.getMeetingById(meetingId);
+    if (meeting) {
+      meeting.attendeeCount = Math.max(roomMap.size, 1);
+    }
+    return Array.from(roomMap.values());
+  }
+  leaveMeeting(meetingId, userId) {
+    const roomMap = liveParticipants.get(meetingId);
+    if (roomMap) {
+      roomMap.delete(userId);
+    }
+    const meeting = this.getMeetingById(meetingId);
+    if (meeting && roomMap) {
+      meeting.attendeeCount = roomMap.size;
+    }
+    return roomMap ? Array.from(roomMap.values()) : [];
+  }
+  getParticipants(meetingId) {
+    const roomMap = liveParticipants.get(meetingId);
+    return roomMap ? Array.from(roomMap.values()) : [];
+  }
+  updateParticipantState(meetingId, userId, updates) {
+    const roomMap = liveParticipants.get(meetingId);
+    if (!roomMap || !roomMap.has(userId)) return null;
+    const current = roomMap.get(userId);
+    const updated = { ...current, ...updates };
+    roomMap.set(userId, updated);
+    return updated;
+  }
+  // --- WEBRTC SIGNALING ---
+  addSignal(meetingId, signal) {
+    if (!liveSignals.has(meetingId)) {
+      liveSignals.set(meetingId, []);
+    }
+    const list = liveSignals.get(meetingId);
+    list.push(signal);
+    if (list.length > 200) {
+      list.splice(0, list.length - 200);
+    }
+  }
+  getSignals(meetingId, forUserId, sinceTimestamp = 0) {
+    const list = liveSignals.get(meetingId) || [];
+    return list.filter((s) => {
+      if (s.timestamp <= sinceTimestamp) return false;
+      if (s.fromUserId === forUserId) return false;
+      if (!s.toUserId || s.toUserId === forUserId) return true;
+      return false;
+    });
+  }
+  // --- MEETING CHAT ---
+  getMeetingChat(meetingId) {
+    return this.state.meetingChats[meetingId] || [];
+  }
+  addMeetingChatMessage(meetingId, msg) {
+    if (!this.state.meetingChats[meetingId]) {
+      this.state.meetingChats[meetingId] = [];
+    }
+    const newMsg = {
+      ...msg,
+      id: "msg_" + Date.now() + "_" + Math.random().toString(36).substring(2, 6),
+      timestamp: Date.now(),
+      prayingCount: 0,
+      prayedByUserIds: []
+    };
+    this.state.meetingChats[meetingId].push(newMsg);
+    this.saveState();
+    return newMsg;
+  }
+  togglePrayerPledge(meetingId, messageId, userId) {
+    const msgs = this.state.meetingChats[meetingId];
+    if (!msgs) return null;
+    const msg = msgs.find((m) => m.id === messageId);
+    if (!msg) return null;
+    if (!msg.prayedByUserIds) msg.prayedByUserIds = [];
+    const index = msg.prayedByUserIds.indexOf(userId);
+    if (index === -1) {
+      msg.prayedByUserIds.push(userId);
+      msg.prayingCount = msg.prayedByUserIds.length;
+    } else {
+      msg.prayedByUserIds.splice(index, 1);
+      msg.prayingCount = msg.prayedByUserIds.length;
+    }
+    this.saveState();
+    return msg;
+  }
+  // --- HOST ACTIONS ---
+  performHostAction(meetingId, action) {
+    if (action.type === "set_status" && action.status) {
+      this.updateMeetingStatus(meetingId, action.status);
+    }
+    if (action.type === "mute_all") {
+      const roomMap = liveParticipants.get(meetingId);
+      if (roomMap) {
+        roomMap.forEach((p, uid) => {
+          if (p.role !== "host") {
+            p.isMuted = true;
+            roomMap.set(uid, p);
+          }
+        });
+      }
+      this.addSignal(meetingId, {
+        fromUserId: "host",
+        type: "host_command",
+        payload: { command: "mute_all" },
+        timestamp: Date.now()
+      });
+    }
+    if (action.type === "mute_user" && action.targetUserId) {
+      this.updateParticipantState(meetingId, action.targetUserId, { isMuted: true });
+      this.addSignal(meetingId, {
+        fromUserId: "host",
+        toUserId: action.targetUserId,
+        type: "host_command",
+        payload: { command: "mute" },
+        timestamp: Date.now()
+      });
+    }
+    if (action.type === "kick_user" && action.targetUserId) {
+      this.leaveMeeting(meetingId, action.targetUserId);
+      this.addSignal(meetingId, {
+        fromUserId: "host",
+        toUserId: action.targetUserId,
+        type: "host_command",
+        payload: { command: "kick" },
+        timestamp: Date.now()
+      });
+    }
+    if (action.type === "broadcast_notice" && action.noticeText) {
+      this.addMeetingChatMessage(meetingId, {
+        meetingId,
+        senderId: "host_broadcast",
+        senderName: "Host Announcement",
+        senderAvatar: "/icons/icon-192.svg",
+        type: "system",
+        content: action.noticeText
+      });
+    }
+    return { success: true };
+  }
+  // --- USER PRINCIPLES PROGRESS ---
+  getUserPrinciples(userId) {
+    return this.state.userPrinciples[userId] || {};
+  }
+  saveUserPrinciple(userId, progress) {
+    if (!this.state.userPrinciples[userId]) {
+      this.state.userPrinciples[userId] = {};
+    }
+    this.state.userPrinciples[userId][progress.step] = progress;
+    this.saveState();
+    return this.state.userPrinciples[userId];
+  }
+  // --- RECOVERY JOURNAL & STREAK ---
+  getUserJournal(userId) {
+    if (!this.state.userJournals[userId]) {
+      this.state.userJournals[userId] = {
+        streakStartDate: (/* @__PURE__ */ new Date()).toISOString(),
+        streakDays: 1,
+        entries: [
+          {
+            id: "entry_seed_1",
+            date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
+            streakDay: 1,
+            mood: "grateful",
+            gratitudeNotes: "Grateful for Jesus delivering me from isolation, and for the Path to Freedom fellowship.",
+            prayerNotes: "Lord Jesus, keep my eyes fixed on You today. Give me strength to flee youthful lusts and walk in the Spirit.",
+            memoryVerseRef: "Romans 8:1",
+            memoryVerseText: "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit.",
+            reflection: "Starting this journey with complete surrender. I cannot do it on my own, but Christ in me is the hope of glory.",
+            cravingsManaged: true,
+            createdAt: Date.now() - 1e3 * 60 * 60 * 12
+          }
+        ]
+      };
+      this.saveState();
+    }
+    return this.state.userJournals[userId];
+  }
+  addJournalEntry(userId, entry) {
+    const journal = this.getUserJournal(userId);
+    const newEntry = {
+      ...entry,
+      id: "jrn_" + Date.now(),
+      createdAt: Date.now()
+    };
+    journal.entries.unshift(newEntry);
+    this.saveState();
+    return newEntry;
+  }
+  updateJournalStreak(userId, streakDays, startDate) {
+    const journal = this.getUserJournal(userId);
+    journal.streakDays = streakDays;
+    if (startDate) journal.streakStartDate = startDate;
+    this.saveState();
+    return journal;
+  }
+  // --- ACCOUNTABILITY CIRCLES & SOS ---
+  getCircles() {
+    return this.state.circles;
+  }
+  addCircleCheckin(circleId, checkin) {
+    const circle = this.state.circles.find((c) => c.id === circleId);
+    if (!circle) return null;
+    const newCheckin = {
+      ...checkin,
+      id: "chk_" + Date.now(),
+      timestamp: Date.now(),
+      encouragementCount: 0,
+      encouragedByUserIds: []
+    };
+    circle.recentCheckins.unshift(newCheckin);
+    this.saveState();
+    return newCheckin;
+  }
+  toggleCheckinEncouragement(circleId, checkinId, userId) {
+    const circle = this.state.circles.find((c) => c.id === circleId);
+    if (!circle) return null;
+    const chk = circle.recentCheckins.find((c) => c.id === checkinId);
+    if (!chk) return null;
+    if (!chk.encouragedByUserIds) chk.encouragedByUserIds = [];
+    const idx = chk.encouragedByUserIds.indexOf(userId);
+    if (idx === -1) {
+      chk.encouragedByUserIds.push(userId);
+      chk.encouragementCount = chk.encouragedByUserIds.length;
+    } else {
+      chk.encouragedByUserIds.splice(idx, 1);
+      chk.encouragementCount = chk.encouragedByUserIds.length;
+    }
+    this.saveState();
+    return chk;
+  }
+};
+var recoveryService = new RecoveryService();
+
+// src/data/recoveryPrinciples.ts
+var CORE_BIBLICAL_RECOVERY_PRINCIPLES = [
+  {
+    step: 1,
+    title: "Admitting Powerlessness & Surrender",
+    subtitle: "Brokenness Before God & The End of Self-Reliance",
+    biblicalTheme: "The Need for a Savior",
+    scripture: {
+      reference: "Romans 7:18 & Matthew 5:3",
+      text: "For I know that in me (that is, in my flesh,) dwelleth no good thing: for to will is present with me; but how to perform that which is good I find not... Blessed are the poor in spirit: for theirs is the kingdom of heaven."
+    },
+    summary: "We acknowledge that our habits, addictions, and fleshly compulsions have overpowered our self-will, and that only Christ can deliver us.",
+    biblicalTruth: "Freedom begins when human excuses end. Admitting powerlessness is not defeat\u2014it is stepping into the realm of God\u2019s supernatural grace.",
+    reflectionQuestions: [
+      "In what specific ways have you tried to manage this addiction or habit in your own strength and failed?",
+      'What lies has the enemy told you about being able to "handle it just one more time"?',
+      "Are you willing to surrender the illusion of control into the hands of Jesus Christ today?"
+    ],
+    actionSteps: [
+      "Write down the concrete costs of your struggle (relationships, time, spiritual peace).",
+      "Pray a prayer of total surrender, releasing the hidden struggle into God's light.",
+      "Tell one trusted Christian brother/sister or mentor that you are seeking recovery."
+    ],
+    prayer: "Lord Jesus, I confess that in my own flesh I am powerless over this sin and compulsion. I lay down my pride, my excuses, and my attempts to fix myself. I need You as my Savior, Deliverer, and King. Amen.",
+    affirmation: "I am weak in my flesh, but Christ's strength is made perfect in my weakness (2 Cor 12:9)."
+  },
+  {
+    step: 2,
+    title: "Faith & Hope in Jesus Christ",
+    subtitle: "Trusting God\u2019s Power and Willingness to Heal",
+    biblicalTheme: "Deliverance through the Living God",
+    scripture: {
+      reference: "Philippians 1:6 & Hebrews 11:1",
+      text: "Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ."
+    },
+    summary: "We come to believe that God not only exists, but that He actively loves us, forgives through the blood of Jesus, and has the power to restore our minds and bodies.",
+    biblicalTruth: "Your current struggle is not the final chapter of your story. Jesus specializes in breaking generational strongholds.",
+    reflectionQuestions: [
+      "Do you truly believe Jesus wants you completely free, or do you feel disqualified from His grace?",
+      "How does knowing God never leaves nor forsakes you give you courage for today?",
+      "What past testimonies or scriptures can you anchor your hope upon right now?"
+    ],
+    actionSteps: [
+      "Memorize Philippians 1:6 and repeat it whenever despair whispers.",
+      "List 3 instances in Scripture where Jesus reached out to those considered hopeless or unclean.",
+      "Thank God in advance for the victory He has purchased at Calvary."
+    ],
+    prayer: "Father, increase my faith. Silence the accusing voice of the enemy. I anchor my hope in the resurrection power of Jesus Christ. You who began a good work in me will complete it. Amen.",
+    affirmation: "My hope is not anchored in my willpower; it is anchored in the finished work of Jesus Christ."
+  },
+  {
+    step: 3,
+    title: "Repentance & Turnaround",
+    subtitle: "Deciding to Turn our Will and Lives over to Christ",
+    biblicalTheme: "True Biblical Metanoia (Change of Mind & Direction)",
+    scripture: {
+      reference: "Acts 3:19 & Romans 12:1",
+      text: "Repent ye therefore, and be converted, that your sins may be blotted out, when the times of refreshing shall come from the presence of the Lord."
+    },
+    summary: "Repentance is more than feeling guilty or shedding tears; it is a decisive turn of the heart, mind, and feet away from sin and toward Jesus Christ.",
+    biblicalTruth: "Godly sorrow worketh repentance to salvation not to be repented of, but worldly sorrow worketh death (2 Cor 7:10).",
+    reflectionQuestions: [
+      "Have you been seeking relief from consequences, or genuine transformation of heart?",
+      'What "provision for the flesh" (apps, contacts, environments, secret stashes) must you destroy today?',
+      "Are you ready to submit your schedule, eyes, mind, and desires to the Lordship of Christ?"
+    ],
+    actionSteps: [
+      "Delete triggering apps, contacts, browser bookmarks, or toxic connections immediately.",
+      "Establish clean digital boundaries (content blockers, accountability apps, open passwords).",
+      "Sign a personal covenant before God pledging to walk in His light daily."
+    ],
+    prayer: "Lord, give me genuine godly sorrow over sin. I turn my back on the counterfeit pleasures of darkness. I present my body as a living sacrifice, holy and acceptable unto You. Amen.",
+    affirmation: "I am dead indeed unto sin, but alive unto God through Jesus Christ our Lord (Rom 6:11)."
+  },
+  {
+    step: 4,
+    title: "Moral Inventory & Radical Honesty",
+    subtitle: "Searching our Hearts in the Light of Scripture",
+    biblicalTheme: "Exposing Darkness to the Light",
+    scripture: {
+      reference: "Lamentations 3:40 & Psalm 139:23-24",
+      text: "Let us search and try our ways, and turn again to the Lord... Search me, O God, and know my heart: try me, and know my thoughts: And see if there be any wicked way in me, and lead me in the way everlasting."
+    },
+    summary: "We conduct a thorough, courageous moral and spiritual inventory of our lives, identifying resentments, fears, buried trauma, and patterns of deception.",
+    biblicalTruth: "He that covereth his sins shall not prosper: but whoso confesseth and forsaketh them shall have mercy (Proverbs 28:13).",
+    reflectionQuestions: [
+      "Who are you holding deep bitterness, unforgiveness, or grudges against?",
+      "What hidden shame or fear drives you to numb yourself with your habit?",
+      "Where have you blamed others or God for choices you made?"
+    ],
+    actionSteps: [
+      "Write down honest columns: Resentment / Cause / My Part / Resulting Fear.",
+      "Acknowledge childhood wounds or trauma to God and bring them to a pastoral counselor or mentor.",
+      "Commit to absolute truthfulness in all conversations this week."
+    ],
+    prayer: "Holy Spirit, shine Your holy spotlight into every dark corner of my memory. Uncover the roots of bitterness, shame, and rebellion so they may be uprooted by Your grace. Amen.",
+    affirmation: "I walk in the light as He is in the light, and the blood of Jesus cleanses me from all sin."
+  },
+  {
+    step: 5,
+    title: "Mutual Confession & Cleansing",
+    subtitle: "Admitting to God, Ourselves, and Another the Exact Nature of our Wrongs",
+    biblicalTheme: "Fellowship & Healing in the Body",
+    scripture: {
+      reference: "James 5:16 & 1 John 1:9",
+      text: "Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much."
+    },
+    summary: "Sin loses its lethal power when dragged out of isolation into the light of Christian brotherhood and fellowship.",
+    biblicalTruth: "You are as sick as your secrets. True healing happens in community.",
+    reflectionQuestions: [
+      "Who is a mature, godly Christian brother/sister with whom you can safely share your moral inventory?",
+      "What fear is keeping you from being completely transparent?",
+      "Have you ever experienced the freedom that comes after truthful confession?"
+    ],
+    actionSteps: [
+      "Schedule a confidential session with a trusted pastor, sponsor, or Christian mentor.",
+      "Read through your moral inventory honestly without minimizing or shifting blame.",
+      "Receive prayer and the declaration of God's full pardon through Christ."
+    ],
+    prayer: "Father, break my terror of what people think. Give me humility to confess my faults to my brothers and sisters. Thank You that when I confess, You are faithful and just to forgive and cleanse me. Amen.",
+    affirmation: "There is now therefore no condemnation to them which are in Christ Jesus (Rom 8:1)."
+  },
+  {
+    step: 6,
+    title: "Humble Submission to Sanctification",
+    subtitle: "Entirely Ready for God to Remove All Character Defects",
+    biblicalTheme: "Yielding to the Potter's Hand",
+    scripture: {
+      reference: "Psalm 51:10 & James 4:10",
+      text: "Create in me a clean heart, O God; and renew a right spirit within me... Humble yourselves in the sight of the Lord, and he shall lift you up."
+    },
+    summary: "We stop trying to hold onto petty idols, anger, lust, or self-pity, and ask God to perform radical surgery on our character.",
+    biblicalTruth: "God does not just want to reform your bad habits; He wants to conform you to the image of His Son.",
+    reflectionQuestions: [
+      "Are there defects of character (pride, anger, isolation, gossip) you secretly enjoy or protect?",
+      "Are you willing to let God strip away old defense mechanisms?",
+      "What fruit of the Spirit (Gal 5:22-23) do you desperately need cultivated in your life?"
+    ],
+    actionSteps: [
+      "Identify the top 3 character defects that trigger your habit (e.g., loneliness, stress, resentment).",
+      "Fast from one meal this week to practice denying the flesh and feeding the spirit.",
+      "Pray Psalm 51:10 three times a day."
+    ],
+    prayer: "Lord, I am the clay, You are the Potter. Mold me, break me, and reshape me. Take away every appetite and disposition that dishonors Your name. Amen.",
+    affirmation: "I am God's workmanship, created in Christ Jesus unto good works (Eph 2:10)."
+  },
+  {
+    step: 7,
+    title: "Reconciliation & Restitution",
+    subtitle: "Making Amends to Those We Have Harmed Whenever Possible",
+    biblicalTheme: "Biblical Restitution & Peacemaking",
+    scripture: {
+      reference: "Matthew 5:23-24 & Luke 19:8",
+      text: "Therefore if thou bring thy gift to the altar, and there rememberest that thy brother hath ought against thee; Leave there thy gift before the altar, and go thy way; first be reconciled to thy brother..."
+    },
+    summary: "We compile a list of all persons we have injured through our addiction, deceit, neglect, or selfishness, and take biblical steps of restitution.",
+    biblicalTruth: "Restitution restores dignity, builds trust, and testifies to the transforming reality of the Gospel.",
+    reflectionQuestions: [
+      "Who suffered the collateral damage of your habit (spouses, children, parents, employers)?",
+      "Is there financial, emotional, or practical restitution you need to make?",
+      "Are there situations where direct contact would injure innocent parties and require indirect amends or prayer?"
+    ],
+    actionSteps: [
+      "Create an Amends List categorized: (1) Immediate, (2) Later, (3) Indirect/Prayer Only.",
+      "Consult with your sponsor or pastor before making difficult amends.",
+      "Deliver humble, sincere apologies without making excuses or pointing out their wrongs."
+    ],
+    prayer: "Lord God, give me courage to face those I have hurt. Fill my mouth with genuine repentance and humility. Heal the wounds my sin has caused in innocent lives. Amen.",
+    affirmation: "As much as lieth in me, I will live peaceably with all men (Rom 12:18)."
+  },
+  {
+    step: 8,
+    title: "Renewing the Mind in the Word",
+    subtitle: "Daily Immersion in Scripture & Biblical Meditation",
+    biblicalTheme: "The Living Sword of the Spirit",
+    scripture: {
+      reference: "Romans 12:2 & Psalm 119:9-11",
+      text: "And be not conformed to this world: but be ye transformed by the renewing of your mind... Wherewithal shall a young man cleanse his way? by taking heed thereto according to thy word. Thy word have I hid in mine heart, that I might not sin against thee."
+    },
+    summary: "You cannot defeat spiritual warfare with empty willpower. You must overwrite corrupted neural pathways with the pure, living Word of God.",
+    biblicalTruth: "The mind governed by the flesh is death, but the mind governed by the Spirit is life and peace (Rom 8:6).",
+    reflectionQuestions: [
+      "What percentage of your mental intake each day is secular media vs. God's Word?",
+      "What specific scripture can you wield as a sword when your trigger strikes?",
+      "How does hiding God's Word in your heart protect you from backsliding?"
+    ],
+    actionSteps: [
+      'Commit to the "First 15" rule: 15 minutes of Scripture before touching social media or news in the morning.',
+      "Write 3 recovery memory verses on index cards or lock screens.",
+      "Meditate on Psalm 1 daily."
+    ],
+    prayer: "Lord, wash my thoughts with the water of Your Word. Cleanse every impure image and habituated fantasy. May the meditation of my heart be pleasing in Your sight. Amen.",
+    affirmation: "I bring every thought into captivity to the obedience of Christ (2 Cor 10:5)."
+  },
+  {
+    step: 9,
+    title: "Daily Vigilance, Prayer & Walking in the Spirit",
+    subtitle: "Continual Spiritual Examination & Putting on the Armor of God",
+    biblicalTheme: "Ongoing Discipleship & Sobriety",
+    scripture: {
+      reference: "Galatians 5:16 & 1 Corinthians 10:12-13",
+      text: "Walk in the Spirit, and ye shall not fulfil the lust of the flesh... Wherefore let him that thinketh he standeth take heed lest he fall. There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able..."
+    },
+    summary: "Recovery is a daily walk, not a one-time event. We continue daily personal inventory, confessing stumbles immediately, and abiding in Christ moment by moment.",
+    biblicalTruth: "The battle is won or lost in the first 5 seconds of temptation. Run to Christ instantly.",
+    reflectionQuestions: [
+      "Are you aware of the H.A.L.T. triggers (Hungry, Angry, Lonely, Tired)?",
+      "When you stumble in thought or attitude, do you repent immediately or dwell in guilt?",
+      "How does your prayer life protect your spiritual perimeter?"
+    ],
+    actionSteps: [
+      "Do a 5-minute nightly review: (1) Where was God present? (2) Where was I selfish? (3) What do I need to confess?",
+      "Keep your accountability partner on speed dial and call whenever cravings peak.",
+      'Practice the "10-Second Jesus Pause" whenever triggered.'
+    ],
+    prayer: "Holy Spirit, fill me afresh right now. Order my steps. Give me instant discernment to recognize the bait of Satan and flee youthful lusts. Amen.",
+    affirmation: "No temptation has overtaken me except what is common to man; and God is faithful to make a way of escape."
+  },
+  {
+    step: 10,
+    title: "Service, Testimony & Ministry to Others",
+    subtitle: "Carrying the Message of Deliverance to Those Still Bound",
+    biblicalTheme: "Comforting with the Comfort We Received",
+    scripture: {
+      reference: "2 Corinthians 1:3-4 & Galatians 6:1-2",
+      text: "Blessed be God... who comforteth us in all our tribulation, that we may be able to comfort them which are in any trouble, by the comfort wherewith we ourselves are comforted of God... Bear ye one another's burdens, and so fulfil the law of Christ."
+    },
+    summary: "Having experienced the deliverance of Jesus Christ, we practice these principles in all our affairs and share our testimony with those still trapped in addiction.",
+    biblicalTruth: "Your past misery becomes your greatest ministry when surrendered to Jesus.",
+    reflectionQuestions: [
+      "Who in your life or community is struggling right now with the very chains God broke off of you?",
+      "How does serving others keep your own heart grounded in gratitude and humility?",
+      "Are you willing to be a voice of hope and an accountability partner for a newcomer?"
+    ],
+    actionSteps: [
+      "Share your testimony in the Path to Freedom meeting or community prayer wall.",
+      "Mentor or pray with someone earlier on the recovery path.",
+      "Volunteer time in service at church or local recovery ministry."
+    ],
+    prayer: "Lord, use my scars to heal others. Let my testimony bring glory to Your Son Jesus Christ. Make me an instrument of Your peace and deliverance to the broken. Amen.",
+    affirmation: "They overcame him by the blood of the Lamb, and by the word of their testimony (Rev 12:11)."
+  }
+];
+
+// src/data/recoveryTeachings.ts
+var RECOVERY_TEACHINGS_DATA = [
+  {
+    id: "rec_teach_1",
+    title: "Celebrate Recovery: Lesson 1 - Denial",
+    speaker: "Pastor John Baker",
+    duration: "28:15",
+    category: "substance",
+    audioUrl: "https://www.youtube.com/watch?v=O0i46mr2Zs4",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Matthew 5:3",
+    description: "The foundational first lesson of Celebrate Recovery. Discover how stepping out of denial and admitting our powerlessness is the very first step toward healing our hurts, habits, and hang-ups.",
+    likesCount: 1240,
+    tags: ["Denial", "Surrender", "Celebrate Recovery"],
+    keyQuote: "We can't heal what we won't reveal. Admitting you are powerless is where God's power begins."
+  },
+  {
+    id: "rec_teach_2",
+    title: "Radical Deliverance from 22 Years of Addiction",
+    speaker: "Todd White",
+    duration: "14:30",
+    category: "deliverance",
+    audioUrl: "https://www.youtube.com/watch?v=3FHL2mHDv3A",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "2 Corinthians 5:17",
+    description: "An incredibly powerful testimony of how the radical grace of Jesus Christ completely shattered a 22-year severe drug addiction, turning a broken atheist into an evangelist overnight.",
+    likesCount: 3890,
+    tags: ["Testimony", "Deliverance", "Grace"],
+    keyQuote: "When Jesus sets you free, He doesn't just modify your behavior, He gives you a brand new heart."
+  },
+  {
+    id: "rec_teach_3",
+    title: "How to Break Bad Habits & Addictions",
+    speaker: "Pastor Michael Todd",
+    duration: "45:12",
+    category: "purity",
+    audioUrl: "https://www.youtube.com/watch?v=Z1Bw7wdtJdc",
+    thumbnailUrl: "https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Romans 12:2",
+    description: "A deeply relatable, practical, and highly spiritual teaching on how the enemy uses habits to build strongholds, and the exact steps to rewire your mind through the Holy Spirit.",
+    likesCount: 5210,
+    tags: ["Mind Renewal", "Habits", "Transformation"],
+    keyQuote: "You cannot defeat a spiritual stronghold with physical willpower alone."
+  },
+  {
+    id: "rec_teach_4",
+    title: "Breaking The Cycle of Shame",
+    speaker: "Pastor Steven Furtick",
+    duration: "38:45",
+    category: "grace",
+    audioUrl: "https://www.youtube.com/watch?v=syzWK9rDyjA",
+    thumbnailUrl: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Romans 8:1",
+    description: "Relapse and struggle often produce an overwhelming spiral of self-hatred. Learn the critical difference between the convicting voice of the Holy Spirit and the condemning lies of the accuser.",
+    likesCount: 8900,
+    tags: ["Shame", "Condemnation", "Grace"],
+    keyQuote: "The enemy wants you to focus on your performance, God wants you to focus on His provision."
+  },
+  {
+    id: "rec_teach_5",
+    title: "Winning the War in Your Mind (Overcoming Anxiety)",
+    speaker: "Pastor Craig Groeschel",
+    duration: "32:10",
+    category: "anxiety",
+    audioUrl: "https://www.youtube.com/watch?v=6JWDfXScGZY",
+    thumbnailUrl: "https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "2 Corinthians 10:4-5",
+    description: "The battlefield for recovery is in the mind. A masterful teaching on how to take every thought captive, overcome deep-seated anxiety, and replace the enemy's lies with God's truth.",
+    likesCount: 6100,
+    tags: ["Anxiety", "Thoughts", "Spiritual Warfare"],
+    keyQuote: "Your life is always moving in the direction of your strongest thoughts."
+  },
+  {
+    id: "rec_teach_6",
+    title: "How to Overcome an Addiction",
+    speaker: "Pastor Craig Groeschel",
+    duration: "35:20",
+    category: "general",
+    audioUrl: "https://www.youtube.com/watch?v=jrvYJLInE4I",
+    thumbnailUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "1 Corinthians 10:13",
+    description: "A direct, compassionate, and fiercely biblical roadmap for anyone trapped in the cycle of addiction, demonstrating how the Holy Spirit provides an exit door for every temptation.",
+    likesCount: 4200,
+    tags: ["Addiction", "Holy Spirit", "Victory"],
+    keyQuote: "Willpower doesn't work because the problem isn't just physical; it's deeply spiritual. You need God's power."
+  },
+  {
+    id: "rec_teach_7",
+    title: "Celebrate Recovery: Amends & Restitution",
+    speaker: "Pastor John Baker",
+    duration: "22:15",
+    category: "deliverance",
+    audioUrl: "https://www.youtube.com/watch?v=owK5LV7TJCY",
+    thumbnailUrl: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Matthew 5:23-24",
+    description: "A core Celebrate Recovery teaching on how to effectively make amends and seek restitution with the people harmed by our past habits, without causing further injury.",
+    likesCount: 2150,
+    tags: ["Amends", "Restitution", "Healing"],
+    keyQuote: "Forgiveness is letting go of the past, but making amends is clearing the path for the future."
+  },
+  {
+    id: "rec_teach_8",
+    title: "Rewiring Your Mind with the Word",
+    speaker: "Pastor Craig Groeschel",
+    duration: "29:40",
+    category: "purity",
+    audioUrl: "https://www.youtube.com/watch?v=u-ZyyUGDRtU",
+    thumbnailUrl: "https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Romans 12:2",
+    description: "An advanced look at neuroplasticity and the Bible. Discover how immersing yourself in Scripture literally rewires the brain, overwriting old addictive pathways with God's truth.",
+    likesCount: 7800,
+    tags: ["Mind Renewal", "Scripture", "Transformation"],
+    keyQuote: "You cannot change your life until you change your thoughts, and you cannot change your thoughts without the Word of God."
+  },
+  {
+    id: "rec_teach_9",
+    title: "How to Fight Sin Everyday",
+    speaker: "John Piper",
+    duration: "18:20",
+    category: "anxiety",
+    audioUrl: "https://www.youtube.com/watch?v=lDRQzHz_0iY",
+    thumbnailUrl: "https://images.unsplash.com/photo-1513258496099-48168024aec0?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "Galatians 5:16",
+    description: "A powerful exhortation on daily spiritual vigilance. Piper breaks down why we must actively fight sin through faith in a superior promise, not just relying on willpower.",
+    likesCount: 5120,
+    tags: ["Vigilance", "Spiritual Warfare", "Faith"],
+    keyQuote: "Sin is what you do when your heart is not satisfied with God. Fight sin with a superior satisfaction."
+  },
+  {
+    id: "rec_teach_10",
+    title: "Turn Your Pain Into Purpose",
+    speaker: "Christine Caine",
+    duration: "41:10",
+    category: "grace",
+    audioUrl: "https://www.youtube.com/watch?v=aIrwb3unP4A",
+    thumbnailUrl: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&auto=format&fit=crop&q=80",
+    scriptureRef: "2 Corinthians 1:3-4",
+    description: "Your recovery is not just about you\u2014it is preparation for your ministry. Discover how God takes the deepest trauma, shame, and brokenness and uses it to rescue others.",
+    likesCount: 9240,
+    tags: ["Purpose", "Ministry", "Testimony"],
+    keyQuote: "God will never waste your pain. The very thing the enemy meant to destroy you will become your greatest weapon to set others free."
+  }
+];
+
+// routes/recovery.ts
+function createRecoveryRoutes() {
+  const router2 = (0, import_express3.Router)();
+  router2.get("/meetings", (_req, res) => {
+    try {
+      const meetings = recoveryService.getMeetings();
+      res.json({ meetings });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get meetings" });
+    }
+  });
+  router2.post("/meetings", (req, res) => {
+    try {
+      const meeting = recoveryService.createMeeting(req.body);
+      res.status(201).json({ meeting });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to create meeting" });
+    }
+  });
+  router2.get("/meetings/:id", (req, res) => {
+    try {
+      const meeting = recoveryService.getMeetingById(req.params.id);
+      if (!meeting) return res.status(404).json({ error: "Meeting not found" });
+      const participants = recoveryService.getParticipants(req.params.id);
+      res.json({ meeting, participants });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get meeting" });
+    }
+  });
+  router2.post("/meetings/:id/status", (req, res) => {
+    try {
+      const { status } = req.body;
+      if (!status || !["scheduled", "live", "completed"].includes(status)) {
+        return res.status(400).json({ error: "Valid status required" });
+      }
+      const updated = recoveryService.updateMeetingStatus(req.params.id, status);
+      if (!updated) return res.status(404).json({ error: "Meeting not found" });
+      res.json({ meeting: updated });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to update meeting status" });
+    }
+  });
+  router2.post("/meetings/:id/join", (req, res) => {
+    try {
+      const { participant } = req.body;
+      if (!participant || !participant.userId) {
+        return res.status(400).json({ error: "Participant data required" });
+      }
+      const participants = recoveryService.joinMeeting(req.params.id, participant);
+      res.json({ success: true, participants });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to join meeting" });
+    }
+  });
+  router2.post("/meetings/:id/leave", (req, res) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) return res.status(400).json({ error: "userId required" });
+      const participants = recoveryService.leaveMeeting(req.params.id, userId);
+      res.json({ success: true, participants });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to leave meeting" });
+    }
+  });
+  router2.get("/meetings/:id/participants", (req, res) => {
+    try {
+      const participants = recoveryService.getParticipants(req.params.id);
+      res.json({ participants });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get participants" });
+    }
+  });
+  router2.post("/meetings/:id/participant-state", (req, res) => {
+    try {
+      const { userId, updates } = req.body;
+      if (!userId || !updates) return res.status(400).json({ error: "userId and updates required" });
+      const updated = recoveryService.updateParticipantState(req.params.id, userId, updates);
+      res.json({ success: true, participant: updated });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to update participant state" });
+    }
+  });
+  router2.post("/meetings/:id/signal", (req, res) => {
+    try {
+      const { signal } = req.body;
+      if (!signal || !signal.fromUserId || !signal.type) {
+        return res.status(400).json({ error: "Valid signal payload required" });
+      }
+      recoveryService.addSignal(req.params.id, signal);
+      res.json({ success: true });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to add signal" });
+    }
+  });
+  router2.get("/meetings/:id/signals", (req, res) => {
+    try {
+      const forUserId = req.query.forUserId;
+      const since = parseInt(req.query.since || "0", 10);
+      if (!forUserId) return res.status(400).json({ error: "forUserId required" });
+      const signals = recoveryService.getSignals(req.params.id, forUserId, since);
+      res.json({ signals });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get signals" });
+    }
+  });
+  router2.get("/meetings/:id/chat", (req, res) => {
+    try {
+      const chat = recoveryService.getMeetingChat(req.params.id);
+      res.json({ messages: chat });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get chat" });
+    }
+  });
+  router2.post("/meetings/:id/chat", (req, res) => {
+    try {
+      const { senderId, senderName, senderAvatar, type, content } = req.body;
+      if (!senderId || !content) {
+        return res.status(400).json({ error: "senderId and content are required" });
+      }
+      const message = recoveryService.addMeetingChatMessage(req.params.id, {
+        meetingId: req.params.id,
+        senderId,
+        senderName: senderName || "Fellow Believer",
+        senderAvatar: senderAvatar || "/icons/icon-192.svg",
+        type: type || "chat",
+        content
+      });
+      res.status(201).json({ message });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to send message" });
+    }
+  });
+  router2.post("/meetings/:id/chat/:messageId/pray", (req, res) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) return res.status(400).json({ error: "userId is required" });
+      const updated = recoveryService.togglePrayerPledge(req.params.id, req.params.messageId, userId);
+      if (!updated) return res.status(404).json({ error: "Message not found" });
+      res.json({ message: updated });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to update prayer pledge" });
+    }
+  });
+  router2.post("/meetings/:id/host-action", (req, res) => {
+    try {
+      const result = recoveryService.performHostAction(req.params.id, req.body);
+      res.json(result);
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to execute host action" });
+    }
+  });
+  router2.get("/teachings", (_req, res) => {
+    res.json({ teachings: RECOVERY_TEACHINGS_DATA });
+  });
+  router2.get("/principles", (_req, res) => {
+    res.json({ principles: CORE_BIBLICAL_RECOVERY_PRINCIPLES });
+  });
+  router2.get("/user-principles/:userId", (req, res) => {
+    try {
+      const progress = recoveryService.getUserPrinciples(req.params.userId);
+      res.json({ progress });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get principles progress" });
+    }
+  });
+  router2.post("/user-principles/:userId", (req, res) => {
+    try {
+      const updated = recoveryService.saveUserPrinciple(req.params.userId, req.body);
+      res.json({ progress: updated });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to save principle progress" });
+    }
+  });
+  router2.get("/journal/:userId", (req, res) => {
+    try {
+      const journal = recoveryService.getUserJournal(req.params.userId);
+      res.json(journal);
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get journal" });
+    }
+  });
+  router2.post("/journal/:userId/entry", (req, res) => {
+    try {
+      const entry = recoveryService.addJournalEntry(req.params.userId, req.body);
+      res.status(201).json({ entry });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to add journal entry" });
+    }
+  });
+  router2.post("/journal/:userId/streak", (req, res) => {
+    try {
+      const { streakDays, startDate } = req.body;
+      const updated = recoveryService.updateJournalStreak(req.params.userId, Number(streakDays) || 1, startDate);
+      res.json(updated);
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to update streak" });
+    }
+  });
+  router2.get("/circles", (_req, res) => {
+    try {
+      const circles = recoveryService.getCircles();
+      res.json({ circles });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to get circles" });
+    }
+  });
+  router2.post("/circles/:id/checkin", (req, res) => {
+    try {
+      const checkin = recoveryService.addCircleCheckin(req.params.id, req.body);
+      if (!checkin) return res.status(404).json({ error: "Circle not found" });
+      res.status(201).json({ checkin });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to add checkin" });
+    }
+  });
+  router2.post("/circles/:id/checkin/:checkinId/encourage", (req, res) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) return res.status(400).json({ error: "userId is required" });
+      const updated = recoveryService.toggleCheckinEncouragement(req.params.id, req.params.checkinId, userId);
+      if (!updated) return res.status(404).json({ error: "Checkin not found" });
+      res.json({ checkin: updated });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to toggle encouragement" });
+    }
+  });
+  router2.post("/sos", (req, res) => {
+    try {
+      const { userId, userName, circleId, message } = req.body;
+      const targetCircleId = circleId || "circle_overcomers";
+      const sosCheckin = recoveryService.addCircleCheckin(targetCircleId, {
+        userId: userId || "anonymous",
+        userName: userName || "Brother / Sister in Christ",
+        userAvatar: "https://api.dicebear.com/7.x/bottts/svg?seed=" + (userName || "SOS"),
+        streakDays: 1,
+        message: `\u{1F6A8} URGENT SOS PRAYER: ${message || "I am facing an intense temptation and urge right now. Please pray for me immediately and text/call if possible!"}`,
+        prayerNeed: "Spiritual warfare & immediate deliverance"
+      });
+      res.status(201).json({
+        success: true,
+        message: "Urgent SOS prayer request dispatched to your accountability circle!",
+        checkin: sosCheckin
+      });
+    } catch (err) {
+      res.status(500).json({ error: err.message || "Failed to dispatch SOS" });
+    }
+  });
+  return router2;
+}
+
 // server.ts
 var import_better_sqlite33 = __toESM(require("better-sqlite3"), 1);
-var import_fs5 = __toESM(require("fs"), 1);
+var import_fs6 = __toESM(require("fs"), 1);
 async function startServer() {
-  const app = (0, import_express3.default)();
+  const app = (0, import_express4.default)();
   const PORT = 3e3;
-  app.use(import_express3.default.json({ limit: "25mb" }));
-  app.use(import_express3.default.urlencoded({ extended: true, limit: "25mb" }));
+  app.use(import_express4.default.json({ limit: "25mb" }));
+  app.use(import_express4.default.urlencoded({ extended: true, limit: "25mb" }));
   app.get(["/uploads/sermons/:filename", "/public/uploads/sermons/:filename"], (req, res) => {
-    const filename = import_path5.default.basename(req.params.filename);
-    const mediaPath = import_path5.default.join(process.cwd(), "public", "uploads", "sermons", filename);
-    if (!import_fs5.default.existsSync(mediaPath)) {
+    const filename = import_path6.default.basename(req.params.filename);
+    const mediaPath = import_path6.default.join(process.cwd(), "public", "uploads", "sermons", filename);
+    if (!import_fs6.default.existsSync(mediaPath)) {
       return res.status(404).json({ error: "Media file not found" });
     }
-    const stat = import_fs5.default.statSync(mediaPath);
+    const stat = import_fs6.default.statSync(mediaPath);
     const fileSize = stat.size;
     const range = req.headers.range;
-    const ext = import_path5.default.extname(filename).toLowerCase();
+    const ext = import_path6.default.extname(filename).toLowerCase();
     const mimeTypes = {
       ".mp4": "video/mp4",
       ".webm": "video/webm",
@@ -3491,7 +4829,7 @@ async function startServer() {
         return;
       }
       const chunksize = end - start + 1;
-      const file = import_fs5.default.createReadStream(mediaPath, { start, end });
+      const file = import_fs6.default.createReadStream(mediaPath, { start, end });
       const head = {
         "Content-Range": `bytes ${start}-${end}/${fileSize}`,
         "Accept-Ranges": "bytes",
@@ -3507,10 +4845,10 @@ async function startServer() {
         "Accept-Ranges": "bytes"
       };
       res.writeHead(200, head);
-      import_fs5.default.createReadStream(mediaPath).pipe(res);
+      import_fs6.default.createReadStream(mediaPath).pipe(res);
     }
   });
-  app.use("/uploads", import_express3.default.static(import_path5.default.join(process.cwd(), "public", "uploads")));
+  app.use("/uploads", import_express4.default.static(import_path6.default.join(process.cwd(), "public", "uploads")));
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -3689,6 +5027,26 @@ async function startServer() {
       storyReply,
       callLog
     });
+    try {
+      const convs = db.getConversations();
+      const currentConv = convs.find((c) => c.id === conversationId);
+      if (currentConv && Array.isArray(currentConv.participantIds)) {
+        for (const pId of currentConv.participantIds) {
+          if (pId !== senderId) {
+            sendPushToUser(pId, {
+              type: "chat",
+              title: senderName || "Aura Message",
+              body: content ? content.length > 80 ? content.slice(0, 77) + "..." : content : mediaType === "audio" ? "\u{1F3A4} Voice message" : "\u{1F4F7} Image",
+              icon: senderAvatar || "/icons/icon-192.svg",
+              actionId: conversationId,
+              url: `/?tab=chat&conversationId=${encodeURIComponent(conversationId)}`
+            });
+          }
+        }
+      }
+    } catch (pushErr) {
+      console.warn("Message push delivery note:", pushErr);
+    }
     res.status(201).json(message);
   });
   app.post("/api/messages/:conversationId/:messageId/reaction", (req, res) => {
@@ -3704,7 +5062,7 @@ async function startServer() {
   const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || "OCB5cJ_HHQhpQX5kcRdf4jr_hMBhnGPdsV52v2M76SA";
   const VAPID_MAILTO = process.env.VAPID_MAILTO || "mailto:admin@cloudcraftstudio.com";
   import_web_push.default.setVapidDetails(VAPID_MAILTO, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
-  const authDb = new import_better_sqlite33.default(import_path5.default.join(process.cwd(), "data", "auth.db"));
+  const authDb = new import_better_sqlite33.default(import_path6.default.join(process.cwd(), "data", "auth.db"));
   authDb.exec(`
     CREATE TABLE IF NOT EXISTS push_subscriptions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -3744,6 +5102,9 @@ async function startServer() {
   const sendPushToUser = async (userId, payload) => {
     try {
       const subs = authDb.prepare("SELECT * FROM push_subscriptions WHERE user_id = ?").all(userId);
+      if (!subs || subs.length === 0) {
+        return;
+      }
       for (const sub of subs) {
         const pushSubscription = {
           endpoint: sub.endpoint,
@@ -3765,6 +5126,26 @@ async function startServer() {
       console.error("Error dispatching push notifications:", err);
     }
   };
+  app.post("/api/push/test-call", (req, res) => {
+    const { userId, isVideo } = req.body;
+    if (!userId) return res.status(400).json({ error: "userId is required" });
+    setTimeout(() => {
+      const testRoomId = "room_test_" + Date.now();
+      sendPushToUser(userId, {
+        type: "CALL_INCOMING",
+        action: "incoming_call",
+        title: `\u{1F4DE} Incoming ${isVideo ? "Video" : "Audio"} Call (Test Ring)`,
+        body: "Aura Call Test is ringing your device. Tap to answer!",
+        callerId: "system_tester",
+        callerName: "Aura Calling Test",
+        callerAvatar: "/icons/icon-192.svg",
+        roomId: testRoomId,
+        isVideo: isVideo !== false,
+        url: `/?action=incoming_call&roomId=${encodeURIComponent(testRoomId)}&callerId=system_tester&isVideo=${isVideo !== false}`
+      });
+    }, 3500);
+    res.json({ success: true, message: "Test call will ring device in 3.5 seconds" });
+  });
   app.post("/api/calls", (req, res) => {
     const { callerId, callerName, callerAvatar, receiverId, receiverName, receiverAvatar, isVideo, roomId } = req.body;
     if (!callerId || !receiverId || !roomId) {
@@ -3780,6 +5161,18 @@ async function startServer() {
       isVideo: isVideo !== void 0 ? isVideo : true,
       roomId,
       status: "calling"
+    });
+    sendPushToUser(receiverId, {
+      type: "CALL_INCOMING",
+      action: "incoming_call",
+      title: `\u{1F4DE} Incoming ${isVideo !== false ? "Video" : "Audio"} Call`,
+      body: `${callerName || "Someone"} is calling you on Aura...`,
+      callerId,
+      callerName,
+      callerAvatar,
+      roomId,
+      isVideo: isVideo !== false,
+      url: `/?action=incoming_call&roomId=${encodeURIComponent(roomId)}&callerId=${encodeURIComponent(callerId)}&isVideo=${isVideo !== false}`
     });
     res.status(201).json(session);
   });
@@ -3800,6 +5193,23 @@ async function startServer() {
     const session = db.updateCallStatus(req.params.roomId, status);
     if (!session) return res.status(404).json({ error: "Call session not found" });
     if (status === "ended" || status === "declined") {
+      const isMissed = !session.startedAt || session.status === "calling";
+      sendPushToUser(session.receiverId, {
+        type: "CALL_CANCELLED",
+        action: "call_cancelled",
+        roomId: req.params.roomId,
+        callerName: session.callerName,
+        callerAvatar: session.callerAvatar,
+        isMissed: isMissed && status !== "declined"
+      });
+      if (status === "declined") {
+        sendPushToUser(session.callerId, {
+          type: "CALL_DECLINED",
+          action: "call_declined",
+          roomId: req.params.roomId,
+          receiverName: session.receiverName
+        });
+      }
       try {
         const convs = db.getConversations();
         const directConv = convs.find(
@@ -3982,7 +5392,7 @@ async function startServer() {
     }
   });
   try {
-    const bibleDbPath = import_path5.default.join(process.cwd(), "data", "bible", "bible_study.db");
+    const bibleDbPath = import_path6.default.join(process.cwd(), "data", "bible", "bible_study.db");
     initializeBibleDB(bibleDbPath);
     const bibleDB = new BibleStudyDB(bibleDbPath);
     const bibleRoutes = createBibleRoutes(bibleDB);
@@ -4000,16 +5410,22 @@ async function startServer() {
     console.error("Failed to initialize Bible Study DB:", err);
   }
   try {
-    const authDbPath = import_path5.default.join(process.cwd(), "data", "auth.db");
+    const authDbPath = import_path6.default.join(process.cwd(), "data", "auth.db");
     const authDb2 = new import_better_sqlite33.default(authDbPath);
-    const schemaPath = import_path5.default.join(process.cwd(), "data", "auth_schema.sql");
-    const schema = import_fs5.default.readFileSync(schemaPath, "utf-8");
+    const schemaPath = import_path6.default.join(process.cwd(), "data", "auth_schema.sql");
+    const schema = import_fs6.default.readFileSync(schemaPath, "utf-8");
     authDb2.exec(schema);
     const authService = new AuthService(authDb2);
     const authRoutes = createAuthRoutes(authService);
     app.use("/api/auth", authRoutes);
   } catch (err) {
     console.error("Failed to initialize Auth DB:", err);
+  }
+  try {
+    const recoveryRoutes = createRecoveryRoutes();
+    app.use("/api/recovery", recoveryRoutes);
+  } catch (err) {
+    console.error("Failed to initialize Recovery routes:", err);
   }
   const isProd = process.env.NODE_ENV === "production" || !process.env.VITE_DEV;
   if (!isProd) {
@@ -4020,12 +5436,12 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = import_path5.default.join(process.cwd(), "dist");
+    const distPath = import_path6.default.join(process.cwd(), "dist");
     app.get("/api/app-update/version", (req, res) => {
       try {
-        const manifestPath = import_path5.default.join(process.cwd(), "public", "update-manifest.json");
-        if (import_fs5.default.existsSync(manifestPath)) {
-          return res.json(JSON.parse(import_fs5.default.readFileSync(manifestPath, "utf8")));
+        const manifestPath = import_path6.default.join(process.cwd(), "public", "update-manifest.json");
+        if (import_fs6.default.existsSync(manifestPath)) {
+          return res.json(JSON.parse(import_fs6.default.readFileSync(manifestPath, "utf8")));
         }
         res.json({ version: "1.0.0", url: "https://webcraftstudio.cloud/dist.zip" });
       } catch (e) {
@@ -4033,17 +5449,17 @@ async function startServer() {
       }
     });
     app.get("/aura.apk", (req, res) => {
-      const apkPath = import_path5.default.join(process.cwd(), "dist", "aura.apk");
-      if (import_fs5.default.existsSync(apkPath)) {
+      const apkPath = import_path6.default.join(process.cwd(), "dist", "aura.apk");
+      if (import_fs6.default.existsSync(apkPath)) {
         res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
         res.setHeader("Content-Type", "application/vnd.android.package-archive");
         return res.sendFile(apkPath);
       }
       res.status(404).send("APK not found");
     });
-    app.use(import_express3.default.static(distPath));
+    app.use(import_express4.default.static(distPath));
     app.get("*", (req, res) => {
-      res.sendFile(import_path5.default.join(distPath, "index.html"));
+      res.sendFile(import_path6.default.join(distPath, "index.html"));
     });
   }
   app.listen(PORT, "0.0.0.0", () => {

@@ -120,6 +120,18 @@ async function startServer() {
     res.json(stats);
   });
 
+  app.get('/api/system/version', (req, res) => {
+    // Return the current server version (which updates when the repo is pulled)
+    // The client will compare this against its built-in __APP_VERSION__
+    const pkg = require('./package.json');
+    res.json({
+      version: pkg.version || '1.0.4',
+      downloadUrl: 'https://aura.webcraftstudio.cloud/aura.apk',
+      forceUpdate: false,
+      releaseNotes: 'Performance improvements and new features.'
+    });
+  });
+
   app.get('/api/system/export-db', (req, res) => {
     const fullDb = db.exportFullDatabase();
     res.json(fullDb);
@@ -800,7 +812,7 @@ async function startServer() {
       if (fs.existsSync(manifestPath)) {
         return res.json(JSON.parse(fs.readFileSync(manifestPath, "utf8")));
       }
-      res.json({ version: "1.0.0", url: "https://webcraftstudio.cloud/dist.zip" });
+      res.json({ version: "1.0.0", url: "https://aura.webcraftstudio.cloud/dist.zip" });
     } catch (e) {
       res.status(500).json({ error: "Failed to read manifest" });
     }

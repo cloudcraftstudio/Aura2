@@ -1,12 +1,12 @@
 {
   "name": "aura",
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
-    "release:ota": "npm run build && cd dist && zip -r ../public/dist.zip . -x '*.zip' && cd .. && node -e \"require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://webcraftstudio.cloud/dist.zip' }))\"",
+    "release:ota": "npm run build && cd dist && zip -r ../public/dist.zip . -x '*.zip' && cd .. && node -e \"require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.zip' }))\"",
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
@@ -19,6 +19,7 @@
     "@capacitor/cli": "^7.6.8",
     "@capacitor/core": "^8.5.0",
     "@capacitor/filesystem": "^8.1.3",
+    "@capacitor/push-notifications": "^8.1.2",
     "@capgo/capacitor-incoming-call-kit": "^8.2.7",
     "@capgo/capacitor-updater": "^8.51.15",
     "@google/genai": "^2.4.0",

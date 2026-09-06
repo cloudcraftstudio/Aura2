@@ -54,7 +54,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   const totalUnreadChats = conversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
 
   const handleBellClick = async () => {
-    if (notificationService.getPermissionStatus() === 'default') {
+    const status = await notificationService.getPermissionStatus();
+    if (status === 'prompt' || status === 'default') {
       await notificationService.requestPermission();
     }
     if (onOpenNotifications) {

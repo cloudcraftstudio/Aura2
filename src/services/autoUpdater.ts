@@ -9,7 +9,8 @@ export async function initAutoUpdater(onUpdateReady?: () => void) {
     await CapacitorUpdater.notifyAppReady();
 
     // Check your server for newer web bundles
-    const response = await fetch('https://webcraftstudio.cloud/api/app-update/version');
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://aura.webcraftstudio.cloud';
+    const response = await fetch(`${baseUrl}/api/app-update/version`);
     if (!response.ok) return;
 
     const serverData = await response.json();

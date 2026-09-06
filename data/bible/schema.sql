@@ -64,6 +64,8 @@ CREATE TABLE IF NOT EXISTS sermons_podcasts (
   duration INTEGER,
   dateRecorded DATETIME,
   courseLessonId TEXT,
+  channel TEXT,
+  seriesPart INTEGER,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );
