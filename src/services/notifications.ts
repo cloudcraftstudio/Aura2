@@ -56,13 +56,7 @@ class NotificationService {
   }
 
   public async getPermissionStatus(): Promise<NotificationPermission | string> {
-    // 1. Direct Web Notification check (Synchronous & instant)
-    if (typeof window !== 'undefined' && 'Notification' in window) {
-      if (Notification.permission === 'granted') return 'granted';
-      if (Notification.permission === 'denied') return 'denied';
-    }
-
-    // 2. Capacitor native check
+    // 1. Capacitor native check (Highest priority on mobile)
     if (Capacitor.isNativePlatform()) {
       try {
         const status = await PushNotifications.checkPermissions();
@@ -74,9 +68,13 @@ class NotificationService {
       }
     }
 
+    // 2. Direct Web Notification check (Synchronous & instant)
     if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'granted') return 'granted';
+      if (Notification.permission === 'denied') return 'denied';
       return Notification.permission;
     }
+
     return 'prompt';
   }
 

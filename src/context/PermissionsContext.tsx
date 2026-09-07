@@ -132,7 +132,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       setNotificationStatus('granted');
     } else {
       const notifStatus = await notificationService.getPermissionStatus();
-      if (notifStatus === 'granted') {
+      if (notifStatus === 'granted' || localStorage.getItem('aura_perms_notif') === 'granted') {
         setNotificationStatus('granted');
       } else if (notifStatus === 'denied') {
         setNotificationStatus('denied');
@@ -147,31 +147,41 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     if (navigator.permissions && navigator.permissions.query) {
       try {
         const notifPerm = await navigator.permissions.query({ name: 'notifications' as any }).catch(() => null);
-        if (notifPerm) {
+        if (notifPerm && localStorage.getItem('aura_perms_notif') !== 'granted') {
           if (notifPerm.state === 'granted') setNotificationStatus('granted');
           else if (notifPerm.state === 'denied') setNotificationStatus('denied');
           else setNotificationStatus('prompt');
           notifPerm.onchange = () => {
-            if (notifPerm.state === 'granted') setNotificationStatus('granted');
-            else if (notifPerm.state === 'denied') setNotificationStatus('denied');
+            if (notifPerm.state === 'granted') {
+              setNotificationStatus('granted');
+              localStorage.setItem('aura_perms_notif', 'granted');
+            } else if (notifPerm.state === 'denied') setNotificationStatus('denied');
             else setNotificationStatus('prompt');
           };
         }
 
         const camPerm = await navigator.permissions.query({ name: 'camera' as any }).catch(() => null);
-        if (camPerm) {
+        if (localStorage.getItem('aura_perms_cam') === 'granted') {
+          setCameraStatus('granted');
+        } else if (camPerm) {
           setCameraStatus(camPerm.state as PermissionState);
           camPerm.onchange = () => setCameraStatus(camPerm.state as PermissionState);
         }
 
         const micPerm = await navigator.permissions.query({ name: 'microphone' as any }).catch(() => null);
-        if (micPerm) {
+        if (localStorage.getItem('aura_perms_mic') === 'granted') {
+          setMicStatus('granted');
+        } else if (micPerm) {
           setMicStatus(micPerm.state as PermissionState);
           micPerm.onchange = () => setMicStatus(micPerm.state as PermissionState);
         }
       } catch {
         // Some browsers don't support camera/mic in permissions.query
       }
+    } else {
+      // Fallback for browsers without permissions API
+      if (localStorage.getItem('aura_perms_cam') === 'granted') setCameraStatus('granted');
+      if (localStorage.getItem('aura_perms_mic') === 'granted') setMicStatus('granted');
     }
   }, []);
 
@@ -200,9 +210,9 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     try {
       soundEffects.playTap();
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      // Stop tracks immediately after granting
       stream.getTracks().forEach((track) => track.stop());
       setCameraStatus('granted');
+      localStorage.setItem('aura_perms_cam', 'granted');
       soundEffects.playSuccessTone();
       return true;
     } catch (err: any) {
@@ -225,6 +235,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       stream.getTracks().forEach((track) => track.stop());
       setMicStatus('granted');
+      localStorage.setItem('aura_perms_mic', 'granted');
       soundEffects.playSuccessTone();
       return true;
     } catch (err: any) {
@@ -250,6 +261,8 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       stream.getTracks().forEach((track) => track.stop());
       setCameraStatus('granted');
       setMicStatus('granted');
+      localStorage.setItem('aura_perms_cam', 'granted');
+      localStorage.setItem('aura_perms_mic', 'granted');
       soundEffects.playSuccessTone();
       return { camera: true, mic: true };
     } catch (err: any) {
@@ -269,6 +282,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
     if (isGranted) {
       setNotificationStatus('granted');
+      localStorage.setItem('aura_perms_notif', 'granted');
       soundEffects.playSuccessTone();
 
       // Automatically register Web Push subscription on the server
