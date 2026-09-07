@@ -215,6 +215,13 @@ async function startServer() {
     res.status(201).json(newPost);
   });
 
+  app.patch('/api/posts/:id', (req, res) => {
+    const { content, mediaUrls, tags, location } = req.body;
+    const updatedPost = db.updatePost(req.params.id, { content, mediaUrls, tags, location });
+    if (!updatedPost) return res.status(404).json({ error: 'Post not found' });
+    res.json({ post: updatedPost });
+  });
+
   app.delete('/api/posts/:id', (req, res) => {
     const success = db.deletePost(req.params.id);
     if (!success) return res.status(404).json({ error: 'Post not found' });

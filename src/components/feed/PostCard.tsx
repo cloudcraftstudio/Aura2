@@ -38,6 +38,19 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  const isTexAdmin =
+    user?.handle?.toLowerCase() === 'tex' ||
+    user?.handle?.toLowerCase() === 'texxx360' ||
+    user?.email?.toLowerCase().includes('lightsouttattootex') ||
+    user?.email?.toLowerCase().includes('tex@aura.social');
+
+  const canEdit = user && (
+    isTexAdmin || 
+    user.id === post.authorId || 
+    post.authorId === 'user_tex' || 
+    !post.authorId
+  );
+
   const isLiked = user ? post.likedByUserIds.includes(user.id) : false;
 
   React.useEffect(() => {
@@ -159,7 +172,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </div>
           )}
 
-          {user && user.id === post.authorId && (
+          {canEdit && (
             <div className="relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}

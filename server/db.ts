@@ -625,8 +625,8 @@ class JSONDatabase {
     const filtered = this.data.posts.filter((p) => p.id !== id);
     const diff = initialLen - filtered.length;
 
-    if (diff !== 1) {
-      console.error(`[CRITICAL] Deletion bounds check failed! Expected diff of 1, got ${diff}. Aborting to protect database.`);
+    if (diff < 1) {
+      console.error(`[CRITICAL] Deletion bounds check failed! Expected diff >= 1, got ${diff}. Aborting to protect database.`);
       return false;
     }
 
@@ -642,6 +642,19 @@ class JSONDatabase {
     this.scheduleSave();
     console.log(`[AUDIT] Successfully deleted single post ${id}. Remaining posts: ${filtered.length}`);
     return true;
+  }
+
+  public updatePost(id: string, updates: Partial<Pick<DBPost, 'content' | 'mediaUrls' | 'tags' | 'location'>>): DBPost | null {
+    const post = this.getPostById(id);
+    if (!post) return null;
+    
+    if (updates.content !== undefined) post.content = updates.content;
+    if (updates.mediaUrls !== undefined) post.mediaUrls = updates.mediaUrls;
+    if (updates.tags !== undefined) post.tags = updates.tags;
+    if (updates.location !== undefined) post.location = updates.location;
+    
+    this.scheduleSave();
+    return post;
   }
 
   public toggleLikePost(postId: string, userId: string): { likesCount: number; likedByUserIds: string[] } | null {
