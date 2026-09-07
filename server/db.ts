@@ -560,6 +560,55 @@ class JSONDatabase {
     return newPost;
   }
 
+  public syncClientPosts(clientPosts: any[]): { added: number; total: number; addedPosts: DBPost[] } {
+    if (!Array.isArray(clientPosts)) return { added: 0, total: this.data.posts.length, addedPosts: [] };
+    let added = 0;
+    const addedPosts: DBPost[] = [];
+    const existingIds = new Set(this.data.posts.map((p) => p.id));
+    const existingContents = new Set(this.data.posts.map((p) => (p.content || '').trim().toLowerCase()));
+
+    for (const cp of clientPosts) {
+      if (!cp) continue;
+      const content = (cp.content || '').trim();
+      const mediaUrls = Array.isArray(cp.mediaUrls) ? cp.mediaUrls : [];
+      if (!content && mediaUrls.length === 0) continue;
+
+      // Skip exact duplicates
+      if (cp.id && existingIds.has(cp.id)) continue;
+      if (content && existingContents.has(content.toLowerCase())) continue;
+
+      const newPost: DBPost = {
+        id: cp.id || `post_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+        authorId: cp.authorId || 'user_tex',
+        authorName: cp.authorName || 'Tex',
+        authorHandle: cp.authorHandle || 'texxx360',
+        authorAvatar: cp.authorAvatar || 'https://api.dicebear.com/7.x/bottts/svg?seed=lightsouttattootex@gmail.com',
+        content: content,
+        mediaUrls: mediaUrls,
+        tags: Array.isArray(cp.tags) ? cp.tags : [],
+        location: cp.location || '',
+        likesCount: typeof cp.likesCount === 'number' ? cp.likesCount : 0,
+        likedByUserIds: Array.isArray(cp.likedByUserIds) ? cp.likedByUserIds : [],
+        commentsCount: Array.isArray(cp.comments) ? cp.comments.length : (cp.commentsCount || 0),
+        comments: Array.isArray(cp.comments) ? cp.comments : [],
+        sharesCount: typeof cp.sharesCount === 'number' ? cp.sharesCount : 0,
+        savedByUserIds: Array.isArray(cp.savedByUserIds) ? cp.savedByUserIds : [],
+        createdAt: typeof cp.createdAt === 'number' ? cp.createdAt : (Date.parse(cp.createdAt || cp.timestamp) || Date.now()),
+      };
+
+      this.data.posts.unshift(newPost);
+      existingIds.add(newPost.id);
+      if (content) existingContents.add(content.toLowerCase());
+      addedPosts.push(newPost);
+      added++;
+    }
+
+    if (added > 0) {
+      this.scheduleSave();
+    }
+    return { added, total: this.data.posts.length, addedPosts };
+  }
+
   public deletePost(id: string): boolean {
     if (!id || typeof id !== "string" || id.trim() === "" || id === "undefined" || id === "null") {
       console.warn("[SECURITY] Aborted invalid post deletion with empty/malformed ID:", id);

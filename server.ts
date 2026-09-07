@@ -247,6 +247,26 @@ async function startServer() {
     res.json(result);
   });
 
+  // Client Offline Cache Restore Endpoint
+  app.post('/api/sync/restore-client-cache', (req, res) => {
+    try {
+      const { posts } = req.body;
+      console.log(`[SYNC RECOVERY] Received ${Array.isArray(posts) ? posts.length : 0} candidate posts from client device.`);
+      const result = db.syncClientPosts(posts || []);
+      console.log(`[SYNC RECOVERY] Result: ${result.added} added, total now: ${result.total}`);
+      res.json({
+        success: true,
+        added: result.added,
+        total: result.total,
+        posts: result.addedPosts,
+        message: `Successfully recovered and saved ${result.added} post(s) into server database.`,
+      });
+    } catch (err: any) {
+      console.error('[SYNC RECOVERY ERROR]', err);
+      res.status(500).json({ error: err.message || 'Failed to sync client cache' });
+    }
+  });
+
   // --- Stories API ---
   app.get('/api/stories', (req, res) => {
     const stories = db.getStories();

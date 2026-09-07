@@ -256,6 +256,11 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     } else {
       const notifStatus = await notificationService.getPermissionStatus();
       setNotificationStatus(notifStatus === 'denied' ? 'denied' : 'prompt');
+      
+      if (notifStatus === 'denied' && typeof window !== 'undefined') {
+        alert("Your browser has permanently blocked notifications for this site.\n\nPlease tap the lock 🔒 icon or the settings icon in your browser's address bar, and change Notifications to 'Allow'.");
+      }
+      
       return false;
     }
   };

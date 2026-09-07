@@ -16,3 +16,7 @@ data/*.json
 public/uploads/*
 !public/uploads/.gitkeep
 
+
+# Exclude databases from git
+data/
+

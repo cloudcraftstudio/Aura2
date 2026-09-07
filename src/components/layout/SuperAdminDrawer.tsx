@@ -18,13 +18,16 @@ import {
   Cpu,
   GraduationCap,
   RefreshCw,
-  Zap
+  Zap,
+  Database,
+  UploadCloud
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Avatar } from '../common/Avatar';
 import { soundEffects } from '../../services/audio';
 import { usePermissions } from '../../context/PermissionsContext';
 import { useAuraEnergy } from '../../context/AuraEnergyContext';
+import { recoverDeviceCachedPosts } from '../../services/cacheRecovery';
 
 interface SuperAdminDrawerProps {
   isOpen: boolean;
@@ -324,6 +327,35 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
             >
               <Sliders className="w-4 h-4 text-cyan-400" />
               <span>Audio/Video & Notifications Setup</span>
+            </button>
+
+            {/* Sync Phone Cached Posts */}
+            <button
+              id="super-menu-sync-posts"
+              onClick={async () => {
+                soundEffects.play('pop');
+                try {
+                  const res = await recoverDeviceCachedPosts();
+                  if (res.addedToServer > 0) {
+                    alert(`🎉 Successfully recovered ${res.addedToServer} post(s) from this device to the server database!`);
+                    soundEffects.play('success');
+                    window.dispatchEvent(new CustomEvent('refresh_feed'));
+                  } else if (res.foundCandidates > 0) {
+                    alert(`Found ${res.foundCandidates} items in device storage, all are already up-to-date on the server.`);
+                  } else {
+                    alert(`No offline posts or reflections found in this device's storage. If you took church notes in another browser/app, open Aura there and tap this button!`);
+                  }
+                } catch (e: any) {
+                  alert(`Sync error: ${e.message || 'Failed'}`);
+                }
+              }}
+              className="w-full flex items-center justify-between p-2.5 rounded-xl text-teal-300 hover:text-white hover:bg-teal-600/20 border border-teal-500/20 transition-all text-xs font-semibold"
+            >
+              <div className="flex items-center gap-2.5">
+                <Database className="w-4 h-4 text-teal-400" />
+                <span>Sync Phone Cached Posts</span>
+              </div>
+              <UploadCloud className="w-3.5 h-3.5 text-teal-400" />
             </button>
 
             <button

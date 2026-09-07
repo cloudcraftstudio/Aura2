@@ -17,9 +17,12 @@ import {
   ExternalLink,
   ChevronRight,
   PhoneCall,
+  Database,
+  UploadCloud,
 } from 'lucide-react';
 import { usePermissions } from '../../context/PermissionsContext';
 import { soundEffects } from '../../services/audio';
+import { recoverDeviceCachedPosts } from '../../services/cacheRecovery';
 
 export const PermissionsModal: React.FC = () => {
   const {
@@ -56,6 +59,8 @@ export const PermissionsModal: React.FC = () => {
   const [micVolumeLevel, setMicVolumeLevel] = useState<number>(0);
   const [activeCameraStream, setActiveCameraStream] = useState<MediaStream | null>(null);
   const [activeMicStream, setActiveMicStream] = useState<MediaStream | null>(null);
+  const [isRecovering, setIsRecovering] = useState(false);
+  const [recoveryResult, setRecoveryResult] = useState<string | null>(null);
 
   const videoTestRef = useRef<HTMLVideoElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -385,9 +390,13 @@ export const PermissionsModal: React.FC = () => {
                     <CheckCircle2 className="w-3.5 h-3.5" /> Allowed
                   </span>
                 ) : notificationStatus === 'denied' ? (
-                  <span className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/30">
-                    Blocked
-                  </span>
+                  <button
+                    type="button"
+                    onClick={requestNotificationPermission}
+                    className="flex items-center gap-1 text-[11px] font-bold text-red-400 bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/30 hover:bg-red-500/30 transition-colors"
+                  >
+                    Blocked (Tap to Retry)
+                  </button>
                 ) : notificationStatus === 'unsupported' ? (
                   <span className="flex items-center gap-1 text-[11px] font-bold text-slate-400 bg-slate-500/20 px-2.5 py-1 rounded-full border border-slate-500/30">
                     N/A
@@ -457,6 +466,62 @@ export const PermissionsModal: React.FC = () => {
           </div>
 
           
+          {/* Recover Phone Cache Posts & Notes */}
+          <div className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 space-y-2">
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5">
+                  <Database className="w-3.5 h-3.5 text-emerald-400" />
+                  <h4 className="text-xs font-bold text-white">Recover Phone Cached Posts</h4>
+                </div>
+                <p className="text-[10px] text-slate-400">Scan phone storage for offline posts, church notes, & prayers and push them to the server</p>
+              </div>
+              <button
+                type="button"
+                disabled={isRecovering}
+                onClick={async () => {
+                  setIsRecovering(true);
+                  setRecoveryResult(null);
+                  try {
+                    soundEffects.play('pop');
+                    const res = await recoverDeviceCachedPosts();
+                    if (res.addedToServer > 0) {
+                      setRecoveryResult(`🎉 Recovered ${res.addedToServer} post(s) directly to server! Total: ${res.totalServerPosts}`);
+                      soundEffects.play('success');
+                      window.dispatchEvent(new CustomEvent('refresh_feed'));
+                    } else if (res.foundCandidates > 0) {
+                      setRecoveryResult(`Found ${res.foundCandidates} items, all already synced to server.`);
+                    } else {
+                      setRecoveryResult(`No offline posts found in this browser storage.`);
+                    }
+                  } catch (e: any) {
+                    setRecoveryResult(`Recovery error: ${e.message || 'Failed'}`);
+                  } finally {
+                    setIsRecovering(false);
+                  }
+                }}
+                className="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 flex-shrink-0 active:scale-95 disabled:opacity-50"
+              >
+                {isRecovering ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Scanning...</span>
+                  </>
+                ) : (
+                  <>
+                    <UploadCloud className="w-3.5 h-3.5" />
+                    <span>Sync Posts</span>
+                  </>
+                )}
+              </button>
+            </div>
+            {recoveryResult && (
+              <p className="text-[11px] font-medium text-emerald-300 bg-emerald-950/60 p-2 rounded-lg border border-emerald-500/20">
+                {recoveryResult}
+              </p>
+            )}
+          </div>
+
           {/* PWA Cache Refresh & Reload Tool */}
           <div className="p-3.5 rounded-xl bg-slate-900/80 border border-white/10 flex items-center justify-between gap-3">
             <div className="min-w-0">
@@ -494,7 +559,7 @@ export const PermissionsModal: React.FC = () => {
               <span>Permission Troubleshooting:</span>
             </p>
             <p className="text-[11px] text-blue-300/80">
-              If your browser previously blocked Camera or Mic, tap the <strong className="text-white">lock 🔒</strong> icon in your browser URL address bar and choose <strong className="text-white">&ldquo;Allow&rdquo;</strong> for Camera and Microphone.
+              If your browser previously blocked Camera, Mic, or Notifications, tap the <strong className="text-white">lock 🔒</strong> icon in your browser URL address bar and choose <strong className="text-white">&ldquo;Allow&rdquo;</strong>.
             </p>
           </div>
         </div>
