@@ -12,9 +12,11 @@ coverage/
 *.bak*
 
 # Database & Uploads (root directory only)
-/data/
-!/src/data/
-!/src/data/**
+/data/*.db
+/data/*.json
+/data/*.sqlite*
 public/uploads/*
 !public/uploads/.gitkeep
+!/src/content/**
+!/server/bible/**
 

@@ -3,13 +3,13 @@
  */
 
 import { Router, Request, Response } from 'express';
-import { BibleStudyDB } from '../data/bible/models';
+import { BibleStudyDB } from '../server/bible/models';
 import { KingJamesService } from '../services/kingJamesService';
-import KJVLoader from '../data/bible/kjv_loader';
+import KJVLoader from '../server/bible/kjv_loader';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { SERMONAUDIO_FEED, SERMONAUDIO_SPEAKERS } from '../src/data/sermonaudioData';
+import { SERMONAUDIO_FEED, SERMONAUDIO_SPEAKERS } from '../src/content/sermonaudioData';
 import { sermonIndexService, SERMONINDEX_SPEAKERS_CATALOG, SERMONINDEX_TOPICS_CATALOG } from '../services/sermonIndexService';
 import { synthesizeBibleAudio } from '../server/audioService';
 import { syncYoutubeSermons } from '../services/youtubeSyncService';

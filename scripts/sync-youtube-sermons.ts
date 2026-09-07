@@ -1,5 +1,5 @@
 import path from 'path';
-import { BibleStudyDB } from '../data/bible/models';
+import { BibleStudyDB } from '../server/bible/models';
 import { syncYoutubeSermons } from '../services/youtubeSyncService';
 
 async function main() {

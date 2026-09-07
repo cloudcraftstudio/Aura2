@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { BibleStudyDB } from '../data/bible/models';
+import { BibleStudyDB } from '../server/bible/models';
 
 // Default directory paths where YouTube series videos are stored
 export const UPLOAD_YOUTUBE_DIRS = [

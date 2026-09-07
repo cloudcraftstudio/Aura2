@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { recoveryService } from '../server/recoveryService';
-import { CORE_BIBLICAL_RECOVERY_PRINCIPLES } from '../src/data/recoveryPrinciples';
-import { RECOVERY_TEACHINGS_DATA } from '../src/data/recoveryTeachings';
+import { CORE_BIBLICAL_RECOVERY_PRINCIPLES } from '../src/content/recoveryPrinciples';
+import { RECOVERY_TEACHINGS_DATA } from '../src/content/recoveryTeachings';
 
 export function createRecoveryRoutes(): Router {
   const router = Router();

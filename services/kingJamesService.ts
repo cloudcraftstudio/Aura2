@@ -2,8 +2,8 @@
  * King James AI Study Engine & Interactive Biblical Scholar Service
  */
 
-import { BibleStudyDB } from '../data/bible/models';
-import KJVLoader from '../data/bible/kjv_loader';
+import { BibleStudyDB } from '../server/bible/models';
+import KJVLoader from '../server/bible/kjv_loader';
 import { GoogleGenAI } from '@google/genai';
 
 const kjvLoader = new KJVLoader();
