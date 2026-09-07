@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Bell,
@@ -43,9 +43,19 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
   } = useNotifications();
 
   const { setActiveConversationId, conversations } = useChat();
-  const { notificationStatus, requestNotificationPermission, sendTestNotification } = usePermissions();
+  const { notificationStatus, requestNotificationPermission, sendTestNotification, checkAllPermissions } = usePermissions();
 
   const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'interactions' | 'chats'>('all');
+
+  useEffect(() => {
+    if (isOpen) {
+      checkAllPermissions();
+    }
+  }, [isOpen, checkAllPermissions]);
+
+  const isActuallyGranted =
+    notificationStatus === 'granted' ||
+    (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
 
   const filteredNotifications = useMemo(() => {
     return notifications.filter((notif) => {
@@ -255,7 +265,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
         {/* Notifications Scroll List */}
         <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 min-h-0">
           {/* Notification Permission Status Banner if not granted */}
-          {notificationStatus !== 'granted' && (
+          {!isActuallyGranted && (
             <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between gap-2.5 mb-2">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-7 h-7 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center flex-shrink-0">
@@ -268,7 +278,10 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
               </div>
               <button
                 type="button"
-                onClick={requestNotificationPermission}
+                onClick={async () => {
+                  await requestNotificationPermission();
+                  await checkAllPermissions();
+                }}
                 className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md flex-shrink-0 transition-all active:scale-95"
               >
                 Allow Alerts
@@ -276,7 +289,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
             </div>
           )}
 
-          {notificationStatus === 'granted' && (
+          {isActuallyGranted && (
             <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-between text-[11px] mb-2">
               <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />

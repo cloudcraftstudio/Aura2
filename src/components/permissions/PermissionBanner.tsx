@@ -29,7 +29,9 @@ export const PermissionBanner: React.FC = () => {
   } = usePermissions();
 
   const isMediaGranted = cameraStatus === 'granted' && micStatus === 'granted';
-  const isNotifGranted = notificationStatus === 'granted';
+  const isNotifGranted =
+    notificationStatus === 'granted' ||
+    (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
   const isPwaInstalled = isStandalone || pwaStatus === 'installed';
 
   const allComplete = isMediaGranted && isNotifGranted && isPwaInstalled;

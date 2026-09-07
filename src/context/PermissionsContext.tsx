@@ -127,21 +127,37 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const checkAllPermissions = useCallback(async () => {
     if (typeof window === 'undefined') return;
 
-    // Notification status check
-    const notifStatus = await notificationService.getPermissionStatus();
-    if (notifStatus === 'granted') {
+    // Direct synchronous check for Notification.permission
+    if ('Notification' in window && window.Notification.permission === 'granted') {
       setNotificationStatus('granted');
-    } else if (notifStatus === 'denied') {
-      setNotificationStatus('denied');
-    } else if (notifStatus === 'prompt' || notifStatus === 'default' || notifStatus === 'prompt-with-rationale') {
-      setNotificationStatus('prompt');
     } else {
-      setNotificationStatus('unsupported');
+      const notifStatus = await notificationService.getPermissionStatus();
+      if (notifStatus === 'granted') {
+        setNotificationStatus('granted');
+      } else if (notifStatus === 'denied') {
+        setNotificationStatus('denied');
+      } else if (notifStatus === 'prompt' || notifStatus === 'default' || notifStatus === 'prompt-with-rationale') {
+        setNotificationStatus('prompt');
+      } else {
+        setNotificationStatus('unsupported');
+      }
     }
 
     // Modern permissions API query if available
     if (navigator.permissions && navigator.permissions.query) {
       try {
+        const notifPerm = await navigator.permissions.query({ name: 'notifications' as any }).catch(() => null);
+        if (notifPerm) {
+          if (notifPerm.state === 'granted') setNotificationStatus('granted');
+          else if (notifPerm.state === 'denied') setNotificationStatus('denied');
+          else setNotificationStatus('prompt');
+          notifPerm.onchange = () => {
+            if (notifPerm.state === 'granted') setNotificationStatus('granted');
+            else if (notifPerm.state === 'denied') setNotificationStatus('denied');
+            else setNotificationStatus('prompt');
+          };
+        }
+
         const camPerm = await navigator.permissions.query({ name: 'camera' as any }).catch(() => null);
         if (camPerm) {
           setCameraStatus(camPerm.state as PermissionState);
@@ -161,6 +177,18 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   useEffect(() => {
     checkAllPermissions();
+
+    const handleFocusOrVisible = () => {
+      checkAllPermissions();
+    };
+
+    window.addEventListener('focus', handleFocusOrVisible);
+    document.addEventListener('visibilitychange', handleFocusOrVisible);
+
+    return () => {
+      window.removeEventListener('focus', handleFocusOrVisible);
+      document.removeEventListener('visibilitychange', handleFocusOrVisible);
+    };
   }, [checkAllPermissions]);
 
   // Request Camera
@@ -236,7 +264,10 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const requestNotificationPermission = async (): Promise<boolean> => {
     soundEffects.playTap();
     const granted = await notificationService.requestPermission();
-    if (granted) {
+    const currentStatus = await notificationService.getPermissionStatus();
+    const isGranted = granted || currentStatus === 'granted' || (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
+
+    if (isGranted) {
       setNotificationStatus('granted');
       soundEffects.playSuccessTone();
 
@@ -254,11 +285,11 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       });
       return true;
     } else {
-      const notifStatus = await notificationService.getPermissionStatus();
+      const notifStatus = currentStatus;
       setNotificationStatus(notifStatus === 'denied' ? 'denied' : 'prompt');
       
       if (notifStatus === 'denied' && typeof window !== 'undefined') {
-        alert("Your browser has permanently blocked notifications for this site.\n\nPlease tap the lock 🔒 icon or the settings icon in your browser's address bar, and change Notifications to 'Allow'.");
+        alert("Your browser or device has blocked notifications for this site.\n\nPlease tap the lock 🔒 icon or site settings icon in your browser's address bar, and change Notifications to 'Allow'.");
       }
       
       return false;

@@ -14,6 +14,7 @@ class NotificationService {
   }
 
   public async requestPermission(): Promise<boolean> {
+    // 1. Native Capacitor push notifications
     if (Capacitor.isNativePlatform()) {
       try {
         let permStatus = await PushNotifications.checkPermissions();
@@ -22,21 +23,25 @@ class NotificationService {
           permStatus = await PushNotifications.requestPermissions();
         }
 
-        if (permStatus.receive !== 'granted') {
-          this.permission = 'denied';
-          return false;
+        if (permStatus.receive === 'granted') {
+          try {
+            await PushNotifications.register();
+          } catch (regErr) {
+            console.warn('PushNotifications register warning:', regErr);
+          }
+          this.permission = 'granted';
+          return true;
         }
-
-        await PushNotifications.register();
-        this.permission = 'granted';
-        return true;
       } catch (e) {
         console.warn('Capacitor Push Notifications request error:', e);
-        return false;
       }
-    } else {
-      if (typeof window === 'undefined' || !('Notification' in window)) {
-        return false;
+    }
+
+    // 2. Standard Web Notification API
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'granted') {
+        this.permission = 'granted';
+        return true;
       }
       try {
         const result = await Notification.requestPermission();
@@ -44,24 +49,35 @@ class NotificationService {
         return result === 'granted';
       } catch (e) {
         console.warn('Push notification permission error:', e);
-        return false;
       }
     }
+
+    return false;
   }
 
   public async getPermissionStatus(): Promise<NotificationPermission | string> {
+    // 1. Direct Web Notification check (Synchronous & instant)
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      if (Notification.permission === 'granted') return 'granted';
+      if (Notification.permission === 'denied') return 'denied';
+    }
+
+    // 2. Capacitor native check
     if (Capacitor.isNativePlatform()) {
       try {
         const status = await PushNotifications.checkPermissions();
+        if (status.receive === 'granted') return 'granted';
+        if (status.receive === 'denied') return 'denied';
         return status.receive;
       } catch (e) {
-        return 'denied';
+        // Continue fallback
       }
     }
+
     if (typeof window !== 'undefined' && 'Notification' in window) {
       return Notification.permission;
     }
-    return 'denied';
+    return 'prompt';
   }
 
   public subscribe(cb: (notification: AppNotification) => void) {

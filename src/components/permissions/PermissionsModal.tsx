@@ -166,7 +166,9 @@ export const PermissionsModal: React.FC = () => {
   if (!isPermissionsModalOpen) return null;
 
   const isMediaComplete = cameraStatus === 'granted' && micStatus === 'granted';
-  const isNotifComplete = notificationStatus === 'granted';
+  const isNotifComplete =
+    notificationStatus === 'granted' ||
+    (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
   const isPwaComplete = isStandalone || pwaStatus === 'installed';
 
   return (
@@ -385,7 +387,7 @@ export const PermissionsModal: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                {notificationStatus === 'granted' ? (
+                {isNotifComplete ? (
                   <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/20 px-2.5 py-1 rounded-full border border-emerald-500/30">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Allowed
                   </span>

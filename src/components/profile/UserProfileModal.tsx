@@ -75,6 +75,10 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     sendTestCallNotification,
   } = usePermissions();
 
+  const isNotifGranted =
+    notificationStatus === 'granted' ||
+    (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
+
   const [activeTab, setActiveTab] = useState<'profile' | 'gospel' | 'permissions' | 'journey'>('profile');
   const [name, setName] = useState(user?.name || '');
   const [bio, setBio] = useState(user?.bio || '');
@@ -436,8 +440,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1.5">
                   <Bell className="w-5 h-5 text-amber-400" />
                   <span className="text-[10px] text-slate-300 font-medium">Notifications</span>
-                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${notificationStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
-                    {notificationStatus === 'granted' ? 'Allowed' : 'Prompt'}
+                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${isNotifGranted ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
+                    {isNotifGranted ? 'Allowed' : 'Prompt'}
                   </span>
                 </div>
 
@@ -980,8 +984,8 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <div className="p-2 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1">
                     <Bell className="w-4 h-4 text-amber-400" />
                     <span className="text-[10px] text-slate-300 font-medium">Alerts</span>
-                    <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${notificationStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
-                      {notificationStatus === 'granted' ? 'Allowed' : 'Prompt'}
+                    <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${isNotifGranted ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
+                      {isNotifGranted ? 'Allowed' : 'Prompt'}
                     </span>
                   </div>
 
