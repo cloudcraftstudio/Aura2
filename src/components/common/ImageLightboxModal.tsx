@@ -200,7 +200,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
               e.stopPropagation();
               setIsZoomed(!isZoomed);
             }}
-            className="relative flex-1 w-full flex items-center justify-center overflow-auto my-2 cursor-zoom-in"
+            className="relative flex-1 min-h-0 w-full flex items-center justify-center overflow-auto my-2 cursor-zoom-in"
           >
             {/* Previous Button */}
             {images.length > 1 && (
@@ -224,7 +224,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
                 scale: isZoomed ? 1.5 : 1,
               }}
               transition={{ duration: 0.2 }}
-              className={`max-w-full max-h-[75vh] md:max-h-[85vh] w-auto h-auto object-contain rounded-lg shadow-2xl transition-transform ${
+              className={`max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-2xl transition-transform ${
                 isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
               }`}
             />

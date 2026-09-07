@@ -195,7 +195,7 @@ const FALLBACK_SERMONS: SermonItem[] = [
     scriptureRef: 'Ephesians 6:10-18',
     description: 'Pastor Tony Evans breaks down how God equips believers to stand firm against darkness through faith, prayer, and the armor of God.',
     mediaType: 'video',
-    mediaUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    mediaUrl: 'https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4',
     duration: 1845
   },
   {
@@ -208,7 +208,7 @@ const FALLBACK_SERMONS: SermonItem[] = [
     scriptureRef: 'Hebrews 12:28-29',
     description: 'Discover the enduring peace of receiving a kingdom that cannot be shaken, offering our God acceptable worship with reverence and awe.',
     mediaType: 'audio',
-    mediaUrl: 'https://actions.google.com/sounds/v1/ambiences/outdoor_evening.ogg',
+    mediaUrl: 'https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/bensound-goinghigher.mp3',
     duration: 1420
   }
 ];
