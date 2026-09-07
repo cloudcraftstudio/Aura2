@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, SunMedium, Calendar, Quote, Share2, Copy, Check } from 'lucide-react';
-import { getDailyQuote, getFormattedToday, MotivationalQuote } from '../../data/quotes';
+import { getDailyQuote, getFormattedToday, MotivationalQuote } from '../../content/quotes';
 import { notificationService } from '../../services/notifications';
 import { soundEffects } from '../../services/audio';
 

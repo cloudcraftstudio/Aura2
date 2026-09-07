@@ -14,7 +14,7 @@ import {
   FastForward,
   Headphones
 } from 'lucide-react';
-import { RECOVERY_TEACHINGS_DATA } from '../../data/recoveryTeachings';
+import { RECOVERY_TEACHINGS_DATA } from '../../content/recoveryTeachings';
 import { RecoveryTeaching } from '../../types/recovery';
 import { soundEffects } from '../../services/audio';
 import { extractYouTubeInfo } from '../../utils/mediaUtils';

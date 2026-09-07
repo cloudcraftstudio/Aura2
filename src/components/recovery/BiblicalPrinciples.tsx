@@ -11,7 +11,7 @@ import {
   Save,
   Check
 } from 'lucide-react';
-import { CORE_BIBLICAL_RECOVERY_PRINCIPLES } from '../../data/recoveryPrinciples';
+import { CORE_BIBLICAL_RECOVERY_PRINCIPLES } from '../../content/recoveryPrinciples';
 import { RecoveryPrinciple, UserPrincipleProgress } from '../../types/recovery';
 import { useAuth } from '../../context/AuthContext';
 import { soundEffects } from '../../services/audio';

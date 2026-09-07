@@ -15,7 +15,7 @@ import { Avatar } from '../common/Avatar';
 import { StoryViewerModal } from './StoryViewerModal';
 import { UnsplashSearch } from '../common/UnsplashSearch';
 import { soundEffects } from '../../services/audio';
-import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../data/presetImages';
+import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../content/presetImages';
 import { useAsyncMedia } from '../../utils/useAsyncMedia';
 
 const PRESET_STORY_IMAGES = ALL_CHRISTIAN_PRESET_IMAGES;

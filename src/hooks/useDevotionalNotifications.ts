@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getCurrentDevotional, DailyDevotional } from '../data/devotionals';
+import { getCurrentDevotional, DailyDevotional } from '../content/devotionals';
 import { notificationService } from '../services/notifications';
 
 export const useDevotionalNotifications = () => {

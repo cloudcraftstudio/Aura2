@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sun, SunDim, Moon, Heart, ChevronRight, BookOpen, CheckCircle2 } from 'lucide-react';
-import { getCurrentDevotional, DailyDevotional } from '../../data/devotionals';
+import { getCurrentDevotional, DailyDevotional } from '../../content/devotionals';
 
 export const DailyDevotionalTab = () => {
   const [devotional, setDevotional] = useState<DailyDevotional | null>(null);

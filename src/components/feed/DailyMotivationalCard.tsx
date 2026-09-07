@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Quote, Sparkles, Share2, Copy, Check, Calendar, SunMedium } from 'lucide-react';
-import { getDailyQuote, getFormattedToday, MotivationalQuote } from '../../data/quotes';
+import { getDailyQuote, getFormattedToday, MotivationalQuote } from '../../content/quotes';
 import { notificationService } from '../../services/notifications';
 import { soundEffects } from '../../services/audio';
 

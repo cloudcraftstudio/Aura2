@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, Sparkles, Image as ImageIcon, Loader2, Check, RefreshCw } from 'lucide-react';
-import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../data/presetImages';
+import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../content/presetImages';
 
 export interface UniversalUnsplashModalProps {
   isOpen: boolean;

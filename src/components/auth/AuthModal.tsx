@@ -15,7 +15,7 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { getDailyQuote } from '../../data/quotes';
+import { getDailyQuote } from '../../content/quotes';
 import { compressImage } from '../../utils/imageCompressor';
 import { soundEffects } from '../../services/audio';
 

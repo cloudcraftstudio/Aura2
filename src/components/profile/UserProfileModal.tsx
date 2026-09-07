@@ -32,7 +32,7 @@ import { UserStatus } from '../../types';
 import { Avatar } from '../common/Avatar';
 import { soundEffects } from '../../services/audio';
 import { compressImage } from '../../utils/imageCompressor';
-import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../data/presetImages';
+import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../content/presetImages';
 import { GospelTract } from './GospelTract';
 import { UnsplashSearch } from '../common/UnsplashSearch';
 import { UniversalUnsplashModal } from '../common/UniversalUnsplashModal';

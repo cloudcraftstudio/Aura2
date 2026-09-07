@@ -31,7 +31,7 @@ import { useCall } from '../../context/CallContext';
 import { useSocial } from '../../context/SocialContext';
 import { Avatar } from '../common/Avatar';
 import { formatDistanceToNow } from 'date-fns';
-import { DEFAULT_PRESET_COVER } from '../../data/presetImages';
+import { DEFAULT_PRESET_COVER } from '../../content/presetImages';
 
 interface MemberProfileModalProps {
   userId: string;

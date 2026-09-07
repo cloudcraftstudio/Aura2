@@ -37,7 +37,7 @@ import { extractVideosFromText, isDirectVideoUrl } from '../../utils/mediaUtils'
 import { VideoEmbed } from '../common/VideoEmbed';
 import { RichTextRenderer } from '../common/RichTextRenderer';
 import { notificationService } from '../../services/notifications';
-import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../data/presetImages';
+import { ALL_CHRISTIAN_PRESET_IMAGES } from '../../content/presetImages';
 import { UnsplashSearch } from '../common/UnsplashSearch';
 import { UniversalUnsplashModal } from '../common/UniversalUnsplashModal';
 

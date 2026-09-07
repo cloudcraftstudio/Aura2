@@ -19,7 +19,7 @@ import { BibleReader } from "./BibleReader";
 import { PodcastFeed } from "./PodcastFeed";
 import { ScriptureLinker } from "./ScriptureLinker";
 import { PrayerWall } from "./PrayerWall";
-import { getBooksByTestament } from "../../data/bibleBooks";
+import { getBooksByTestament } from "../../content/bibleBooks";
 
 interface Course {
   id: string;

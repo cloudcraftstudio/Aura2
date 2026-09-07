@@ -26,7 +26,7 @@ import {
   X,
   Loader2
 } from 'lucide-react';
-import { BIBLE_BOOKS, getBooksByTestament, getBookMetadata } from '../../data/bibleBooks';
+import { BIBLE_BOOKS, getBooksByTestament, getBookMetadata } from '../../content/bibleBooks';
 import {
   createPlayableAudioBlob,
   base64ToUint8Array,
