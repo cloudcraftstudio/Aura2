@@ -68,7 +68,7 @@ export const UnsplashSearch: React.FC<UnsplashSearchProps> = ({
       }
 
       // 2. Direct client-side key fallback
-      const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+      const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || '6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0';
       if (accessKey) {
         const endpoint = searchTerm.trim() 
           ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchTerm)}&per_page=24&orientation=landscape`

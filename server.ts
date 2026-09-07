@@ -612,13 +612,13 @@ async function startServer() {
 
   // --- Unsplash Image Proxy ---
   app.get('/api/unsplash/search', async (req, res) => {
-    try {
-      const query = (req.query.query as string) || '';
-      const accessKey = process.env.UNSPLASH_ACCESS_KEY || process.env.VITE_UNSPLASH_ACCESS_KEY;
-      if (!accessKey) {
-        return res.status(200).json({ results: [], noKey: true });
-      }
+    const query = (req.query.query as string) || '';
+    const accessKey =
+      process.env.UNSPLASH_ACCESS_KEY ||
+      process.env.VITE_UNSPLASH_ACCESS_KEY ||
+      '6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0';
 
+    try {
       const endpoint = query.trim()
         ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=24&orientation=landscape`
         : `https://api.unsplash.com/photos/random?count=24&orientation=landscape`;
@@ -629,26 +629,35 @@ async function startServer() {
         },
       });
 
-      if (!response.ok) {
-        return res.status(response.status).json({ error: 'Unsplash upstream error' });
-      }
-
-      const data = await response.json();
-      const photos = query.trim() ? data.results : data;
-      const results = Array.isArray(photos)
-        ? photos.map((p: any) => ({
+      if (response.ok) {
+        const data = await response.json();
+        const photos = query.trim() ? data.results : data;
+        if (Array.isArray(photos) && photos.length > 0) {
+          const results = photos.map((p: any) => ({
             id: p.id,
-            url: p.urls.regular,
-            thumb: p.urls.small,
+            url: p.urls?.regular || p.urls?.full || p.urls?.small,
+            thumb: p.urls?.small || p.urls?.thumb,
             author: p.user?.name || 'Unsplash Creator',
-          }))
-        : [];
-
-      return res.json({ results });
+          }));
+          return res.json({ results });
+        }
+      }
     } catch (err: any) {
-      console.error('Unsplash proxy error:', err);
-      return res.status(500).json({ error: 'Failed to fetch from Unsplash' });
+      console.warn('Unsplash upstream fetch error, using curated presets:', err.message);
     }
+
+    // Graceful fallback if Unsplash rate-limited or offline
+    const CURATED_FALLBACK = [
+      { id: 'curated_1', url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&auto=format&fit=crop&q=80', author: 'Benjamin Davies' },
+      { id: 'curated_2', url: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&auto=format&fit=crop&q=80', author: 'Aaron Burden' },
+      { id: 'curated_3', url: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?w=400&auto=format&fit=crop&q=80', author: 'Patrick Fore' },
+      { id: 'curated_4', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=80', author: 'Sean Oulashin' },
+      { id: 'curated_5', url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&auto=format&fit=crop&q=80', author: 'Eberhard Grossgasteiger' },
+      { id: 'curated_6', url: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=400&auto=format&fit=crop&q=80', author: 'Ben White' },
+      { id: 'curated_7', url: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&auto=format&fit=crop&q=80', author: 'Mohamed Nohassi' },
+      { id: 'curated_8', url: 'https://images.unsplash.com/photo-1445445290350-18a3b86e0b5b?w=1200&auto=format&fit=crop&q=80', thumb: 'https://images.unsplash.com/photo-1445445290350-18a3b86e0b5b?w=400&auto=format&fit=crop&q=80', author: 'Priscilla Du Preez' },
+    ];
+    return res.json({ results: CURATED_FALLBACK, fallback: true });
   });
 
   // --- AI TUTOR (KING JAMES) API ---

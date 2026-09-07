@@ -108,25 +108,53 @@ class NotificationService {
       }
     });
 
-    // Native browser push notification if permitted and window not focused
+    // Native browser push notification if permitted
     if (
       typeof window !== 'undefined' &&
       'Notification' in window &&
       Notification.permission === 'granted'
     ) {
-      try {
-        const nativeNotif = new Notification(options.title, {
-          body: options.body,
-          icon: options.avatar || '/icon.png',
-          tag: options.type + '_' + (options.actionId || 'general'),
-        });
-        nativeNotif.onclick = () => {
-          window.focus();
-          nativeNotif.close();
-        };
-      } catch (e) {
-        // In iframe context or secure worker fallback
-        console.warn('Native notification dispatch fallback:', e);
+      // 1. ServiceWorkerRegistration (Required on Android Chrome & mobile PWAs)
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready
+          .then((registration) => {
+            registration.showNotification(options.title, {
+              body: options.body,
+              icon: options.avatar || '/icon.png',
+              badge: '/icon.png',
+              tag: options.type + '_' + (options.actionId || 'general'),
+              data: { url: window.location.href, actionId: options.actionId },
+            });
+          })
+          .catch(() => {
+            // Fallback to desktop constructor
+            try {
+              const nativeNotif = new Notification(options.title, {
+                body: options.body,
+                icon: options.avatar || '/icon.png',
+                tag: options.type + '_' + (options.actionId || 'general'),
+              });
+              nativeNotif.onclick = () => {
+                window.focus();
+                nativeNotif.close();
+              };
+            } catch {}
+          });
+      } else {
+        // 2. Standard desktop browser constructor
+        try {
+          const nativeNotif = new Notification(options.title, {
+            body: options.body,
+            icon: options.avatar || '/icon.png',
+            tag: options.type + '_' + (options.actionId || 'general'),
+          });
+          nativeNotif.onclick = () => {
+            window.focus();
+            nativeNotif.close();
+          };
+        } catch (e) {
+          console.warn('Native notification dispatch error:', e);
+        }
       }
     }
 
