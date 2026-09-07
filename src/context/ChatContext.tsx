@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Conversation, ChatMessage, UserProfile, MediaType } from '../types';
-import { INITIAL_CONVERSATIONS, DEMO_USERS } from '../data/mockData';
+
+const INITIAL_CONVERSATIONS: Conversation[] = [];
+const DEMO_USERS: UserProfile[] = [];
 import { offlineStorage, STORAGE_KEYS } from '../services/offlineStorage';
 import { notificationService } from '../services/notifications';
 import { soundEffects } from '../services/audio';

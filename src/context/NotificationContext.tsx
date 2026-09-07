@@ -3,7 +3,6 @@ import { AppNotification } from '../types';
 import { notificationService } from '../services/notifications';
 import { offlineStorage, STORAGE_KEYS } from '../services/offlineStorage';
 import { soundEffects } from '../services/audio';
-import { DEMO_USERS } from '../data/mockData';
 
 interface NotificationContextType {
   notifications: AppNotification[];

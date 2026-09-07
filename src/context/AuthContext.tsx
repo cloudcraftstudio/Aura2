@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserStatus } from '../types';
-import { DEMO_USERS } from '../data/mockData';
 import { offlineStorage, STORAGE_KEYS } from '../services/offlineStorage';
+
+const DEMO_USERS: UserProfile[] = [];
 import { notificationService } from '../services/notifications';
 import { api } from '../services/api';
 import { GoogleAccountChooserModal, KnownGoogleAccount } from '../components/common/GoogleAccountChooserModal';

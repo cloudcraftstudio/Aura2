@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { SocialPost, UserStory, PostComment, StorySlide } from '../types';
-import { INITIAL_POSTS, INITIAL_STORIES } from '../data/mockData';
+
+const INITIAL_POSTS: SocialPost[] = [];
+const INITIAL_STORIES: UserStory[] = [];
 import { offlineStorage, STORAGE_KEYS } from '../services/offlineStorage';
 import { notificationService } from '../services/notifications';
 import { soundEffects } from '../services/audio';

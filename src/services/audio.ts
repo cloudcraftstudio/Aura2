@@ -488,6 +488,18 @@ class SoundEffectsService {
     }
   }
 
+  public play(soundName: string = 'pop') {
+    if (soundName === 'pop' || soundName === 'tap') {
+      this.playTap();
+    } else if (soundName === 'success' || soundName === 'coin') {
+      this.playMarioCoin();
+    } else if (soundName === 'error') {
+      this.error();
+    } else {
+      this.playTap();
+    }
+  }
+
   // Common aliases for seamless component integration
   public tap() {
     this.playTap();

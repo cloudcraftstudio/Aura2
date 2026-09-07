@@ -11,12 +11,10 @@ coverage/
 *.db-shm
 *.bak*
 
-# Database & Uploads
-data/*.json
+# Database & Uploads (root directory only)
+/data/
+!/src/data/
+!/src/data/**
 public/uploads/*
 !public/uploads/.gitkeep
-
-
-# Exclude databases from git
-data/
 
