@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Sparkles, Heart, BookOpen, Music, Users, ArrowLeft } from 'lucide-react';
+import { Shield, Sparkles, Heart, BookOpen, Music, Users, ArrowLeft, Pencil } from 'lucide-react';
 import { BiblicalPrinciples } from './BiblicalPrinciples';
 import { RecoveryAudioFeed } from './RecoveryAudioFeed';
 import { RecoveryJournal } from './RecoveryJournal';
 import { MeetingCountdownTimer } from './MeetingCountdownTimer';
 import { RecoveryMeetingRoom } from './RecoveryMeetingRoom';
 import { RecoveryMeeting } from '../../types/recovery';
+import { useAuth } from '../../context/AuthContext';
 
 export const RecoveryDashboard: React.FC = () => {
+  const { user, updateProfile } = useAuth();
+  
   const [activeTab, setActiveTab] = useState<'principles' | 'audio' | 'journal' | 'meetings'>(() => {
     try {
       const saved = localStorage.getItem('aura_recovery_tab');
@@ -16,6 +19,58 @@ export const RecoveryDashboard: React.FC = () => {
       return 'principles';
     }
   });
+
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [tempDate, setTempDate] = useState('');
+  
+  // Calculate days clean
+  const getDaysClean = () => {
+    let dateStr = user?.cleanDate;
+    if (!dateStr) {
+      dateStr = localStorage.getItem('aura_clean_date') || undefined;
+    }
+    
+    if (!dateStr) {
+      // Fallback to legacy journal streak if no date set
+      try {
+        const journal = JSON.parse(localStorage.getItem('aura_recovery_journal') || '[]');
+        if (journal.length > 0) return journal[0].streakDay;
+      } catch {}
+      return 0;
+    }
+    
+    const cleanDate = new Date(dateStr);
+    const today = new Date();
+    // Reset times to midnight for accurate day calculation
+    cleanDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    
+    const diffTime = Math.abs(today.getTime() - cleanDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  const getMilestoneChip = (days: number) => {
+    if (days >= 365 * 2) return { name: `${Math.floor(days/365)} Years`, color: 'bg-yellow-700', text: 'text-yellow-100', border: 'border-yellow-600' };
+    if (days >= 365) return { name: '1 Year', color: 'bg-yellow-600', text: 'text-black', border: 'border-yellow-400' };
+    if (days >= 270) return { name: '9 Months', color: 'bg-purple-600', text: 'text-white', border: 'border-purple-400' };
+    if (days >= 180) return { name: '6 Months', color: 'bg-blue-600', text: 'text-white', border: 'border-blue-400' };
+    if (days >= 90) return { name: '90 Days', color: 'bg-emerald-600', text: 'text-white', border: 'border-emerald-400' };
+    if (days >= 60) return { name: '60 Days', color: 'bg-amber-500', text: 'text-black', border: 'border-amber-300' };
+    if (days >= 30) return { name: '30 Days', color: 'bg-red-600', text: 'text-white', border: 'border-red-400' };
+    if (days > 0) return { name: '24 Hours', color: 'bg-slate-200', text: 'text-black', border: 'border-white' };
+    return { name: 'Just for Today', color: 'bg-slate-800', text: 'text-white', border: 'border-slate-600' };
+  };
+
+  const handleSaveDate = async () => {
+    if (tempDate) {
+      if (user) {
+        await updateProfile({ cleanDate: tempDate });
+      }
+      localStorage.setItem('aura_clean_date', tempDate);
+    }
+    setIsEditingDate(false);
+  };
 
   useEffect(() => {
     try {
@@ -73,8 +128,11 @@ export const RecoveryDashboard: React.FC = () => {
     );
   }
 
+  const daysClean = getDaysClean();
+  const chip = getMilestoneChip(daysClean);
+
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500">
+    <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 animate-in fade-in duration-500 pb-24">
 
       {/* Header */}
       <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -93,22 +151,51 @@ export const RecoveryDashboard: React.FC = () => {
         </div>
 
         {/* Dynamic Streak Widget */}
-        <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 shrink-0">
-          <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
-            <span className="text-xl font-black text-white">
-              {(() => {
-                try {
-                  const journal = JSON.parse(localStorage.getItem('aura_recovery_journal') || '[]');
-                  if (journal.length > 0) return journal[0].streakDay;
-                  return 0;
-                } catch { return 0; }
-              })()}
-            </span>
-          </div>
-          <div>
-            <span className="block text-sm font-bold text-white uppercase tracking-wider">Days Clean</span>
-            <span className="block text-xs text-slate-400">Keep walking in victory!</span>
-          </div>
+        <div className="flex flex-col gap-2 shrink-0">
+          {isEditingDate ? (
+            <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/10 border border-amber-500/50">
+              <input 
+                type="date" 
+                value={tempDate}
+                onChange={(e) => setTempDate(e.target.value)}
+                className="bg-black/50 border border-white/20 rounded-lg px-2 py-1 text-white text-sm focus:outline-none focus:border-amber-500"
+              />
+              <button 
+                onClick={handleSaveDate}
+                className="px-3 py-1 bg-amber-500 text-black font-bold text-sm rounded-lg hover:bg-amber-400"
+              >
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 shrink-0 relative group">
+                <button 
+                  onClick={() => {
+                    const savedDate = user?.cleanDate || localStorage.getItem('aura_clean_date') || new Date().toISOString().split('T')[0];
+                    setTempDate(savedDate);
+                    setIsEditingDate(true);
+                  }}
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-slate-800 rounded-full border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-700"
+                >
+                  <Pencil className="w-3 h-3 text-slate-300" />
+                </button>
+                <div className={`w-14 h-14 rounded-full ${chip.color} border-4 ${chip.border} flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.3)]`}>
+                  <span className={`text-xl font-black ${chip.text}`}>
+                    {daysClean}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-sm font-bold text-white uppercase tracking-wider">Days Clean</span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${chip.color} ${chip.text} border border-white/20`}>
+                      {chip.name}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

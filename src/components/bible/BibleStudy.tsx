@@ -216,7 +216,9 @@ export function BibleStudy() {
       if (res.ok) {
         const data = await res.json();
         setStudyBreakdown({
-          passageText: data.passageText || ("\"" + targetBook + " " + targetChapter + ":" + targetVerse + "\" — King James Version"),
+          passageText: data.passageText 
+            ? `"${data.passageText}" — ${targetBook} ${targetChapter}:${targetVerse} (King James Version)` 
+            : `"${targetBook} ${targetChapter}:${targetVerse}" — King James Version`,
           bookSummary: {
             author: data.bookSummary?.author || "Biblical Author",
             era: data.bookSummary?.era || "Biblical Antiquity",

@@ -252,8 +252,10 @@ export class KingJamesService {
     }
 
     // Fetch passage text
-    const verseData = kjvLoader.getVerse(verseRef);
-    const passageText = verseData?.text || `\"Thy word is a lamp unto my feet, and a light unto my path.\" — ${verseRef} (King James Version)`;
+    const verseData = await kjvLoader.getOrFetchVerse(book, chapter, verse);
+    const passageText = verseData?.text && verseData.text !== 'Verse not found.' 
+        ? verseData.text 
+        : `"${book} ${chapter}:${verse}" — King James Version`;
 
     const bookMeta = BOOK_METADATA[book] || {
       author: 'Biblical Author',
@@ -267,6 +269,7 @@ export class KingJamesService {
       try {
         const prompt = `Provide a comprehensive scholarly study breakdown for the scripture passage: "${verseRef}": "${passageText}".
 Return a JSON object with:
+- passageText: explicitly and exactly the exact text: ${passageText}
 - bookSummary: { author, era, audience }
 - historicalContext: { mindsetThen, originalIssue }
 - hebrewGreekBites: array of { word, definition, language }
@@ -286,7 +289,7 @@ Return a JSON object with:
         const parsed = JSON.parse(res.text || '{}');
         if (parsed && parsed.historicalContext && parsed.dailyApplication) {
           const result: StudyBreakdown = {
-            passageText,
+            passageText: passageText,
             bookSummary: {
               author: parsed.bookSummary?.author || bookMeta.author,
               era: parsed.bookSummary?.era || bookMeta.era,

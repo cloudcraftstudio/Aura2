@@ -14,7 +14,8 @@ export interface UserProfile {
   followingCount: number;
   isVerified?: boolean;
   joinedAt: string;
-  authProvider?: 'google' | 'email' | 'guest' | 'demo';
+  cleanDate?: string; // Add cleanDate for recovery tracking
+  authProvider?: 'google' | 'email' | 'facebook' | 'github' | 'phone' | 'guest' | 'demo';
   hasPassword?: boolean;
   followingUserIds?: string[];
 }

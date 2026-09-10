@@ -173,7 +173,7 @@ class KJVLoader {
       book: cleanBook,
       chapter: chNum,
       verse: vNum,
-      text: `For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.`
+      text: `Verse not found.`
     };
   }
 

@@ -38,6 +38,8 @@ import { GospelTractModal } from './components/auth/GospelTractModal';
 
 import { RecoveryDashboard } from './components/recovery/RecoveryDashboard';
 
+import { UnverifiedBanner } from './components/auth/UnverifiedBanner';
+
 function MainApp() {
   useDevotionalNotifications();
   const [activeTab, setActiveTab] = useState<'feed' | 'bible' | 'chat' | 'studio' | 'devotional' | 'recovery'>(() => {
@@ -197,6 +199,8 @@ function MainApp() {
 
       {/* Live Animated Aura Energy Wallpaper */}
       <AuraLiveWallpaper />
+
+      <UnverifiedBanner />
 
       {/* Top Navbar */}
       <Navbar
