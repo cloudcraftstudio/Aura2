@@ -19,6 +19,7 @@ import {
   PhoneCall,
   Database,
   UploadCloud,
+  Loader2,
 } from 'lucide-react';
 import { usePermissions } from '../../context/PermissionsContext';
 import { soundEffects } from '../../services/audio';
@@ -40,7 +41,9 @@ export const PermissionsModal: React.FC = () => {
     requestAllPermissions,
     promptSaveToHome,
     checkAllPermissions,
+    isRequestingAll,
     sendTestNotification,
+    sendTestDevotionalNotification,
     sendTestCallNotification,
     openSaveToHomeModal,
   } = usePermissions();
@@ -220,9 +223,17 @@ export const PermissionsModal: React.FC = () => {
               <button
                 type="button"
                 onClick={requestAllPermissions}
-                className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all hover:scale-105 active:scale-95"
+                disabled={isRequestingAll}
+                className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 disabled:opacity-60 text-white text-xs font-bold shadow-md shadow-amber-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all hover:scale-105 active:scale-95"
               >
-                <span>Allow All</span>
+                {isRequestingAll ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Enabling...</span>
+                  </>
+                ) : (
+                  <span>Allow All</span>
+                )}
               </button>
             </div>
           )}
@@ -417,6 +428,15 @@ export const PermissionsModal: React.FC = () => {
 
             {/* Test Notification Triggers */}
             <div className="pt-1 space-y-2">
+              <button
+                type="button"
+                onClick={sendTestDevotionalNotification}
+                className="w-full py-2 px-3 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:scale-[1.01] active:scale-[0.99]"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                <span>Receive Today's Verse Alert & Chime Now</span>
+              </button>
+
               <button
                 type="button"
                 onClick={sendTestNotification}

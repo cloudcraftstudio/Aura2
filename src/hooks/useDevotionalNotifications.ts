@@ -1,79 +1,106 @@
-import { useEffect, useRef } from 'react';
-import { getCurrentDevotional, DailyDevotional } from '../content/devotionals';
+import { useEffect } from 'react';
+import { getCurrentDevotional, DailyDevotional, DevotionalEntry } from '../content/devotionals';
 import { notificationService } from '../services/notifications';
 
-export const useDevotionalNotifications = () => {
-  const hasNotifiedMorning = useRef(false);
-  const hasNotifiedMidday = useRef(false);
-  const hasNotifiedEvening = useRef(false);
+const DEVOTIONAL_DATE_KEY = 'aura_last_devotional_sent_date';
+const DEVOTIONAL_SLOT_KEY = 'aura_last_devotional_sent_slot';
 
+export const getDevotionalSlot = (hour: number): 'morning' | 'midday' | 'evening' => {
+  if (hour >= 5 && hour < 12) return 'morning';
+  if (hour >= 12 && hour < 17) return 'midday';
+  return 'evening';
+};
+
+export const dispatchDevotionalNow = (forcedSlot?: 'morning' | 'midday' | 'evening') => {
+  try {
+    const now = new Date();
+    const hour = now.getHours();
+    const slot = forcedSlot || getDevotionalSlot(hour);
+    const devotional = getCurrentDevotional();
+    const entry: DevotionalEntry = devotional[slot];
+
+    const slotNames: Record<string, string> = {
+      morning: 'Morning Manna',
+      midday: 'Midday Daily Bread',
+      evening: 'Evening Scripture & Prayer',
+    };
+
+    const notif = notificationService.notify({
+      type: 'system',
+      title: `📖 Verse of the Day: ${entry.reference}`,
+      body: `"${entry.text}"\n\n🕊️ ${entry.reminder}`,
+      playSound: true,
+      actionId: 'devotional-nav',
+    });
+
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    try {
+      localStorage.setItem(DEVOTIONAL_DATE_KEY, todayStr);
+      localStorage.setItem(DEVOTIONAL_SLOT_KEY, slot);
+    } catch {}
+
+    return notif;
+  } catch (err) {
+    console.error('Failed to dispatch devotional:', err);
+    return null;
+  }
+};
+
+export const useDevotionalNotifications = () => {
   useEffect(() => {
-    // Check permission
+    // 1. Check & request permissions gracefully
     const initNotifications = async () => {
-      const status = await notificationService.getPermissionStatus();
-      if (status === 'prompt' || status === 'default') {
-        notificationService.requestPermission();
+      try {
+        const status = await notificationService.getPermissionStatus();
+        if (status === 'prompt' || status === 'default') {
+          await notificationService.requestPermission();
+        }
+      } catch (err) {
+        console.warn('Notification init check error:', err);
       }
     };
     initNotifications();
 
-    const checkTime = () => {
-      const now = new Date();
-      const hour = now.getHours();
-      const devotional = getCurrentDevotional();
+    // 2. Guaranteed Catch-Up & Periodic Delivery Check
+    const checkAndDeliverDevotional = () => {
+      try {
+        const now = new Date();
+        const hour = now.getHours();
+        const slot = getDevotionalSlot(hour);
+        const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-      const sendNotification = (title: string, body: string, slot: string) => {
-        notificationService.notify({
-          type: 'system',
-          title: title,
-          body: body,
-          playSound: true,
-          actionId: 'devotional-nav'
-        });
-      };
+        const lastDate = localStorage.getItem(DEVOTIONAL_DATE_KEY);
+        const lastSlot = localStorage.getItem(DEVOTIONAL_SLOT_KEY);
 
-      // Morning (8 AM)
-      if (hour === 8 && !hasNotifiedMorning.current) {
-        sendNotification(
-          devotional.morning.title,
-          devotional.morning.reference,
-          'morning'
-        );
-        hasNotifiedMorning.current = true;
-      }
-      
-      // Midday (12 PM)
-      if (hour === 12 && !hasNotifiedMidday.current) {
-        sendNotification(
-          devotional.midday.title,
-          devotional.midday.reference,
-          'midday'
-        );
-        hasNotifiedMidday.current = true;
-      }
+        // If never received today or haven't received current slot today, deliver immediately!
+        const isNewDay = lastDate !== todayStr;
+        const isNewSlot = lastSlot !== slot;
 
-      // Evening (8 PM / 20:00)
-      if (hour === 20 && !hasNotifiedEvening.current) {
-        sendNotification(
-          devotional.evening.title,
-          devotional.evening.reference,
-          'evening'
-        );
-        hasNotifiedEvening.current = true;
-      }
-
-      // Reset flags at midnight
-      if (hour === 0) {
-        hasNotifiedMorning.current = false;
-        hasNotifiedMidday.current = false;
-        hasNotifiedEvening.current = false;
+        if (isNewDay || isNewSlot) {
+          dispatchDevotionalNow(slot);
+        }
+      } catch (e) {
+        console.warn('Devotional delivery check error:', e);
       }
     };
 
-    // Run check immediately, then every minute
-    checkTime();
-    const intervalId = setInterval(checkTime, 60 * 1000);
+    // Run catch-up delivery after 1.5s delay to ensure app & audio context are mounted
+    const initialTimer = setTimeout(checkAndDeliverDevotional, 1500);
 
-    return () => clearInterval(intervalId);
+    // Continue checking every 60 seconds
+    const intervalId = setInterval(checkAndDeliverDevotional, 60 * 1000);
+
+    // Listen for manual trigger events (e.g. from Notifications Center "Get Verse" button)
+    const handleManualTrigger = () => {
+      dispatchDevotionalNow();
+    };
+    window.addEventListener('trigger_devotional_notification', handleManualTrigger);
+
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(intervalId);
+      window.removeEventListener('trigger_devotional_notification', handleManualTrigger);
+    };
   }, []);
 };
+

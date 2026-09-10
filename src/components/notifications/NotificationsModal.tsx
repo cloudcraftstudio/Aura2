@@ -17,6 +17,7 @@ import {
   EyeOff,
   Filter,
   Volume2,
+  BookOpen,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useNotifications } from '../../context/NotificationContext';
@@ -43,9 +44,15 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
   } = useNotifications();
 
   const { setActiveConversationId, conversations } = useChat();
-  const { notificationStatus, requestNotificationPermission, sendTestNotification, checkAllPermissions } = usePermissions();
+  const {
+    notificationStatus,
+    requestNotificationPermission,
+    sendTestNotification,
+    sendTestDevotionalNotification,
+    checkAllPermissions,
+  } = usePermissions();
 
-  const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'interactions' | 'chats'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'verses' | 'interactions' | 'chats'>('all');
 
   useEffect(() => {
     if (isOpen) {
@@ -60,6 +67,16 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
   const filteredNotifications = useMemo(() => {
     return notifications.filter((notif) => {
       if (activeFilter === 'unread') return !notif.isRead;
+      if (activeFilter === 'verses') {
+        return (
+          notif.type === 'system' ||
+          notif.actionId === 'devotional-nav' ||
+          notif.title.toLowerCase().includes('verse') ||
+          notif.title.toLowerCase().includes('manna') ||
+          notif.title.toLowerCase().includes('bread') ||
+          notif.title.toLowerCase().includes('scripture')
+        );
+      }
       if (activeFilter === 'interactions') return notif.type === 'like' || notif.type === 'comment' || notif.type === 'follow';
       if (activeFilter === 'chats') return notif.type === 'chat' || notif.type === 'call';
       return true;
@@ -93,11 +110,20 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
     } else if (notif.type === 'follow' && notif.actionId) {
       window.dispatchEvent(new CustomEvent('open_user_profile', { detail: { userId: notif.actionId } }));
       onClose();
+    } else if (notif.type === 'system' || notif.actionId === 'devotional-nav') {
+      window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'devotional' } }));
+      onClose();
     }
   };
 
   const getNotificationIcon = (type: AppNotification['type']) => {
     switch (type) {
+      case 'system':
+        return (
+          <div className="w-7 h-7 rounded-full bg-amber-500/25 border border-amber-400/40 text-amber-300 flex items-center justify-center flex-shrink-0 shadow-sm shadow-amber-500/20">
+            <BookOpen className="w-3.5 h-3.5" />
+          </div>
+        );
       case 'like':
         return (
           <div className="w-7 h-7 rounded-full bg-pink-500/20 border border-pink-500/30 text-pink-400 flex items-center justify-center flex-shrink-0">
@@ -176,6 +202,17 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
           </div>
 
           <div className="flex items-center gap-1 sm:gap-2">
+            <button
+              type="button"
+              onClick={sendTestDevotionalNotification}
+              className="px-2.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-400/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
+              title="Deliver today's daily verse right now"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden sm:inline">Receive Daily Verse</span>
+              <span className="sm:hidden">Get Verse</span>
+            </button>
+
             {unreadCount > 0 && (
               <button
                 id="mark-all-read-btn"
@@ -237,6 +274,18 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                 {unreadCount}
               </span>
             )}
+          </button>
+
+          <button
+            onClick={() => setActiveFilter('verses')}
+            className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+              activeFilter === 'verses'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Daily Verses</span>
           </button>
 
           <button

@@ -453,7 +453,7 @@ async function startServer() {
         };
         webpush.sendNotification(pushSubscription, JSON.stringify(payload), {
           urgency: "high",
-          TTL: 60,
+          TTL: 86400,
         }).catch((err: any) => {
           if (err.statusCode === 404 || err.statusCode === 410) {
             authDb.prepare("DELETE FROM push_subscriptions WHERE endpoint = ?").run(sub.endpoint);
@@ -464,6 +464,64 @@ async function startServer() {
       console.error("Error dispatching push notifications:", err);
     }
   };
+
+  // Helper to broadcast push notification to all subscribers
+  const broadcastPush = async (payload: any) => {
+    try {
+      const subs = authDb.prepare("SELECT * FROM push_subscriptions").all() as any[];
+      if (!subs || subs.length === 0) return;
+      for (const sub of subs) {
+        const pushSubscription = {
+          endpoint: sub.endpoint,
+          keys: {
+            p256dh: sub.p256dh,
+            auth: sub.auth,
+          },
+        };
+        webpush.sendNotification(pushSubscription, JSON.stringify(payload), {
+          urgency: "high",
+          TTL: 86400,
+        }).catch((err: any) => {
+          if (err.statusCode === 404 || err.statusCode === 410) {
+            authDb.prepare("DELETE FROM push_subscriptions WHERE endpoint = ?").run(sub.endpoint);
+          }
+        });
+      }
+    } catch (err) {
+      console.error("Error broadcasting push notification:", err);
+    }
+  };
+
+  // Test daily verse push endpoint
+  app.post('/api/push/test-daily-verse', (req, res) => {
+    const { userId } = req.body;
+    const devotionalVerses = [
+      { ref: "Joshua 1:9", text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." },
+      { ref: "Philippians 4:13", text: "I can do all things through Christ who strengthens me." },
+      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart and lean not on your own understanding." },
+      { ref: "Psalm 23:1", text: "The Lord is my shepherd; I lack nothing." },
+      { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him." },
+      { ref: "Isaiah 40:31", text: "Those who hope in the Lord will renew their strength. They will soar on wings like eagles." },
+      { ref: "Jeremiah 29:11", text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future." }
+    ];
+    const picked = devotionalVerses[Math.floor(Math.random() * devotionalVerses.length)];
+    const payload = {
+      type: 'DAILY_DEVOTIONAL',
+      action: 'devotional',
+      title: `📖 Verse of the Day: ${picked.ref}`,
+      body: `"${picked.text}"`,
+      url: '/?tab=devotional',
+      tag: 'daily-devotional',
+    };
+
+    if (userId) {
+      sendPushToUser(userId, payload);
+    } else {
+      broadcastPush(payload);
+    }
+
+    res.json({ success: true, message: 'Daily verse push dispatched', verse: picked });
+  });
 
   // Test push call endpoint for user verification
   app.post('/api/push/test-call', (req, res) => {

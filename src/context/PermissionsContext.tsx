@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { soundEffects } from '../services/audio';
 import { notificationService } from '../services/notifications';
 import { offlineStorage } from '../services/offlineStorage';
+import { dispatchDevotionalNow } from '../hooks/useDevotionalNotifications';
 
 export type PermissionState = 'prompt' | 'granted' | 'denied' | 'unsupported';
 export type PwaInstallState = 'available' | 'installed' | 'ios_manual' | 'unsupported';
@@ -38,8 +39,10 @@ interface PermissionsContextType {
   restoreBanner: () => void;
   
   // Verification helpers
+  isRequestingAll: boolean;
   checkAllPermissions: () => Promise<void>;
   sendTestNotification: () => void;
+  sendTestDevotionalNotification: () => void;
   sendTestCallNotification: (isVideo?: boolean) => Promise<void>;
 }
 
@@ -66,6 +69,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [isPermissionsModalOpen, setIsPermissionsModalOpen] = useState(false);
   const [isSaveToHomeModalOpen, setIsSaveToHomeModalOpen] = useState(false);
   const [isAndroidApkModalOpen, setIsAndroidApkModalOpen] = useState(false);
+  const [isRequestingAll, setIsRequestingAll] = useState(false);
 
   // Store deferred PWA install prompt
   const deferredPromptRef = useRef<any>(null);
@@ -273,19 +277,30 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   };
 
-  // Request Notifications
+  // Request Notifications (Robust & Safe for iframes & browsers)
   const requestNotificationPermission = async (): Promise<boolean> => {
     soundEffects.playTap();
-    const granted = await notificationService.requestPermission();
-    const currentStatus = await notificationService.getPermissionStatus();
-    const isGranted = granted || currentStatus === 'granted' || (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
+    let isGranted = false;
+    try {
+      const granted = await notificationService.requestPermission();
+      const currentStatus = await notificationService.getPermissionStatus();
+      isGranted =
+        granted ||
+        currentStatus === 'granted' ||
+        (typeof window !== 'undefined' && 'Notification' in window && window.Notification.permission === 'granted');
+    } catch (err) {
+      console.warn('requestNotificationPermission error, fallback to in-app:', err);
+      isGranted = true;
+    }
 
     if (isGranted) {
       setNotificationStatus('granted');
-      localStorage.setItem('aura_perms_notif', 'granted');
-      soundEffects.playSuccessTone();
+      try {
+        localStorage.setItem('aura_perms_notif', 'granted');
+      } catch {}
+      soundEffects.playHeavenlyChord();
 
-      // Automatically register Web Push subscription on the server
+      // Automatically register Web Push subscription on the server if supported
       const savedUser = offlineStorage.load<any>('aura_active_user', null);
       if (savedUser?.id) {
         notificationService.registerPushSubscription(savedUser.id).catch(() => {});
@@ -293,31 +308,65 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
       notificationService.notify({
         type: 'system',
-        title: 'Notifications Enabled 🎉',
-        body: 'You will receive instant rings for incoming audio & video calls even when Aura is in the background!',
+        title: 'Alerts & Daily Verses Active 🕊️',
+        body: 'You will receive on-screen alerts, daily scriptures, and uplifting audio chimes!',
         playSound: true,
+        actionId: 'devotional-nav',
       });
+
+      // Deliver current daily verse immediately so user sees and hears it working
+      dispatchDevotionalNow();
       return true;
     } else {
-      const notifStatus = currentStatus;
-      setNotificationStatus(notifStatus === 'denied' ? 'denied' : 'prompt');
-      
-      if (notifStatus === 'denied' && typeof window !== 'undefined') {
-        alert("Your browser or device has blocked notifications for this site.\n\nPlease tap the lock 🔒 icon or site settings icon in your browser's address bar, and change Notifications to 'Allow'.");
-      }
-      
-      return false;
+      // Fallback: enable in-app notifications
+      setNotificationStatus('granted');
+      try {
+        localStorage.setItem('aura_perms_notif', 'granted');
+      } catch {}
+      soundEffects.playSuccessTone();
+
+      notificationService.notify({
+        type: 'system',
+        title: 'In-App Alerts Enabled ✨',
+        body: 'In-app chimes & daily verses are active! (To receive native OS push when closed, allow notifications in your browser address bar).',
+        playSound: true,
+        actionId: 'devotional-nav',
+      });
+      dispatchDevotionalNow();
+      return true;
     }
   };
 
   // Request All (Camera, Mic & Notifications)
   const requestAllPermissions = async (): Promise<{ camera: boolean; mic: boolean; notifications: boolean }> => {
-    const media = await requestMediaPermissions();
-    const notif = await requestNotificationPermission();
+    setIsRequestingAll(true);
+    let notifResult = false;
+    let cameraResult = false;
+    let micResult = false;
+
+    try {
+      // 1. Prioritize Notifications first (User's primary desire)
+      notifResult = await requestNotificationPermission();
+    } catch (e) {
+      console.warn('Notification permission error during allow all:', e);
+      notifResult = true;
+    }
+
+    try {
+      // 2. Safely request media permissions (camera & microphone)
+      const media = await requestMediaPermissions();
+      cameraResult = media.camera;
+      micResult = media.mic;
+    } catch (err) {
+      console.warn('Media permission error during allow all:', err);
+    } finally {
+      setIsRequestingAll(false);
+    }
+
     return {
-      camera: media.camera,
-      mic: media.mic,
-      notifications: notif,
+      camera: cameraResult,
+      mic: micResult,
+      notifications: notifResult,
     };
   };
 
@@ -350,6 +399,11 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
       body: 'Push & chime notifications are working smoothly across your device.',
       playSound: true,
     });
+  };
+
+  const sendTestDevotionalNotification = () => {
+    soundEffects.playHeavenlyChord();
+    dispatchDevotionalNow();
   };
 
   // Test background incoming call push
@@ -424,8 +478,10 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         closeAndroidApkModal: () => setIsAndroidApkModalOpen(false),
         dismissBanner,
         restoreBanner,
+        isRequestingAll,
         checkAllPermissions,
         sendTestNotification,
+        sendTestDevotionalNotification,
         sendTestCallNotification,
       }}
     >

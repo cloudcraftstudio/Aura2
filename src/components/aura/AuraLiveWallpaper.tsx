@@ -461,7 +461,7 @@ export const AuraLiveWallpaper: React.FC = () => {
               top: `${item.y}px`,
               transform: 'translate(-50%, -50%)',
             }}
-            className="absolute animate-float-fade flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#0b0f22]/90 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-black shadow-[0_0_25px_rgba(245,158,11,0.4)] backdrop-blur-md whitespace-nowrap select-none"
+            className="pointer-events-none absolute animate-float-fade flex items-center gap-2 px-4 py-2 rounded-2xl bg-[#0b0f22]/90 border border-amber-400/40 text-amber-200 text-xs sm:text-sm font-black shadow-[0_0_25px_rgba(245,158,11,0.4)] backdrop-blur-md whitespace-nowrap select-none"
           >
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
             <span>{item.text}</span>

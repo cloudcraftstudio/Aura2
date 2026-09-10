@@ -273,7 +273,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
   return (
     <div
       id="christian-splash-screen"
-      className="fixed inset-0 z-[100] bg-[#03040b] select-none flex flex-col items-center justify-between p-4 sm:p-6 overflow-hidden"
+      className="fixed inset-0 z-[100] bg-[#03040b] select-none flex flex-col items-center justify-between overflow-hidden"
     >
       {/* Background Volumetric Divine Light & Golden Embers Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
@@ -281,36 +281,49 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       {/* Subtle Vignette & Holy Light Radial Glare */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(3,4,11,0.85)_85%)]" />
 
-      {/* Top Header: Unmistakable Christian Identity & Armor of God Status */}
-      <div className="relative z-10 w-full max-w-4xl flex items-center justify-between pt-2 sm:pt-4 border-b border-amber-500/20 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
-            <span className="font-serif font-black text-sm">✝</span>
+      {/* Top Header: Unmistakable Christian Identity & Quick Enter Button */}
+      <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-2.5 sm:pt-4 border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0">
+            <span className="font-serif font-black text-base">✝</span>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xs sm:text-sm tracking-wider text-amber-300 font-mono">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-xs sm:text-sm tracking-wider text-amber-300 font-mono truncate">
                 AURA SANCTUARY
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-500/30 text-[9px] font-black uppercase tracking-widest hidden sm:inline">
+              <span className="px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-500/30 text-[8px] sm:text-[9px] font-black uppercase tracking-widest hidden sm:inline">
                 Christian Social Network
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-medium">Faith • Fellowship • Bible Study • Recovery</p>
+            <p className="text-[9px] sm:text-[10px] text-slate-400 font-medium truncate">Faith • Fellowship • Bible Study • Recovery</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[10px] text-amber-300/80">
-          <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-white/5 border border-white/10">
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="hidden sm:flex items-center gap-1 font-mono text-[10px] text-amber-300/80 px-2 py-1 rounded-lg bg-white/5 border border-white/10">
             <Shield className="w-3 h-3 text-amber-400 animate-pulse" />
-            <span className="hidden sm:inline">ARMOR OF GOD:</span>
+            <span>ARMOR OF GOD:</span>
             <span className="text-white font-bold">EPH 6:11</span>
           </div>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleTriggerEnter(e);
+            }}
+            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-black tracking-wider uppercase flex items-center gap-1 transition-all active:scale-95 shadow-md shadow-amber-500/30"
+          >
+            <span>Enter</span>
+            <ChevronRight className="w-3.5 h-3.5 stroke-[3]" />
+          </button>
         </div>
       </div>
 
-      {/* Main Centerpiece: Graphic Badge, Roaring Lion, Doves, Prayer Hands & Cross */}
-      <div className="relative z-10 my-auto flex flex-col items-center text-center max-w-xl px-2 w-full space-y-4 sm:space-y-5">
+      {/* Main Centerpiece: Scrollable on Mobile so nothing is ever cut off */}
+      <div className="relative z-10 w-full flex-1 overflow-y-auto overscroll-contain px-3 sm:px-6 py-3 sm:py-5 flex flex-col items-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="my-auto flex flex-col items-center text-center max-w-xl px-2 w-full space-y-3.5 sm:space-y-4">
         {/* Emblem Showcase: Lion of Judah, Holy Dove, Praying Hands, Calvary Cross */}
         <div className="relative group">
           {/* Celestial Halo & Radiant Beams */}
@@ -323,14 +336,14 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20"
+            className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20"
           >
             {activeGraphic === 'lion' && (
               <div className="relative w-full h-full flex flex-col items-center justify-center">
                 {/* Roaring Lion of Judah Majestic SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_0_20px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
+                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
                 >
                   <defs>
                     <linearGradient id="lionGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -384,7 +397,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Descending Holy Spirit Dove SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_0_20px_rgba(255,255,255,0.9)]"
+                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(255,255,255,0.9)]"
                 >
                   <defs>
                     <linearGradient id="doveWhite" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -416,7 +429,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Praying Hands of Mercy SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_0_20px_rgba(251,191,36,0.7)]"
+                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(251,191,36,0.7)]"
                 >
                   <defs>
                     <linearGradient id="handsGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -447,7 +460,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Calvary Cross of Light SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-[0_0_24px_rgba(251,191,36,0.9)]"
+                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_24px_rgba(251,191,36,0.9)]"
                 >
                   <defs>
                     <linearGradient id="crossGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -606,36 +619,40 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
           ))}
         </div>
 
+        </div>
+      </div>
+
+      {/* Sticky Bottom Action Bar: Always visible on mobile, never cut off */}
+      <div className="relative z-20 w-full max-w-xl px-4 pt-2.5 pb-4 sm:pb-5 bg-gradient-to-t from-[#03040b] via-[#03040b]/95 to-transparent flex-shrink-0 flex flex-col items-center gap-2 border-t border-amber-500/20 shadow-[0_-15px_30px_rgba(0,0,0,0.85)]">
         {/* Big Badass "TOUCH TO ENTER SANCTUARY" Button */}
         <motion.button
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={(e) => {
             e.stopPropagation();
             handleTriggerEnter(e);
           }}
-          className="group w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black font-black text-sm tracking-widest uppercase shadow-[0_0_40px_rgba(245,158,11,0.6)] border border-amber-200 flex items-center justify-center gap-3 transition-all cursor-pointer relative overflow-hidden"
+          id="enter-sanctuary-btn"
+          className="group w-full py-3.5 sm:py-4 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-600 hover:from-amber-400 hover:to-yellow-300 text-black font-black text-sm sm:text-base tracking-widest uppercase shadow-[0_0_40px_rgba(245,158,11,0.7)] border-2 border-amber-200/90 flex items-center justify-center gap-3 transition-all cursor-pointer relative overflow-hidden active:scale-98"
         >
-          <span className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+          <span className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
           <span className="text-lg">✝</span>
           <span>ENTER THE SANCTUARY</span>
-          <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+          <ChevronRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform stroke-[2.5]" />
         </motion.button>
-      </div>
 
-      {/* Bottom Footer: Scripture Pillars & Community Badges */}
-      <div className="relative z-10 w-full max-w-4xl flex flex-wrap items-center justify-between text-slate-400 font-mono text-[10px] border-t border-white/10 pt-3 gap-2">
-        <div className="flex items-center gap-3">
-          <span>📖 KING JAMES BIBLE</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">🙏 PRAYER WALL</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">🕊️ CHRIST RECOVERY</span>
-        </div>
-        <div className="flex items-center gap-2 text-amber-400 font-bold animate-pulse">
-          <span>REVELATION 5:5</span>
-          <span>•</span>
-          <span>THE LION HAS PREVAILED</span>
+        {/* Bottom Footer: Scripture Pillars & Community Badges */}
+        <div className="w-full flex items-center justify-between text-slate-400 font-mono text-[9px] sm:text-[10px] px-1">
+          <div className="flex items-center gap-2">
+            <span>📖 KING JAMES BIBLE</span>
+            <span>•</span>
+            <span>🙏 PRAYER WALL</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+            <Shield className="w-3 h-3 text-amber-400" />
+            <span>REVELATION 5:5</span>
+            <span className="hidden sm:inline">• LION HAS PREVAILED</span>
+          </div>
         </div>
       </div>
 
