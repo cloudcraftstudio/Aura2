@@ -71,18 +71,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
 
   useEffect(() => {
-    // Listen to all users (simplified for demo, in production use pagination/queries)
-    const q = query(collection(db, 'users'));
-    const unsubscribeUsers = onSnapshot(q, (snapshot) => {
-      const usersList: UserProfile[] = [];
-      snapshot.forEach((doc) => {
-        usersList.push({ id: doc.id, ...doc.data() } as UserProfile);
-      });
-      setAllUsers(usersList);
-    });
+    let unsubscribeUsers: (() => void) | undefined;
 
     const unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        // Listen to all users only when authenticated
+        const q = query(collection(db, 'users'));
+        unsubscribeUsers = onSnapshot(q, (snapshot) => {
+          const usersList: UserProfile[] = [];
+          snapshot.forEach((doc) => {
+            usersList.push({ id: doc.id, ...doc.data() } as UserProfile);
+          });
+          setAllUsers(usersList);
+        });
+
         const userDocRef = doc(db, 'users', firebaseUser.uid);
         const userDoc = await getDoc(userDocRef);
         
@@ -118,7 +120,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => {
-      unsubscribeUsers();
+      if (unsubscribeUsers) unsubscribeUsers();
       unsubscribeAuth();
     };
   }, []);
