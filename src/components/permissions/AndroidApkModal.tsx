@@ -164,7 +164,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({ isOpen, onClos
                 <div className="flex-1 space-y-0.5">
                   <div className="font-bold text-white">Enable &ldquo;Allow from this source&rdquo; (If prompted)</div>
                   <p className="text-[11px] text-slate-300">
-                    Open the downloaded file. If your phone says <em className="text-amber-300">&ldquo;For your security, your phone is not allowed to install unknown apps from this source&rdquo;</em>, tap <strong className="text-blue-300">&ldquo;Settings&rdquo;</strong> and toggle switch <strong className="text-emerald-300">&ldquo;Allow from this source&rdquo;</strong> to ON.
+                    Open the downloaded file. If your phone says <em className="text-amber-300">&ldquo;For your security, your phone is not allowed to install unknown apps from this source&rdquo;</em>, tap <strong className="text-amber-300">&ldquo;Settings&rdquo;</strong> and toggle switch <strong className="text-emerald-300">&ldquo;Allow from this source&rdquo;</strong> to ON.
                   </p>
                 </div>
               </li>

@@ -231,6 +231,16 @@ export function PodcastFeed({
     } catch (e) {
       console.warn("Could not fetch studio manual sermons:", e);
     }
+    
+    try {
+      const targetDataStr = sessionStorage.getItem('aura_target_sermon_data');
+      if (targetDataStr) {
+        const targetData = JSON.parse(targetDataStr);
+        if (targetData && targetData.id && !combined.some(s => s.id === targetData.id)) {
+          combined = [targetData, ...combined];
+        }
+      }
+    } catch {}
 
     setSermons(combined);
     setLoading(false);
@@ -355,8 +365,8 @@ export function PodcastFeed({
         <div className="absolute inset-0 bg-radial-vignette opacity-70" />
 
         <div className="relative px-6 pt-10 pb-8 sm:px-10 sm:pt-14 sm:pb-10 flex flex-col items-center text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-md text-[11px] font-bold text-blue-400 uppercase tracking-widest">
-            <Radio className="w-3.5 h-3.5 animate-pulse text-blue-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 backdrop-blur-md text-[11px] font-bold text-amber-400 uppercase tracking-widest">
+            <Radio className="w-3.5 h-3.5 animate-pulse text-amber-400" />
             <span>Pulpit & Expository Library</span>
           </div>
 
@@ -373,7 +383,7 @@ export function PodcastFeed({
               <button
                 type="button"
                 onClick={() => setFormatFilter("audio")}
-                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "audio" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
+                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "audio" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
               >
                 <Headphones className="w-4 h-4" />
                 <span>Audio Sermons</span>
@@ -381,7 +391,7 @@ export function PodcastFeed({
               <button
                 type="button"
                 onClick={() => setFormatFilter("video")}
-                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "video" ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
+                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "video" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
               >
                 <Video className="w-4 h-4" />
                 <span>Video Sermons</span>
@@ -413,7 +423,7 @@ export function PodcastFeed({
             <button
               type="button"
               onClick={() => setSourceFilter("sermonindex")}
-              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "sermonindex" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white")}
+              className={"px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 " + (sourceFilter === "sermonindex" ? "bg-yellow-600 text-white shadow" : "text-slate-400 hover:text-white")}
             >
               <Flame className="w-3.5 h-3.5 text-amber-300" />
               <span>SermonIndex</span>
@@ -440,7 +450,7 @@ export function PodcastFeed({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search speaker, passage, title, channel..."
-                className="w-full pl-9 pr-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="w-full pl-9 pr-3 py-1.5 bg-black/40 border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
 
@@ -448,7 +458,7 @@ export function PodcastFeed({
               <button
                 type="button"
                 onClick={() => setViewMode("grid")}
-                className={"p-1.5 rounded-lg transition-all " + (viewMode === "grid" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                className={"p-1.5 rounded-lg transition-all " + (viewMode === "grid" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
                 title="Grid View"
               >
                 <LayoutGrid className="w-4 h-4" />
@@ -456,7 +466,7 @@ export function PodcastFeed({
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
-                className={"p-1.5 rounded-lg transition-all " + (viewMode === "list" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                className={"p-1.5 rounded-lg transition-all " + (viewMode === "list" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
                 title="List View"
               >
                 <List className="w-4 h-4" />
@@ -469,13 +479,13 @@ export function PodcastFeed({
         {availableChannels.length > 0 && (
           <div className="bg-[#0b0f19]/80 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none">
             <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 flex-shrink-0 pr-2 border-r border-white/10">
-              <Tv className="w-3.5 h-3.5 text-blue-400" />
+              <Tv className="w-3.5 h-3.5 text-amber-400" />
               <span>Channels:</span>
             </div>
             <button
               type="button"
               onClick={() => setSelectedChannel("all")}
-              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === "all" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
+              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === "all" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
             >
               All Channels
             </button>
@@ -484,7 +494,7 @@ export function PodcastFeed({
                 key={ch}
                 type="button"
                 onClick={() => setSelectedChannel(ch)}
-                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === ch ? "bg-blue-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
+                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedChannel === ch ? "bg-amber-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
               >
                 {ch}
               </button>
@@ -496,13 +506,13 @@ export function PodcastFeed({
         {availableSeries.length > 0 && (
           <div className="bg-[#0b0f19]/80 backdrop-blur-md px-3.5 py-2.5 rounded-2xl border border-white/10 flex items-center gap-2 overflow-x-auto scrollbar-none">
             <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 flex-shrink-0 pr-2 border-r border-white/10">
-              <Layers className="w-3.5 h-3.5 text-indigo-400" />
+              <Layers className="w-3.5 h-3.5 text-yellow-400" />
               <span>Series:</span>
             </div>
             <button
               type="button"
               onClick={() => { setSelectedSeries("all"); setActiveSeriesContainer(null); }}
-              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedSeries === "all" ? "bg-indigo-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
+              className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 " + (selectedSeries === "all" ? "bg-yellow-600 text-white shadow" : "text-slate-400 hover:text-white bg-white/5")}
             >
               All Series
             </button>
@@ -511,7 +521,7 @@ export function PodcastFeed({
                 key={ser}
                 type="button"
                 onClick={() => { setSelectedSeries(ser); setActiveSeriesContainer(ser); }}
-                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 flex-shrink-0 " + (selectedSeries === ser ? "bg-indigo-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
+                className={"px-3 py-1 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-1.5 flex-shrink-0 " + (selectedSeries === ser ? "bg-yellow-600 text-white shadow" : "text-slate-300 hover:text-white bg-white/5 hover:bg-white/10")}
               >
                 <span>{ser}</span>
                 <span className={"text-[10px] px-1.5 py-0.2 rounded-full " + (selectedSeries === ser ? "bg-white/20 text-white" : "bg-white/10 text-slate-400")}>
@@ -525,11 +535,11 @@ export function PodcastFeed({
 
       {/* ACTIVE SERIES CONTAINER SPOTLIGHT */}
       {selectedSeries !== "all" && (
-        <div className="rounded-3xl p-5 bg-gradient-to-r from-indigo-950/70 via-slate-900 to-blue-950/70 border border-indigo-500/30 shadow-2xl space-y-4 animate-in fade-in">
+        <div className="rounded-3xl p-5 bg-gradient-to-r from-yellow-950/70 via-slate-900 to-amber-950/70 border border-yellow-500/30 shadow-2xl space-y-4 animate-in fade-in">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-[11px] font-black uppercase tracking-wider border border-indigo-400/20">
-                <Layers className="w-3.5 h-3.5 text-indigo-400" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/20 text-yellow-300 text-[11px] font-black uppercase tracking-wider border border-yellow-400/20">
+                <Layers className="w-3.5 h-3.5 text-yellow-400" />
                 <span>Connected Series Container • {seriesContainerItems.length} Sermon{seriesContainerItems.length > 1 ? "s" : ""}</span>
               </div>
               <h2 className="text-xl sm:text-2xl font-black text-white">{selectedSeries}</h2>
@@ -560,16 +570,16 @@ export function PodcastFeed({
                   if (item.format === "video") setSelectedVideo(item);
                   else handlePlayAudio(item);
                 }}
-                className="cursor-pointer bg-black/50 hover:bg-indigo-950/50 border border-white/10 hover:border-indigo-500/40 rounded-2xl p-3 transition-all flex items-center gap-3 group"
+                className="cursor-pointer bg-black/50 hover:bg-yellow-950/50 border border-white/10 hover:border-yellow-500/40 rounded-2xl p-3 transition-all flex items-center gap-3 group"
               >
-                <div className="w-10 h-10 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-yellow-600/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400 flex-shrink-0 group-hover:bg-yellow-600 group-hover:text-white transition-colors">
                   <Play className="w-4 h-4 fill-current ml-0.5" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <span className="text-[10px] font-black text-indigo-400 uppercase tracking-wider block">
+                  <span className="text-[10px] font-black text-yellow-400 uppercase tracking-wider block">
                     Part {item.seriesPart || partIdx + 1}
                   </span>
-                  <h4 className="text-xs font-bold text-white truncate group-hover:text-indigo-300">{item.title}</h4>
+                  <h4 className="text-xs font-bold text-white truncate group-hover:text-yellow-300">{item.title}</h4>
                   <p className="text-[10px] text-slate-400 truncate">{item.duration || "Full Exposition"}</p>
                 </div>
               </div>
@@ -581,7 +591,7 @@ export function PodcastFeed({
       {/* FEED CONTENT */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 space-y-3">
-          <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-amber-500 border-t-transparent rounded-full animate-spin" />
           <p className="text-xs text-slate-400 tracking-wider font-semibold uppercase">Streaming Sermon Library...</p>
         </div>
       ) : filtered.length === 0 ? (
@@ -604,16 +614,16 @@ export function PodcastFeed({
                   onClick={() => setSelectedVideo(sermon)}
                   className={`cursor-pointer bg-slate-900/70 backdrop-blur-md border rounded-3xl overflow-hidden shadow-xl transition-all duration-500 flex flex-col justify-between group relative ${
                     isTargeted
-                      ? "ring-2 ring-blue-400 border-blue-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
-                      : "border-white/10 hover:border-blue-500/50"
+                      ? "ring-2 ring-amber-400 border-amber-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
+                      : "border-white/10 hover:border-amber-500/50"
                   }`}
                 >
                   {isTargeted && (
-                    <div className="bg-blue-600/40 border-b border-blue-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-blue-200 animate-fade-in">
+                    <div className="bg-amber-600/40 border-b border-amber-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-amber-200 animate-fade-in">
                       <span className="flex items-center gap-1.5 animate-pulse">
                         <span>🎯 Targeted Sermon Exposition</span>
                       </span>
-                      <span className="text-[10px] text-blue-300 font-mono">From Feed Shortcut</span>
+                      <span className="text-[10px] text-amber-300 font-mono">From Feed Shortcut</span>
                     </div>
                   )}
                   <div>
@@ -625,19 +635,19 @@ export function PodcastFeed({
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0d14] via-black/20 to-transparent" />
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-14 h-14 rounded-full bg-blue-600/90 text-white flex items-center justify-center shadow-lg shadow-blue-500/50 group-hover:scale-110 transition-transform">
+                        <div className="w-14 h-14 rounded-full bg-amber-600/90 text-white flex items-center justify-center shadow-lg shadow-amber-500/50 group-hover:scale-110 transition-transform">
                           <Play className="w-6 h-6 fill-white ml-0.5" />
                         </div>
                       </div>
                       <div className="absolute bottom-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-lg text-[11px] font-bold text-white border border-white/10 flex items-center gap-1.5">
-                        <Video className="w-3.5 h-3.5 text-blue-400" />
+                        <Video className="w-3.5 h-3.5 text-amber-400" />
                         <span>Tap to Watch</span>
                       </div>
                     </div>
 
                     <div className="p-5 space-y-2.5">
                       <div className="flex items-center gap-2">
-                        <span className={"text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md " + (sermon.source === "sermonindex" ? "bg-indigo-600/90 text-white" : "bg-emerald-600/90 text-white")}>
+                        <span className={"text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md " + (sermon.source === "sermonindex" ? "bg-yellow-600/90 text-white" : "bg-emerald-600/90 text-white")}>
                           {sermon.source === "sermonindex" ? "Historical Archive" : "Community"}
                         </span>
                         {sermon.duration && (
@@ -648,18 +658,18 @@ export function PodcastFeed({
                         )}
                       </div>
 
-                      <h3 className="font-black text-white text-base leading-snug line-clamp-2 group-hover:text-blue-400 transition-colors">
+                      <h3 className="font-black text-white text-base leading-snug line-clamp-2 group-hover:text-amber-400 transition-colors">
                         {sermon.title}
                       </h3>
 
                       <div className="flex items-center gap-2 text-xs text-slate-300">
-                        <User className="w-3.5 h-3.5 text-blue-400" />
+                        <User className="w-3.5 h-3.5 text-amber-400" />
                         <span className="font-semibold text-white">{sermon.speaker}</span>
                         {sermon.speakerTitle && <span className="text-slate-500 font-normal">• {sermon.speakerTitle}</span>}
                       </div>
 
                       {sermon.scriptureRef && (
-                        <div className="inline-flex items-center gap-1.5 text-xs text-blue-400 font-semibold bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-500/20">
+                        <div className="inline-flex items-center gap-1.5 text-xs text-amber-400 font-semibold bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20">
                           <BookOpen className="w-3.5 h-3.5" />
                           <span>{sermon.scriptureRef}</span>
                         </div>
@@ -677,7 +687,7 @@ export function PodcastFeed({
                             className="text-[10px] font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
                             title="Filter by channel"
                           >
-                            <Tv className="w-2.5 h-2.5 text-blue-400" />
+                            <Tv className="w-2.5 h-2.5 text-amber-400" />
                             <span className="truncate max-w-[120px]">{sermon.channel}</span>
                           </button>
                         )}
@@ -689,12 +699,12 @@ export function PodcastFeed({
                               setSelectedSeries(sermon.series!);
                               setActiveSeriesContainer(sermon.series!);
                             }}
-                            className="text-[10px] font-bold text-indigo-300 hover:text-white bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                            className="text-[10px] font-bold text-yellow-300 hover:text-white bg-yellow-500/15 hover:bg-yellow-500/25 border border-yellow-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
                             title="Open Series Container"
                           >
-                            <Layers className="w-2.5 h-2.5 text-indigo-400" />
+                            <Layers className="w-2.5 h-2.5 text-yellow-400" />
                             <span className="truncate max-w-[120px]">{sermon.series}</span>
-                            {sermon.seriesPart && <span className="text-indigo-200">Pt. {sermon.seriesPart}</span>}
+                            {sermon.seriesPart && <span className="text-yellow-200">Pt. {sermon.seriesPart}</span>}
                           </button>
                         )}
                       </div>
@@ -711,18 +721,18 @@ export function PodcastFeed({
                 id={`sermon-card-${sermon.id}`}
                 className={`bg-slate-900/60 backdrop-blur-md border rounded-3xl overflow-hidden shadow-xl transition-all duration-500 group flex flex-col justify-between relative ${
                   isTargeted
-                    ? "ring-2 ring-blue-400 border-blue-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
+                    ? "ring-2 ring-amber-400 border-amber-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
                     : isCurrent
-                    ? "border-blue-500/80 ring-2 ring-blue-500/20"
-                    : "border-white/10 hover:border-blue-500/40"
+                    ? "border-amber-500/80 ring-2 ring-amber-500/20"
+                    : "border-white/10 hover:border-amber-500/40"
                 }`}
               >
                 {isTargeted && (
-                  <div className="bg-blue-600/40 border-b border-blue-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-blue-200 animate-fade-in">
+                  <div className="bg-amber-600/40 border-b border-amber-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-amber-200 animate-fade-in">
                     <span className="flex items-center gap-1.5 animate-pulse">
                       <span>🎯 Targeted Sermon Exposition</span>
                     </span>
-                    <span className="text-[10px] text-blue-300 font-mono">From Feed Shortcut</span>
+                    <span className="text-[10px] text-amber-300 font-mono">From Feed Shortcut</span>
                   </div>
                 )}
                 <div>
@@ -736,7 +746,7 @@ export function PodcastFeed({
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
 
                     <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                      <span className={"text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md shadow " + (sermon.source === "sermonindex" ? "bg-indigo-600/90 text-white" : "bg-emerald-600/90 text-white")}>
+                      <span className={"text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md shadow " + (sermon.source === "sermonindex" ? "bg-yellow-600/90 text-white" : "bg-emerald-600/90 text-white")}>
                         {sermon.source === "sermonindex" ? "Historical Master" : "Community"}
                       </span>
                       {sermon.duration && (
@@ -751,7 +761,7 @@ export function PodcastFeed({
                       <button
                         type="button"
                         onClick={() => handlePlayAudio(sermon)}
-                        className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform active:scale-95 group-hover:scale-110"
+                        className="w-14 h-14 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center shadow-2xl backdrop-blur-sm transition-transform active:scale-95 group-hover:scale-110"
                       >
                         {isCurrent && isPlaying ? (
                           <Pause className="w-6 h-6 fill-current" />
@@ -765,13 +775,13 @@ export function PodcastFeed({
                   <div className="p-5 space-y-2">
                     <h3 className="font-black text-white text-base leading-snug line-clamp-2">{sermon.title}</h3>
                     <div className="flex items-center gap-2 text-xs text-slate-300">
-                      <User className="w-3.5 h-3.5 text-blue-400" />
+                      <User className="w-3.5 h-3.5 text-amber-400" />
                       <span className="font-bold text-white">{sermon.speaker}</span>
                       {sermon.speakerTitle && <span className="text-slate-500 truncate">• {sermon.speakerTitle}</span>}
                     </div>
 
                     {sermon.scriptureRef && (
-                      <p className="text-xs font-semibold text-blue-300">{sermon.scriptureRef}</p>
+                      <p className="text-xs font-semibold text-amber-300">{sermon.scriptureRef}</p>
                     )}
 
                     {/* Channel & Series badges */}
@@ -786,7 +796,7 @@ export function PodcastFeed({
                           className="text-[10px] font-bold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
                           title="Filter by channel"
                         >
-                          <Tv className="w-2.5 h-2.5 text-blue-400" />
+                          <Tv className="w-2.5 h-2.5 text-amber-400" />
                           <span className="truncate max-w-[120px]">{sermon.channel}</span>
                         </button>
                       )}
@@ -798,12 +808,12 @@ export function PodcastFeed({
                             setSelectedSeries(sermon.series!);
                             setActiveSeriesContainer(sermon.series!);
                           }}
-                          className="text-[10px] font-bold text-indigo-300 hover:text-white bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
+                          className="text-[10px] font-bold text-yellow-300 hover:text-white bg-yellow-500/15 hover:bg-yellow-500/25 border border-yellow-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-colors"
                           title="Open Series Container"
                         >
-                          <Layers className="w-2.5 h-2.5 text-indigo-400" />
+                          <Layers className="w-2.5 h-2.5 text-yellow-400" />
                           <span className="truncate max-w-[120px]">{sermon.series}</span>
-                          {sermon.seriesPart && <span className="text-indigo-200">Pt. {sermon.seriesPart}</span>}
+                          {sermon.seriesPart && <span className="text-yellow-200">Pt. {sermon.seriesPart}</span>}
                         </button>
                       )}
                     </div>
@@ -815,9 +825,9 @@ export function PodcastFeed({
                     <button
                       type="button"
                       onClick={() => onStudyPassage && onStudyPassage(sermon.scriptureRef!)}
-                      className="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                      className="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
                     >
-                      <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                       <span>Study Notes</span>
                     </button>
                   ) : <span />}
@@ -848,8 +858,8 @@ export function PodcastFeed({
               referrerPolicy="no-referrer"
             />
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-black text-blue-400 uppercase tracking-wider flex items-center gap-1">
-                <Volume2 className="w-3 h-3 animate-pulse text-blue-400" />
+              <p className="text-[10px] font-black text-amber-400 uppercase tracking-wider flex items-center gap-1">
+                <Volume2 className="w-3 h-3 animate-pulse text-amber-400" />
                 <span>Now Playing</span>
               </p>
               <h4 className="text-xs sm:text-sm font-bold text-white truncate">{activeItem.title}</h4>
@@ -861,7 +871,7 @@ export function PodcastFeed({
             <button
               type="button"
               onClick={() => handlePlayAudio(activeItem)}
-              className="w-10 h-10 rounded-full bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
+              className="w-10 h-10 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center shadow-lg transition-transform active:scale-95"
             >
               {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
             </button>
@@ -883,7 +893,7 @@ export function PodcastFeed({
             <div className="flex items-start justify-between gap-3 px-1">
               <div className="min-w-0 flex-1">
                 <h2 className="text-white font-black text-sm sm:text-base leading-snug line-clamp-1">{selectedVideo.title}</h2>
-                <p className="text-xs text-blue-400 font-semibold">{selectedVideo.speaker} {selectedVideo.scriptureRef ? `• ${selectedVideo.scriptureRef}` : ""}</p>
+                <p className="text-xs text-amber-400 font-semibold">{selectedVideo.speaker} {selectedVideo.scriptureRef ? `• ${selectedVideo.scriptureRef}` : ""}</p>
               </div>
               <button
                 type="button"

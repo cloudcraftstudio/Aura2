@@ -187,7 +187,7 @@ export const PermissionsModal: React.FC = () => {
         {/* Header */}
         <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/5 flex-shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <div className="w-8 h-8 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
               <Sliders className="w-4 h-4" />
             </div>
             <div>
@@ -207,10 +207,10 @@ export const PermissionsModal: React.FC = () => {
         <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 min-h-0">
           {/* Quick Grant All Banner */}
           {(!isMediaComplete || !isNotifComplete) && (
-            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-600/20 via-indigo-600/20 to-purple-600/20 border border-blue-500/30 flex items-center justify-between gap-3">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-600/20 via-yellow-600/20 to-orange-600/20 border border-amber-500/30 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-xs font-bold text-white flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-blue-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>One-Click Permission Setup</span>
                 </p>
                 <p className="text-[11px] text-slate-300 truncate">
@@ -220,7 +220,7 @@ export const PermissionsModal: React.FC = () => {
               <button
                 type="button"
                 onClick={requestAllPermissions}
-                className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all hover:scale-105 active:scale-95"
+                className="px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all hover:scale-105 active:scale-95"
               >
                 <span>Allow All</span>
               </button>
@@ -231,7 +231,7 @@ export const PermissionsModal: React.FC = () => {
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                <div className="w-8 h-8 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
                   <Video className="w-4 h-4" />
                 </div>
                 <div>
@@ -257,7 +257,7 @@ export const PermissionsModal: React.FC = () => {
                   <button
                     type="button"
                     onClick={requestCameraPermission}
-                    className="px-3 py-1 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md"
+                    className="px-3 py-1 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all shadow-md"
                   >
                     Allow
                   </button>
@@ -285,7 +285,7 @@ export const PermissionsModal: React.FC = () => {
                     onClick={startCameraTest}
                     className="w-full py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                   >
-                    <Camera className="w-3.5 h-3.5 text-blue-400" />
+                    <Camera className="w-3.5 h-3.5 text-amber-400" />
                     <span>Test Live Camera View</span>
                   </button>
                 )}
@@ -297,7 +297,7 @@ export const PermissionsModal: React.FC = () => {
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+                <div className="w-8 h-8 rounded-xl bg-yellow-600/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
                   <Mic className="w-4 h-4" />
                 </div>
                 <div>
@@ -323,7 +323,7 @@ export const PermissionsModal: React.FC = () => {
                   <button
                     type="button"
                     onClick={requestMicPermission}
-                    className="px-3 py-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md"
+                    className="px-3 py-1 rounded-xl bg-yellow-600 hover:bg-yellow-500 text-white text-xs font-bold transition-all shadow-md"
                   >
                     Allow
                   </button>
@@ -365,7 +365,7 @@ export const PermissionsModal: React.FC = () => {
                     onClick={startMicTest}
                     className="w-full py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                   >
-                    <Volume2 className="w-3.5 h-3.5 text-indigo-400" />
+                    <Volume2 className="w-3.5 h-3.5 text-yellow-400" />
                     <span>Test Microphone Input Level</span>
                   </button>
                 )}
@@ -444,7 +444,7 @@ export const PermissionsModal: React.FC = () => {
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                <div className="w-8 h-8 rounded-xl bg-orange-600/20 border border-orange-500/30 flex items-center justify-center text-orange-400">
                   <Smartphone className="w-4 h-4" />
                 </div>
                 <div>
@@ -459,7 +459,7 @@ export const PermissionsModal: React.FC = () => {
                   closePermissionsModal();
                   openSaveToHomeModal();
                 }}
-                className="px-3 py-1 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1"
+                className="px-3 py-1 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1"
               >
                 <span>{isPwaComplete ? 'Manage' : 'Add App'}</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -547,7 +547,7 @@ export const PermissionsModal: React.FC = () => {
                 }
                 window.location.reload();
               }}
-              className="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 flex-shrink-0 active:scale-95"
+              className="px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 flex-shrink-0 active:scale-95"
             >
               <RefreshCw className="w-3.5 h-3.5 animate-spin" />
               <span>Refresh App</span>
@@ -555,12 +555,12 @@ export const PermissionsModal: React.FC = () => {
           </div>
 
           {/* Troubleshoot / Browser Settings Helper */}
-          <div className="p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/20 text-xs text-blue-200 leading-relaxed">
+          <div className="p-3.5 rounded-xl bg-amber-950/30 border border-amber-500/20 text-xs text-amber-200 leading-relaxed">
             <p className="font-bold text-white mb-1 flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
               <span>Permission Troubleshooting:</span>
             </p>
-            <p className="text-[11px] text-blue-300/80">
+            <p className="text-[11px] text-amber-300/80">
               If your browser previously blocked Camera, Mic, or Notifications, tap the <strong className="text-white">lock 🔒</strong> icon in your browser URL address bar and choose <strong className="text-white">&ldquo;Allow&rdquo;</strong>.
             </p>
           </div>

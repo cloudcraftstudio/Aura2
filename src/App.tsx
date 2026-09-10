@@ -34,6 +34,8 @@ import { AuraEnergyProvider } from './context/AuraEnergyContext';
 import { AuraLiveWallpaper } from './components/aura/AuraLiveWallpaper';
 import { AuraEnergyHubModal } from './components/aura/AuraEnergyHubModal';
 
+import { GospelTractModal } from './components/auth/GospelTractModal';
+
 import { RecoveryDashboard } from './components/recovery/RecoveryDashboard';
 
 function MainApp() {
@@ -66,6 +68,9 @@ function MainApp() {
       return true;
     }
   });
+
+  const [showGospelTract, setShowGospelTract] = useState(false);
+
   const { user, isAuthModalOpen, setIsAuthModalOpen } = useAuth();
   const { isNotificationsOpen, closeNotifications, openNotifications } = useNotifications();
   const { isAndroidApkModalOpen, closeAndroidApkModal } = usePermissions();
@@ -117,13 +122,19 @@ function MainApp() {
       }
     };
 
+    const handleOpenSplash = () => {
+      setShowSplashScreen(true);
+    };
+
     window.addEventListener('navigate_tab', handleTabNav);
     window.addEventListener('open_share_modal', handleOpenShare);
     window.addEventListener('open_user_profile', handleOpenUserProfile);
+    window.addEventListener('open_splash_screen', handleOpenSplash);
     return () => {
       window.removeEventListener('navigate_tab', handleTabNav);
       window.removeEventListener('open_share_modal', handleOpenShare);
       window.removeEventListener('open_user_profile', handleOpenUserProfile);
+      window.removeEventListener('open_splash_screen', handleOpenSplash);
     };
   }, []);
 
@@ -139,8 +150,32 @@ function MainApp() {
       sessionStorage.setItem('aura_splash_entered', 'true');
     } catch {}
     setShowSplashScreen(false);
-    // Upon entering the app for the first time, greet the user with sign up / sign in onboarding experience if not logged in
-    if (!user) {
+    
+    // Check if we should show the Gospel Tract
+    let shouldShowGospel = true;
+    if (user) {
+      try {
+        const hasSeen = localStorage.getItem('aura_gospel_seen');
+        if (hasSeen === 'true') {
+          shouldShowGospel = false;
+        }
+      } catch {}
+    } else {
+      // For guests, we show it on repeat, maybe check session storage so it's not every single refresh
+      try {
+        const hasSeenThisSession = sessionStorage.getItem('aura_gospel_session');
+        if (hasSeenThisSession === 'true') {
+          shouldShowGospel = false;
+        } else {
+          sessionStorage.setItem('aura_gospel_session', 'true');
+        }
+      } catch {}
+    }
+
+    if (shouldShowGospel) {
+      setShowGospelTract(true);
+    } else if (!user) {
+      // Fallback if they skipped tract this session but aren't logged in
       setIsAuthModalOpen(true);
     }
   };
@@ -153,7 +188,7 @@ function MainApp() {
     <div
       className={`relative ${
         activeTab === 'chat' ? 'h-[100dvh] max-h-[100dvh] overflow-hidden' : 'min-h-screen'
-      } bg-[#05060f] text-white flex flex-col selection:bg-blue-500/30 selection:text-blue-200`}
+      } bg-[#05060f] text-white flex flex-col selection:bg-amber-500/30 selection:text-amber-200`}
     >
       {/* Matrix Style Splash Screen with Touch to Enter */}
       {showSplashScreen && (
@@ -223,6 +258,7 @@ function MainApp() {
         <UserProfileModal
           onClose={() => setIsProfileOpen(false)}
           onTriggerMatrixSplash={handleReplayMatrix}
+          onOpenGospelTract={() => setShowGospelTract(true)}
           onOpenShare={() => {
             setIsProfileOpen(false);
             handleOpenShareModal('general');
@@ -258,6 +294,13 @@ function MainApp() {
 
       {/* Authentication / Onboarding Modal */}
       {isAuthModalOpen && <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />}
+
+      {/* Gospel Tract Onboarding Modal */}
+      <GospelTractModal
+        isOpen={showGospelTract}
+        onClose={() => setShowGospelTract(false)}
+        onOpenSignUp={() => setIsAuthModalOpen(true)}
+      />
 
       {/* Aura Energy & Live Wallpaper Hub Modal */}
       <AuraEnergyHubModal />

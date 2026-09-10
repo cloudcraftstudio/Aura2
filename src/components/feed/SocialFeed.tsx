@@ -91,14 +91,14 @@ export const SocialFeed: React.FC = () => {
             className="flex-1 text-left px-4 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 text-xs sm:text-sm transition-all flex items-center justify-between"
           >
             <span>What's on your mind?</span>
-            <Sparkles className="w-4 h-4 text-blue-400" />
+            <Sparkles className="w-4 h-4 text-amber-400" />
           </button>
         </div>
 
         <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-white/5 gap-1">
           <button
             onClick={() => handleOpenCreateModal('Photography')}
-            className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold text-slate-300 hover:text-blue-400 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+            className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold text-slate-300 hover:text-amber-400 py-1.5 rounded-lg hover:bg-white/5 transition-all"
           >
             <ImageIcon className="w-4 h-4 text-emerald-400" />
             <span>Photo</span>
@@ -115,7 +115,7 @@ export const SocialFeed: React.FC = () => {
 
           <button
             onClick={() => handleOpenCreateModal()}
-            className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold text-slate-300 hover:text-purple-400 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+            className="flex-1 flex items-center justify-center gap-2 text-xs font-semibold text-slate-300 hover:text-orange-400 py-1.5 rounded-lg hover:bg-white/5 transition-all"
           >
             <Video className="w-4 h-4 text-rose-400" />
             <span>Camera</span>
@@ -134,7 +134,7 @@ export const SocialFeed: React.FC = () => {
             onClick={() => setActiveFilter(tag)}
             className={`px-3.5 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all flex-shrink-0 ${
               activeFilter === tag
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/30'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/25 border border-amber-400/30'
                 : 'bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white'
             }`}
           >
@@ -148,7 +148,7 @@ export const SocialFeed: React.FC = () => {
         {filteredPosts.length === 0 ? (
           <div className="space-y-4">
             <div className="text-center py-8 bg-[#0b0f24]/60 border border-white/5 rounded-3xl p-6 space-y-2">
-              <Sparkles className="w-8 h-8 text-blue-400/60 mx-auto" />
+              <Sparkles className="w-8 h-8 text-amber-400/60 mx-auto" />
               <h3 className="text-sm font-bold text-white">Latest From Your Faith Community</h3>
               <p className="text-xs text-slate-400 max-w-sm mx-auto">
                 Stay connected with recent prayers, sermons, new members, and fellowships happening across AURA.
@@ -200,8 +200,8 @@ export const SocialFeed: React.FC = () => {
       </div>
 
       {/* Invite Friends & Share App Card at end of feed */}
-      <div className="mt-8 p-6 rounded-[32px] bg-gradient-to-tr from-blue-600/15 via-indigo-600/10 to-purple-600/15 border border-blue-500/25 shadow-xl text-center space-y-3">
-        <div className="w-12 h-12 rounded-2xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 mx-auto shadow-lg shadow-blue-500/20">
+      <div className="mt-8 p-6 rounded-[32px] bg-gradient-to-tr from-amber-600/15 via-yellow-600/10 to-orange-600/15 border border-amber-500/25 shadow-xl text-center space-y-3">
+        <div className="w-12 h-12 rounded-2xl bg-amber-600/20 border border-amber-500/40 flex items-center justify-center text-amber-400 mx-auto shadow-lg shadow-amber-500/20">
           <Share2 className="w-6 h-6" />
         </div>
         <div>
@@ -216,7 +216,7 @@ export const SocialFeed: React.FC = () => {
               new CustomEvent('open_share_modal', { detail: { type: 'general' } })
             );
           }}
-          className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/30 transition-all hover:scale-105 inline-flex items-center gap-2"
+          className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-500/30 transition-all hover:scale-105 inline-flex items-center gap-2"
         >
           <QrCode className="w-4 h-4" />
           <span>Open Invite & Share Hub</span>

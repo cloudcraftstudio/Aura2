@@ -302,7 +302,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
           onClick={() => setEntryMode('file')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
             entryMode === 'file'
-              ? 'bg-blue-600 text-white shadow-lg'
+              ? 'bg-amber-600 text-white shadow-lg'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -372,7 +372,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                     <button
                       type="button"
                       onClick={() => handleOpenUnsplash('youtube')}
-                      className="p-1.5 rounded-lg bg-blue-600 text-white text-[10px] font-bold"
+                      className="p-1.5 rounded-lg bg-amber-600 text-white text-[10px] font-bold"
                     >
                       Unsplash
                     </button>
@@ -399,7 +399,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                 <button
                   type="button"
                   onClick={() => handleOpenUnsplash('youtube')}
-                  className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
+                  className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                   <span>Choose from Unsplash</span>
@@ -413,7 +413,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                   }}
                   className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold border border-white/15 flex items-center gap-1.5 transition-all"
                 >
-                  <Upload className="w-3.5 h-3.5 text-blue-400" />
+                  <Upload className="w-3.5 h-3.5 text-amber-400" />
                   <span>Direct File Upload</span>
                 </button>
               </div>
@@ -510,11 +510,11 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
             onDrop={handleDrop}
             className={`border-2 border-dashed rounded-3xl p-8 sm:p-10 text-center transition-all bg-slate-900/60 backdrop-blur-md shadow-xl ${
               dragActive
-                ? 'border-blue-400 bg-blue-950/30 scale-[1.01]'
-                : 'border-white/20 hover:border-blue-500/50'
+                ? 'border-amber-400 bg-amber-950/30 scale-[1.01]'
+                : 'border-white/20 hover:border-amber-500/50'
             }`}
           >
-            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-lg">
+            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-lg">
               <Upload className="w-7 h-7" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-white mb-1">
@@ -526,7 +526,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/30"
+              className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-amber-600/30"
             >
               Browse Audio / Video Files
             </button>
@@ -559,7 +559,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                         {isAudio ? (
                           <FileAudio className="w-5 h-5 text-amber-400" />
                         ) : (
-                          <Film className="w-5 h-5 text-blue-400" />
+                          <Film className="w-5 h-5 text-amber-400" />
                         )}
                         <div>
                           <p className="text-xs font-bold text-white truncate max-w-sm">
@@ -610,7 +610,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                         <button
                           type="button"
                           onClick={() => handleOpenUnsplash(sermon.id)}
-                          className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 shadow"
+                          className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold flex items-center gap-1.5 shadow"
                         >
                           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                           <span>Unsplash Cover</span>
@@ -624,7 +624,7 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                           }}
                           className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white text-xs font-semibold border border-white/15 flex items-center gap-1.5"
                         >
-                          <Upload className="w-3.5 h-3.5 text-blue-400" />
+                          <Upload className="w-3.5 h-3.5 text-amber-400" />
                           <span>Direct Cover Upload</span>
                         </button>
                       </div>
@@ -637,14 +637,14 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                         value={sermon.title}
                         onChange={(e) => updateSermon(sermon.id, 'title', e.target.value)}
                         placeholder="Sermon Title *"
-                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                       />
                       <input
                         type="text"
                         value={sermon.speaker}
                         onChange={(e) => updateSermon(sermon.id, 'speaker', e.target.value)}
                         placeholder="Speaker / Preacher"
-                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                       />
                     </div>
 
@@ -654,14 +654,14 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                         value={sermon.scriptureRef}
                         onChange={(e) => updateSermon(sermon.id, 'scriptureRef', e.target.value)}
                         placeholder="Scripture Ref (e.g. John 1:1)"
-                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                       />
                       <input
                         type="text"
                         value={sermon.series}
                         onChange={(e) => updateSermon(sermon.id, 'series', e.target.value)}
                         placeholder="Series Name"
-                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                        className="bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                       />
                     </div>
 
@@ -670,14 +670,14 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
                       value={sermon.description}
                       onChange={(e) => updateSermon(sermon.id, 'description', e.target.value)}
                       placeholder="Summary or study outline..."
-                      className="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                      className="w-full bg-black/40 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                     />
 
                     <button
                       type="button"
                       onClick={() => uploadSermon(sermon)}
                       disabled={sermon.uploading}
-                      className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition-all disabled:opacity-50"
+                      className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-amber-600/30 transition-all disabled:opacity-50"
                     >
                       {sermon.uploading ? (
                         <>

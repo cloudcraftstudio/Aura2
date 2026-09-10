@@ -94,7 +94,7 @@ export const DailyMotivationModal: React.FC<DailyMotivationModalProps> = ({
         >
           {/* Ambient Glow Effects */}
           <div className="absolute -top-16 -right-16 w-56 h-56 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
 
           {/* Sticky Modal Top Bar */}
           <div className="px-5 sm:px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.03] relative z-10">
@@ -212,7 +212,7 @@ export const DailyMotivationModal: React.FC<DailyMotivationModalProps> = ({
               <button
                 id="share-motivation-quote-btn"
                 onClick={handleShare}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold transition-all shadow-lg shadow-blue-500/25 active:scale-95"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold transition-all shadow-lg shadow-amber-500/25 active:scale-95"
                 title="Share this daily quote as a new post to the community feed"
               >
                 <Share2 className="w-3.5 h-3.5" />

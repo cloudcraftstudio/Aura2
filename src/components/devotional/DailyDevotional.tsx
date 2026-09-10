@@ -26,16 +26,16 @@ export const DailyDevotionalTab = () => {
 
   return (
     <div className="max-w-2xl mx-auto w-full pb-20 animate-in fade-in duration-300">
-      <div className="bg-gradient-to-b from-blue-900/40 to-transparent p-6 sm:p-8 border-b border-white/5 rounded-b-[2.5rem]">
+      <div className="bg-gradient-to-b from-amber-900/40 to-transparent p-6 sm:p-8 border-b border-white/5 rounded-b-[2.5rem]">
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight">Daily Scripture Plan</h1>
-        <p className="text-blue-200/70 text-sm">Spiritual nourishment around the clock.</p>
+        <p className="text-amber-200/70 text-sm">Spiritual nourishment around the clock.</p>
         
         {/* Slot Selectors */}
         <div className="flex bg-black/40 p-1.5 rounded-2xl mt-6">
           <button
             onClick={() => setActiveSlot('morning')}
             className={`flex-1 flex flex-col items-center gap-1.5 py-3 rounded-xl transition-all ${
-              activeSlot === 'morning' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+              activeSlot === 'morning' ? 'bg-amber-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Sun className="w-5 h-5" />
@@ -53,7 +53,7 @@ export const DailyDevotionalTab = () => {
           <button
             onClick={() => setActiveSlot('evening')}
             className={`flex-1 flex flex-col items-center gap-1.5 py-3 rounded-xl transition-all ${
-              activeSlot === 'evening' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+              activeSlot === 'evening' ? 'bg-yellow-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Moon className="w-5 h-5" />
@@ -69,9 +69,9 @@ export const DailyDevotionalTab = () => {
           
           <div className="flex items-center gap-3 mb-4">
             <div className={`p-2.5 rounded-xl ${
-              activeSlot === 'morning' ? 'bg-blue-500/20 text-blue-400' :
+              activeSlot === 'morning' ? 'bg-amber-500/20 text-amber-400' :
               activeSlot === 'midday' ? 'bg-amber-500/20 text-amber-400' :
-              'bg-indigo-500/20 text-indigo-400'
+              'bg-yellow-500/20 text-yellow-400'
             }`}>
               <BookOpen className="w-5 h-5" />
             </div>
@@ -87,7 +87,7 @@ export const DailyDevotionalTab = () => {
                     }, 50);
                   }, 50);
                 }}
-                className="text-sm font-serif text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1 group"
+                className="text-sm font-serif text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-1 group"
               >
                 {currentEntry.reference}
                 <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
@@ -126,12 +126,12 @@ export const DailyDevotionalTab = () => {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-gradient-to-br from-indigo-900/40 to-purple-900/40 rounded-3xl p-5 border border-indigo-500/20 shadow-lg">
-              <h3 className="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+            <div className="bg-gradient-to-br from-yellow-900/40 to-orange-900/40 rounded-3xl p-5 border border-yellow-500/20 shadow-lg">
+              <h3 className="text-xs font-bold text-yellow-300 uppercase tracking-wider mb-2 flex items-center gap-2">
                 <Heart className="w-3.5 h-3.5" />
                 Reminder
               </h3>
-              <p className="text-indigo-100 font-medium leading-relaxed">
+              <p className="text-yellow-100 font-medium leading-relaxed">
                 {currentEntry.reminder}
               </p>
             </div>

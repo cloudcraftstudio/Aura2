@@ -70,9 +70,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Brand Logo & Live Badge */}
         <div className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 p-[1.5px] shadow-lg shadow-blue-500/25">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 p-[1.5px] shadow-lg shadow-amber-500/25">
             <div className="w-full h-full rounded-[14px] bg-[#05060f]/70 backdrop-blur-md flex items-center justify-center">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 animate-pulse" />
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 animate-pulse" />
             </div>
           </div>
           <div>
@@ -80,7 +80,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <h1 className="text-base sm:text-lg font-black tracking-tight text-white">
                 AURA
               </h1>
-              <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/30">
+              <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
                 Live
               </span>
             </div>
@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('feed')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'feed'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/30'
                 : 'text-slate-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('bible')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'bible'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/30'
                 : 'text-slate-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -117,7 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('chat')}
             className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'chat'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/30'
                 : 'text-slate-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -134,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setActiveTab('recovery')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
               activeTab === 'recovery'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/30'
                 : 'text-slate-300 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -147,7 +147,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setActiveTab('studio')}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === 'studio'
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/30'
+                  ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/30'
                   : 'text-slate-300 hover:text-white hover:bg-white/5'
               }`}
             >
@@ -165,12 +165,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Notifications Center Bell */}
           <button
             onClick={handleBellClick}
-            className="relative p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-blue-400 transition-all flex items-center justify-center active:scale-95"
+            className="relative p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-amber-400 transition-all flex items-center justify-center active:scale-95"
             title="Notifications"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-[10px] font-black flex items-center justify-center shadow-lg shadow-blue-500/40 border-2 border-[#05060f] animate-pulse">
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-[10px] font-black flex items-center justify-center shadow-lg shadow-amber-500/40 border-2 border-[#05060f] animate-pulse">
                 {unreadCount > 99 ? '99+' : unreadCount}
               </span>
             )}
@@ -180,17 +180,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="navbar-spark-grid-super-menu"
             onClick={() => setIsSuperDrawerOpen(true)}
-            className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-br from-blue-600/15 via-indigo-600/20 to-purple-600/15 hover:from-blue-600/25 hover:to-purple-600/25 border border-blue-500/30 text-blue-400 hover:text-white transition-all active:scale-95 flex-shrink-0 shadow-lg shadow-blue-500/10 flex items-center justify-center group"
+            className="p-2 sm:p-2.5 rounded-2xl bg-gradient-to-br from-amber-600/15 via-yellow-600/20 to-orange-600/15 hover:from-amber-600/25 hover:to-orange-600/25 border border-amber-500/30 text-amber-400 hover:text-white transition-all active:scale-95 flex-shrink-0 shadow-lg shadow-amber-500/10 flex items-center justify-center group"
             title="Super Enhanced Menu"
             aria-label="Super Enhanced Menu"
           >
-            <SparkGridIcon className="w-5 h-5 text-blue-400 group-hover:text-blue-200 transition-colors drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
+            <SparkGridIcon className="w-5 h-5 text-amber-400 group-hover:text-amber-200 transition-colors drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]" />
           </button>
 
           {!user && (
             <button
               onClick={openAuthModal}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs shadow-lg shadow-blue-500/25 border border-blue-400/30"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 text-white font-bold text-xs shadow-lg shadow-amber-500/25 border border-amber-400/30"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>

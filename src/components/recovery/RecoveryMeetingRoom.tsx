@@ -545,7 +545,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 text-xs font-semibold flex items-center gap-1.5 transition-all"
             title="Meeting Guidelines & Anonymity"
           >
-            <Info className="w-4 h-4 text-blue-400" />
+            <Info className="w-4 h-4 text-amber-400" />
             <span className="hidden md:inline">Guidelines</span>
           </button>
 
@@ -555,11 +555,11 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
               onClick={() => setIsHostPanelOpen(!isHostPanelOpen)}
               className={`p-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all ${
                 isHostPanelOpen
-                  ? 'bg-purple-600/30 border-purple-400 text-purple-200'
-                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-purple-300'
+                  ? 'bg-orange-600/30 border-orange-400 text-orange-200'
+                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-orange-300'
               }`}
             >
-              <Shield className="w-4 h-4 text-purple-400" />
+              <Shield className="w-4 h-4 text-orange-400" />
               <span className="hidden md:inline">Host Controls</span>
             </button>
           )}
@@ -569,15 +569,15 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             onClick={() => setIsChatOpen(!isChatOpen)}
             className={`px-3 py-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all relative ${
               isChatOpen
-                ? 'bg-blue-600 border-blue-400 text-white shadow-md shadow-blue-500/30'
+                ? 'bg-amber-600 border-amber-400 text-white shadow-md shadow-amber-500/30'
                 : 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'
             }`}
             title={isChatOpen ? 'Hide Prayer Chat' : 'Open Prayer Chat'}
           >
-            <MessageSquare className="w-4 h-4 text-blue-300" />
+            <MessageSquare className="w-4 h-4 text-amber-300" />
             <span>Chat</span>
             {chatMessages.length > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full bg-blue-400 text-slate-950 font-black text-[9px] leading-none">
+              <span className="px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] leading-none">
                 {chatMessages.length}
               </span>
             )}
@@ -626,14 +626,14 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                       src={displayAvatar || undefined}
                       name={displayName}
                       size="xl"
-                      className="border-2 border-blue-400/50 shadow-lg"
+                      className="border-2 border-amber-400/50 shadow-lg"
                     />
                     {!isMuted && (
                       <div className="absolute -inset-1.5 rounded-full border-2 border-emerald-400/40 animate-ping pointer-events-none" />
                     )}
                   </div>
                   <span className="text-sm font-bold text-white mb-0.5">{displayName}</span>
-                  <span className="text-[11px] text-blue-300">
+                  <span className="text-[11px] text-amber-300">
                     {isAudioOnly ? 'Audio Only Mode' : 'Camera Off'}
                   </span>
                 </div>
@@ -644,7 +644,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-xs font-semibold text-white">
                   <span>{displayName} (You)</span>
                   {isHost && (
-                    <span className="px-1.5 py-0.5 rounded-md bg-purple-500/30 text-purple-300 text-[10px] font-bold">
+                    <span className="px-1.5 py-0.5 rounded-md bg-orange-500/30 text-orange-300 text-[10px] font-bold">
                       Host
                     </span>
                   )}
@@ -710,7 +710,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                     <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-xs font-semibold text-white">
                       <span>{participant.userName}</span>
                       {participant.role === 'host' && (
-                        <span className="px-1.5 py-0.5 rounded-md bg-purple-500/30 text-purple-300 text-[10px] font-bold">
+                        <span className="px-1.5 py-0.5 rounded-md bg-orange-500/30 text-orange-300 text-[10px] font-bold">
                           Host
                         </span>
                       )}
@@ -738,7 +738,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
           <aside className="absolute inset-0 z-30 sm:relative sm:z-auto sm:w-80 md:w-96 bg-[#070a1c] border-l border-white/10 flex flex-col shrink-0 h-full min-h-0 overflow-hidden shadow-2xl sm:shadow-none">
             <div className="p-3.5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#090d24]">
               <div className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-blue-400" />
+                <MessageSquare className="w-4 h-4 text-amber-400" />
                 <h3 className="text-xs font-black uppercase tracking-wider text-white">
                   Live Fellowship & Prayer
                 </h3>
@@ -766,7 +766,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 onClick={() => setMessageType('chat')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'chat'
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-amber-600 text-white'
                     : 'bg-white/5 text-slate-400 hover:text-white'
                 }`}
               >
@@ -788,7 +788,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 onClick={() => setMessageType('scripture')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
                   messageType === 'scripture'
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-yellow-600 text-white'
                     : 'bg-white/5 text-slate-400 hover:text-white'
                 }`}
               >
@@ -811,7 +811,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             <div className="flex-1 min-h-0 p-3 space-y-3 overflow-y-auto text-xs">
               {chatMessages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400">
-                  <Heart className="w-8 h-8 text-blue-400/40 mb-2 animate-pulse" />
+                  <Heart className="w-8 h-8 text-amber-400/40 mb-2 animate-pulse" />
                   <p className="font-semibold text-slate-300">Welcome to Fellowship</p>
                   <p className="text-[11px] text-slate-500 mt-1">
                     Feel free to share prayer requests, scriptures, or an encouraging Amen.
@@ -825,9 +825,9 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                       msg.type === 'prayer_request'
                         ? 'bg-amber-950/30 border-amber-500/30'
                         : msg.type === 'scripture'
-                        ? 'bg-indigo-950/30 border-indigo-500/30'
+                        ? 'bg-yellow-950/30 border-yellow-500/30'
                         : msg.type === 'system'
-                        ? 'bg-blue-950/40 border-blue-500/20 text-center'
+                        ? 'bg-amber-950/40 border-amber-500/20 text-center'
                         : 'bg-white/5 border-white/10'
                     }`}
                   >
@@ -849,7 +849,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                           </span>
                         )}
                         {msg.type === 'scripture' && (
-                          <span className="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] font-semibold">
+                          <span className="px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-300 text-[10px] font-semibold">
                             Scripture
                           </span>
                         )}
@@ -860,7 +860,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                     </div>
 
                     {/* Content */}
-                    <p className={`text-slate-200 leading-relaxed ${msg.type === 'scripture' ? 'italic font-serif text-blue-200' : ''}`}>
+                    <p className={`text-slate-200 leading-relaxed ${msg.type === 'scripture' ? 'italic font-serif text-amber-200' : ''}`}>
                       {msg.content}
                     </p>
 
@@ -903,14 +903,14 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                       ? 'Share an Amen or praise report...'
                       : 'Share fellowship encouragement...'
                   }
-                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 focus:bg-white/15 border border-white/20 focus:border-blue-400 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-400 transition-all shadow-inner"
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 focus:bg-white/15 border border-white/20 focus:border-amber-400 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-amber-400 transition-all shadow-inner"
                   autoComplete="off"
                 />
                 <button
                   id="recovery-chat-send-btn"
                   type="submit"
                   disabled={!messageInput.trim()}
-                  className="p-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white transition-all shadow-md shadow-blue-500/30 flex items-center justify-center shrink-0"
+                  className="p-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-white transition-all shadow-md shadow-amber-500/30 flex items-center justify-center shrink-0"
                   title="Send message"
                   aria-label="Send message"
                 >
@@ -951,7 +951,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             }`}
             title={isVideoOff ? 'Turn camera on' : 'Turn camera off'}
           >
-            {isVideoOff || isAudioOnly ? <VideoOff className="w-4 h-4 text-red-400" /> : <Video className="w-4 h-4 text-blue-400" />}
+            {isVideoOff || isAudioOnly ? <VideoOff className="w-4 h-4 text-red-400" /> : <Video className="w-4 h-4 text-amber-400" />}
             <span className="hidden sm:inline">{isVideoOff ? 'Camera Off' : 'Camera'}</span>
           </button>
         </div>
@@ -976,15 +976,15 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             onClick={() => setIsChatOpen(!isChatOpen)}
             className={`px-3.5 py-3 rounded-2xl flex items-center gap-2 font-bold text-xs transition-all shadow-md ${
               isChatOpen
-                ? 'bg-blue-600 text-white shadow-blue-500/30 border border-blue-400'
+                ? 'bg-amber-600 text-white shadow-amber-500/30 border border-amber-400'
                 : 'bg-white/10 hover:bg-white/15 text-slate-200 border border-white/10'
             }`}
             title="Toggle Prayer Chat"
           >
-            <MessageSquare className="w-4 h-4 text-blue-300" />
+            <MessageSquare className="w-4 h-4 text-amber-300" />
             <span className="hidden sm:inline">Prayer Chat</span>
             {chatMessages.length > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full bg-blue-400 text-slate-950 font-black text-[9px] leading-none">
+              <span className="px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black text-[9px] leading-none">
                 {chatMessages.length}
               </span>
             )}
@@ -999,12 +999,12 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
             }}
             className={`px-3.5 py-3 rounded-2xl flex items-center gap-2 font-bold text-xs transition-all shadow-md ${
               isAudioOnly
-                ? 'bg-indigo-600 text-white shadow-indigo-500/30'
+                ? 'bg-yellow-600 text-white shadow-yellow-500/30'
                 : 'bg-white/10 hover:bg-white/15 text-slate-200 border border-white/10'
             }`}
             title="Audio-only mode (conserves data & hides camera)"
           >
-            <Volume2 className="w-4 h-4 text-indigo-300" />
+            <Volume2 className="w-4 h-4 text-yellow-300" />
             <span className="hidden md:inline">{isAudioOnly ? 'Audio Only Active' : 'Audio Only'}</span>
           </button>
 
@@ -1052,10 +1052,10 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
       {/* Host Controls Modal / Panel */}
       {isHostPanelOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-3xl bg-[#090e24] border border-purple-500/40 p-6 shadow-2xl space-y-5">
+          <div className="w-full max-w-lg rounded-3xl bg-[#090e24] border border-orange-500/40 p-6 shadow-2xl space-y-5">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-purple-400" />
+                <Shield className="w-5 h-5 text-orange-400" />
                 <h3 className="text-base font-black text-white">Host Management Panel</h3>
               </div>
               <button
@@ -1075,9 +1075,9 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={handleHostMuteAll}
-                    className="p-3 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/30 text-purple-200 text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                    className="p-3 rounded-xl bg-orange-600/20 hover:bg-orange-600/30 border border-orange-500/30 text-orange-200 text-xs font-bold flex items-center justify-center gap-2 transition-all"
                   >
-                    <MicOff className="w-4 h-4 text-purple-400" />
+                    <MicOff className="w-4 h-4 text-orange-400" />
                     <span>Mute All Participants</span>
                   </button>
 
@@ -1102,12 +1102,12 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                     value={hostAnnouncement}
                     onChange={e => setHostAnnouncement(e.target.value)}
                     placeholder="e.g. Opening the floor for 3-minute testimonies..."
-                    className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500"
+                    className="flex-1 px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-orange-500"
                   />
                   <button
                     onClick={handleHostBroadcast}
                     disabled={!hostAnnouncement.trim()}
-                    className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white text-xs font-bold transition-all shadow-md shadow-purple-500/30"
+                    className="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-500 disabled:opacity-40 text-white text-xs font-bold transition-all shadow-md shadow-orange-500/30"
                   >
                     Broadcast
                   </button>
@@ -1133,7 +1133,7 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
                         />
                         <span className="font-semibold text-white">{p.userName}</span>
                         {p.role === 'host' && (
-                          <span className="px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-300 text-[10px]">
+                          <span className="px-1.5 py-0.2 rounded bg-orange-500/30 text-orange-300 text-[10px]">
                             Host
                           </span>
                         )}
@@ -1184,10 +1184,10 @@ export const RecoveryMeetingRoom: React.FC<RecoveryMeetingRoomProps> = ({
       {/* Meeting Guidelines Modal */}
       {isGuidelinesOpen && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-3xl bg-[#080d24] border border-blue-500/40 p-6 shadow-2xl space-y-4">
+          <div className="w-full max-w-md rounded-3xl bg-[#080d24] border border-amber-500/40 p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
-                <Info className="w-5 h-5 text-blue-400" />
+                <Info className="w-5 h-5 text-amber-400" />
                 <h3 className="text-base font-black text-white">Fellowship Guidelines</h3>
               </div>
               <button

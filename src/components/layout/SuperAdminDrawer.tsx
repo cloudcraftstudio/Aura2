@@ -74,7 +74,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-600 to-yellow-600 flex items-center justify-center text-white shadow-lg shadow-amber-500/20">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
@@ -119,14 +119,14 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
           {/* Admin Studio */}
           {isTexAdmin && (
             <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-blue-400 px-2 mb-1.5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-amber-400 px-2 mb-1.5">
                 Creator & Admin Suite
               </p>
               <button
                 onClick={() => handleAction(() => onNavigateTab?.('studio'))}
-                className="w-full flex items-center gap-2.5 p-2.5 rounded-xl bg-blue-600/10 border border-blue-500/20 text-blue-300 hover:bg-blue-600/20 transition-all text-xs font-semibold"
+                className="w-full flex items-center gap-2.5 p-2.5 rounded-xl bg-amber-600/10 border border-amber-500/20 text-amber-300 hover:bg-amber-600/20 transition-all text-xs font-semibold"
               >
-                <Sparkles className="w-4 h-4 text-blue-400" />
+                <Sparkles className="w-4 h-4 text-amber-400" />
                 <span>Master Studio & Course Builder</span>
               </button>
             </div>
@@ -154,10 +154,10 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               onClick={() => handleAction(() => {
                 if (onOpenProfile) onOpenProfile();
               })}
-              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-100 hover:bg-blue-500/20 transition-all text-xs font-bold"
+              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-100 hover:bg-amber-500/20 transition-all text-xs font-bold"
             >
               <div className="flex items-center gap-2.5">
-                <Heart className="w-4 h-4 text-blue-400" />
+                <Heart className="w-4 h-4 text-amber-400" />
                 <span>My Journey (Profile)</span>
               </div>
             </button>
@@ -210,7 +210,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               })}
               className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all text-xs font-semibold"
             >
-              <Mic className="w-4 h-4 text-purple-400" />
+              <Mic className="w-4 h-4 text-orange-400" />
               <span>Pulpit & Sermons</span>
             </button>
 
@@ -240,7 +240,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               })}
               className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all text-xs font-semibold"
             >
-              <GraduationCap className="w-4 h-4 text-blue-400" />
+              <GraduationCap className="w-4 h-4 text-amber-400" />
               <span>Courses</span>
             </button>
 
@@ -269,7 +269,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
             {/* Aura Live Wallpaper & Energy Hub */}
             <button
               onClick={() => handleAction(() => openAuraHub())}
-              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-blue-500/10 border border-amber-500/25 text-amber-200 hover:border-amber-400/50 hover:bg-amber-500/20 transition-all text-xs font-bold shadow-[0_0_15px_rgba(245,158,11,0.15)]"
+              className="w-full flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 border border-amber-500/25 text-amber-200 hover:border-amber-400/50 hover:bg-amber-500/20 transition-all text-xs font-bold shadow-[0_0_15px_rgba(245,158,11,0.15)]"
             >
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-4 h-4 text-amber-400" />
@@ -297,9 +297,9 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
             ) : !isAppInstalled ? (
               <button
                 onClick={() => handleAction(() => openSaveToHomeModal())}
-                className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-purple-300 hover:bg-purple-600/20 transition-all text-xs font-semibold"
+                className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-orange-300 hover:bg-orange-600/20 transition-all text-xs font-semibold"
               >
-                <Smartphone className="w-4 h-4 text-purple-400" />
+                <Smartphone className="w-4 h-4 text-orange-400" />
                 <span>Install Aura App</span>
               </button>
             ) : null}
@@ -325,7 +325,7 @@ export const SuperAdminDrawer: React.FC<SuperAdminDrawerProps> = ({
               }
               className="w-full flex items-center gap-2.5 p-2.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all text-xs font-semibold"
             >
-              <Sliders className="w-4 h-4 text-cyan-400" />
+              <Sliders className="w-4 h-4 text-amber-400" />
               <span>Audio/Video & Notifications Setup</span>
             </button>
 

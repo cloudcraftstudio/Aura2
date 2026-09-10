@@ -106,11 +106,11 @@ export const UnsplashSearch: React.FC<UnsplashSearchProps> = ({
           onChange={handleSearchChange}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
-          className="w-full bg-slate-900/50 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+          className="w-full bg-slate-900/50 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 transition-all"
         />
         {isLoading && (
           <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <Loader2 className="h-4 w-4 text-indigo-400 animate-spin" />
+            <Loader2 className="h-4 w-4 text-yellow-400 animate-spin" />
           </div>
         )}
       </div>
@@ -121,7 +121,7 @@ export const UnsplashSearch: React.FC<UnsplashSearchProps> = ({
             <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
               {results.length} Available Images
             </span>
-            <span className="text-[11px] text-indigo-400">
+            <span className="text-[11px] text-yellow-400">
               High Resolution
             </span>
           </div>
@@ -135,7 +135,7 @@ export const UnsplashSearch: React.FC<UnsplashSearchProps> = ({
                   onSelect(img.url);
                   setIsOpen(false);
                 }}
-                className="group relative aspect-video rounded-lg overflow-hidden border border-white/10 hover:border-indigo-400 transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="group relative aspect-video rounded-lg overflow-hidden border border-white/10 hover:border-yellow-400 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-500"
               >
                 <img
                   src={img.thumb}

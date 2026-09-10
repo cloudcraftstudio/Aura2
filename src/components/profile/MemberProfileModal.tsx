@@ -219,7 +219,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                       onClose();
                       onOpenSelfEdit?.();
                     }}
-                    className="px-4 py-2 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-lg shadow-blue-500/25"
+                    className="px-4 py-2 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all shadow-lg shadow-amber-500/25"
                   >
                     Edit Profile
                   </button>
@@ -233,7 +233,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                       className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-md ${
                         isFollowing
                           ? 'bg-white/10 hover:bg-red-500/20 hover:text-red-300 text-white border border-white/20'
-                          : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/25'
+                          : 'bg-amber-600 hover:bg-amber-500 text-white shadow-amber-500/25'
                       }`}
                     >
                       {isFollowing ? (
@@ -253,7 +253,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                       id="member-msg-btn"
                       type="button"
                       onClick={handleStartMessage}
-                      className="p-2 sm:p-2.5 rounded-2xl bg-white/10 hover:bg-blue-600 text-white transition-all border border-white/15 shadow-md"
+                      className="p-2 sm:p-2.5 rounded-2xl bg-white/10 hover:bg-amber-600 text-white transition-all border border-white/15 shadow-md"
                       title="Send Message"
                     >
                       <MessageSquare className="w-4 h-4" />
@@ -273,7 +273,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                       id="member-audiocall-btn"
                       type="button"
                       onClick={() => handleStartCall(false)}
-                      className="p-2 sm:p-2.5 rounded-2xl bg-indigo-600/30 hover:bg-indigo-500 text-indigo-300 hover:text-white transition-all border border-indigo-500/30 shadow-md"
+                      className="p-2 sm:p-2.5 rounded-2xl bg-yellow-600/30 hover:bg-yellow-500 text-yellow-300 hover:text-white transition-all border border-yellow-500/30 shadow-md"
                       title="Start Voice Call"
                     >
                       <Phone className="w-4 h-4" />
@@ -303,8 +303,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
               <div className="flex items-center gap-2">
                 <h3 className="text-xl sm:text-2xl font-extrabold text-white">{targetUser.name}</h3>
                 {targetUser.isVerified && (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30">
-                    <Sparkles className="w-3 h-3 fill-blue-400/30 text-blue-400" />
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                    <Sparkles className="w-3 h-3 fill-amber-400/30 text-amber-400" />
                     Verified
                   </span>
                 )}
@@ -357,7 +357,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 onClick={() => setActiveTab('posts')}
                 className={`flex-1 pb-2.5 text-xs font-bold transition-all border-b-2 flex items-center justify-center gap-1.5 ${
                   activeTab === 'posts'
-                    ? 'border-blue-500 text-blue-400'
+                    ? 'border-amber-500 text-amber-400'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -369,7 +369,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                 onClick={() => setActiveTab('about')}
                 className={`flex-1 pb-2.5 text-xs font-bold transition-all border-b-2 flex items-center justify-center gap-1.5 ${
                   activeTab === 'about'
-                    ? 'border-blue-500 text-blue-400'
+                    ? 'border-amber-500 text-amber-400'
                     : 'border-transparent text-slate-400 hover:text-white'
                 }`}
               >
@@ -397,8 +397,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                           {formatDistanceToNow(post.createdAt, { addSuffix: true })}
                         </span>
                         {post.location && (
-                          <span className="flex items-center gap-1 text-blue-300 font-medium">
-                            <MapPin className="w-3 h-3 text-blue-400" />
+                          <span className="flex items-center gap-1 text-amber-300 font-medium">
+                            <MapPin className="w-3 h-3 text-amber-400" />
                             {post.location}
                           </span>
                         )}
@@ -440,7 +440,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                           </button>
 
                           <div className="flex items-center gap-1">
-                            <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
+                            <MessageCircle className="w-3.5 h-3.5 text-amber-400" />
                             <span>{post.commentsCount || (post.comments ? post.comments.length : 0)}</span>
                           </div>
                         </div>
@@ -474,7 +474,7 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   </div>
                   <div className="flex items-center justify-between py-1">
                     <span className="text-slate-400 font-medium flex items-center gap-1.5">
-                      <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
                       Identity Verification:
                     </span>
                     <span className="font-semibold text-emerald-400 flex items-center gap-1">
@@ -483,12 +483,12 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/40 to-indigo-950/40 border border-blue-500/25 text-blue-200">
+                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-950/40 to-yellow-950/40 border border-amber-500/25 text-amber-200">
                   <div className="flex items-center gap-2 font-semibold mb-1 text-white">
-                    <Zap className="w-4 h-4 text-cyan-400" />
+                    <Zap className="w-4 h-4 text-amber-400" />
                     <span>Real-Time WebRTC Calling</span>
                   </div>
-                  <p className="text-[11px] text-blue-200/80 leading-relaxed">
+                  <p className="text-[11px] text-amber-200/80 leading-relaxed">
                     Direct phone and video calls with {targetUser.name} connect via peer-to-peer encryption with spatial audio and HD video.
                   </p>
                 </div>

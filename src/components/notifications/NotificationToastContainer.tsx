@@ -60,13 +60,13 @@ export const NotificationToastContainer: React.FC<NotificationToastContainerProp
   const getIcon = (type: AppNotification['type']) => {
     switch (type) {
       case 'chat':
-        return <MessageSquare className="w-4 h-4 text-cyan-400" />;
+        return <MessageSquare className="w-4 h-4 text-amber-400" />;
       case 'call':
         return <Phone className="w-4 h-4 text-emerald-400" />;
       case 'like':
         return <Heart className="w-4 h-4 text-pink-500 fill-pink-500" />;
       case 'comment':
-        return <MessageSquare className="w-4 h-4 text-indigo-400" />;
+        return <MessageSquare className="w-4 h-4 text-yellow-400" />;
       default:
         return <Sparkles className="w-4 h-4 text-amber-400" />;
     }

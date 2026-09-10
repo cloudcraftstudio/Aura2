@@ -31,8 +31,8 @@ const StoryCardMedia: React.FC<{
   const safeSrc = (resolvedSrc || src || '').trim();
   if (!safeSrc || error) {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-blue-950 via-indigo-950 to-purple-950 flex items-center justify-center p-2 text-center">
-        <Sparkles className="w-6 h-6 text-blue-400/40" />
+      <div className="w-full h-full bg-gradient-to-br from-amber-950 via-yellow-950 to-orange-950 flex items-center justify-center p-2 text-center">
+        <Sparkles className="w-6 h-6 text-amber-400/40" />
       </div>
     );
   }
@@ -155,11 +155,11 @@ export const StoriesReel: React.FC = () => {
         <div
           id="create-story-card"
           onClick={() => setIsAddingStory(true)}
-          className="w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-[#090d20] border border-white/15 hover:border-blue-400/50 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-blue-500/25 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between"
+          className="w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-[#090d20] border border-white/15 hover:border-amber-400/50 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-amber-500/25 hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between"
           title="Create a new 24-hour story"
         >
           {/* Top User Photo / Avatar Area */}
-          <div className="w-full h-[124px] sm:h-[136px] overflow-hidden relative bg-gradient-to-b from-blue-900/40 via-indigo-950/60 to-[#090d20] flex items-center justify-center">
+          <div className="w-full h-[124px] sm:h-[136px] overflow-hidden relative bg-gradient-to-b from-amber-900/40 via-yellow-950/60 to-[#090d20] flex items-center justify-center">
             {user?.avatarUrl && user.avatarUrl.trim() ? (
               <img
                 src={user.avatarUrl.trim()}
@@ -168,7 +168,7 @@ export const StoriesReel: React.FC = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
             ) : (
-              <div className="w-14 h-14 rounded-full bg-blue-600/20 border border-blue-400/40 flex items-center justify-center text-blue-300">
+              <div className="w-14 h-14 rounded-full bg-amber-600/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
                 <Avatar src={user?.avatarUrl || undefined} name={user?.name || 'You'} size="lg" />
               </div>
             )}
@@ -177,7 +177,7 @@ export const StoriesReel: React.FC = () => {
 
           {/* Bottom Card Footer with Overlapping Circular Plus Button */}
           <div className="flex-1 bg-[#070a1a] relative flex flex-col items-center justify-end pb-3 sm:pb-3.5 pt-3.5 px-1.5 border-t border-white/10">
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-blue-600 group-hover:bg-blue-500 text-white flex items-center justify-center shadow-lg border-[3px] border-[#070a1a] transition-transform group-hover:scale-110 active:scale-95">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-amber-600 group-hover:bg-amber-500 text-white flex items-center justify-center shadow-lg border-[3px] border-[#070a1a] transition-transform group-hover:scale-110 active:scale-95">
               <Plus className="w-4 h-4 stroke-[3]" />
             </div>
             <span className="text-[11px] font-bold text-white text-center leading-tight">
@@ -198,7 +198,7 @@ export const StoriesReel: React.FC = () => {
               key="my-active-story"
               id="my-active-story-card"
               onClick={() => setSelectedStoryIndex(myStoryIndex)}
-              className="w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-slate-950 border-2 border-blue-500/80 hover:border-blue-400 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-blue-500/30 hover:scale-[1.02] transition-all duration-300"
+              className="w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-slate-950 border-2 border-amber-500/80 hover:border-amber-400 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-amber-500/30 hover:scale-[1.02] transition-all duration-300"
               title="Click to view your active story"
             >
               {/* Story Visual Media */}
@@ -209,7 +209,7 @@ export const StoriesReel: React.FC = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-950 p-2 flex items-center justify-center text-center">
+                <div className="w-full h-full bg-gradient-to-br from-amber-900 via-yellow-900 to-orange-950 p-2 flex items-center justify-center text-center">
                   <p className="text-[10px] text-white font-bold line-clamp-4 leading-tight">
                     {myStory.caption || 'Your Story'}
                   </p>
@@ -217,7 +217,7 @@ export const StoriesReel: React.FC = () => {
               )}
 
               {/* Author Avatar in Top-Left */}
-              <div className="absolute top-2.5 left-2.5 z-10 ring-2 ring-blue-500 ring-offset-2 ring-offset-black/70 rounded-full shadow-lg">
+              <div className="absolute top-2.5 left-2.5 z-10 ring-2 ring-amber-500 ring-offset-2 ring-offset-black/70 rounded-full shadow-lg">
                 <Avatar src={user?.avatarUrl || myStory.userAvatar} name="You" size="xs" />
               </div>
 
@@ -228,7 +228,7 @@ export const StoriesReel: React.FC = () => {
                   e.stopPropagation();
                   setIsAddingStory(true);
                 }}
-                className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-blue-600/90 hover:bg-blue-500 text-white flex items-center justify-center shadow-lg border border-white/20 transition-transform active:scale-90 z-20"
+                className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-amber-600/90 hover:bg-amber-500 text-white flex items-center justify-center shadow-lg border border-white/20 transition-transform active:scale-90 z-20"
                 title="Add another slide to your story"
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -239,7 +239,7 @@ export const StoriesReel: React.FC = () => {
                 <p className="text-xs font-bold text-white leading-tight drop-shadow-md">
                   Your Story
                 </p>
-                <span className="text-[9px] text-blue-300 font-semibold block mt-0.5">
+                <span className="text-[9px] text-amber-300 font-semibold block mt-0.5">
                   {myStory.slides?.length || 1} {(myStory.slides?.length || 1) === 1 ? 'slide' : 'slides'}
                 </span>
               </div>
@@ -263,10 +263,10 @@ export const StoriesReel: React.FC = () => {
               key={story.id}
               id={`story-item-${story.id}`}
               onClick={() => setSelectedStoryIndex(index)}
-              className={`w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-slate-950 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-blue-500/25 hover:scale-[1.02] transition-all duration-300 ${
+              className={`w-[114px] sm:w-[130px] h-[184px] sm:h-[200px] rounded-2xl overflow-hidden relative bg-slate-950 flex-shrink-0 cursor-pointer group shadow-xl hover:shadow-amber-500/25 hover:scale-[1.02] transition-all duration-300 ${
                 isSeen
                   ? 'border border-white/15 hover:border-white/30'
-                  : 'border-2 border-blue-500/80 hover:border-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                  : 'border-2 border-amber-500/80 hover:border-amber-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
               }`}
               title={`View ${story.userName}'s story`}
             >
@@ -278,7 +278,7 @@ export const StoriesReel: React.FC = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-950 p-2 flex items-center justify-center text-center">
+                <div className="w-full h-full bg-gradient-to-br from-yellow-900 via-orange-900 to-amber-950 p-2 flex items-center justify-center text-center">
                   <p className="text-[10px] text-white font-bold line-clamp-4 leading-tight">
                     {story.caption || story.userName}
                   </p>
@@ -290,7 +290,7 @@ export const StoriesReel: React.FC = () => {
                 className={`absolute top-2.5 left-2.5 z-10 rounded-full shadow-lg ${
                   isSeen
                     ? 'ring-2 ring-white/30 ring-offset-2 ring-offset-black/70'
-                    : 'ring-[2.5px] ring-blue-500 ring-offset-2 ring-offset-black/70 animate-pulse-glow'
+                    : 'ring-[2.5px] ring-amber-500 ring-offset-2 ring-offset-black/70 animate-pulse-glow'
                 }`}
               >
                 <Avatar src={story.userAvatar} name={story.userName} size="xs" />
@@ -329,7 +329,7 @@ export const StoriesReel: React.FC = () => {
             {/* Header */}
             <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/5 shrink-0">
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-400" /> Share 24-Hour Story
+                <Sparkles className="w-4 h-4 text-amber-400" /> Share 24-Hour Story
               </h3>
               <button
                 onClick={handleCloseModal}
@@ -357,7 +357,7 @@ export const StoriesReel: React.FC = () => {
                     <button
                       type="button"
                       onClick={takeSnapshot}
-                      className="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg flex items-center gap-1.5"
+                      className="px-4 py-2 rounded-full bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg flex items-center gap-1.5"
                     >
                       <Camera className="w-4 h-4" />
                       <span>Take Photo</span>
@@ -408,11 +408,11 @@ export const StoriesReel: React.FC = () => {
                   onClick={() => fileInputRef.current?.click()}
                   className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
                     isDragging
-                      ? 'border-blue-400 bg-blue-500/20 scale-[1.02]'
-                      : 'border-white/20 hover:border-blue-400/60 bg-white/5 hover:bg-white/10'
+                      ? 'border-amber-400 bg-amber-500/20 scale-[1.02]'
+                      : 'border-white/20 hover:border-amber-400/60 bg-white/5 hover:bg-white/10'
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-600/20 text-amber-400 flex items-center justify-center">
                     <Upload className="w-6 h-6" />
                   </div>
                   <p className="text-sm font-semibold text-white">
@@ -427,7 +427,7 @@ export const StoriesReel: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex-1 py-2 px-3 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+                  className="flex-1 py-2 px-3 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                 >
                   <Upload className="w-3.5 h-3.5" />
                   <span>Upload from Device</span>
@@ -437,7 +437,7 @@ export const StoriesReel: React.FC = () => {
                   onClick={startCamera}
                   className="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                 >
-                  <Camera className="w-3.5 h-3.5 text-indigo-400" />
+                  <Camera className="w-3.5 h-3.5 text-yellow-400" />
                   <span>Take Selfie</span>
                 </button>
               </div>
@@ -449,7 +449,7 @@ export const StoriesReel: React.FC = () => {
                   placeholder="Or paste photo URL (https://...)"
                   value={storyImageUrl}
                   onChange={(e) => setStoryImageUrl(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -486,7 +486,7 @@ export const StoriesReel: React.FC = () => {
                   placeholder="What's happening right now?"
                   value={storyCaption}
                   onChange={(e) => setStoryCaption(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -502,7 +502,7 @@ export const StoriesReel: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!storyImageUrl}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all hover:scale-105"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-500/25 border border-amber-400/30 transition-all hover:scale-105"
                 >
                   Post Story
                 </button>

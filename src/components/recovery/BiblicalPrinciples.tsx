@@ -148,11 +148,11 @@ export const BiblicalPrinciples: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header & Progress Bar */}
-      <div className="p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-blue-950/40 via-slate-900/80 to-indigo-950/40 border border-white/10 shadow-xl">
+      <div className="p-5 sm:p-7 rounded-3xl bg-gradient-to-br from-amber-950/40 via-slate-900/80 to-yellow-950/40 border border-white/10 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-bold uppercase tracking-wider">
+              <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
                 10 Biblical Steps
               </span>
               <span className="text-xs text-slate-400">Christ-Centered Deliverance</span>
@@ -167,7 +167,7 @@ export const BiblicalPrinciples: React.FC = () => {
 
           {/* Progress Badge */}
           <div className="flex items-center gap-3 p-3 rounded-2xl bg-black/40 border border-white/10">
-            <div className="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-400/40 flex items-center justify-center text-blue-400">
+            <div className="w-12 h-12 rounded-xl bg-amber-600/20 border border-amber-400/40 flex items-center justify-center text-amber-400">
               <Award className="w-6 h-6" />
             </div>
             <div>
@@ -181,11 +181,11 @@ export const BiblicalPrinciples: React.FC = () => {
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs font-bold">
             <span className="text-slate-400">Sanctification & Growth Journey</span>
-            <span className="text-blue-400">{percentage}% Mastered</span>
+            <span className="text-amber-400">{percentage}% Mastered</span>
           </div>
           <div className="w-full h-3 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/5">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-teal-400 transition-all duration-700 shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+              className="h-full rounded-full bg-gradient-to-r from-amber-500 via-yellow-500 to-teal-400 transition-all duration-700 shadow-[0_0_12px_rgba(59,130,246,0.5)]"
               style={{ width: `${percentage}%` }}
             />
           </div>
@@ -208,7 +208,7 @@ export const BiblicalPrinciples: React.FC = () => {
                 isDone
                   ? 'bg-emerald-950/20 border-emerald-500/30'
                   : isExpanded
-                  ? 'bg-slate-900/90 border-blue-500/40 shadow-blue-900/10'
+                  ? 'bg-slate-900/90 border-amber-500/40 shadow-amber-900/10'
                   : 'bg-white/5 hover:bg-white/[0.07] border-white/10'
               }`}
             >
@@ -228,7 +228,7 @@ export const BiblicalPrinciples: React.FC = () => {
                     className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center font-black text-sm shrink-0 transition-all ${
                       isDone
                         ? 'bg-emerald-500 text-slate-950 shadow-lg shadow-emerald-500/30'
-                        : 'bg-white/10 hover:bg-blue-600/30 text-white border border-white/15'
+                        : 'bg-white/10 hover:bg-amber-600/30 text-white border border-white/15'
                     }`}
                     title={isDone ? 'Mark as In Progress' : 'Mark Step as Completed'}
                   >
@@ -237,7 +237,7 @@ export const BiblicalPrinciples: React.FC = () => {
 
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-blue-400">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
                         Step {principle.step} • {principle.biblicalTheme}
                       </span>
                       {isDone && (
@@ -265,7 +265,7 @@ export const BiblicalPrinciples: React.FC = () => {
                     }}
                     className={`p-2 rounded-xl border transition-all ${
                       playingStep === principle.step
-                        ? 'bg-blue-600 text-white border-blue-400 animate-pulse'
+                        ? 'bg-amber-600 text-white border-amber-400 animate-pulse'
                         : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white border-white/10'
                     }`}
                     title="Listen to principle"
@@ -283,9 +283,9 @@ export const BiblicalPrinciples: React.FC = () => {
               {isExpanded && (
                 <div className="p-5 sm:p-7 pt-2 border-t border-white/10 space-y-6">
                   {/* Scripture Foundation Quote Box */}
-                  <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/60 to-indigo-950/60 border border-blue-500/30">
-                    <div className="flex items-center gap-2 text-xs font-bold text-blue-300 mb-2">
-                      <BookOpen className="w-4 h-4 text-blue-400" />
+                  <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/60 to-yellow-950/60 border border-amber-500/30">
+                    <div className="flex items-center gap-2 text-xs font-bold text-amber-300 mb-2">
+                      <BookOpen className="w-4 h-4 text-amber-400" />
                       <span>Scripture Foundation (King James Version)</span>
                       <span className="ml-auto text-amber-300 font-semibold">{principle.scripture.reference}</span>
                     </div>
@@ -305,11 +305,11 @@ export const BiblicalPrinciples: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-blue-950/30 border border-blue-500/20 space-y-1.5">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-blue-300">
+                    <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-500/20 space-y-1.5">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300">
                         The Transforming Truth
                       </h4>
-                      <p className="text-xs sm:text-sm text-blue-100 leading-relaxed font-medium">
+                      <p className="text-xs sm:text-sm text-amber-100 leading-relaxed font-medium">
                         {principle.biblicalTruth}
                       </p>
                     </div>
@@ -388,7 +388,7 @@ export const BiblicalPrinciples: React.FC = () => {
                         setActiveNotes(prev => ({ ...prev, [principle.step]: e.target.value }))
                       }
                       placeholder="Write your personal reflections, what God is speaking to you, and any commitments..."
-                      className="w-full p-3 rounded-2xl bg-white/5 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all resize-none"
+                      className="w-full p-3 rounded-2xl bg-white/5 border border-white/10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all resize-none"
                     />
                     <div className="flex items-center justify-between pt-1">
                       <button
@@ -408,7 +408,7 @@ export const BiblicalPrinciples: React.FC = () => {
                         type="button"
                         onClick={() => handleSaveNotes(principle.step)}
                         disabled={isSaving === principle.step}
-                        className="px-4 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-blue-500/20"
+                        className="px-4 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-amber-500/20"
                       >
                         <Save className="w-3.5 h-3.5" />
                         <span>{isSaving === principle.step ? 'Saving...' : 'Save Notes'}</span>

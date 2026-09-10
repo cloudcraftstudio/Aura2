@@ -740,8 +740,8 @@ export function BibleReader({
 
   // Theme styling configurations
   const themeClasses = {
-    dark: 'bg-[#0b1022] text-slate-100 border-blue-500/20',
-    navy: 'bg-[#07132a] text-blue-50 border-blue-400/30',
+    dark: 'bg-[#0b1022] text-slate-100 border-amber-500/20',
+    navy: 'bg-[#07132a] text-amber-50 border-amber-400/30',
     parchment: 'bg-[#181512] text-[#e8ded1] border-amber-900/40',
     black: 'bg-black text-gray-100 border-neutral-800'
   }[themeMode];
@@ -779,7 +779,7 @@ export function BibleReader({
         </div>
       </div>
       {/* Top Header & Church Quick-Jump Bar */}
-      <div className="bg-gradient-to-r from-blue-950/80 via-indigo-950/70 to-slate-900/80 border border-blue-500/30 rounded-2xl p-4 shadow-xl backdrop-blur-md">
+      <div className="bg-gradient-to-r from-amber-950/80 via-yellow-950/70 to-slate-900/80 border border-amber-500/30 rounded-2xl p-4 shadow-xl backdrop-blur-md">
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
           {/* Quick Jump Input */}
           <div className="relative flex-1">
@@ -791,12 +791,12 @@ export function BibleReader({
                 if (e.key === 'Enter') handleQuickJump();
               }}
               placeholder='Follow sermon (e.g. "John 3:16", "Romans 8", "faith")...'
-              className="w-full bg-black/50 border border-blue-500/40 focus:border-blue-400 rounded-xl pl-10 pr-24 py-2.5 text-white placeholder-blue-300/50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all"
+              className="w-full bg-black/50 border border-amber-500/40 focus:border-amber-400 rounded-xl pl-10 pr-24 py-2.5 text-white placeholder-amber-300/50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-all"
             />
-            <Search className="w-4 h-4 text-blue-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-amber-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <button
               onClick={() => handleQuickJump()}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1 shadow"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-1 shadow"
             >
               <Zap className="w-3 h-3 fill-current" />
               <span>Jump</span>
@@ -812,13 +812,13 @@ export function BibleReader({
                 setPickerStep('book');
                 setIsBookPickerOpen(true);
               }}
-              className="flex-1 md:flex-none flex items-center justify-between gap-3 px-4 py-2.5 bg-blue-600/30 hover:bg-blue-600/50 border border-blue-400/40 rounded-xl text-white font-bold text-sm transition-all shadow"
+              className="flex-1 md:flex-none flex items-center justify-between gap-3 px-4 py-2.5 bg-amber-600/30 hover:bg-amber-600/50 border border-amber-400/40 rounded-xl text-white font-bold text-sm transition-all shadow"
             >
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-blue-400" />
+                <BookOpen className="w-4 h-4 text-amber-400" />
                 <span className="truncate">{selectedBook} {selectedChapter}</span>
               </div>
-              <ChevronDown className="w-4 h-4 text-blue-300" />
+              <ChevronDown className="w-4 h-4 text-amber-300" />
             </button>
 
             {/* Reading Preferences Toggle */}
@@ -827,8 +827,8 @@ export function BibleReader({
               title="Reading Preferences"
               className={`p-2.5 rounded-xl border transition-all ${
                 showPreferences
-                  ? 'bg-blue-600 text-white border-blue-400'
-                  : 'bg-black/40 text-blue-300 border-blue-500/30 hover:bg-blue-900/40'
+                  ? 'bg-amber-600 text-white border-amber-400'
+                  : 'bg-black/40 text-amber-300 border-amber-500/30 hover:bg-amber-900/40'
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -838,8 +838,8 @@ export function BibleReader({
 
         {/* Sermon Follow-Along Recent History Chips */}
         {sermonHistory.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-blue-500/20 flex items-center gap-2 overflow-x-auto pb-1 text-xs scrollbar-none">
-            <span className="text-blue-300/70 font-semibold flex items-center gap-1 flex-shrink-0 text-[11px]">
+          <div className="mt-3 pt-3 border-t border-amber-500/20 flex items-center gap-2 overflow-x-auto pb-1 text-xs scrollbar-none">
+            <span className="text-amber-300/70 font-semibold flex items-center gap-1 flex-shrink-0 text-[11px]">
               <History className="w-3 h-3" />
               <span>Sermon Trail:</span>
             </span>
@@ -847,7 +847,7 @@ export function BibleReader({
               <button
                 key={`${item}-${idx}`}
                 onClick={() => handleQuickJump(item)}
-                className="px-2.5 py-1 bg-black/40 hover:bg-blue-600/40 border border-blue-500/30 hover:border-blue-400 rounded-full text-blue-200 text-xs whitespace-nowrap transition-all flex-shrink-0"
+                className="px-2.5 py-1 bg-black/40 hover:bg-amber-600/40 border border-amber-500/30 hover:border-amber-400 rounded-full text-amber-200 text-xs whitespace-nowrap transition-all flex-shrink-0"
               >
                 {item}
               </button>
@@ -858,19 +858,19 @@ export function BibleReader({
 
       {/* Reading Customizer Drawer (Font, Size, Contrast Theme) */}
       {showPreferences && (
-        <div className="bg-black/70 border border-blue-500/40 rounded-2xl p-4 shadow-xl backdrop-blur-md animate-in fade-in duration-200">
+        <div className="bg-black/70 border border-amber-500/40 rounded-2xl p-4 shadow-xl backdrop-blur-md animate-in fade-in duration-200">
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Font Size Adjuster */}
             <div className="flex items-center gap-3">
               <span className="text-xs font-bold text-gray-300">Size:</span>
-              <div className="flex items-center gap-1 bg-blue-950/60 rounded-xl p-1 border border-blue-500/30">
+              <div className="flex items-center gap-1 bg-amber-950/60 rounded-xl p-1 border border-amber-500/30">
                 <button
                   onClick={() => {
                     const next = Math.max(14, fontSize - 2);
                     setFontSize(next);
                     try { localStorage.setItem('aura_bible_font_size', next.toString()); } catch {}
                   }}
-                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-blue-200 hover:bg-blue-800/50"
+                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-amber-200 hover:bg-amber-800/50"
                 >
                   A-
                 </button>
@@ -881,7 +881,7 @@ export function BibleReader({
                     setFontSize(next);
                     try { localStorage.setItem('aura_bible_font_size', next.toString()); } catch {}
                   }}
-                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-blue-200 hover:bg-blue-800/50"
+                  className="px-2.5 py-1 rounded-lg text-xs font-bold text-amber-200 hover:bg-amber-800/50"
                 >
                   A+
                 </button>
@@ -891,14 +891,14 @@ export function BibleReader({
             {/* Font Family Selection */}
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-gray-300">Font:</span>
-              <div className="flex bg-blue-950/60 rounded-xl p-1 border border-blue-500/30">
+              <div className="flex bg-amber-950/60 rounded-xl p-1 border border-amber-500/30">
                 <button
                   onClick={() => {
                     setFontFamily('serif');
                     try { localStorage.setItem('aura_bible_font_family', 'serif'); } catch {}
                   }}
                   className={`px-3 py-1 rounded-lg text-xs font-serif font-bold transition-all ${
-                    fontFamily === 'serif' ? 'bg-blue-600 text-white shadow' : 'text-blue-300 hover:text-white'
+                    fontFamily === 'serif' ? 'bg-amber-600 text-white shadow' : 'text-amber-300 hover:text-white'
                   }`}
                 >
                   Classical Serif
@@ -909,7 +909,7 @@ export function BibleReader({
                     try { localStorage.setItem('aura_bible_font_family', 'sans'); } catch {}
                   }}
                   className={`px-3 py-1 rounded-lg text-xs font-sans font-bold transition-all ${
-                    fontFamily === 'sans' ? 'bg-blue-600 text-white shadow' : 'text-blue-300 hover:text-white'
+                    fontFamily === 'sans' ? 'bg-amber-600 text-white shadow' : 'text-amber-300 hover:text-white'
                   }`}
                 >
                   Modern Clean
@@ -935,7 +935,7 @@ export function BibleReader({
                     }}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all ${
                       themeMode === t.id
-                        ? 'border-blue-400 ring-2 ring-blue-500/50 text-white ' + t.bg
+                        ? 'border-amber-400 ring-2 ring-amber-500/50 text-white ' + t.bg
                         : 'border-white/10 text-gray-400 hover:text-white ' + t.bg
                     }`}
                   >
@@ -949,27 +949,27 @@ export function BibleReader({
       )}
 
       {/* Main Testament & All 66 Books Toggle Navigation Card */}
-      <div className="bg-gradient-to-br from-[#0c1432] via-[#091024] to-[#040817] border border-blue-500/30 rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
+      <div className="bg-gradient-to-br from-[#0c1432] via-[#091024] to-[#040817] border border-amber-500/30 rounded-2xl p-4 sm:p-5 shadow-2xl space-y-4">
         {/* Testament Toggle Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-blue-500/20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-amber-500/20">
           <div className="flex-1">
             <div className="flex items-center justify-between">
               <h3 className="font-extrabold text-lg text-white flex items-center gap-2">
-                <BookMarked className="w-5 h-5 text-blue-400" />
+                <BookMarked className="w-5 h-5 text-amber-400" />
                 <span>Holy Scriptures</span>
-                <span className="text-xs font-normal text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">
+                <span className="text-xs font-normal text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-500/30">
                   KJV
                 </span>
               </h3>
               <button
                 onClick={() => setIsLibraryCollapsed(!isLibraryCollapsed)}
-                className="sm:hidden p-1.5 bg-blue-900/40 text-blue-300 rounded-lg border border-blue-500/30 hover:bg-blue-600/40"
+                className="sm:hidden p-1.5 bg-amber-900/40 text-amber-300 rounded-lg border border-amber-500/30 hover:bg-amber-600/40"
               >
                 {isLibraryCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
               </button>
             </div>
             {!isLibraryCollapsed && (
-              <p className="text-xs text-blue-300/80 mt-1">
+              <p className="text-xs text-amber-300/80 mt-1">
                 Browse all 66 canonical books or open any chapter instantly
               </p>
             )}
@@ -978,7 +978,7 @@ export function BibleReader({
           <div className="flex items-center gap-3">
             {/* Old Testament / New Testament High-Contrast Toggle Switch */}
             {!isLibraryCollapsed && (
-              <div className="flex bg-black/60 p-1 rounded-xl border border-blue-500/40 self-start sm:self-auto shadow-inner">
+              <div className="flex bg-black/60 p-1 rounded-xl border border-amber-500/40 self-start sm:self-auto shadow-inner">
                 <button
                   onClick={() => {
                     setSelectedTestament('Old Testament');
@@ -1000,7 +1000,7 @@ export function BibleReader({
                   }}
                   className={`px-4 py-2 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 ${
                     selectedTestament === 'New Testament'
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg ring-1 ring-blue-400/50'
+                      ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg ring-1 ring-amber-400/50'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
@@ -1012,7 +1012,7 @@ export function BibleReader({
             
             <button
               onClick={() => setIsLibraryCollapsed(!isLibraryCollapsed)}
-              className="hidden sm:flex p-1.5 bg-blue-900/40 text-blue-300 rounded-lg border border-blue-500/30 hover:bg-blue-600/40"
+              className="hidden sm:flex p-1.5 bg-amber-900/40 text-amber-300 rounded-lg border border-amber-500/30 hover:bg-amber-600/40"
             >
               {isLibraryCollapsed ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
             </button>
@@ -1024,7 +1024,7 @@ export function BibleReader({
             {/* Biblical Category Filter Chips */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none animate-in fade-in slide-in-from-top-2 duration-300">
               <span className="text-[11px] text-gray-400 font-bold uppercase tracking-wider mr-1 flex items-center gap-1 flex-shrink-0">
-                <Filter className="w-3 h-3 text-blue-400" />
+                <Filter className="w-3 h-3 text-amber-400" />
                 <span>Section:</span>
               </span>
               {categories.map(cat => (
@@ -1033,8 +1033,8 @@ export function BibleReader({
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1 rounded-full text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 ${
                     selectedCategory === cat
-                      ? 'bg-blue-500 text-white shadow-md'
-                      : 'bg-black/40 text-blue-200/80 hover:bg-blue-900/40 border border-white/5'
+                      ? 'bg-amber-500 text-white shadow-md'
+                      : 'bg-black/40 text-amber-200/80 hover:bg-amber-900/40 border border-white/5'
                   }`}
                 >
                   {cat}
@@ -1059,21 +1059,21 @@ export function BibleReader({
                     }}
                     className={`p-2.5 rounded-xl text-left border transition-all flex flex-col justify-between group ${
                       isCurrent
-                        ? 'bg-blue-600/40 border-blue-400 text-white shadow-lg ring-2 ring-blue-500/40'
-                        : 'bg-black/30 hover:bg-blue-950/40 border-blue-500/20 hover:border-blue-400/60 text-gray-200'
+                        ? 'bg-amber-600/40 border-amber-400 text-white shadow-lg ring-2 ring-amber-500/40'
+                        : 'bg-black/30 hover:bg-amber-950/40 border-amber-500/20 hover:border-amber-400/60 text-gray-200'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-xs font-bold truncate group-hover:text-blue-300 transition-colors">
+                      <span className="text-xs font-bold truncate group-hover:text-amber-300 transition-colors">
                         {book.name}
                       </span>
-                      <span className="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.2 rounded font-mono">
+                      <span className="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.2 rounded font-mono">
                         {book.chapters} ch
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-[10px] text-gray-400">
                       <span className="truncate">{book.category}</span>
-                      <span className="text-blue-400/80 font-mono group-hover:translate-x-0.5 transition-transform">→</span>
+                      <span className="text-amber-400/80 font-mono group-hover:translate-x-0.5 transition-transform">→</span>
                     </div>
                   </button>
                 );
@@ -1085,12 +1085,12 @@ export function BibleReader({
 
       {/* Search Results Overlay */}
       {isSearchActive && (
-        <div className="bg-black/90 border border-blue-500/40 rounded-2xl p-4 shadow-2xl backdrop-blur-md space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-blue-500/20">
+        <div className="bg-black/90 border border-amber-500/40 rounded-2xl p-4 shadow-2xl backdrop-blur-md space-y-3">
+          <div className="flex items-center justify-between pb-2 border-b border-amber-500/20">
             <h4 className="text-sm font-bold text-white flex items-center gap-2">
-              <Search className="w-4 h-4 text-blue-400" />
+              <Search className="w-4 h-4 text-amber-400" />
               <span>Search Results for "{searchQuery || quickJumpInput}"</span>
-              <span className="text-xs text-blue-300 font-mono">({searchResults.length} verses found)</span>
+              <span className="text-xs text-amber-300 font-mono">({searchResults.length} verses found)</span>
             </h4>
             <button
               onClick={() => setIsSearchActive(false)}
@@ -1101,7 +1101,7 @@ export function BibleReader({
           </div>
 
           {isSearching ? (
-            <div className="py-8 text-center text-blue-300 text-sm animate-pulse">
+            <div className="py-8 text-center text-amber-300 text-sm animate-pulse">
               Searching the King James Scriptures...
             </div>
           ) : searchResults.length === 0 ? (
@@ -1119,11 +1119,11 @@ export function BibleReader({
                     setSelectedVerse(res.verse.toString());
                     setIsSearchActive(false);
                   }}
-                  className="p-3 bg-blue-950/40 hover:bg-blue-900/60 border border-blue-500/30 hover:border-blue-400 rounded-xl cursor-pointer transition-all space-y-1"
+                  className="p-3 bg-amber-950/40 hover:bg-amber-900/60 border border-amber-500/30 hover:border-amber-400 rounded-xl cursor-pointer transition-all space-y-1"
                 >
-                  <div className="flex items-center justify-between text-xs font-bold text-blue-300">
+                  <div className="flex items-center justify-between text-xs font-bold text-amber-300">
                     <span>{res.reference}</span>
-                    <span className="text-[10px] text-blue-400">Open Passage →</span>
+                    <span className="text-[10px] text-amber-400">Open Passage →</span>
                   </div>
                   <p className="text-xs text-gray-200 line-clamp-2">
                     {res.text}
@@ -1142,7 +1142,7 @@ export function BibleReader({
           <button
             onClick={handlePrevChapter}
             disabled={parseInt(selectedChapter, 10) <= 1}
-            className="px-3 py-1.5 rounded-xl bg-black/40 hover:bg-blue-600/30 disabled:opacity-30 disabled:hover:bg-black/40 border border-white/10 text-xs font-bold transition-all flex items-center gap-1"
+            className="px-3 py-1.5 rounded-xl bg-black/40 hover:bg-amber-600/30 disabled:opacity-30 disabled:hover:bg-black/40 border border-white/10 text-xs font-bold transition-all flex items-center gap-1"
           >
             <ChevronLeft className="w-4 h-4" />
             <span className="hidden sm:inline">Prev Ch</span>
@@ -1151,9 +1151,9 @@ export function BibleReader({
           <div className="text-center">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center justify-center gap-2">
               <span>{selectedBook}</span>
-              <span className="text-blue-400 font-serif">{selectedChapter}</span>
+              <span className="text-amber-400 font-serif">{selectedChapter}</span>
             </h2>
-            <p className="text-xs text-blue-300/80 font-sans mt-0.5">
+            <p className="text-xs text-amber-300/80 font-sans mt-0.5">
               {currentBookMeta?.author ? `Written by ${currentBookMeta.author}` : ''} • {selectedTestament}
             </p>
           </div>
@@ -1161,7 +1161,7 @@ export function BibleReader({
           <button
             onClick={handleNextChapter}
             disabled={parseInt(selectedChapter, 10) >= totalChaptersInCurrentBook}
-            className="px-3 py-1.5 rounded-xl bg-black/40 hover:bg-blue-600/30 disabled:opacity-30 disabled:hover:bg-black/40 border border-white/10 text-xs font-bold transition-all flex items-center gap-1"
+            className="px-3 py-1.5 rounded-xl bg-black/40 hover:bg-amber-600/30 disabled:opacity-30 disabled:hover:bg-black/40 border border-white/10 text-xs font-bold transition-all flex items-center gap-1"
           >
             <span className="hidden sm:inline">Next Ch</span>
             <ChevronRight className="w-4 h-4" />
@@ -1183,7 +1183,7 @@ export function BibleReader({
                   setSelectedChapter(ch);
                   setSelectedVerse(vs.split('-')[0]);
                 }}
-                className="px-2.5 py-0.5 rounded-full bg-blue-500/20 hover:bg-blue-500/40 text-blue-200 border border-blue-500/30 text-xs whitespace-nowrap transition-colors flex-shrink-0"
+                className="px-2.5 py-0.5 rounded-full bg-amber-500/20 hover:bg-amber-500/40 text-amber-200 border border-amber-500/30 text-xs whitespace-nowrap transition-colors flex-shrink-0"
               >
                 {selectedBook} {v}
               </button>
@@ -1194,8 +1194,8 @@ export function BibleReader({
         {/* Verse by Verse Reader */}
         {loadingChapter ? (
           <div className="py-16 text-center space-y-3">
-            <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto" />
-            <p className="text-sm text-blue-300 animate-pulse font-sans">
+            <div className="w-8 h-8 border-2 border-amber-400 border-t-transparent rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-amber-300 animate-pulse font-sans">
               Loading {selectedBook} {selectedChapter} Scripture...
             </p>
           </div>
@@ -1204,16 +1204,16 @@ export function BibleReader({
             <div className="flex flex-col items-center justify-center py-8 px-4 sm:px-8 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-slate-950 rounded-3xl border border-white/10 shadow-2xl space-y-6 my-4 max-w-2xl mx-auto w-full">
               {/* Album Art / Ambient Visualizer */}
               <div className="relative group w-full max-w-sm">
-                <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 rounded-3xl blur-md opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-600 via-yellow-500 to-orange-600 rounded-3xl blur-md opacity-30 group-hover:opacity-50 transition duration-1000"></div>
                 <div className="relative w-full aspect-square bg-slate-900/95 rounded-3xl border border-white/15 flex flex-col items-center justify-center p-6 text-center shadow-2xl overflow-hidden backdrop-blur-xl">
                   {/* Subtle animated background circles when playing */}
                   {isSpeaking && (
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-                      <div className="w-48 h-48 rounded-full border border-blue-400 animate-ping" />
+                      <div className="w-48 h-48 rounded-full border border-amber-400 animate-ping" />
                     </div>
                   )}
 
-                  <span className="text-[11px] uppercase tracking-widest text-blue-400 font-bold mb-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
+                  <span className="text-[11px] uppercase tracking-widest text-amber-400 font-bold mb-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20">
                     Aura Audio • Majestic Voice
                   </span>
                   <h3 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-1 tracking-tight">
@@ -1233,7 +1233,7 @@ export function BibleReader({
                         <span className="w-1 bg-emerald-400 rounded-full animate-pulse h-2.5" />
                       </div>
                     ) : (
-                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="w-2 h-2 rounded-full bg-amber-500" />
                     )}
                     <span className="text-xs text-slate-300 font-medium">
                       {audioStatusMessage}
@@ -1243,7 +1243,7 @@ export function BibleReader({
                   {/* Currently Reading Verse Display */}
                   {chapterData.verses[currentPlayingVerseIndex] && (
                     <div className="mt-4 px-3.5 py-2.5 rounded-xl bg-slate-950/70 border border-white/10 max-h-24 overflow-y-auto w-full text-center scrollbar-none">
-                      <span className="text-[11px] font-bold text-blue-300 block mb-0.5">
+                      <span className="text-[11px] font-bold text-amber-300 block mb-0.5">
                         Verse {chapterData.verses[currentPlayingVerseIndex].verse}
                       </span>
                       <p className="text-xs text-slate-300 line-clamp-3 italic font-serif leading-relaxed">
@@ -1268,7 +1268,7 @@ export function BibleReader({
                 <button
                   onClick={toggleSpeechPlayback}
                   title={isSpeaking ? "Pause Playback" : "Start Listening"}
-                  className="w-20 h-20 rounded-full bg-white hover:bg-slate-100 text-slate-950 flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-blue-500/50"
+                  className="w-20 h-20 rounded-full bg-white hover:bg-slate-100 text-slate-950 flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-amber-500/50"
                 >
                   {audioLoadingVerse !== null ? (
                     <Loader2 className="w-8 h-8 animate-spin text-slate-950" />
@@ -1297,7 +1297,7 @@ export function BibleReader({
                     type="checkbox"
                     checked={autoAdvanceAudio}
                     onChange={(e) => setAutoAdvanceAudio(e.target.checked)}
-                    className="w-3.5 h-3.5 rounded border-slate-700 text-blue-600 focus:ring-0 bg-slate-800 cursor-pointer"
+                    className="w-3.5 h-3.5 rounded border-slate-700 text-amber-600 focus:ring-0 bg-slate-800 cursor-pointer"
                   />
                   <span>Auto-advance verses</span>
                 </label>
@@ -1309,7 +1309,7 @@ export function BibleReader({
                   <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                     Jump to Verse
                   </span>
-                  <span className="text-[11px] text-blue-400 font-mono">
+                  <span className="text-[11px] text-amber-400 font-mono">
                     {selectedBook} {selectedChapter}
                   </span>
                 </div>
@@ -1329,7 +1329,7 @@ export function BibleReader({
                           isPlaying
                             ? 'bg-emerald-500 text-slate-950 font-bold shadow-md scale-105 ring-2 ring-emerald-400'
                             : isCurrent
-                            ? 'bg-blue-600 text-white font-bold'
+                            ? 'bg-amber-600 text-white font-bold'
                             : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-white/5'
                         }`}
                       >
@@ -1360,9 +1360,9 @@ export function BibleReader({
                   id={`verse-${item.verse}`}
                   className={`group relative rounded-xl p-3 sm:p-4 transition-all duration-300 ${
                     isCurrentPlayingAudio
-                      ? 'bg-blue-600/25 border border-blue-400/80 shadow-xl ring-2 ring-blue-500/40'
+                      ? 'bg-amber-600/25 border border-amber-400/80 shadow-xl ring-2 ring-amber-500/40'
                       : isSelected
-                        ? 'bg-blue-600/20 border border-blue-400/60 shadow-lg ring-1 ring-blue-500/30'
+                        ? 'bg-amber-600/20 border border-amber-400/60 shadow-lg ring-1 ring-amber-500/30'
                         : 'hover:bg-white/[0.04] border border-transparent'
                   }`}
                 >
@@ -1374,10 +1374,10 @@ export function BibleReader({
                       }}
                       className={`text-xs font-sans font-extrabold px-2 py-1 rounded-lg transition-all flex-shrink-0 mt-0.5 ${
                         isCurrentPlayingAudio
-                          ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg animate-pulse ring-2 ring-blue-300/40'
+                          ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-white shadow-lg animate-pulse ring-2 ring-amber-300/40'
                           : isSelected
-                            ? 'bg-blue-500 text-white shadow-md'
-                            : 'bg-black/40 text-blue-400/80 group-hover:bg-blue-500/20 group-hover:text-blue-300'
+                            ? 'bg-amber-500 text-white shadow-md'
+                            : 'bg-black/40 text-amber-400/80 group-hover:bg-amber-500/20 group-hover:text-amber-300'
                       }`}
                     >
                       {item.verse}
@@ -1398,7 +1398,7 @@ export function BibleReader({
 
                   {(isSelected || isActionOpen) && (
                     <div className="mt-3 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 font-sans text-xs animate-in fade-in duration-150">
-                      <span className="font-bold text-blue-300">
+                      <span className="font-bold text-amber-300">
                         {selectedBook} {selectedChapter}:{item.verse}
                       </span>
 
@@ -1414,8 +1414,8 @@ export function BibleReader({
                           title={isCurrentPlayingAudio ? "Pause Audio" : "Listen with Audio Stream"}
                           className={`px-2.5 py-1.5 rounded-lg border transition-all flex items-center gap-1 ${
                             isCurrentPlayingAudio
-                              ? 'bg-blue-600 text-white border-blue-400 shadow-md animate-pulse'
-                              : 'bg-blue-600/30 hover:bg-blue-600 text-blue-200 hover:text-white border-blue-500/30'
+                              ? 'bg-amber-600 text-white border-amber-400 shadow-md animate-pulse'
+                              : 'bg-amber-600/30 hover:bg-amber-600 text-amber-200 hover:text-white border-amber-500/30'
                           }`}
                         >
                           {isCurrentPlayingAudio ? (
@@ -1429,7 +1429,7 @@ export function BibleReader({
                         <button
                           onClick={() => handleCopyVerse(item.verse, item.text)}
                           title="Copy verse to clipboard"
-                          className="px-2.5 py-1.5 rounded-lg bg-black/40 hover:bg-blue-600 text-gray-300 hover:text-white border border-white/10 transition-all flex items-center gap-1"
+                          className="px-2.5 py-1.5 rounded-lg bg-black/40 hover:bg-amber-600 text-gray-300 hover:text-white border border-white/10 transition-all flex items-center gap-1"
                         >
                           {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                           <span className="hidden sm:inline">{isCopied ? 'Copied' : 'Copy'}</span>
@@ -1451,7 +1451,7 @@ export function BibleReader({
                         {onOpenStudyBreakdown && (
                           <button
                             onClick={() => onOpenStudyBreakdown(selectedBook, selectedChapter, item.verse.toString())}
-                            className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold transition-all flex items-center gap-1 shadow"
+                            className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold transition-all flex items-center gap-1 shadow"
                           >
                             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                             <span>Study</span>
@@ -1462,7 +1462,7 @@ export function BibleReader({
                           <button
                             onClick={() => onShareToFeed(`${selectedBook} ${selectedChapter}:${item.verse}`, item.text)}
                             title="Share to Aura Feed"
-                            className="p-1.5 rounded-lg bg-black/40 hover:bg-blue-600 text-gray-300 hover:text-white border border-white/10 transition-all"
+                            className="p-1.5 rounded-lg bg-black/40 hover:bg-amber-600 text-gray-300 hover:text-white border border-white/10 transition-all"
                           >
                             <Share2 className="w-3.5 h-3.5" />
                           </button>
@@ -1486,7 +1486,7 @@ export function BibleReader({
           <button
             onClick={handlePrevChapter}
             disabled={parseInt(selectedChapter, 10) <= 1}
-            className="px-4 py-2.5 rounded-xl bg-black/40 hover:bg-blue-600/40 disabled:opacity-30 border border-white/10 text-xs font-bold transition-all flex items-center gap-2"
+            className="px-4 py-2.5 rounded-xl bg-black/40 hover:bg-amber-600/40 disabled:opacity-30 border border-white/10 text-xs font-bold transition-all flex items-center gap-2"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Previous Chapter</span>
@@ -1496,7 +1496,7 @@ export function BibleReader({
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="px-3 py-1.5 text-xs text-blue-300/70 hover:text-blue-200 transition-colors"
+            className="px-3 py-1.5 text-xs text-amber-300/70 hover:text-amber-200 transition-colors"
           >
             ↑ Back to Top
           </button>
@@ -1504,7 +1504,7 @@ export function BibleReader({
           <button
             onClick={handleNextChapter}
             disabled={parseInt(selectedChapter, 10) >= totalChaptersInCurrentBook}
-            className="px-4 py-2.5 rounded-xl bg-black/40 hover:bg-blue-600/40 disabled:opacity-30 border border-white/10 text-xs font-bold transition-all flex items-center gap-2"
+            className="px-4 py-2.5 rounded-xl bg-black/40 hover:bg-amber-600/40 disabled:opacity-30 border border-white/10 text-xs font-bold transition-all flex items-center gap-2"
           >
             <span>Next Chapter</span>
             <ChevronRight className="w-4 h-4" />
@@ -1515,12 +1515,12 @@ export function BibleReader({
       {/* Quick Interactive Modal Book & Chapter Picker */}
       {isBookPickerOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b1022] border border-blue-500/40 rounded-3xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
-            <div className="p-4 border-b border-blue-500/30 flex items-center justify-between bg-blue-950/40">
+          <div className="bg-[#0b1022] border border-amber-500/40 rounded-3xl w-full max-w-2xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+            <div className="p-4 border-b border-amber-500/30 flex items-center justify-between bg-amber-950/40">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-blue-400" />
+                <BookOpen className="w-5 h-5 text-amber-400" />
                 <span className="font-extrabold text-white text-base">Select Scripture</span>
-                <span className="text-xs text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded">
+                <span className="text-xs text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded">
                   {pickerStep === 'book' ? 'Step 1: Choose Book' : `Step 2: Choose Chapter (${tempSelectedBook})`}
                 </span>
               </div>
@@ -1536,7 +1536,7 @@ export function BibleReader({
             <div className="p-4 flex-1 overflow-y-auto space-y-4">
               {pickerStep === 'book' ? (
                 <>
-                  <div className="flex bg-black/60 p-1 rounded-xl border border-blue-500/30">
+                  <div className="flex bg-black/60 p-1 rounded-xl border border-amber-500/30">
                     <button
                       onClick={() => setSelectedTestament('Old Testament')}
                       className={`flex-1 py-2 rounded-lg text-xs font-extrabold transition-all ${
@@ -1551,7 +1551,7 @@ export function BibleReader({
                       onClick={() => setSelectedTestament('New Testament')}
                       className={`flex-1 py-2 rounded-lg text-xs font-extrabold transition-all ${
                         selectedTestament === 'New Testament'
-                          ? 'bg-blue-600 text-white shadow'
+                          ? 'bg-amber-600 text-white shadow'
                           : 'text-gray-400 hover:text-white'
                       }`}
                     >
@@ -1569,12 +1569,12 @@ export function BibleReader({
                         }}
                         className={`p-3 rounded-xl border text-left transition-all ${
                           tempSelectedBook === b.name
-                            ? 'bg-blue-600 text-white border-blue-400 shadow-md'
-                            : 'bg-black/40 hover:bg-blue-950/60 border-blue-500/20 text-gray-200'
+                            ? 'bg-amber-600 text-white border-amber-400 shadow-md'
+                            : 'bg-black/40 hover:bg-amber-950/60 border-amber-500/20 text-gray-200'
                         }`}
                       >
                         <div className="font-bold text-xs truncate">{b.name}</div>
-                        <div className="text-[10px] text-blue-300/80">{b.chapters} chapters</div>
+                        <div className="text-[10px] text-amber-300/80">{b.chapters} chapters</div>
                       </button>
                     ))}
                   </div>
@@ -1584,7 +1584,7 @@ export function BibleReader({
                   <div className="flex items-center justify-between">
                     <button
                       onClick={() => setPickerStep('book')}
-                      className="text-xs text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1"
+                      className="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1"
                     >
                       <ChevronLeft className="w-4 h-4" />
                       <span>← Back to Books</span>
@@ -1602,7 +1602,7 @@ export function BibleReader({
                           setSelectedVerse('1');
                           setIsBookPickerOpen(false);
                         }}
-                        className="py-2.5 rounded-xl bg-black/40 hover:bg-blue-600 border border-blue-500/20 hover:border-blue-400 text-white font-bold text-xs transition-all shadow text-center"
+                        className="py-2.5 rounded-xl bg-black/40 hover:bg-amber-600 border border-amber-500/20 hover:border-amber-400 text-white font-bold text-xs transition-all shadow text-center"
                       >
                         {ch}
                       </button>

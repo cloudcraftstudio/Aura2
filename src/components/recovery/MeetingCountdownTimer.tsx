@@ -60,12 +60,12 @@ export const MeetingCountdownTimer: React.FC<MeetingCountdownTimerProps> = ({
     <div
       className={`relative overflow-hidden rounded-3xl border transition-all duration-500 shadow-2xl ${
         isLive
-          ? 'bg-gradient-to-br from-emerald-950/70 via-slate-900/90 to-blue-950/70 border-emerald-500/40 shadow-emerald-900/20'
-          : 'bg-gradient-to-br from-blue-950/50 via-slate-900/80 to-indigo-950/50 border-white/10'
+          ? 'bg-gradient-to-br from-emerald-950/70 via-slate-900/90 to-amber-950/70 border-emerald-500/40 shadow-emerald-900/20'
+          : 'bg-gradient-to-br from-amber-950/50 via-slate-900/80 to-yellow-950/50 border-white/10'
       }`}
     >
       {/* Ambient background glow */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
       {isLive && (
         <div className="absolute top-0 left-0 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none animate-pulse" />
       )}
@@ -80,8 +80,8 @@ export const MeetingCountdownTimer: React.FC<MeetingCountdownTimerProps> = ({
                 Live Room Open
               </span>
             ) : (
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold">
-                <Clock className="w-3.5 h-3.5 text-blue-400" />
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-semibold">
+                <Clock className="w-3.5 h-3.5 text-amber-400" />
                 Scheduled Gathering
               </span>
             )}
@@ -111,7 +111,7 @@ export const MeetingCountdownTimer: React.FC<MeetingCountdownTimerProps> = ({
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <strong className="text-white">Topic:</strong> {meeting.topic}
             </span>
-            <span className="text-blue-300 flex items-center gap-1.5">
+            <span className="text-amber-300 flex items-center gap-1.5">
               <span>📖</span>
               <strong className="text-white">Focus:</strong> {meeting.scriptureFocus}
             </span>
@@ -131,7 +131,7 @@ export const MeetingCountdownTimer: React.FC<MeetingCountdownTimerProps> = ({
               <span className="text-xs uppercase tracking-widest text-slate-400 font-bold">
                 Time Until Gathering
               </span>
-              <span className="text-xs text-blue-300 font-medium">
+              <span className="text-xs text-amber-300 font-medium">
                 {new Date(meeting.scheduledAt).toLocaleDateString(undefined, {
                   weekday: 'short',
                   month: 'short',
@@ -165,11 +165,11 @@ export const MeetingCountdownTimer: React.FC<MeetingCountdownTimerProps> = ({
                 <span className="text-[10px] sm:text-xs text-slate-400 uppercase font-semibold mt-1">Mins</span>
               </div>
 
-              <div className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-black/40 border border-blue-500/30 backdrop-blur-md shadow-inner">
-                <span className="text-2xl sm:text-4xl font-black text-blue-400 font-mono tracking-wider animate-pulse">
+              <div className="flex flex-col items-center justify-center p-3 sm:p-4 rounded-2xl bg-black/40 border border-amber-500/30 backdrop-blur-md shadow-inner">
+                <span className="text-2xl sm:text-4xl font-black text-amber-400 font-mono tracking-wider animate-pulse">
                   {pad(timeLeft.seconds)}
                 </span>
-                <span className="text-[10px] sm:text-xs text-blue-300 uppercase font-semibold mt-1">Secs</span>
+                <span className="text-[10px] sm:text-xs text-amber-300 uppercase font-semibold mt-1">Secs</span>
               </div>
             </div>
 

@@ -329,6 +329,123 @@ class SoundEffectsService {
     }
   }
 
+  // Heavenly celestial chord with radiant warm harmonics (Cathedral pad / Light descending)
+  public playHeavenlyChord() {
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      // Rich resonant D-major/G celestial chord: D3, A3, D4, F#4, A4, D5
+      const notes = [146.83, 220.0, 293.66, 369.99, 440.0, 587.33];
+      notes.forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = idx < 2 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        
+        // Gentle shimmer vibrato
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(0.08 / (idx + 1), now + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2 + idx * 0.1);
+        
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 1.4);
+      });
+    } catch (e) {
+      console.warn('Heavenly chord error:', e);
+    }
+  }
+
+  // Badass Lion of Judah Shofar / Triumphant rumble resonance
+  public playLionRoarChime() {
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      
+      // Sub-bass resonance rumble (Lion's chest vibration)
+      const subOsc = this.ctx.createOscillator();
+      const subGain = this.ctx.createGain();
+      subOsc.type = 'sawtooth';
+      subOsc.frequency.setValueAtTime(75, now);
+      subOsc.frequency.exponentialRampToValueAtTime(45, now + 0.7);
+      subGain.gain.setValueAtTime(0.2, now);
+      subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
+      subOsc.connect(subGain);
+      subGain.connect(this.ctx.destination);
+      subOsc.start(now);
+      subOsc.stop(now + 0.85);
+
+      // Triumphant royal brass fanfare (Shofar trumpet flourish)
+      const fanfares = [293.66, 440.0, 587.33, 880.0];
+      fanfares.forEach((f, i) => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(f, now + 0.1 + i * 0.08);
+        gain.gain.setValueAtTime(0.001, now + 0.1 + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.09, now + 0.15 + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9 + i * 0.05);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + 0.1 + i * 0.08);
+        osc.stop(now + 1.1);
+      });
+    } catch (e) {
+      console.warn('Lion roar sound error:', e);
+    }
+  }
+
+  // Shofar Horn Call for Intercession / Midnight Prayer Room / Answered Prayers
+  public playShofarHorn() {
+    try {
+      this.initCtx();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      
+      // Core ancient horn tone (Sawtooth for brassy/reedy timbre)
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      
+      // Pitch bends common in Shofar blowing (Tekiah)
+      osc.frequency.setValueAtTime(329.63, now); // E4
+      osc.frequency.linearRampToValueAtTime(349.23, now + 0.3); // F4
+      osc.frequency.linearRampToValueAtTime(329.63, now + 1.2);
+      osc.frequency.linearRampToValueAtTime(440.0, now + 1.8); // Jump to A4
+      
+      // Swelling volume envelope
+      gain.gain.setValueAtTime(0.001, now);
+      gain.gain.exponentialRampToValueAtTime(0.15, now + 0.5);
+      gain.gain.linearRampToValueAtTime(0.2, now + 1.5);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 2.5);
+      
+      // Add slight vibrato
+      const lfo = this.ctx.createOscillator();
+      const lfoGain = this.ctx.createGain();
+      lfo.type = 'sine';
+      lfo.frequency.value = 6;
+      lfoGain.gain.value = 5;
+      lfo.connect(lfoGain);
+      lfoGain.connect(osc.frequency);
+      
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      
+      lfo.start(now);
+      osc.start(now);
+      
+      lfo.stop(now + 2.5);
+      osc.stop(now + 2.5);
+    } catch (e) {
+      console.warn('Shofar horn sound error:', e);
+    }
+  }
+
   // Harmonious success chime for permissions granted / items saved
   public playSuccessTone() {
     try {

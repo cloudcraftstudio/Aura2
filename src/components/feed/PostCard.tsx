@@ -111,6 +111,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
       localStorage.setItem('aura_study_initial_tab', 'prayers');
       localStorage.setItem('aura_target_prayer_id', targetPrayerId);
       sessionStorage.setItem('aura_target_prayer_id', targetPrayerId);
+      sessionStorage.setItem('aura_target_prayer_data', JSON.stringify(prayerItem));
     } catch {}
 
     window.dispatchEvent(
@@ -161,6 +162,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
       localStorage.setItem('aura_study_initial_tab', 'pulpit');
       localStorage.setItem('aura_target_sermon_id', sermonId);
       sessionStorage.setItem('aura_target_sermon_id', sermonId);
+      sessionStorage.setItem('aura_target_sermon_data', JSON.stringify(sermonItem));
     } catch {}
 
     window.dispatchEvent(
@@ -308,7 +310,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
       id={`post-card-${post.id}`}
       className={`rounded-2xl bg-[#0b0f24]/90 backdrop-blur-xl border shadow-lg transition-all duration-300 mb-4 ${
         isHighlighted
-          ? 'border-blue-400/80 shadow-[0_0_30px_rgba(59,130,246,0.3)] ring-2 ring-blue-400/50'
+          ? 'border-amber-400/80 shadow-[0_0_30px_rgba(59,130,246,0.3)] ring-2 ring-amber-400/50'
           : 'border-white/10 hover:border-white/20'
       }`}
     >
@@ -328,10 +330,10 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+              <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
                 {post.authorName}
               </h4>
-              <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 fill-blue-400/20" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
             </div>
             <div className="flex items-center gap-1.5 text-xs text-slate-400">
               <span className="group-hover:text-slate-300">@{post.authorHandle}</span>
@@ -351,7 +353,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
         <div className="flex items-center gap-2 relative">
           {post.location && (
-            <div className="hidden sm:flex items-center gap-1 text-[11px] text-blue-300 px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20">
+            <div className="hidden sm:flex items-center gap-1 text-[11px] text-amber-300 px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
               <MapPin className="w-3 h-3" />
               <span>{post.location}</span>
             </div>
@@ -409,7 +411,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
         {isTextLong && (
           <button
             onClick={() => setIsExpandedText(!isExpandedText)}
-            className="text-xs font-semibold text-blue-400 hover:text-blue-300 mt-1 focus:outline-none"
+            className="text-xs font-semibold text-amber-400 hover:text-amber-300 mt-1 focus:outline-none"
           >
             {isExpandedText ? 'Show less' : 'See more...'}
           </button>
@@ -422,7 +424,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
               <span
                 key={tag}
                 onClick={() => handleTagClick(tag)}
-                className="text-[11px] font-medium text-blue-400/90 hover:text-blue-300 hover:underline cursor-pointer"
+                className="text-[11px] font-medium text-amber-400/90 hover:text-amber-300 hover:underline cursor-pointer"
               >
                 #{tag}
               </span>
@@ -446,20 +448,20 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             {isSermonPost && (
               <button
                 onClick={handleGoToSermons}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/35 text-blue-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35 text-amber-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
               >
                 <span>🎙️ Open in Pulpit / Sermons</span>
-                <ArrowRight className="w-3 h-3 text-blue-400 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3 h-3 text-amber-400 group-hover:translate-x-0.5 transition-transform" />
               </button>
             )}
 
             {isScripturePost && (
               <button
                 onClick={handleGoToBible}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/35 text-indigo-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-yellow-500/15 hover:bg-yellow-500/25 border border-yellow-500/35 text-yellow-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
               >
                 <span>📖 Open {scriptureMatch ? scriptureMatch[0] : 'in Bible Study'}</span>
-                <ArrowRight className="w-3 h-3 text-indigo-400 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3 h-3 text-yellow-400 group-hover:translate-x-0.5 transition-transform" />
               </button>
             )}
 
@@ -469,10 +471,10 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                   soundEffects.playTap();
                   window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'devotional' } }));
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/35 text-purple-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/15 hover:bg-orange-500/25 border border-orange-500/35 text-orange-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
               >
                 <span>✨ Daily Devotional</span>
-                <ArrowRight className="w-3 h-3 text-purple-400 group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3 h-3 text-orange-400 group-hover:translate-x-0.5 transition-transform" />
               </button>
             )}
 
@@ -669,10 +671,10 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
           id={`comments-toggle-${post.id}`}
           onClick={() => setIsCommentsOpen(!isCommentsOpen)}
           className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition-all ${
-            isCommentsOpen ? 'bg-white/5 text-blue-400' : ''
+            isCommentsOpen ? 'bg-white/5 text-amber-400' : ''
           }`}
         >
-          <MessageCircle className="w-4 h-4 text-blue-400" />
+          <MessageCircle className="w-4 h-4 text-amber-400" />
           <span>Comment</span>
         </button>
 
@@ -713,7 +715,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                             new CustomEvent('open_user_profile', { detail: { userId: c.authorId } })
                           );
                         }}
-                        className="font-bold text-white cursor-pointer hover:text-blue-300 transition-colors"
+                        className="font-bold text-white cursor-pointer hover:text-amber-300 transition-colors"
                       >
                         {c.authorName}
                       </span>
@@ -743,12 +745,12 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
               placeholder="Write a comment..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
-              className="flex-1 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400"
+              className="flex-1 px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400"
             />
             <button
               type="submit"
               disabled={!commentText.trim()}
-              className="p-2 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20"
+              className="p-2 rounded-xl bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-white text-xs font-bold transition-all shadow-md shadow-amber-500/20"
             >
               <Send className="w-3.5 h-3.5" />
             </button>

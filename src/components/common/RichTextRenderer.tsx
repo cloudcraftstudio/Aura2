@@ -37,7 +37,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 underline underline-offset-2 font-medium transition-colors break-all"
+                className="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 underline underline-offset-2 font-medium transition-colors break-all"
                 title={`Open link: ${token.url}`}
               >
                 <span>{token.value}</span>
@@ -56,7 +56,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                     onTagClick(token.value.replace(/^#/, ''));
                   }
                 }}
-                className={`text-cyan-400 hover:text-cyan-300 font-semibold ${
+                className={`text-amber-400 hover:text-amber-300 font-semibold ${
                   onTagClick ? 'cursor-pointer hover:underline' : ''
                 }`}
               >
@@ -75,7 +75,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                     onMentionClick(token.value.replace(/^@/, ''));
                   }
                 }}
-                className={`text-indigo-400 hover:text-indigo-300 font-semibold ${
+                className={`text-yellow-400 hover:text-yellow-300 font-semibold ${
                   onMentionClick ? 'cursor-pointer hover:underline' : ''
                 }`}
               >

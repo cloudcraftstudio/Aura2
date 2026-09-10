@@ -47,29 +47,29 @@ export const AuraEnergyHubModal: React.FC = () => {
       case 'celestial-gold':
         return <Sun className="w-4 h-4 text-amber-400" />;
       case 'living-water':
-        return <Droplets className="w-4 h-4 text-cyan-400" />;
+        return <Droplets className="w-4 h-4 text-amber-400" />;
       case 'holy-fire':
         return <Flame className="w-4 h-4 text-red-400" />;
       case 'cosmic-harmony':
-        return <Radio className="w-4 h-4 text-purple-400" />;
+        return <Radio className="w-4 h-4 text-orange-400" />;
       case 'gentle-sanctuary':
-        return <Moon className="w-4 h-4 text-blue-300" />;
+        return <Moon className="w-4 h-4 text-amber-300" />;
     }
   };
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
       <div
-        className="relative w-full max-w-lg bg-[#0a0d1d] border border-blue-500/30 rounded-3xl p-6 text-white shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+        className="relative w-full max-w-lg bg-[#0a0d1d] border border-amber-500/30 rounded-3xl p-6 text-white shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Ambient Top Glow in modal */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-gradient-to-r from-amber-500/20 via-blue-500/20 to-purple-500/20 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-24 bg-gradient-to-r from-amber-500/20 via-amber-500/20 to-orange-500/20 blur-3xl pointer-events-none" />
 
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/10 relative z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-indigo-600 p-[1.5px] shadow-lg shadow-amber-500/20 flex-shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 p-[1.5px] shadow-lg shadow-amber-500/20 flex-shrink-0">
               <div className="w-full h-full rounded-[14px] bg-[#0a0d1d] flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
               </div>
@@ -95,7 +95,7 @@ export const AuraEnergyHubModal: React.FC = () => {
         {/* Modal Body (Scrollable) */}
         <div className="flex-1 overflow-y-auto py-4 space-y-5 relative z-10 pr-1">
           {/* Energy Resonance Card */}
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-950/40 via-[#0e142e] to-indigo-950/40 border border-blue-500/30 shadow-inner">
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-950/40 via-[#0e142e] to-yellow-950/40 border border-amber-500/30 shadow-inner">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <Zap className="w-4 h-4 text-amber-400 animate-bounce" />
@@ -109,7 +109,7 @@ export const AuraEnergyHubModal: React.FC = () => {
             {/* Progress Bar */}
             <div className="w-full h-2.5 rounded-full bg-white/10 overflow-hidden p-0.5 mb-2">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-cyan-400 transition-all duration-700 shadow-md shadow-amber-500/50"
+                className="h-full rounded-full bg-gradient-to-r from-amber-500 via-pink-500 to-amber-400 transition-all duration-700 shadow-md shadow-amber-500/50"
                 style={{ width: `${auraLevel}%` }}
               />
             </div>
@@ -141,14 +141,14 @@ export const AuraEnergyHubModal: React.FC = () => {
 
               <button
                 onClick={() => triggerBurst('community', '✦ Community Connection & Fellowship')}
-                className="flex items-center gap-2.5 p-3 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 font-bold text-xs transition-all active:scale-95 group shadow-lg shadow-cyan-500/10 text-left"
+                className="flex items-center gap-2.5 p-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs transition-all active:scale-95 group shadow-lg shadow-amber-500/10 text-left"
               >
-                <div className="w-8 h-8 rounded-xl bg-cyan-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Users className="w-4 h-4 text-cyan-400" />
+                <div className="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Users className="w-4 h-4 text-amber-400" />
                 </div>
                 <div>
                   <div className="text-white font-bold">Community Vibe</div>
-                  <div className="text-[10px] text-cyan-300/80">Fellowship & love</div>
+                  <div className="text-[10px] text-amber-300/80">Fellowship & love</div>
                 </div>
               </button>
             </div>
@@ -169,7 +169,7 @@ export const AuraEnergyHubModal: React.FC = () => {
                     onClick={() => setTheme(key)}
                     className={`w-full flex items-center justify-between p-3 rounded-2xl border transition-all text-left ${
                       isSelected
-                        ? 'bg-blue-600/20 border-blue-400 text-white shadow-lg shadow-blue-500/20'
+                        ? 'bg-amber-600/20 border-amber-400 text-white shadow-lg shadow-amber-500/20'
                         : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 hover:text-white'
                     }`}
                   >
@@ -181,7 +181,7 @@ export const AuraEnergyHubModal: React.FC = () => {
                         <div className="font-bold text-xs sm:text-sm flex items-center gap-2">
                           {info.name}
                           {isSelected && (
-                            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-300">
+                            <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded bg-amber-500/30 text-amber-300">
                               Active
                             </span>
                           )}
@@ -232,7 +232,7 @@ export const AuraEnergyHubModal: React.FC = () => {
                 onClick={() => setInteractiveTaps(!interactiveTaps)}
                 className={`px-3 py-1.5 rounded-xl font-bold text-xs transition-all ${
                   interactiveTaps
-                    ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
+                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
                     : 'bg-slate-500/20 text-slate-400 border border-slate-500/30'
                 }`}
               >
@@ -262,7 +262,7 @@ export const AuraEnergyHubModal: React.FC = () => {
             <div className="p-3 rounded-2xl bg-white/5 border border-white/10 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-white">Aura Particle Intensity</span>
-                <span className="text-[11px] text-blue-300 capitalize font-bold">{intensity}</span>
+                <span className="text-[11px] text-amber-300 capitalize font-bold">{intensity}</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {(['subtle', 'balanced', 'vibrant'] as AuraIntensity[]).map((val) => (
@@ -271,7 +271,7 @@ export const AuraEnergyHubModal: React.FC = () => {
                     onClick={() => setIntensity(val)}
                     className={`py-1.5 rounded-xl text-xs font-bold capitalize transition-all border ${
                       intensity === val
-                        ? 'bg-blue-600 text-white border-blue-400 shadow-md shadow-blue-500/30'
+                        ? 'bg-amber-600 text-white border-amber-400 shadow-md shadow-amber-500/30'
                         : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10'
                     }`}
                   >
@@ -287,7 +287,7 @@ export const AuraEnergyHubModal: React.FC = () => {
         <div className="pt-3 border-t border-white/10 flex justify-end relative z-10">
           <button
             onClick={closeHub}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25 transition-all active:scale-95"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs shadow-lg shadow-amber-500/25 transition-all active:scale-95"
           >
             Done
           </button>

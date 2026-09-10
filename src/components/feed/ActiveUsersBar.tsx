@@ -47,10 +47,10 @@ export const ActiveUsersBar: React.FC<ActiveUsersBarProps> = ({ onOpenProfile })
   return (
     <div
       id="active-online-users-bar"
-      className="mb-6 rounded-[28px] bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-purple-950/40 border border-blue-500/20 p-4 backdrop-blur-2xl shadow-xl relative overflow-hidden"
+      className="mb-6 rounded-[28px] bg-gradient-to-r from-amber-950/40 via-yellow-950/30 to-orange-950/40 border border-amber-500/20 p-4 backdrop-blur-2xl shadow-xl relative overflow-hidden"
     >
       {/* Glow ambient background */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
@@ -77,7 +77,7 @@ export const ActiveUsersBar: React.FC<ActiveUsersBarProps> = ({ onOpenProfile })
             key={u.id}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2.5 p-2 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-blue-500/30 transition-all flex-shrink-0 group"
+            className="flex items-center gap-2.5 p-2 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-amber-500/30 transition-all flex-shrink-0 group"
           >
             {/* User Avatar with Green Ring */}
             <div className="relative cursor-pointer" onClick={() => handleOpenUserProfile(u.id)}>
@@ -90,10 +90,10 @@ export const ActiveUsersBar: React.FC<ActiveUsersBarProps> = ({ onOpenProfile })
             {/* Name and Status Message */}
             <div className="min-w-0 pr-1 cursor-pointer" onClick={() => handleOpenUserProfile(u.id)}>
               <div className="flex items-center gap-1">
-                <p className="text-xs font-bold text-white group-hover:text-blue-300 transition-colors truncate max-w-[100px]">
+                <p className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors truncate max-w-[100px]">
                   {u.name.split(' ')[0]}
                 </p>
-                {u.isVerified && <Sparkles className="w-2.5 h-2.5 text-blue-400" />}
+                {u.isVerified && <Sparkles className="w-2.5 h-2.5 text-amber-400" />}
               </div>
               <p className="text-[10px] text-slate-400 truncate max-w-[110px]">
                 {u.statusMessage || 'Active now'}
@@ -105,7 +105,7 @@ export const ActiveUsersBar: React.FC<ActiveUsersBarProps> = ({ onOpenProfile })
               <button
                 type="button"
                 onClick={() => handleStartChatWith(u)}
-                className="p-1.5 rounded-xl bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white transition-all shadow-sm"
+                className="p-1.5 rounded-xl bg-white/5 hover:bg-amber-600 text-slate-300 hover:text-white transition-all shadow-sm"
                 title={`Send message to ${u.name}`}
               >
                 <MessageSquare className="w-3.5 h-3.5" />

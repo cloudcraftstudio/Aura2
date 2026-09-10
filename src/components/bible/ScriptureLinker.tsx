@@ -86,10 +86,10 @@ export const ScriptureLinker: React.FC<ScriptureLinkerProps> = ({ text, classNam
         key={`scrip-${idx}-${matchText}`}
         onClick={(e) => handleTrigger(e, matchText)}
         onMouseEnter={(e) => handleTrigger(e, matchText)}
-        className="inline-flex items-center gap-0.5 px-1.5 py-0.5 mx-0.5 rounded-md bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 hover:text-blue-100 font-semibold border border-blue-400/30 transition-all text-inherit align-baseline underline decoration-blue-400/50 hover:decoration-blue-300"
+        className="inline-flex items-center gap-0.5 px-1.5 py-0.5 mx-0.5 rounded-md bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 hover:text-amber-100 font-semibold border border-amber-400/30 transition-all text-inherit align-baseline underline decoration-amber-400/50 hover:decoration-amber-300"
         title={`Click or hover to preview ${matchText}`}
       >
-        <BookOpen className="w-3 h-3 text-blue-400 inline" />
+        <BookOpen className="w-3 h-3 text-amber-400 inline" />
         <span>{matchText}</span>
       </button>
     );
@@ -110,13 +110,13 @@ export const ScriptureLinker: React.FC<ScriptureLinkerProps> = ({ text, classNam
         <div
           ref={popoverRef}
           style={{ top: `${popoverPos.y}px`, left: `${Math.max(12, popoverPos.x)}px` }}
-          className="fixed z-[999] w-[320px] sm:w-[360px] bg-slate-900/95 backdrop-blur-xl border border-blue-500/40 rounded-2xl p-4 shadow-2xl animate-fade-in text-left space-y-3"
+          className="fixed z-[999] w-[320px] sm:w-[360px] bg-slate-900/95 backdrop-blur-xl border border-amber-500/40 rounded-2xl p-4 shadow-2xl animate-fade-in text-left space-y-3"
         >
           <div className="flex items-center justify-between border-b border-white/10 pb-2">
             <div className="flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-xs font-black uppercase tracking-wider text-blue-300">{activeRef}</span>
-              <span className="text-[10px] bg-blue-600/30 text-blue-200 px-1.5 py-0.5 rounded font-bold">KJV</span>
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-xs font-black uppercase tracking-wider text-amber-300">{activeRef}</span>
+              <span className="text-[10px] bg-amber-600/30 text-amber-200 px-1.5 py-0.5 rounded font-bold">KJV</span>
             </div>
             <button
               onClick={() => setActiveRef(null)}
@@ -128,7 +128,7 @@ export const ScriptureLinker: React.FC<ScriptureLinkerProps> = ({ text, classNam
 
           <div className="text-xs text-slate-200 leading-relaxed max-h-48 overflow-y-auto pr-1">
             {loading ? (
-              <div className="flex items-center justify-center py-6 text-blue-400 gap-2">
+              <div className="flex items-center justify-center py-6 text-amber-400 gap-2">
                 <Loader className="w-4 h-4 animate-spin" />
                 <span className="text-xs">Loading Scripture passage...</span>
               </div>
@@ -145,7 +145,7 @@ export const ScriptureLinker: React.FC<ScriptureLinkerProps> = ({ text, classNam
                   onOpenStudy(activeRef);
                   setActiveRef(null);
                 }}
-                className="text-[11px] font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1 bg-blue-500/10 px-2 py-1 rounded-lg border border-blue-500/20"
+                className="text-[11px] font-bold text-amber-400 hover:text-amber-300 flex items-center gap-1 bg-amber-500/10 px-2 py-1 rounded-lg border border-amber-500/20"
               >
                 <span>Study Passage</span>
                 <ExternalLink className="w-3 h-3" />

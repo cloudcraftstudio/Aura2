@@ -310,7 +310,7 @@ export function KingJamesTutor({
           // Heading 4
           if (trimmed.startsWith('#### ')) {
             return (
-              <h4 key={idx} className="font-semibold text-blue-300 pt-1">
+              <h4 key={idx} className="font-semibold text-amber-300 pt-1">
                 {trimmed.replace('#### ', '')}
               </h4>
             );
@@ -338,7 +338,7 @@ export function KingJamesTutor({
             const rest = trimmed.replace(/^\d+\.\s+/, '');
             return (
               <div key={idx} className="flex items-start gap-2 pl-2">
-                <span className="text-blue-400 font-semibold text-xs mt-0.5">{num}.</span>
+                <span className="text-amber-400 font-semibold text-xs mt-0.5">{num}.</span>
                 <span className="text-gray-200">{rest}</span>
               </div>
             );
@@ -355,11 +355,11 @@ export function KingJamesTutor({
   };
 
   const contentElement = (
-    <div className={`flex flex-col ${isInline ? 'h-[720px] rounded-xl border border-blue-500/30 bg-blue-950/40 backdrop-blur-md shadow-2xl' : 'h-full bg-blue-950/95 border border-blue-500/30 rounded-xl shadow-2xl'}`}>
+    <div className={`flex flex-col ${isInline ? 'h-[720px] rounded-xl border border-amber-500/30 bg-amber-950/40 backdrop-blur-md shadow-2xl' : 'h-full bg-amber-950/95 border border-amber-500/30 rounded-xl shadow-2xl'}`}>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-blue-500/20 bg-blue-900/30 gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border-b border-amber-500/20 bg-amber-900/30 gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-blue-600 flex items-center justify-center shadow-lg border border-amber-400/40">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center shadow-lg border border-amber-400/40">
             <GraduationCap className="w-5 h-5 text-white" />
           </div>
           <div>
@@ -369,7 +369,7 @@ export function KingJamesTutor({
                 Biblical Scholar & Master Theologian
               </span>
             </div>
-            <p className="text-xs text-blue-300">
+            <p className="text-xs text-amber-300">
               Answers any Bible inquiry • KJV Exegesis • Hebrew & Greek • Historical Context
             </p>
           </div>
@@ -379,7 +379,7 @@ export function KingJamesTutor({
           <button
             onClick={handleClearHistory}
             title="Reset Conversation"
-            className="p-1.5 text-gray-400 hover:text-amber-300 bg-blue-900/40 hover:bg-blue-800/60 rounded-lg border border-blue-500/20 text-xs flex items-center gap-1 transition-all"
+            className="p-1.5 text-gray-400 hover:text-amber-300 bg-amber-900/40 hover:bg-amber-800/60 rounded-lg border border-amber-500/20 text-xs flex items-center gap-1 transition-all"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">New Topic</span>
@@ -388,7 +388,7 @@ export function KingJamesTutor({
           {!isInline && onClose && (
             <button
               onClick={onClose}
-              className="p-1.5 text-gray-400 hover:text-white bg-blue-900/40 hover:bg-blue-800/60 rounded-lg border border-blue-500/20 transition-colors"
+              className="p-1.5 text-gray-400 hover:text-white bg-amber-900/40 hover:bg-amber-800/60 rounded-lg border border-amber-500/20 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -397,7 +397,7 @@ export function KingJamesTutor({
       </div>
 
       {/* Mode Selector Pill Bar */}
-      <div className="px-4 py-2 bg-blue-950/60 border-b border-blue-500/20 overflow-x-auto flex gap-2 items-center text-xs">
+      <div className="px-4 py-2 bg-amber-950/60 border-b border-amber-500/20 overflow-x-auto flex gap-2 items-center text-xs">
         <span className="text-gray-400 whitespace-nowrap font-medium flex items-center gap-1">
           <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Focus Mode:
         </span>
@@ -410,8 +410,8 @@ export function KingJamesTutor({
               onClick={() => setSelectedMode(mode.id)}
               className={`px-2.5 py-1 rounded-full whitespace-nowrap flex items-center gap-1.5 transition-all ${
                 isSelected
-                  ? 'bg-gradient-to-r from-amber-500/30 to-blue-600/30 text-amber-200 border border-amber-400/40 shadow-sm font-semibold'
-                  : 'bg-blue-900/30 text-gray-300 hover:text-white hover:bg-blue-800/40 border border-blue-500/10'
+                  ? 'bg-gradient-to-r from-amber-500/30 to-amber-600/30 text-amber-200 border border-amber-400/40 shadow-sm font-semibold'
+                  : 'bg-amber-900/30 text-gray-300 hover:text-white hover:bg-amber-800/40 border border-amber-500/10'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -434,13 +434,13 @@ export function KingJamesTutor({
                 <button
                   key={idx}
                   onClick={() => handleSendMessage(topic.query)}
-                  className="text-left p-3 rounded-lg bg-blue-900/30 hover:bg-blue-800/50 border border-blue-500/20 hover:border-amber-400/40 transition-all group flex flex-col justify-between"
+                  className="text-left p-3 rounded-lg bg-amber-900/30 hover:bg-amber-800/50 border border-amber-500/20 hover:border-amber-400/40 transition-all group flex flex-col justify-between"
                 >
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="text-xs font-bold text-amber-200 group-hover:text-amber-100">
                       {topic.title}
                     </span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-800/60 text-blue-300 border border-blue-500/20">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-800/60 text-amber-300 border border-amber-500/20">
                       {topic.category}
                     </span>
                   </div>
@@ -464,13 +464,13 @@ export function KingJamesTutor({
               <div
                 className={`max-w-full sm:max-w-xl lg:max-w-2xl px-4 py-3 rounded-xl shadow-md ${
                   isBot
-                    ? 'bg-blue-900/60 text-blue-50 border border-blue-500/30 backdrop-blur-sm'
-                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-br-none'
+                    ? 'bg-amber-900/60 text-amber-50 border border-amber-500/30 backdrop-blur-sm'
+                    : 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white rounded-br-none'
                 }`}
               >
                 {/* Header for Bot */}
                 {isBot && (
-                  <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-blue-500/20">
+                  <div className="flex items-center justify-between gap-2 pb-2 mb-2 border-b border-amber-500/20">
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center">
                         <GraduationCap className="w-3 h-3 text-amber-300" />
@@ -483,7 +483,7 @@ export function KingJamesTutor({
                         onClick={() => handlePlayVoice(msg)}
                         disabled={audioLoadingId === msg.id}
                         title={playingAudioId === msg.id ? 'Stop Voice' : 'Listen to King James Voice'}
-                        className={`p-1 rounded hover:bg-blue-800/60 text-amber-300 transition-colors ${
+                        className={`p-1 rounded hover:bg-amber-800/60 text-amber-300 transition-colors ${
                           playingAudioId === msg.id ? 'text-amber-400 bg-amber-950/40' : ''
                         }`}
                       >
@@ -499,7 +499,7 @@ export function KingJamesTutor({
                       <button
                         onClick={() => handleCopy(msg.content, msg.id)}
                         title="Copy text"
-                        className="p-1 rounded hover:bg-blue-800/60 text-gray-300 hover:text-white transition-colors"
+                        className="p-1 rounded hover:bg-amber-800/60 text-gray-300 hover:text-white transition-colors"
                       >
                         {copiedId === msg.id ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
                       </button>
@@ -507,7 +507,7 @@ export function KingJamesTutor({
                       <button
                         onClick={() => handleShareToFeed(msg)}
                         title="Share takeaway to Feed"
-                        className="p-1 rounded hover:bg-blue-800/60 text-gray-300 hover:text-amber-300 transition-colors"
+                        className="p-1 rounded hover:bg-amber-800/60 text-gray-300 hover:text-amber-300 transition-colors"
                       >
                         <Share2 className="w-3.5 h-3.5" />
                       </button>
@@ -520,7 +520,7 @@ export function KingJamesTutor({
 
                 {/* Verses Cited Badges */}
                 {isBot && msg.versesCited && msg.versesCited.length > 0 && (
-                  <div className="mt-3 pt-2 border-t border-blue-500/20">
+                  <div className="mt-3 pt-2 border-t border-amber-500/20">
                     <p className="text-[11px] font-semibold text-amber-300/90 mb-1.5 flex items-center gap-1">
                       <BookOpen className="w-3 h-3" /> Scriptures Referenced:
                     </p>
@@ -541,15 +541,15 @@ export function KingJamesTutor({
 
                 {/* Hebrew & Greek Word Badges */}
                 {isBot && msg.hebrewGreekWords && msg.hebrewGreekWords.length > 0 && (
-                  <div className="mt-2 pt-2 border-t border-blue-500/20">
-                    <p className="text-[11px] font-semibold text-blue-300/90 mb-1.5 flex items-center gap-1">
+                  <div className="mt-2 pt-2 border-t border-amber-500/20">
+                    <p className="text-[11px] font-semibold text-amber-300/90 mb-1.5 flex items-center gap-1">
                       <Languages className="w-3 h-3" /> Original Language Bites:
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                       {msg.hebrewGreekWords.map((item, wIdx) => (
                         <div
                           key={wIdx}
-                          className="p-1.5 rounded bg-blue-950/40 border border-blue-500/20 text-[11px]"
+                          className="p-1.5 rounded bg-amber-950/40 border border-amber-500/20 text-[11px]"
                         >
                           <span className="font-bold text-amber-300">{item.word}: </span>
                           <span className="text-gray-300">{item.definition}</span>
@@ -571,7 +571,7 @@ export function KingJamesTutor({
                       <button
                         key={sqIdx}
                         onClick={() => handleSendMessage(sq)}
-                        className="text-left px-3 py-1.5 rounded-lg bg-blue-900/40 hover:bg-blue-800/70 text-blue-200 hover:text-amber-200 border border-blue-500/20 hover:border-amber-400/40 text-xs transition-all flex items-center gap-1.5 shadow-sm"
+                        className="text-left px-3 py-1.5 rounded-lg bg-amber-900/40 hover:bg-amber-800/70 text-amber-200 hover:text-amber-200 border border-amber-500/20 hover:border-amber-400/40 text-xs transition-all flex items-center gap-1.5 shadow-sm"
                       >
                         <span>{sq}</span>
                         <ChevronRight className="w-3 h-3 text-amber-400 shrink-0" />
@@ -587,7 +587,7 @@ export function KingJamesTutor({
         {/* Loading Indicator */}
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-blue-900/60 text-blue-100 border border-blue-500/30 px-4 py-3 rounded-xl shadow-md flex items-center gap-3">
+            <div className="bg-amber-900/60 text-amber-100 border border-amber-500/30 px-4 py-3 rounded-xl shadow-md flex items-center gap-3">
               <div className="w-5 h-5 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" />
               <div>
                 <p className="text-xs font-bold text-amber-300">King James is consulting the scriptures...</p>
@@ -601,7 +601,7 @@ export function KingJamesTutor({
       </div>
 
       {/* Input Bar */}
-      <div className="border-t border-blue-500/20 p-3 sm:p-4 bg-blue-900/30">
+      <div className="border-t border-amber-500/20 p-3 sm:p-4 bg-amber-900/30">
         <div className="flex gap-2">
           <input
             ref={inputRef}
@@ -610,13 +610,13 @@ export function KingJamesTutor({
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
             placeholder="Ask King James anything (e.g. Melchizedek, Romans 8:28, Grace vs Works, Beatitudes)..."
-            className="flex-1 bg-blue-900/50 border border-blue-500/30 rounded-xl px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 text-sm transition-all"
+            className="flex-1 bg-amber-900/50 border border-amber-500/30 rounded-xl px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400/50 text-sm transition-all"
             disabled={loading}
           />
           <button
             onClick={() => handleSendMessage()}
             disabled={loading || !input.trim()}
-            className="bg-gradient-to-r from-amber-500 to-blue-600 hover:from-amber-600 hover:to-blue-700 disabled:opacity-50 text-white font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-md shadow-blue-950"
+            className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 text-white font-semibold px-4 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-md shadow-amber-950"
           >
             <Send className="w-4 h-4" />
             <span className="hidden sm:inline text-xs font-bold">Inquire</span>

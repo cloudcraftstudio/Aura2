@@ -80,7 +80,7 @@ export const RecoveryDashboard: React.FC = () => {
       <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <span className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
+            <span className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
               <Shield className="w-6 h-6" />
             </span>
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
@@ -94,7 +94,7 @@ export const RecoveryDashboard: React.FC = () => {
 
         {/* Dynamic Streak Widget */}
         <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 shrink-0">
-          <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+          <div className="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
             <span className="text-xl font-black text-white">
               {(() => {
                 try {
@@ -119,7 +119,7 @@ export const RecoveryDashboard: React.FC = () => {
           onClick={() => setActiveTab('principles')}
           className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold whitespace-nowrap transition-all shadow-sm ${
             activeTab === 'principles'
-              ? 'bg-blue-600 text-white shadow-blue-500/30'
+              ? 'bg-amber-600 text-white shadow-amber-500/30'
               : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
           }`}
         >
@@ -143,7 +143,7 @@ export const RecoveryDashboard: React.FC = () => {
           onClick={() => setActiveTab('audio')}
           className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold whitespace-nowrap transition-all shadow-sm ${
             activeTab === 'audio'
-              ? 'bg-indigo-600 text-white shadow-indigo-500/30'
+              ? 'bg-yellow-600 text-white shadow-yellow-500/30'
               : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
           }`}
         >
@@ -171,9 +171,9 @@ export const RecoveryDashboard: React.FC = () => {
         {activeTab === 'audio' && <RecoveryAudioFeed />}
         {activeTab === 'meetings' && (
           <div className="space-y-6">
-            <div className="mb-6 p-6 rounded-3xl bg-blue-950/20 border border-blue-500/30">
+            <div className="mb-6 p-6 rounded-3xl bg-amber-950/20 border border-amber-500/30">
               <h2 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                <Users className="w-5 h-5 text-blue-400" />
+                <Users className="w-5 h-5 text-amber-400" />
                 Live Fellowship Rooms
               </h2>
               <p className="text-sm text-slate-400">

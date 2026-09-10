@@ -165,10 +165,10 @@ The Sinner's Prayer:
   return (
     <div className="space-y-6 text-slate-200">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-[#0d1338] to-blue-950 border border-blue-500/30 p-6 sm:p-8 shadow-2xl">
-        <div className="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-yellow-950 via-[#0d1338] to-amber-950 border border-amber-500/30 p-6 sm:p-8 shadow-2xl">
+        <div className="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
         <div className="relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-400/30">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-400/30">
             <Sparkles className="w-3.5 h-3.5" />
             <span>The Good News • Eternal Life</span>
           </div>
@@ -186,7 +186,7 @@ The Sinner's Prayer:
             <button
               type="button"
               onClick={handleShareTract}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
             >
               {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Share2 className="w-4 h-4" />}
               <span>{copied ? 'Tract Copied to Clipboard!' : 'Share This Gospel Tract'}</span>
@@ -205,7 +205,7 @@ The Sinner's Prayer:
       {/* Step by Step Breakdown */}
       <div className="space-y-3">
         <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2 px-1">
-          <BookOpen className="w-4 h-4 text-blue-400" />
+          <BookOpen className="w-4 h-4 text-amber-400" />
           <span>The 6 Truths of Salvation</span>
         </h3>
 
@@ -217,8 +217,8 @@ The Sinner's Prayer:
                 key={step.num}
                 className={`rounded-2xl border transition-all overflow-hidden ${
                   isExpanded
-                    ? 'bg-[#0d143d] border-blue-400 shadow-xl shadow-blue-500/10'
-                    : 'bg-[#0a0e27]/80 border-white/10 hover:border-blue-500/40'
+                    ? 'bg-[#0d143d] border-amber-400 shadow-xl shadow-amber-500/10'
+                    : 'bg-[#0a0e27]/80 border-white/10 hover:border-amber-500/40'
                 }`}
               >
                 <button
@@ -227,7 +227,7 @@ The Sinner's Prayer:
                   className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left"
                 >
                   <div className="flex items-center gap-3.5 flex-1 min-w-0">
-                    <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-400/30 text-blue-300 font-bold text-sm flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-amber-600/20 border border-amber-400/30 text-amber-300 font-bold text-sm flex items-center justify-center flex-shrink-0">
                       {step.num}
                     </div>
                     <div className="min-w-0">
@@ -241,7 +241,7 @@ The Sinner's Prayer:
                   </div>
 
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <span className="text-[11px] font-semibold text-indigo-300 hidden sm:inline">
+                    <span className="text-[11px] font-semibold text-yellow-300 hidden sm:inline">
                       {step.verse}
                     </span>
                     {isExpanded ? (
@@ -255,9 +255,9 @@ The Sinner's Prayer:
                 {isExpanded && (
                   <div className="px-4 pb-5 sm:px-5 space-y-3.5 border-t border-white/5 pt-3">
                     {/* Scripture Quote Box */}
-                    <div className="p-3.5 rounded-xl bg-blue-950/40 border border-blue-500/30 text-blue-100 space-y-1.5">
+                    <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-100 space-y-1.5">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-blue-300 flex items-center gap-1.5">
+                        <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
                           <Bookmark className="w-3.5 h-3.5" />
                           <span>{step.verse} (KJV)</span>
                         </span>
@@ -265,7 +265,7 @@ The Sinner's Prayer:
                           <button
                             type="button"
                             onClick={() => onStudyPassage(step.verse)}
-                            className="text-[10px] text-blue-400 hover:text-blue-200 underline font-medium"
+                            className="text-[10px] text-amber-400 hover:text-amber-200 underline font-medium"
                           >
                             Study in Bible Guide →
                           </button>
@@ -295,7 +295,7 @@ The Sinner's Prayer:
       </div>
 
       {/* Sinner's Prayer & Commitment Section */}
-      <div className="rounded-3xl bg-gradient-to-b from-[#0f1742] to-[#0a0e2c] border-2 border-indigo-500/40 p-6 sm:p-8 space-y-5 shadow-2xl relative overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-b from-[#0f1742] to-[#0a0e2c] border-2 border-yellow-500/40 p-6 sm:p-8 space-y-5 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
           <Heart className="w-40 h-40 text-rose-500" />
         </div>
@@ -317,7 +317,7 @@ The Sinner's Prayer:
         </div>
 
         {/* The Prayer Card */}
-        <div className="relative rounded-2xl bg-black/50 border border-blue-500/30 p-5 sm:p-6 space-y-3 font-serif text-slate-100 text-xs sm:text-sm sm:leading-relaxed shadow-inner">
+        <div className="relative rounded-2xl bg-black/50 border border-amber-500/30 p-5 sm:p-6 space-y-3 font-serif text-slate-100 text-xs sm:text-sm sm:leading-relaxed shadow-inner">
           <p className="italic">
             "Dear Heavenly Father, I know that I am a sinner and that I have broken Your laws. 
             I cannot save myself. I believe with all my heart that Your Son Jesus Christ died on the cross 
@@ -337,7 +337,7 @@ The Sinner's Prayer:
             <button
               type="button"
               onClick={handleDecision}
-              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-blue-600 hover:from-emerald-500 hover:to-blue-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/25 border border-emerald-400/40 flex items-center justify-center gap-2 active:scale-98 transition-all"
+              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-600 hover:from-emerald-500 hover:to-amber-500 text-white font-extrabold text-sm sm:text-base shadow-xl shadow-emerald-500/25 border border-emerald-400/40 flex items-center justify-center gap-2 active:scale-98 transition-all"
             >
               <CheckCircle2 className="w-5 h-5 text-emerald-200" />
               <span>I Have Prayed This Prayer & Accept Jesus Today!</span>
@@ -360,13 +360,13 @@ The Sinner's Prayer:
       {/* Discipleship / Next Steps */}
       <div className="rounded-2xl bg-[#090d24]/90 border border-white/10 p-5 sm:p-6 space-y-4">
         <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-          <Compass className="w-4 h-4 text-indigo-400" />
+          <Compass className="w-4 h-4 text-yellow-400" />
           <span>Next Steps for Your New Christian Walk</span>
         </h4>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 space-y-1">
-            <p className="font-bold text-blue-300 flex items-center gap-1.5">
+            <p className="font-bold text-amber-300 flex items-center gap-1.5">
               <span>1. Read the Bible Daily</span>
             </p>
             <p className="text-slate-300 text-[11px] leading-relaxed">
@@ -375,7 +375,7 @@ The Sinner's Prayer:
           </div>
 
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 space-y-1">
-            <p className="font-bold text-indigo-300 flex items-center gap-1.5">
+            <p className="font-bold text-yellow-300 flex items-center gap-1.5">
               <span>2. Talk with God in Prayer</span>
             </p>
             <p className="text-slate-300 text-[11px] leading-relaxed">
@@ -384,7 +384,7 @@ The Sinner's Prayer:
           </div>
 
           <div className="p-3.5 rounded-xl bg-white/5 border border-white/5 space-y-1">
-            <p className="font-bold text-purple-300 flex items-center gap-1.5">
+            <p className="font-bold text-orange-300 flex items-center gap-1.5">
               <span>3. Fellowship with Believers</span>
             </p>
             <p className="text-slate-300 text-[11px] leading-relaxed">

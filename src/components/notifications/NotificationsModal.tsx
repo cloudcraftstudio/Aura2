@@ -106,13 +106,13 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
         );
       case 'comment':
         return (
-          <div className="w-7 h-7 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 flex items-center justify-center flex-shrink-0">
             <MessageSquare className="w-3.5 h-3.5" />
           </div>
         );
       case 'chat':
         return (
-          <div className="w-7 h-7 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 flex items-center justify-center flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center flex-shrink-0">
             <MessageSquare className="w-3.5 h-3.5" />
           </div>
         );
@@ -124,13 +124,13 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
         );
       case 'follow':
         return (
-          <div className="w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-400 flex items-center justify-center flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/30 text-orange-400 flex items-center justify-center flex-shrink-0">
             <UserPlus className="w-3.5 h-3.5" />
           </div>
         );
       default:
         return (
-          <div className="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center flex-shrink-0">
             <Sparkles className="w-3.5 h-3.5" />
           </div>
         );
@@ -155,7 +155,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
         {/* Top Header */}
         <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-white/5 flex-shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-2xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-md">
+            <div className="w-9 h-9 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
               <Bell className="w-4 h-4" />
             </div>
             <div>
@@ -164,7 +164,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                   Notifications
                 </h3>
                 {unreadCount > 0 && (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-500 text-white shadow-md shadow-blue-500/30 animate-pulse">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500 text-white shadow-md shadow-amber-500/30 animate-pulse">
                     {unreadCount} new
                   </span>
                 )}
@@ -183,7 +183,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                 className="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 border border-white/10 transition-colors"
                 title="Mark all notifications as read"
               >
-                <CheckCheck className="w-3.5 h-3.5 text-blue-400" />
+                <CheckCheck className="w-3.5 h-3.5 text-amber-400" />
                 <span className="hidden sm:inline">Mark all read</span>
               </button>
             )}
@@ -216,7 +216,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
             onClick={() => setActiveFilter('all')}
             className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all ${
               activeFilter === 'all'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -227,7 +227,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
             onClick={() => setActiveFilter('unread')}
             className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
               activeFilter === 'unread'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -243,7 +243,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
             onClick={() => setActiveFilter('interactions')}
             className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all ${
               activeFilter === 'interactions'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -254,7 +254,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
             onClick={() => setActiveFilter('chats')}
             className={`px-3 py-1 rounded-xl text-xs font-semibold transition-all ${
               activeFilter === 'chats'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
           >
@@ -339,7 +339,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                     className={`group relative p-3 sm:p-3.5 rounded-2xl border transition-all cursor-pointer flex items-start gap-3 ${
                       notif.isRead
                         ? 'bg-white/[0.03] hover:bg-white/[0.07] border-white/5 text-slate-300'
-                        : 'bg-blue-600/10 hover:bg-blue-600/15 border-blue-500/30 text-white shadow-lg shadow-blue-500/5'
+                        : 'bg-amber-600/10 hover:bg-amber-600/15 border-amber-500/30 text-white shadow-lg shadow-amber-500/5'
                     }`}
                   >
                     {/* Avatar or Type Icon */}
@@ -376,18 +376,18 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                         <div className="flex items-center gap-2">
                           {notif.isRead ? (
                             <span className="inline-flex items-center gap-1 text-[10px] text-slate-400 font-medium">
-                              <CheckCheck className="w-3 h-3 text-blue-400" />
+                              <CheckCheck className="w-3 h-3 text-amber-400" />
                               <span>Read</span>
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1.5 text-[10px] text-blue-400 font-bold">
-                              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                            <span className="inline-flex items-center gap-1.5 text-[10px] text-amber-400 font-bold">
+                              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                               <span>Unread</span>
                             </span>
                           )}
 
                           {notif.actionId && (
-                            <span className="text-[10px] text-blue-300 group-hover:underline inline-flex items-center gap-0.5">
+                            <span className="text-[10px] text-amber-300 group-hover:underline inline-flex items-center gap-0.5">
                               <span>Open</span>
                               <ExternalLink className="w-2.5 h-2.5" />
                             </span>
@@ -412,7 +412,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({ isOpen, 
                             {notif.isRead ? (
                               <EyeOff className="w-3.5 h-3.5 text-slate-400" />
                             ) : (
-                              <Eye className="w-3.5 h-3.5 text-blue-400" />
+                              <Eye className="w-3.5 h-3.5 text-amber-400" />
                             )}
                           </button>
 

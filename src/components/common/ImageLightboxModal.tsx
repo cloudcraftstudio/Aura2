@@ -256,7 +256,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
                   }}
                   className={`relative w-11 h-11 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
                     idx === currentIndex
-                      ? 'border-blue-500 scale-105 shadow-md shadow-blue-500/40'
+                      ? 'border-amber-500 scale-105 shadow-md shadow-amber-500/40'
                       : 'border-transparent opacity-50 hover:opacity-100'
                   }`}
                 >
@@ -286,7 +286,7 @@ export const ImageLightboxModal: React.FC<ImageLightboxModalProps> = ({
                   className="w-10 h-10 rounded-full object-cover border border-neutral-700"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                <div className="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-sm">
                   {(authorName || 'U')[0].toUpperCase()}
                 </div>
               )}

@@ -208,7 +208,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
     {
       name: 'Email',
       icon: '✉️',
-      color: 'bg-indigo-600 hover:bg-indigo-500',
+      color: 'bg-yellow-600 hover:bg-yellow-500',
       url: `mailto:?subject=${encodeURIComponent(
         initialContent ? 'A shared thought from AURA' : 'Join me on AURA Social'
       )}&body=${encodedText}`,
@@ -222,7 +222,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
     {
       name: 'LinkedIn',
       icon: '💼',
-      color: 'bg-blue-700 hover:bg-blue-600',
+      color: 'bg-amber-700 hover:bg-amber-600',
       url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
     },
   ];
@@ -236,13 +236,13 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
         {/* Header */}
         <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-600 flex items-center justify-center text-white shadow-lg shadow-amber-500/25">
               <Share2 className="w-4 h-4" />
             </div>
             <div>
               <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
                 <span>Invite Others & Share AURA</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   Live Sync
                 </span>
               </h3>
@@ -270,7 +270,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               }}
               className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 inviteType === 'general'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -284,7 +284,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               }}
               className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 inviteType === 'call'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -298,7 +298,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               }}
               className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 inviteType === 'chat'
-                  ? 'bg-blue-600 text-white shadow-md'
+                  ? 'bg-amber-600 text-white shadow-md'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
@@ -313,7 +313,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               onClick={() => setActiveTab('link')}
               className={`pb-2.5 px-3 border-b-2 transition-colors flex items-center gap-1.5 ${
                 activeTab === 'link'
-                  ? 'border-blue-400 text-blue-400'
+                  ? 'border-amber-400 text-amber-400'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -324,7 +324,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               onClick={() => setActiveTab('qr')}
               className={`pb-2.5 px-3 border-b-2 transition-colors flex items-center gap-1.5 ${
                 activeTab === 'qr'
-                  ? 'border-blue-400 text-blue-400'
+                  ? 'border-amber-400 text-amber-400'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -335,7 +335,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               onClick={() => setActiveTab('direct')}
               className={`pb-2.5 px-3 border-b-2 transition-colors flex items-center gap-1.5 ${
                 activeTab === 'direct'
-                  ? 'border-blue-400 text-blue-400'
+                  ? 'border-amber-400 text-amber-400'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -352,19 +352,19 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                 <label className="block text-[11px] font-semibold text-slate-300 mb-1.5">
                   Your Personal Invite Link
                 </label>
-                <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/40 border border-white/15 focus-within:border-blue-400 transition-colors">
+                <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/40 border border-white/15 focus-within:border-amber-400 transition-colors">
                   <input
                     type="text"
                     readOnly
                     value={shareUrl}
-                    className="flex-1 px-2.5 py-1 bg-transparent text-xs text-blue-200 font-mono focus:outline-none truncate"
+                    className="flex-1 px-2.5 py-1 bg-transparent text-xs text-amber-200 font-mono focus:outline-none truncate"
                   />
                   <button
                     onClick={handleCopyLink}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-md flex-shrink-0 ${
                       copied
                         ? 'bg-emerald-600 text-white'
-                        : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white'
+                        : 'bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white'
                     }`}
                   >
                     {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
@@ -377,7 +377,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               {initialContent && (
                 <button
                   onClick={handlePostToFeed}
-                  className="w-full py-2.5 px-4 mb-2 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
+                  className="w-full py-2.5 px-4 mb-2 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>Post to AURA Feed</span>
@@ -388,7 +388,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               {typeof navigator !== 'undefined' && 'share' in navigator && (
                 <button
                   onClick={handleNativeShare}
-                  className="w-full py-2.5 px-4 rounded-2xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
+                  className="w-full py-2.5 px-4 rounded-2xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-98"
                 >
                   <Smartphone className="w-4 h-4" />
                   <span>Share via Device / AirDrop / Nearby</span>
@@ -418,7 +418,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <div className="flex items-center justify-between text-[11px] text-slate-400">
                   <span className="font-semibold text-slate-300">Invite Preview</span>
-                  <span className="text-blue-400 flex items-center gap-1">
+                  <span className="text-amber-400 flex items-center gap-1">
                     <Radio className="w-2.5 h-2.5 animate-pulse text-emerald-400" /> Real-time peer link
                   </span>
                 </div>
@@ -432,7 +432,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
           {/* Tab 2: QR Code */}
           {activeTab === 'qr' && (
             <div className="flex flex-col items-center justify-center space-y-4 py-2">
-              <div className="p-4 rounded-3xl bg-[#05060f] border-2 border-blue-500/30 shadow-2xl flex flex-col items-center">
+              <div className="p-4 rounded-3xl bg-[#05060f] border-2 border-amber-500/30 shadow-2xl flex flex-col items-center">
                 <div className="w-56 h-56 rounded-2xl overflow-hidden bg-black/60 flex items-center justify-center p-2 border border-white/10">
                   <img
                     src={qrCodeUrl}
@@ -453,12 +453,12 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                   onClick={downloadQrCode}
                   className="flex-1 py-2.5 px-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md"
                 >
-                  <Download className="w-3.5 h-3.5 text-blue-400" />
+                  <Download className="w-3.5 h-3.5 text-amber-400" />
                   <span>Download QR</span>
                 </button>
                 <button
                   onClick={handleCopyLink}
-                  className="flex-1 py-2.5 px-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md"
+                  className="flex-1 py-2.5 px-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md"
                 >
                   {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied!' : 'Copy Link'}</span>
@@ -479,7 +479,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                   placeholder="e.g. Alex"
                   value={friendName}
                   onChange={(e) => setFriendName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -493,7 +493,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                   placeholder="alex@example.com or +1 (555) 000-0000"
                   value={friendContact}
                   onChange={(e) => setFriendContact(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -506,7 +506,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
                   placeholder="Hey! Join me on AURA so we can chat and jump on video calls..."
                   value={customNote}
                   onChange={(e) => setCustomNote(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400 resize-none"
                 />
               </div>
 
@@ -520,7 +520,7 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
               <button
                 type="submit"
                 disabled={isSendingInvite || !friendContact.trim()}
-                className="w-full py-2.5 px-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-40 text-white text-xs font-bold shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-40 text-white text-xs font-bold shadow-lg shadow-amber-500/25 border border-amber-400/30 transition-all flex items-center justify-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>{isSendingInvite ? 'Sending Invitation...' : 'Send Direct Invitation'}</span>
@@ -529,8 +529,8 @@ export const ShareAppModal: React.FC<ShareAppModalProps> = ({
           )}
 
           {/* Persistent Server Info Banner */}
-          <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-2.5">
-            <Sparkles className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+          <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-start gap-2.5">
+            <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
             <p className="text-[11px] text-slate-300 leading-relaxed">
               <strong className="text-white font-semibold">Live Server Persistence:</strong> Anyone
               who opens your invite link will automatically sync with the shared server database,

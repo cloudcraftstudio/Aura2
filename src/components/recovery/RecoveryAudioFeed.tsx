@@ -155,7 +155,7 @@ export const RecoveryAudioFeed: React.FC = () => {
 
       {/* Persistent Audio Player Bar / Hero Widget */}
       {currentTrack && (
-        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#0d1430] via-[#101b44] to-[#0d1430] border border-blue-500/30 shadow-2xl space-y-4">
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-[#0d1430] via-[#101b44] to-[#0d1430] border border-amber-500/30 shadow-2xl space-y-4">
           {(() => {
             const ytInfo = extractYouTubeInfo(currentTrack.audioUrl);
             
@@ -201,14 +201,14 @@ export const RecoveryAudioFeed: React.FC = () => {
                       />
                       {isPlaying && (
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                          <Headphones className="w-6 h-6 text-blue-400 animate-pulse" />
+                          <Headphones className="w-6 h-6 text-amber-400 animate-pulse" />
                         </div>
                       )}
                     </div>
 
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-black uppercase">
+                        <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-black uppercase">
                           Now Playing
                         </span>
                         <span className="text-xs text-amber-300 font-semibold">
@@ -236,7 +236,7 @@ export const RecoveryAudioFeed: React.FC = () => {
 
                     <button
                       onClick={() => handlePlayTrack(currentTrack)}
-                      className="w-12 h-12 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all"
+                      className="w-12 h-12 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 text-white flex items-center justify-center shadow-lg shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all"
                     >
                       {isPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
                     </button>
@@ -276,7 +276,7 @@ export const RecoveryAudioFeed: React.FC = () => {
                     max={duration || 100}
                     value={currentTime}
                     onChange={handleSeek}
-                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                    className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-amber-500"
                   />
                   <div className="flex justify-between text-[11px] text-slate-400 font-mono">
                     <span>{formatTime(currentTime)}</span>
@@ -309,7 +309,7 @@ export const RecoveryAudioFeed: React.FC = () => {
               }}
               className={`px-3.5 py-2 rounded-xl font-bold whitespace-nowrap transition-all ${
                 selectedCategory === cat.id
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                  ? 'bg-amber-600 text-white shadow-md shadow-amber-500/20'
                   : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -326,7 +326,7 @@ export const RecoveryAudioFeed: React.FC = () => {
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder="Search audio teachings..."
-            className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+            className="w-full pl-9 pr-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
           />
         </div>
       </div>
@@ -342,7 +342,7 @@ export const RecoveryAudioFeed: React.FC = () => {
               key={teaching.id}
               className={`p-4 sm:p-5 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
                 isThisTrackPlaying
-                  ? 'bg-blue-950/40 border-blue-500/50 shadow-xl shadow-blue-900/20'
+                  ? 'bg-amber-950/40 border-amber-500/50 shadow-xl shadow-amber-900/20'
                   : 'bg-white/5 hover:bg-white/[0.08] border-white/10'
               }`}
             >
@@ -365,7 +365,7 @@ export const RecoveryAudioFeed: React.FC = () => {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-blue-400">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-400">
                         {teaching.category}
                       </span>
                       <span className="text-slate-600">•</span>
@@ -391,7 +391,7 @@ export const RecoveryAudioFeed: React.FC = () => {
 
                 {/* Key Quote */}
                 {teaching.keyQuote && (
-                  <div className="p-3 rounded-2xl bg-black/30 border border-white/5 mb-3 text-xs italic text-blue-200 font-serif">
+                  <div className="p-3 rounded-2xl bg-black/30 border border-white/5 mb-3 text-xs italic text-amber-200 font-serif">
                     "{teaching.keyQuote}"
                   </div>
                 )}
@@ -424,7 +424,7 @@ export const RecoveryAudioFeed: React.FC = () => {
                     onClick={() => handlePlayTrack(teaching)}
                     className={`px-3.5 py-1.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all ${
                       isThisTrackPlaying
-                        ? 'bg-blue-600 text-white shadow-md shadow-blue-500/30'
+                        ? 'bg-amber-600 text-white shadow-md shadow-amber-500/30'
                         : 'bg-white/10 hover:bg-white/20 text-white'
                     }`}
                   >

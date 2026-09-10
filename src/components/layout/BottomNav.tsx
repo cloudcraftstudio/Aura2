@@ -43,14 +43,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => setActiveTab('feed')}
           className={`flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-2xl transition-all relative ${
             activeTab === 'feed'
-              ? 'text-blue-400 font-bold scale-105'
+              ? 'text-amber-400 font-bold scale-105'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           <Home className={`w-5 h-5 ${activeTab === 'feed' ? 'stroke-[2.5px]' : ''}`} />
           <span className="text-[10px] tracking-tight">Feed</span>
           {activeTab === 'feed' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 absolute -bottom-0.5" />
           )}
         </button>
 
@@ -76,14 +76,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => setActiveTab('bible')}
           className={`flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-2xl transition-all relative ${
             activeTab === 'bible'
-              ? 'text-blue-400 font-bold scale-105'
+              ? 'text-amber-400 font-bold scale-105'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           <BookOpen className={`w-5 h-5 ${activeTab === 'bible' ? 'stroke-[2.5px]' : ''}`} />
           <span className="text-[10px] tracking-tight">Bible</span>
           {activeTab === 'bible' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 absolute -bottom-0.5" />
           )}
         </button>
 
@@ -93,14 +93,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => setActiveTab('recovery')}
           className={`flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-2xl transition-all relative ${
             activeTab === 'recovery'
-              ? 'text-blue-400 font-bold scale-105'
+              ? 'text-amber-400 font-bold scale-105'
               : 'text-slate-400 hover:text-white'
           }`}
         >
           <Users className={`w-5 h-5 ${activeTab === 'recovery' ? 'stroke-[2.5px]' : ''}`} />
           <span className="text-[10px] tracking-tight">Freedom</span>
           {activeTab === 'recovery' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 absolute -bottom-0.5" />
           )}
         </button>
 
@@ -110,7 +110,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           onClick={() => setActiveTab('chat')}
           className={`flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-2xl transition-all relative ${
             activeTab === 'chat'
-              ? 'text-blue-400 font-bold scale-105'
+              ? 'text-amber-400 font-bold scale-105'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -124,7 +124,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           </div>
           <span className="text-[10px] tracking-tight">Chats</span>
           {activeTab === 'chat' && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 absolute -bottom-0.5" />
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 absolute -bottom-0.5" />
           )}
         </button>
 
@@ -135,14 +135,14 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             onClick={() => setActiveTab('studio')}
             className={`flex flex-col items-center gap-1 px-2.5 py-1.5 rounded-2xl transition-all relative ${
               activeTab === 'studio'
-                ? 'text-blue-400 font-bold scale-105'
+                ? 'text-amber-400 font-bold scale-105'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
             <Sparkles className={`w-5 h-5 ${activeTab === 'studio' ? 'stroke-[2.5px]' : ''}`} />
             <span className="text-[10px] tracking-tight">Studio</span>
             {activeTab === 'studio' && (
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 absolute -bottom-0.5" />
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 absolute -bottom-0.5" />
             )}
           </button>
         )}

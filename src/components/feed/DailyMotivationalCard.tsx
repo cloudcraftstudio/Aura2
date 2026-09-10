@@ -49,7 +49,7 @@ export const DailyMotivationalCard: React.FC<DailyMotivationalCardProps> = ({ on
       className="relative rounded-[28px] overflow-hidden bg-gradient-to-br from-[#0c122c]/90 via-[#0a0f24]/90 to-[#070b1a]/90 backdrop-blur-2xl border border-white/15 p-5 sm:p-6 mb-6 shadow-2xl group text-white"
     >
       {/* Ambient background glow orbs */}
-      <div className="absolute -top-12 -right-12 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none group-hover:bg-blue-500/30 transition-all duration-500" />
+      <div className="absolute -top-12 -right-12 w-48 h-48 bg-amber-500/20 rounded-full blur-3xl pointer-events-none group-hover:bg-amber-500/30 transition-all duration-500" />
       <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/25 transition-all duration-500" />
 
       {/* Top Meta Bar */}
@@ -78,12 +78,12 @@ export const DailyMotivationalCard: React.FC<DailyMotivationalCardProps> = ({ on
       </div>
 
       {/* Quote Main Body */}
-      <div className="relative z-10 my-3 pl-4 border-l-2 border-gradient-to-b border-blue-400/60">
+      <div className="relative z-10 my-3 pl-4 border-l-2 border-gradient-to-b border-amber-400/60">
         <p className="text-sm sm:text-base md:text-lg font-semibold leading-relaxed text-slate-100 italic tracking-tight">
           &ldquo;{dailyQuote.quote}&rdquo;
         </p>
         <div className="mt-2.5 flex items-center gap-2">
-          <span className="text-xs sm:text-sm font-bold text-blue-300 not-italic">
+          <span className="text-xs sm:text-sm font-bold text-amber-300 not-italic">
             — {dailyQuote.author}
           </span>
           {dailyQuote.role && (
@@ -123,7 +123,7 @@ export const DailyMotivationalCard: React.FC<DailyMotivationalCardProps> = ({ on
           {onShareToFeed && (
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-300 hover:text-white transition-all text-xs font-bold shadow-lg shadow-blue-500/15 hover:scale-105"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-300 hover:text-white transition-all text-xs font-bold shadow-lg shadow-amber-500/15 hover:scale-105"
               title="Share this daily quote as a new post to the community feed"
             >
               <Share2 className="w-3.5 h-3.5" />

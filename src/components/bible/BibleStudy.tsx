@@ -295,7 +295,7 @@ export function BibleStudy() {
           onClick={() => setActiveTab("reader")}
           className={"flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all " + (
             activeTab === "reader"
-              ? "bg-blue-600 text-white shadow-lg"
+              ? "bg-amber-600 text-white shadow-lg"
               : "text-slate-400 hover:text-white"
           )}
         >
@@ -307,7 +307,7 @@ export function BibleStudy() {
           onClick={() => setActiveTab("pulpit")}
           className={"flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all " + (
             activeTab === "pulpit"
-              ? "bg-blue-600 text-white shadow-lg"
+              ? "bg-amber-600 text-white shadow-lg"
               : "text-slate-400 hover:text-white"
           )}
         >
@@ -322,7 +322,7 @@ export function BibleStudy() {
           }}
           className={"flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all " + (
             activeTab === "study"
-              ? "bg-blue-600 text-white shadow-lg"
+              ? "bg-amber-600 text-white shadow-lg"
               : "text-slate-400 hover:text-white"
           )}
         >
@@ -334,7 +334,7 @@ export function BibleStudy() {
           onClick={() => setActiveTab("courses")}
           className={"flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all " + (
             activeTab === "courses"
-              ? "bg-blue-600 text-white shadow-lg"
+              ? "bg-amber-600 text-white shadow-lg"
               : "text-slate-400 hover:text-white"
           )}
         >
@@ -401,7 +401,7 @@ export function BibleStudy() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h3 className="font-extrabold text-white text-base flex items-center gap-2">
-                  <BookMarked className="w-5 h-5 text-blue-400" />
+                  <BookMarked className="w-5 h-5 text-amber-400" />
                   <span>Expository Passage Selector</span>
                 </h3>
                 <p className="text-xs text-slate-400">Choose any scripture to open context, historical setting, and sermons</p>
@@ -410,13 +410,13 @@ export function BibleStudy() {
               <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10 text-xs font-semibold w-fit">
                 <button
                   onClick={() => setSelectedTestament("Old Testament")}
-                  className={"px-3 py-1.5 rounded-lg transition-all " + (selectedTestament === "Old Testament" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                  className={"px-3 py-1.5 rounded-lg transition-all " + (selectedTestament === "Old Testament" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
                 >
                   Old Testament
                 </button>
                 <button
                   onClick={() => setSelectedTestament("New Testament")}
-                  className={"px-3 py-1.5 rounded-lg transition-all " + (selectedTestament === "New Testament" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                  className={"px-3 py-1.5 rounded-lg transition-all " + (selectedTestament === "New Testament" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
                 >
                   New Testament
                 </button>
@@ -427,7 +427,7 @@ export function BibleStudy() {
               <select
                 value={selectedBook}
                 onChange={(e) => setSelectedBook(e.target.value)}
-                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
               >
                 {currentBooks.map(b => (
                   <option key={b.name} value={b.name} className="bg-slate-900 text-white">{b.name}</option>
@@ -441,7 +441,7 @@ export function BibleStudy() {
                 value={selectedChapter}
                 onChange={(e) => setSelectedChapter(e.target.value)}
                 placeholder="Chapter"
-                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
               />
 
               <input
@@ -451,12 +451,12 @@ export function BibleStudy() {
                 value={selectedVerse}
                 onChange={(e) => setSelectedVerse(e.target.value)}
                 placeholder="Verse"
-                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
+                className="bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-500"
               />
 
               <button
                 onClick={() => fetchStudyBreakdown()}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition-all"
+                className="bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow transition-all"
               >
                 <Search className="w-4 h-4" />
                 <span>Open Passage</span>
@@ -466,16 +466,16 @@ export function BibleStudy() {
 
           {studyLoading && (
             <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-12 text-center space-y-3">
-              <Loader className="w-8 h-8 text-blue-400 animate-spin mx-auto" />
+              <Loader className="w-8 h-8 text-amber-400 animate-spin mx-auto" />
               <p className="text-sm text-slate-300">Retrieving expository breakdown for {selectedBook} {selectedChapter}:{selectedVerse}...</p>
             </div>
           )}
 
           {studyBreakdown && !studyLoading && (
             <div className="space-y-5 animate-in fade-in duration-300">
-              <div className="bg-gradient-to-r from-blue-950/60 to-indigo-950/60 border border-blue-500/30 rounded-2xl p-6 shadow-xl space-y-2">
+              <div className="bg-gradient-to-r from-amber-950/60 to-yellow-950/60 border border-amber-500/30 rounded-2xl p-6 shadow-xl space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-bold text-blue-300 tracking-wider bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30">
+                  <span className="text-[10px] uppercase font-bold text-amber-300 tracking-wider bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30">
                     Scripture Text (KJV)
                   </span>
                   <span className="text-xs font-semibold text-slate-300">{selectedBook} {selectedChapter}:{selectedVerse}</span>
@@ -486,7 +486,7 @@ export function BibleStudy() {
               </div>
 
               <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-5 space-y-3">
-                <h4 className="font-extrabold text-xs uppercase tracking-wider text-blue-400">Book Overview</h4>
+                <h4 className="font-extrabold text-xs uppercase tracking-wider text-amber-400">Book Overview</h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-black/30 p-3 rounded-xl border border-white/5">
                     <p className="text-xs text-slate-400">Author</p>
@@ -515,11 +515,11 @@ export function BibleStudy() {
               </div>
 
               <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-5 space-y-3">
-                <h4 className="font-extrabold text-xs uppercase tracking-wider text-blue-400">Daily Life Application</h4>
+                <h4 className="font-extrabold text-xs uppercase tracking-wider text-amber-400">Daily Life Application</h4>
                 <ul className="space-y-2.5 text-xs sm:text-sm">
                   {(studyBreakdown.dailyApplication || []).map((app, idx) => (
                     <li key={idx} className="flex items-start gap-2.5 bg-black/20 p-3 rounded-xl border border-white/5">
-                      <span className="w-5 h-5 rounded-full bg-blue-600/80 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="w-5 h-5 rounded-full bg-amber-600/80 text-white font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">
                         {idx + 1}
                       </span>
                       <span className="text-slate-200 leading-relaxed">{app}</span>
@@ -529,13 +529,13 @@ export function BibleStudy() {
               </div>
 
               {matchingSermons.length > 0 && (
-                <div className="bg-slate-900/70 border border-blue-500/30 rounded-2xl p-5 space-y-3">
+                <div className="bg-slate-900/70 border border-amber-500/30 rounded-2xl p-5 space-y-3">
                   <div className="flex items-center justify-between">
                     <h4 className="font-extrabold text-white text-sm flex items-center gap-2">
-                      <Play className="w-4 h-4 text-blue-400 fill-current" />
+                      <Play className="w-4 h-4 text-amber-400 fill-current" />
                       <span>Expositions on {selectedBook} {selectedChapter}:{selectedVerse}</span>
                     </h4>
-                    <span className="text-[10px] font-bold text-blue-300 bg-blue-500/20 px-2 py-0.5 rounded border border-blue-500/30">
+                    <span className="text-[10px] font-bold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30">
                       SermonIndex
                     </span>
                   </div>
@@ -545,11 +545,11 @@ export function BibleStudy() {
                       <div key={s.id} className="p-3 bg-black/40 border border-white/10 rounded-xl flex items-center justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <p className="text-xs font-bold text-white truncate">{s.title}</p>
-                          <p className="text-[11px] text-blue-300 truncate">{s.speaker} {s.duration ? "• " + s.duration : ""}</p>
+                          <p className="text-[11px] text-amber-300 truncate">{s.speaker} {s.duration ? "• " + s.duration : ""}</p>
                         </div>
                         <button
                           onClick={() => setActiveTab("pulpit")}
-                          className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all flex items-center gap-1 flex-shrink-0"
+                          className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all flex items-center gap-1 flex-shrink-0"
                         >
                           <Play className="w-3 h-3 fill-current" />
                           <span>Pulpit</span>
@@ -562,7 +562,7 @@ export function BibleStudy() {
 
               <button
                 onClick={handleShareStudy}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl text-sm"
+                className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-700 hover:to-yellow-700 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-xl text-sm"
               >
                 <Share2 className="w-4 h-4" />
                 <span>Share Verse & Notes to Feed</span>
@@ -581,7 +581,7 @@ export function BibleStudy() {
                 onClick={() => setCourseViewSubTab("courses")}
                 className={"flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all " + (
                   courseViewSubTab === "courses"
-                    ? "bg-blue-600 text-white shadow"
+                    ? "bg-amber-600 text-white shadow"
                     : "text-slate-400 hover:text-white"
                 )}
               >
@@ -592,7 +592,7 @@ export function BibleStudy() {
                 onClick={() => setCourseViewSubTab("lessons")}
                 className={"flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all " + (
                   courseViewSubTab === "lessons"
-                    ? "bg-blue-600 text-white shadow"
+                    ? "bg-amber-600 text-white shadow"
                     : "text-slate-400 hover:text-white"
                 )}
               >
@@ -604,13 +604,13 @@ export function BibleStudy() {
             <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
               <button
                 onClick={() => setCourseDisplayMode("grid")}
-                className={"p-2 rounded-lg transition-all " + (courseDisplayMode === "grid" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                className={"p-2 rounded-lg transition-all " + (courseDisplayMode === "grid" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
               >
                 <LayoutGrid className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setCourseDisplayMode("list")}
-                className={"p-2 rounded-lg transition-all " + (courseDisplayMode === "list" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white")}
+                className={"p-2 rounded-lg transition-all " + (courseDisplayMode === "list" ? "bg-amber-600 text-white shadow" : "text-slate-400 hover:text-white")}
               >
                 <List className="w-4 h-4" />
               </button>
@@ -619,12 +619,12 @@ export function BibleStudy() {
 
           {loadingCourses ? (
             <div className="flex justify-center py-12">
-              <Loader className="w-8 h-8 text-blue-400 animate-spin" />
+              <Loader className="w-8 h-8 text-amber-400 animate-spin" />
             </div>
           ) : courseViewSubTab === "courses" ? (
             <div className={courseDisplayMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "space-y-4"}>
               {courses.map(course => (
-                <div key={course.id} className="bg-slate-900/60 backdrop-blur-md border border-white/10 hover:border-blue-500/40 rounded-2xl overflow-hidden shadow-lg transition-all">
+                <div key={course.id} className="bg-slate-900/60 backdrop-blur-md border border-white/10 hover:border-amber-500/40 rounded-2xl overflow-hidden shadow-lg transition-all">
                   {course.coverImage && (
                     <div className="relative w-full h-44 bg-slate-950 overflow-hidden">
                       <img src={course.coverImage} alt={course.title} className="w-full h-full object-cover" />
@@ -641,15 +641,15 @@ export function BibleStudy() {
                       <p className="text-xs text-slate-400 line-clamp-2 mt-1">{course.description}</p>
                     </div>
                     <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0">
-                      <ChevronDown className={"w-4 h-4 text-blue-400 transition-transform " + (expandedCourse === course.id ? "rotate-180" : "")} />
+                      <ChevronDown className={"w-4 h-4 text-amber-400 transition-transform " + (expandedCourse === course.id ? "rotate-180" : "")} />
                     </div>
                   </button>
 
                   {expandedCourse === course.id && courseLessons[course.id] && (
-                    <div className="bg-blue-900/10 border-t border-blue-500/20 p-4 space-y-2">
+                    <div className="bg-amber-900/10 border-t border-amber-500/20 p-4 space-y-2">
                       {courseLessons[course.id].map(lesson => (
                         <div key={lesson.id} className="bg-black/30 p-3 rounded-xl border border-white/5 space-y-1">
-                          <p className="font-semibold text-blue-200 text-sm">{lesson.title}</p>
+                          <p className="font-semibold text-amber-200 text-sm">{lesson.title}</p>
                           {lesson.scriptureRef && (
                             <p className="text-xs text-slate-400">{lesson.scriptureRef}</p>
                           )}
@@ -683,7 +683,7 @@ export function BibleStudy() {
                 Object.values(courseLessons).flat().map((lesson, idx) => (
                   <div key={idx} className="bg-slate-900/60 p-4 rounded-2xl border border-white/10 space-y-2">
                     <p className="font-bold text-white text-sm">{lesson.title}</p>
-                    {lesson.scriptureRef && <p className="text-xs text-blue-400">{lesson.scriptureRef}</p>}
+                    {lesson.scriptureRef && <p className="text-xs text-amber-400">{lesson.scriptureRef}</p>}
                     {lesson.notes && <p className="text-xs text-slate-300 leading-relaxed">{lesson.notes}</p>}
                   </div>
                 ))

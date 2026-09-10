@@ -75,6 +75,7 @@ const INITIAL_DEFAULT_PRAYERS: PrayerItem[] = [
 export const PrayerWall: React.FC = () => {
   const { user } = useAuth();
   const [prayers, setPrayers] = useState<PrayerItem[]>(() => {
+    let initialList = INITIAL_DEFAULT_PRAYERS;
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
@@ -82,11 +83,19 @@ export const PrayerWall: React.FC = () => {
         if (Array.isArray(parsed) && parsed.length > 0) {
           // Ensure default Tex prayer is accessible
           const hasTex = parsed.some(p => p.id === 'prayer-tex-1');
-          return hasTex ? parsed : [INITIAL_DEFAULT_PRAYERS[0], ...parsed];
+          initialList = hasTex ? parsed : [INITIAL_DEFAULT_PRAYERS[0], ...parsed];
+        }
+      }
+      
+      const targetDataStr = sessionStorage.getItem('aura_target_prayer_data');
+      if (targetDataStr) {
+        const targetData = JSON.parse(targetDataStr);
+        if (targetData && targetData.id && !initialList.some(p => p.id === targetData.id)) {
+          initialList = [targetData, ...initialList];
         }
       }
     } catch {}
-    return INITIAL_DEFAULT_PRAYERS;
+    return initialList;
   });
 
   const [highlightedPrayerId, setHighlightedPrayerId] = useState<string | null>(() => {
@@ -213,6 +222,9 @@ export const PrayerWall: React.FC = () => {
 
   const handleMarkAnswered = (prayerId: string) => {
     if (!praiseText.trim()) return;
+    try {
+      soundEffects.playShofarHorn();
+    } catch {}
     setPrayers(prev => prev.map(p => {
       if (p.id !== prayerId) return p;
       return {
@@ -234,11 +246,11 @@ export const PrayerWall: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 animate-fade-in pb-20">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-blue-950/80 via-slate-900 to-indigo-950/80 border border-blue-500/20 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+      <div className="bg-gradient-to-r from-amber-950/80 via-slate-900 to-yellow-950/80 border border-amber-500/20 rounded-3xl p-6 shadow-xl relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider border border-blue-500/30">
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-500/30">
                 Church Fellowship
               </span>
               <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/30 flex items-center gap-1">
@@ -255,7 +267,7 @@ export const PrayerWall: React.FC = () => {
             <button
               onClick={() => setFilter('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                filter === 'all' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                filter === 'all' ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'
               }`}
             >
               All
@@ -263,7 +275,7 @@ export const PrayerWall: React.FC = () => {
             <button
               onClick={() => setFilter('requests')}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                filter === 'requests' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
+                filter === 'requests' ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'
               }`}
             >
               Needs
@@ -293,7 +305,7 @@ export const PrayerWall: React.FC = () => {
           value={newRequest}
           onChange={e => setNewRequest(e.target.value)}
           placeholder="How can your church family stand with you in prayer today?"
-          className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-sm focus:border-blue-500 outline-none resize-none leading-relaxed placeholder:text-slate-500"
+          className="w-full bg-slate-950/80 border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-sm focus:border-amber-500 outline-none resize-none leading-relaxed placeholder:text-slate-500"
         />
 
         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
@@ -316,7 +328,7 @@ export const PrayerWall: React.FC = () => {
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={e => setIsAnonymous(e.target.checked)}
-                className="rounded border-slate-700 bg-slate-900 text-blue-600 focus:ring-0"
+                className="rounded border-slate-700 bg-slate-900 text-amber-600 focus:ring-0"
               />
               Share Anonymously
             </label>
@@ -324,7 +336,7 @@ export const PrayerWall: React.FC = () => {
 
           <button
             type="submit"
-            className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-900/30 flex items-center gap-1.5 transition-all"
+            className="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-900/30 flex items-center gap-1.5 transition-all"
           >
             <Send className="w-3.5 h-3.5" />
             <span>Post to Wall</span>
@@ -348,7 +360,7 @@ export const PrayerWall: React.FC = () => {
                   ? 'ring-2 ring-amber-400 border-amber-400 bg-gradient-to-br from-amber-950/50 via-slate-900 to-amber-950/30 shadow-[0_0_35px_rgba(245,158,11,0.35)] scale-[1.01]'
                   : prayer.isAnswered
                   ? 'bg-emerald-950/20 border-emerald-500/30'
-                  : 'bg-slate-900/50 border-white/10 hover:border-blue-500/30'
+                  : 'bg-slate-900/50 border-white/10 hover:border-amber-500/30'
               }`}
             >
               {/* Targeted Banner from NewsFeed shortcut */}
@@ -366,7 +378,7 @@ export const PrayerWall: React.FC = () => {
 
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold text-xs">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-amber-400 font-bold text-xs">
                     {prayer.isAnonymous ? <User className="w-4 h-4 text-slate-400" /> : prayer.authorName.charAt(0)}
                   </div>
                   <div>

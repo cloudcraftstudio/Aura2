@@ -305,11 +305,11 @@ export const ChatView: React.FC = () => {
                 className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all"
                 title="Back to Feed"
               >
-                <Home className="w-4 h-4 text-blue-400" />
+                <Home className="w-4 h-4 text-amber-400" />
               </button>
               <h3 className="text-base font-bold text-white flex items-center gap-2">
                 <span>Messages</span>
-                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
                   {conversations.length}
                 </span>
               </h3>
@@ -326,7 +326,7 @@ export const ChatView: React.FC = () => {
                 className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all"
                 title="Invite Friends to Chat"
               >
-                <Share2 className="w-4 h-4 text-blue-400" />
+                <Share2 className="w-4 h-4 text-amber-400" />
               </button>
 
               <button
@@ -335,13 +335,13 @@ export const ChatView: React.FC = () => {
                 className="w-8 h-8 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-all"
                 title="Create Group"
               >
-                <Users className="w-4 h-4 text-indigo-400" />
+                <Users className="w-4 h-4 text-yellow-400" />
               </button>
 
               <button
                 id="new-chat-btn"
                 onClick={() => setIsNewChatModalOpen(true)}
-                className="w-8 h-8 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 font-bold flex items-center justify-center shadow-lg transition-transform hover:scale-105"
+                className="w-8 h-8 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-400 font-bold flex items-center justify-center shadow-lg transition-transform hover:scale-105"
                 title="Start New Chat"
               >
                 <Plus className="w-4 h-4" />
@@ -357,7 +357,7 @@ export const ChatView: React.FC = () => {
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-400 text-xs focus:outline-none focus:border-blue-400"
+              className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-400 text-xs focus:outline-none focus:border-amber-400"
             />
           </div>
         </div>
@@ -369,7 +369,7 @@ export const ChatView: React.FC = () => {
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 Active Now & Stories
               </span>
-              <span className="text-[10px] text-blue-400 font-semibold">
+              <span className="text-[10px] text-amber-400 font-semibold">
                 {allUsers.filter((u) => u.id !== user?.id).length} online
               </span>
             </div>
@@ -384,7 +384,7 @@ export const ChatView: React.FC = () => {
                 title="Add to Your Story"
               >
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 group-hover:scale-105 transition-transform">
+                  <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-yellow-500 to-orange-500 group-hover:scale-105 transition-transform">
                     <Avatar
                       src={user?.avatarUrl}
                       name={user?.name || 'You'}
@@ -392,7 +392,7 @@ export const ChatView: React.FC = () => {
                       className="w-full h-full rounded-full border-2 border-[#090d22] object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-blue-600 rounded-full border-2 border-[#090d22] flex items-center justify-center text-white text-[10px] font-black">
+                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-amber-600 rounded-full border-2 border-[#090d22] flex items-center justify-center text-white text-[10px] font-black">
                     +
                   </div>
                 </div>
@@ -497,7 +497,7 @@ export const ChatView: React.FC = () => {
                         </span>
                       </p>
                       {conv.unreadCount > 0 && (
-                        <span className="w-4 h-4 rounded-full bg-blue-500 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0 shadow-md">
+                        <span className="w-4 h-4 rounded-full bg-amber-500 text-white font-bold text-[10px] flex items-center justify-center flex-shrink-0 shadow-md">
                           {conv.unreadCount}
                         </span>
                       )}
@@ -555,7 +555,7 @@ export const ChatView: React.FC = () => {
                         />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-blue-300 transition-colors truncate">
+                        <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-amber-300 transition-colors truncate">
                           {activeConversation.isGroup ? activeConversation.name : recipient?.name}
                         </h4>
                         <p className="text-[10px] text-emerald-400 flex items-center gap-1 truncate">
@@ -582,7 +582,7 @@ export const ChatView: React.FC = () => {
                   className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all text-xs font-medium flex items-center gap-1"
                   title="Invite Others to this Chat"
                 >
-                  <Share2 className="w-3.5 h-3.5 text-blue-400" />
+                  <Share2 className="w-3.5 h-3.5 text-amber-400" />
                   <span className="hidden lg:inline">Invite</span>
                 </button>
 
@@ -592,14 +592,14 @@ export const ChatView: React.FC = () => {
                   className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all text-xs font-medium flex items-center gap-1"
                   title="WebRTC Audio Call"
                 >
-                  <Phone className="w-3.5 h-3.5 text-blue-400" />
+                  <Phone className="w-3.5 h-3.5 text-amber-400" />
                   <span className="hidden sm:inline">Call</span>
                 </button>
 
                 <button
                   id="start-video-call-btn"
                   onClick={() => handleStartCall(true)}
-                  className="px-2.5 sm:px-3.5 py-1.5 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-xl text-blue-400 text-xs font-medium transition-all flex items-center gap-1 shadow-lg shadow-blue-500/15 hover:scale-105"
+                  className="px-2.5 sm:px-3.5 py-1.5 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 rounded-xl text-amber-400 text-xs font-medium transition-all flex items-center gap-1 shadow-lg shadow-amber-500/15 hover:scale-105"
                   title="WebRTC HD Video Call"
                 >
                   <Video className="w-3.5 h-3.5" />
@@ -626,7 +626,7 @@ export const ChatView: React.FC = () => {
             >
               {currentMessages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-400 text-xs">
-                  <Sparkles className="w-8 h-8 text-blue-400/50 mb-2 animate-bounce" />
+                  <Sparkles className="w-8 h-8 text-amber-400/50 mb-2 animate-bounce" />
                   <p className="font-semibold text-white">No messages yet</p>
                   <p>Send a message or photo to start the conversation.</p>
                 </div>
@@ -664,7 +664,7 @@ export const ChatView: React.FC = () => {
                                 new CustomEvent('open_user_profile', { detail: { userId: msg.senderId } })
                               );
                             }}
-                            className="text-[10px] font-semibold text-blue-300 px-1 cursor-pointer hover:text-blue-200 transition-colors"
+                            className="text-[10px] font-semibold text-amber-300 px-1 cursor-pointer hover:text-amber-200 transition-colors"
                           >
                             {msg.senderName}
                           </p>
@@ -675,7 +675,7 @@ export const ChatView: React.FC = () => {
                           <div
                             className={`p-2 rounded-xl text-xs mb-1 border ${
                               isMe
-                                ? 'bg-blue-600/30 border-blue-400/20 text-blue-200'
+                                ? 'bg-amber-600/30 border-amber-400/20 text-amber-200'
                                 : 'bg-white/5 border-white/10 text-slate-300'
                             }`}
                           >
@@ -689,7 +689,7 @@ export const ChatView: React.FC = () => {
                           <div
                             className={`p-2 rounded-xl text-xs mb-1.5 border flex items-center gap-2.5 ${
                               isMe
-                                ? 'bg-black/35 border-blue-400/30 text-blue-100 shadow-md'
+                                ? 'bg-black/35 border-amber-400/30 text-amber-100 shadow-md'
                                 : 'bg-black/40 border-white/15 text-slate-200 shadow-md'
                             }`}
                           >
@@ -722,7 +722,7 @@ export const ChatView: React.FC = () => {
                         <div
                           className={`relative group p-3 sm:p-3.5 rounded-2xl text-xs sm:text-sm ${
                             isMe
-                              ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-br-none shadow-lg shadow-blue-600/25 border border-blue-400/30'
+                              ? 'bg-gradient-to-br from-amber-600 to-yellow-600 text-white rounded-br-none shadow-lg shadow-amber-600/25 border border-amber-400/30'
                               : 'bg-white/10 text-slate-100 rounded-bl-none border border-white/10'
                           }`}
                         >
@@ -772,11 +772,11 @@ export const ChatView: React.FC = () => {
                           {/* Timestamp & Read Status */}
                           <div
                             className={`flex items-center gap-1 mt-1 text-[9px] ${
-                              isMe ? 'text-blue-200 justify-end' : 'text-slate-400'
+                              isMe ? 'text-amber-200 justify-end' : 'text-slate-400'
                             }`}
                           >
                             <span>{safeFormatTime(msg?.timestamp, 'HH:mm')}</span>
-                            {isMe && <CheckCheck className="w-3 h-3 text-blue-200" />}
+                            {isMe && <CheckCheck className="w-3 h-3 text-amber-200" />}
                           </div>
 
                           {/* Hover Emoji Reaction Bar */}
@@ -815,7 +815,7 @@ export const ChatView: React.FC = () => {
                                   onClick={() => addReaction(msg.id, emoji)}
                                   className={`px-1.5 py-0.5 rounded-full text-[10px] border flex items-center gap-1 transition-all ${
                                     user && userIds.includes(user.id)
-                                      ? 'bg-blue-500/20 border-blue-400/40 text-blue-300'
+                                      ? 'bg-amber-500/20 border-amber-400/40 text-amber-300'
                                       : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10'
                                   }`}
                                 >
@@ -858,7 +858,7 @@ export const ChatView: React.FC = () => {
             {replyingTo && (
               <div className="px-4 py-2 bg-white/5 border-t border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs">
-                  <Reply className="w-3.5 h-3.5 text-blue-400" />
+                  <Reply className="w-3.5 h-3.5 text-amber-400" />
                   <span className="text-slate-400">Replying to {replyingTo.senderName}:</span>
                   <span className="text-slate-200 truncate max-w-xs">{replyingTo.content}</span>
                 </div>
@@ -890,7 +890,7 @@ export const ChatView: React.FC = () => {
                 className="p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex-shrink-0"
                 title="Attach Photo"
               >
-                <ImageIcon className="w-4 h-4 text-blue-400" />
+                <ImageIcon className="w-4 h-4 text-amber-400" />
               </button>
 
               <button
@@ -927,7 +927,7 @@ export const ChatView: React.FC = () => {
                     setMessageInput(e.target.value);
                     setTyping(true);
                   }}
-                  className="flex-1 min-w-0 px-4 py-2.5 rounded-2xl bg-white/10 border border-white/15 text-white placeholder:text-slate-400 text-sm sm:text-sm focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-all shadow-inner"
+                  className="flex-1 min-w-0 px-4 py-2.5 rounded-2xl bg-white/10 border border-white/15 text-white placeholder:text-slate-400 text-sm sm:text-sm focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all shadow-inner"
                 />
               )}
 
@@ -935,7 +935,7 @@ export const ChatView: React.FC = () => {
                 id="send-message-btn"
                 type="submit"
                 disabled={!messageInput.trim() && !selectedImageAttachment}
-                className="p-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 disabled:opacity-40 text-white shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all active:scale-95 flex items-center justify-center flex-shrink-0"
+                className="p-2.5 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 disabled:opacity-40 text-white shadow-lg shadow-amber-500/25 border border-amber-400/30 transition-all active:scale-95 flex items-center justify-center flex-shrink-0"
                 title="Send Message"
               >
                 <Send className="w-4 h-4" />
@@ -976,7 +976,7 @@ export const ChatView: React.FC = () => {
                   placeholder="e.g. Design & Tech Circle"
                   value={newGroupName}
                   onChange={(e) => setNewGroupName(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3.5 py-2 rounded-xl bg-white/5 border border-white/10 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -998,7 +998,7 @@ export const ChatView: React.FC = () => {
                           }}
                           className={`w-full p-2 rounded-xl flex items-center justify-between text-left transition-all ${
                             isSelected
-                              ? 'bg-blue-500/20 border border-blue-500/30'
+                              ? 'bg-amber-500/20 border border-amber-500/30'
                               : 'bg-white/5 border border-transparent'
                           }`}
                         >
@@ -1011,7 +1011,7 @@ export const ChatView: React.FC = () => {
                           </div>
                           <span
                             className={`w-4 h-4 rounded-md border flex items-center justify-center text-[10px] ${
-                              isSelected ? 'bg-blue-500 border-blue-400 text-white' : 'border-white/20'
+                              isSelected ? 'bg-amber-500 border-amber-400 text-white' : 'border-white/20'
                             }`}
                           >
                             {isSelected && <Check className="w-3 h-3" />}
@@ -1025,7 +1025,7 @@ export const ChatView: React.FC = () => {
               <button
                 type="submit"
                 disabled={!newGroupName.trim() || selectedGroupMembers.length === 0}
-                className="w-full py-2.5 rounded-xl bg-blue-600 disabled:opacity-40 text-white text-xs font-bold shadow-lg shadow-blue-500/30"
+                className="w-full py-2.5 rounded-xl bg-amber-600 disabled:opacity-40 text-white text-xs font-bold shadow-lg shadow-amber-500/30"
               >
                 Create Group Chat
               </button>

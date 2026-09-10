@@ -134,9 +134,9 @@ export const RecoveryJournal: React.FC = () => {
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Streak & Write Card */}
-        <div className="p-6 rounded-3xl bg-gradient-to-br from-blue-900/40 to-slate-900 border border-blue-500/30 flex flex-col justify-between">
+        <div className="p-6 rounded-3xl bg-gradient-to-br from-amber-900/40 to-slate-900 border border-amber-500/30 flex flex-col justify-between">
           <div>
-            <div className="flex items-center gap-2 text-blue-400 mb-2">
+            <div className="flex items-center gap-2 text-amber-400 mb-2">
               <ShieldCheck className="w-5 h-5" />
               <h3 className="font-bold uppercase tracking-wider text-xs">Private Sanctuary</h3>
             </div>
@@ -150,7 +150,7 @@ export const RecoveryJournal: React.FC = () => {
               soundEffects.tap();
               setIsFormOpen(true);
             }}
-            className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 transition-all active:scale-95"
+            className="w-full py-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all active:scale-95"
           >
             <Feather className="w-5 h-5" />
             Write New Entry
@@ -181,7 +181,7 @@ export const RecoveryJournal: React.FC = () => {
       <div className="space-y-4 pt-4 border-t border-white/5">
         <div className="flex items-center justify-between">
           <h3 className="text-sm font-black uppercase tracking-wider text-slate-400 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-blue-400" />
+            <Calendar className="w-4 h-4 text-amber-400" />
             <span>Journal Timeline</span>
           </h3>
           <button
@@ -221,7 +221,7 @@ export const RecoveryJournal: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <span className={`px-3 py-1 rounded-full text-xs font-bold capitalize ${
                       entry.mood === 'triumphant' ? 'bg-amber-500/20 text-amber-300' :
-                      entry.mood === 'peaceful' ? 'bg-blue-500/20 text-blue-300' :
+                      entry.mood === 'peaceful' ? 'bg-amber-500/20 text-amber-300' :
                       entry.mood === 'grateful' ? 'bg-emerald-500/20 text-emerald-300' :
                       entry.mood === 'tempted' ? 'bg-orange-500/20 text-orange-300' :
                       'bg-red-500/20 text-red-300'
@@ -245,13 +245,13 @@ export const RecoveryJournal: React.FC = () => {
                   )}
                   {entry.prayerNotes && (
                     <div className="text-sm">
-                      <strong className="text-indigo-400 block mb-1 uppercase tracking-wider text-[10px]">Prayer</strong> 
+                      <strong className="text-yellow-400 block mb-1 uppercase tracking-wider text-[10px]">Prayer</strong> 
                       <span className="text-slate-300">{entry.prayerNotes}</span>
                     </div>
                   )}
                   {entry.reflection && (
                     <div className="text-sm">
-                      <strong className="text-blue-400 block mb-1 uppercase tracking-wider text-[10px]">Reflection</strong> 
+                      <strong className="text-amber-400 block mb-1 uppercase tracking-wider text-[10px]">Reflection</strong> 
                       <p className="text-slate-200 leading-relaxed font-serif whitespace-pre-wrap">
                         {entry.reflection}
                       </p>
@@ -284,7 +284,7 @@ export const RecoveryJournal: React.FC = () => {
 
               <div className="max-w-xl mx-auto space-y-10 py-8">
                 <div className="text-center space-y-2">
-                  <Feather className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+                  <Feather className="w-8 h-8 text-amber-400 mx-auto mb-4" />
                   <h2 className="text-2xl sm:text-3xl font-black text-white">Daily Sanctuary</h2>
                   <p className="text-slate-400 text-sm">A private space for absolute honesty with yourself and God.</p>
                 </div>
@@ -309,7 +309,7 @@ export const RecoveryJournal: React.FC = () => {
                           onClick={() => setMood(item.id as any)}
                           className={`p-4 rounded-2xl border text-sm font-bold flex flex-col items-center justify-center gap-2 transition-all ${
                             mood === item.id
-                              ? 'bg-blue-600 text-white border-blue-400 shadow-[0_0_20px_rgba(37,99,235,0.3)] scale-105'
+                              ? 'bg-amber-600 text-white border-amber-400 shadow-[0_0_20px_rgba(37,99,235,0.3)] scale-105'
                               : 'bg-white/5 border-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
                           }`}
                         >
@@ -337,7 +337,7 @@ export const RecoveryJournal: React.FC = () => {
                   {/* Distraction-Free Reflection */}
                   <div className="space-y-2">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-blue-500 flex items-center gap-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-amber-500 flex items-center gap-2">
                         <BookOpen className="w-4 h-4" /> Personal Reflection
                       </label>
                       <button
@@ -349,7 +349,7 @@ export const RecoveryJournal: React.FC = () => {
                       </button>
                     </div>
                     
-                    <div className="p-4 rounded-t-2xl bg-blue-500/10 border-x border-t border-blue-500/20 text-blue-200 text-sm font-medium italic">
+                    <div className="p-4 rounded-t-2xl bg-amber-500/10 border-x border-t border-amber-500/20 text-amber-200 text-sm font-medium italic">
                       "{GUIDED_PROMPTS[promptIndex]}"
                     </div>
                     <textarea
@@ -357,13 +357,13 @@ export const RecoveryJournal: React.FC = () => {
                       value={reflection}
                       onChange={e => setReflection(e.target.value)}
                       placeholder="Start writing..."
-                      className="w-full p-5 rounded-b-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 focus:bg-blue-500/5 transition-all resize-none font-serif text-lg leading-relaxed"
+                      className="w-full p-5 rounded-b-2xl bg-white/5 border border-white/10 text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 focus:bg-amber-500/5 transition-all resize-none font-serif text-lg leading-relaxed"
                     />
                   </div>
 
                   {/* Surrender */}
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-indigo-500 flex items-center gap-2">
+                    <label className="text-xs font-bold uppercase tracking-wider text-yellow-500 flex items-center gap-2">
                       <Heart className="w-4 h-4" /> Altar of Surrender
                     </label>
                     <input
@@ -371,7 +371,7 @@ export const RecoveryJournal: React.FC = () => {
                       value={prayer}
                       onChange={e => setPrayer(e.target.value)}
                       placeholder="Lord, I lay down this specific burden..."
-                      className="w-full px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:bg-indigo-500/5 transition-all"
+                      className="w-full px-4 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:border-yellow-500 focus:bg-yellow-500/5 transition-all"
                     />
                   </div>
 
@@ -382,7 +382,7 @@ export const RecoveryJournal: React.FC = () => {
                         type="checkbox"
                         checked={cravingsManaged}
                         onChange={e => setCravingsManaged(e.target.checked)}
-                        className="mt-1 rounded accent-blue-500 w-5 h-5 cursor-pointer"
+                        className="mt-1 rounded accent-amber-500 w-5 h-5 cursor-pointer"
                       />
                       <div>
                         <span className="block text-sm font-bold text-white mb-1">I maintained my sobriety today</span>
@@ -396,7 +396,7 @@ export const RecoveryJournal: React.FC = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting || !mood || !reflection.trim()}
-                      className="px-8 py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold flex items-center gap-2 shadow-xl shadow-blue-500/20 transition-all active:scale-95"
+                      className="px-8 py-4 rounded-2xl bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold flex items-center gap-2 shadow-xl shadow-amber-500/20 transition-all active:scale-95"
                     >
                       <Save className="w-5 h-5" />
                       <span>{isSubmitting ? 'Sealing...' : 'Seal Journal Entry'}</span>

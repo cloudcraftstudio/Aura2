@@ -355,7 +355,7 @@ export function CourseStudio() {
           onClick={() => setActiveSection('podcast')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all ${
             activeSection === 'podcast'
-              ? 'bg-blue-600 text-white shadow-lg'
+              ? 'bg-amber-600 text-white shadow-lg'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -368,7 +368,7 @@ export function CourseStudio() {
           onClick={() => setActiveSection('create')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all ${
             activeSection === 'create'
-              ? 'bg-blue-600 text-white shadow-lg'
+              ? 'bg-amber-600 text-white shadow-lg'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -381,7 +381,7 @@ export function CourseStudio() {
           onClick={() => setActiveSection('add-lesson')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all ${
             activeSection === 'add-lesson'
-              ? 'bg-blue-600 text-white shadow-lg'
+              ? 'bg-amber-600 text-white shadow-lg'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -394,7 +394,7 @@ export function CourseStudio() {
           onClick={() => setActiveSection('manage')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm whitespace-nowrap transition-all ${
             activeSection === 'manage'
-              ? 'bg-blue-600 text-white shadow-lg'
+              ? 'bg-amber-600 text-white shadow-lg'
               : 'text-slate-400 hover:text-white'
           }`}
         >
@@ -428,7 +428,7 @@ export function CourseStudio() {
         <div className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-7 space-y-5 shadow-xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+              <div className="w-9 h-9 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
                 <GraduationCap className="w-5 h-5" />
               </div>
               <div>
@@ -436,7 +436,7 @@ export function CourseStudio() {
                 <p className="text-xs text-slate-400">Design a structured discipleship series or topical study</p>
               </div>
             </div>
-            <span className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 font-semibold">
+            <span className="text-xs px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 font-semibold">
               The Word Studio
             </span>
           </div>
@@ -448,7 +448,7 @@ export function CourseStudio() {
               value={courseTitle}
               onChange={(e) => setCourseTitle(e.target.value)}
               placeholder="e.g., The Gospel of John: Expository Discipleship"
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -459,7 +459,7 @@ export function CourseStudio() {
               value={courseDesc}
               onChange={(e) => setCourseDesc(e.target.value)}
               placeholder="Provide a comprehensive course overview, intended audience, and theological focus..."
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition-all"
             />
           </div>
 
@@ -497,7 +497,7 @@ export function CourseStudio() {
                         setUnsplashTarget('create-course');
                         setIsUnsplashOpen(true);
                       }}
-                      className="p-1.5 rounded-lg bg-blue-600 text-white text-[10px] font-bold"
+                      className="p-1.5 rounded-lg bg-amber-600 text-white text-[10px] font-bold"
                     >
                       Unsplash
                     </button>
@@ -524,7 +524,7 @@ export function CourseStudio() {
                     setUnsplashTarget('create-course');
                     setIsUnsplashOpen(true);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                   <span>Choose from Unsplash</span>
@@ -535,7 +535,7 @@ export function CourseStudio() {
                   onClick={() => courseFileInputRef.current?.click()}
                   className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold border border-white/15 flex items-center gap-1.5 transition-all"
                 >
-                  <Upload className="w-3.5 h-3.5 text-blue-400" />
+                  <Upload className="w-3.5 h-3.5 text-amber-400" />
                   <span>Direct Image Upload</span>
                 </button>
               </div>
@@ -548,7 +548,7 @@ export function CourseStudio() {
               <select
                 value={courseCategory}
                 onChange={(e) => setCourseCategory(e.target.value)}
-                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"
               >
                 <option value="Theology">Theology & Doctrine</option>
                 <option value="Daily Walk">Christian Living & Walk</option>
@@ -564,7 +564,7 @@ export function CourseStudio() {
               <select
                 value={courseLevel}
                 onChange={(e) => setCourseLevel(e.target.value)}
-                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"
               >
                 <option value="Beginner">Foundational / Beginner</option>
                 <option value="Intermediate">Intermediate Discipleship</option>
@@ -577,7 +577,7 @@ export function CourseStudio() {
             type="button"
             onClick={handleCreateCourse}
             disabled={!courseTitle.trim() || submittingCourse}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
           >
             {submittingCourse && <Loader className="w-4 h-4 animate-spin" />}
             <span>{submittingCourse ? 'Publishing Course...' : 'Create Course & Begin Curriculum'}</span>
@@ -590,7 +590,7 @@ export function CourseStudio() {
         <div className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-7 space-y-5 shadow-xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+              <div className="w-9 h-9 rounded-xl bg-yellow-600/20 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
@@ -605,7 +605,7 @@ export function CourseStudio() {
             <select
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"
             >
               <option value="">Choose a course...</option>
               {courses.map((course) => (
@@ -624,7 +624,7 @@ export function CourseStudio() {
                 value={lessonTitle}
                 onChange={(e) => setLessonTitle(e.target.value)}
                 placeholder="e.g., Lesson 1: The Incarnation of the Word"
-                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
             <div>
@@ -634,7 +634,7 @@ export function CourseStudio() {
                 value={scriptureRef}
                 onChange={(e) => setScriptureRef(e.target.value)}
                 placeholder="e.g., John 1:1-14"
-                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
               />
             </div>
           </div>
@@ -646,7 +646,7 @@ export function CourseStudio() {
               value={lessonNotes}
               onChange={(e) => setLessonNotes(e.target.value)}
               placeholder="Expository breakdown, memory verses, or discussion questions..."
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
             />
           </div>
 
@@ -655,7 +655,7 @@ export function CourseStudio() {
             <select
               value={mediaType}
               onChange={(e) => setMediaType(e.target.value as any)}
-              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500"
             >
               <option value="none">Text-Only Study (No Media)</option>
               <option value="youtube">YouTube Video Sermon</option>
@@ -673,12 +673,12 @@ export function CourseStudio() {
                       value={mediaUrl}
                       onChange={(e) => setMediaUrl(e.target.value)}
                       placeholder="https://www.youtube.com/watch?v=..."
-                      className="flex-1 bg-black/40 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                      className="flex-1 bg-black/40 border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
                     />
                     <button
                       type="button"
                       onClick={handleYoutubePreview}
-                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition-all"
+                      className="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white font-bold text-xs rounded-xl transition-all"
                     >
                       Preview
                     </button>
@@ -705,7 +705,7 @@ export function CourseStudio() {
                       const f = e.target.files?.[0];
                       if (f) setMediaFile(f);
                     }}
-                    className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500 cursor-pointer"
+                    className="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-white hover:file:bg-amber-500 cursor-pointer"
                   />
                 </div>
               )}
@@ -716,7 +716,7 @@ export function CourseStudio() {
             type="button"
             onClick={handleAddLesson}
             disabled={!selectedCourse || !lessonTitle.trim() || submittingLesson}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
+            className="w-full py-3 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
           >
             {submittingLesson && <Loader className="w-4 h-4 animate-spin" />}
             <span>{submittingLesson ? 'Saving Lesson...' : 'Save Lesson to Curriculum'}</span>
@@ -734,7 +734,7 @@ export function CourseStudio() {
             <button
               type="button"
               onClick={() => setActiveSection('create')}
-              className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 shadow"
+              className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-1.5 shadow"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>New Course</span>
@@ -743,7 +743,7 @@ export function CourseStudio() {
 
           {loading ? (
             <div className="flex flex-col items-center justify-center py-16 space-y-3">
-              <Loader className="w-7 h-7 animate-spin text-blue-500" />
+              <Loader className="w-7 h-7 animate-spin text-amber-500" />
               <p className="text-xs text-slate-400">Loading your courses...</p>
             </div>
           ) : courses.length === 0 ? (
@@ -775,7 +775,7 @@ export function CourseStudio() {
                             referrerPolicy="no-referrer"
                           />
                         ) : (
-                          <div className="w-20 h-20 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 flex-shrink-0">
+                          <div className="w-20 h-20 rounded-2xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400 flex-shrink-0">
                             <BookOpen className="w-8 h-8" />
                           </div>
                         )}
@@ -788,12 +788,12 @@ export function CourseStudio() {
 
                           <div className="flex items-center gap-2 pt-1">
                             {course.category && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
                                 {course.category}
                               </span>
                             )}
                             {course.level && (
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
                                 {course.level}
                               </span>
                             )}
@@ -827,7 +827,7 @@ export function CourseStudio() {
                         <button
                           type="button"
                           onClick={() => openEditModal(course)}
-                          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-blue-300 transition-all"
+                          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-amber-300 transition-all"
                           title="Edit Course"
                         >
                           <Edit3 className="w-4 h-4" />
@@ -867,7 +867,7 @@ export function CourseStudio() {
                                 <div className="space-y-0.5">
                                   <p className="text-xs font-bold text-white">{lesson.title}</p>
                                   {lesson.scriptureRef && (
-                                    <p className="text-[11px] text-blue-300">{lesson.scriptureRef}</p>
+                                    <p className="text-[11px] text-amber-300">{lesson.scriptureRef}</p>
                                   )}
                                   {lesson.mediaType === 'youtube' && (
                                     <span className="inline-flex items-center gap-1 text-[10px] text-rose-400">
@@ -917,7 +917,7 @@ export function CourseStudio() {
           >
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Edit3 className="w-4 h-4 text-blue-400" />
+                <Edit3 className="w-4 h-4 text-amber-400" />
                 <span>Edit Course Details</span>
               </h3>
               <button
@@ -936,7 +936,7 @@ export function CourseStudio() {
                   type="text"
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
-                  className="w-full px-3.5 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-sm focus:border-blue-500 outline-none"
+                  className="w-full px-3.5 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-sm focus:border-amber-500 outline-none"
                   required
                 />
               </div>
@@ -947,7 +947,7 @@ export function CourseStudio() {
                   value={editDesc}
                   onChange={(e) => setEditDesc(e.target.value)}
                   rows={3}
-                  className="w-full px-3.5 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-sm focus:border-blue-500 outline-none resize-none"
+                  className="w-full px-3.5 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-sm focus:border-amber-500 outline-none resize-none"
                 />
               </div>
 
@@ -971,7 +971,7 @@ export function CourseStudio() {
                       setUnsplashTarget('edit-course');
                       setIsUnsplashOpen(true);
                     }}
-                    className="flex-1 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5"
+                    className="flex-1 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center justify-center gap-1.5"
                   >
                     <Sparkles className="w-3 h-3 text-amber-300" />
                     <span>Unsplash</span>
@@ -981,7 +981,7 @@ export function CourseStudio() {
                     onClick={() => editFileInputRef.current?.click()}
                     className="flex-1 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold flex items-center justify-center gap-1.5"
                   >
-                    <Upload className="w-3 h-3 text-blue-400" />
+                    <Upload className="w-3 h-3 text-amber-400" />
                     <span>Direct Upload</span>
                   </button>
                 </div>
@@ -993,7 +993,7 @@ export function CourseStudio() {
                   <select
                     value={editCategory}
                     onChange={(e) => setEditCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-xs focus:border-blue-500 outline-none"
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-xs focus:border-amber-500 outline-none"
                   >
                     <option value="Theology">Theology</option>
                     <option value="Daily Walk">Daily Walk</option>
@@ -1008,7 +1008,7 @@ export function CourseStudio() {
                   <select
                     value={editLevel}
                     onChange={(e) => setEditLevel(e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-xs focus:border-blue-500 outline-none"
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-white text-xs focus:border-amber-500 outline-none"
                   >
                     <option value="Beginner">Beginner</option>
                     <option value="Intermediate">Intermediate</option>
@@ -1028,7 +1028,7 @@ export function CourseStudio() {
                 <button
                   type="submit"
                   disabled={savingEdit}
-                  className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg transition-all flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg transition-all flex items-center gap-1.5"
                 >
                   {savingEdit ? <Loader className="w-3.5 h-3.5 animate-spin" /> : null}
                   <span>{savingEdit ? 'Saving...' : 'Save Changes'}</span>

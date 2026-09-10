@@ -314,25 +314,25 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
   };
 
   return (
-    <div className="rounded-3xl bg-gradient-to-br from-blue-950/40 via-[#090e28]/95 to-indigo-950/30 border border-blue-500/35 p-4 sm:p-5 shadow-2xl space-y-3.5 backdrop-blur-xl relative overflow-hidden animate-fade-in">
+    <div className="rounded-3xl bg-gradient-to-br from-amber-950/40 via-[#090e28]/95 to-yellow-950/30 border border-amber-500/35 p-4 sm:p-5 shadow-2xl space-y-3.5 backdrop-blur-xl relative overflow-hidden animate-fade-in">
       {/* Glow */}
-      <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Banner */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div className="flex items-center gap-2">
-          <span className="px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-[11px] font-bold uppercase tracking-wider border border-blue-500/30 flex items-center gap-1.5">
+          <span className="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-bold uppercase tracking-wider border border-amber-500/30 flex items-center gap-1.5">
             {sermon.mediaType === 'audio' ? <Volume2 className="w-3.5 h-3.5" /> : <Video className="w-3.5 h-3.5" />}
             <span>{sermon.mediaType === 'audio' ? 'Audio Sermon' : 'Video Sermon'}</span>
           </span>
           {sermon.channel && (
-            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+            <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
               {sermon.channel}
             </span>
           )}
         </div>
 
-        <span className="text-[10px] text-blue-300/80 font-bold px-2 py-0.5 rounded-md bg-blue-500/10">
+        <span className="text-[10px] text-amber-300/80 font-bold px-2 py-0.5 rounded-md bg-amber-500/10">
           Recently Uploaded
         </span>
       </div>
@@ -340,8 +340,8 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
       {/* Notification Headline */}
       <div className="space-y-1.5">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-          <p className="text-xs font-bold text-blue-200">
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+          <p className="text-xs font-bold text-amber-200">
             {sermon.speaker || 'Pastor'} uploaded a new sermon • watch/listen now
           </p>
         </div>
@@ -351,15 +351,15 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
         </h4>
 
         {sermon.series && (
-          <p className="text-xs text-indigo-300 flex items-center gap-1 font-semibold">
-            <Layers className="w-3 h-3 text-indigo-400" />
+          <p className="text-xs text-yellow-300 flex items-center gap-1 font-semibold">
+            <Layers className="w-3 h-3 text-yellow-400" />
             <span>Series: {sermon.series} {sermon.seriesPart ? `(Part ${sermon.seriesPart})` : ''}</span>
           </p>
         )}
 
         {sermon.scriptureRef && (
           <p className="text-xs text-slate-300 flex items-center gap-1">
-            <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
             <span>Passage: {sermon.scriptureRef}</span>
           </p>
         )}
@@ -373,7 +373,7 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
 
       {/* Inline Player */}
       {isPlayingInline && sermon.mediaUrl && (
-        <div className="rounded-2xl overflow-hidden border border-blue-500/40 bg-black/60 p-2 space-y-2 animate-fade-in">
+        <div className="rounded-2xl overflow-hidden border border-amber-500/40 bg-black/60 p-2 space-y-2 animate-fade-in">
           {sermon.mediaType === 'audio' ? (
             <audio controls autoPlay src={sermon.mediaUrl} className="w-full" />
           ) : (
@@ -383,7 +383,7 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
       )}
 
       {/* Footer Controls */}
-      <div className="flex items-center justify-between pt-2 border-t border-blue-500/20 gap-2 flex-wrap">
+      <div className="flex items-center justify-between pt-2 border-t border-amber-500/20 gap-2 flex-wrap">
         <span className="text-xs text-slate-400 font-medium">
           Duration: {formatMinSec(sermon.duration)}
         </span>
@@ -394,14 +394,14 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
               onClick={() => setIsPlayingInline(!isPlayingInline)}
               className="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95"
             >
-              {isPlayingInline ? <Pause className="w-3.5 h-3.5 text-blue-400" /> : <Play className="w-3.5 h-3.5 text-blue-400" />}
+              {isPlayingInline ? <Pause className="w-3.5 h-3.5 text-amber-400" /> : <Play className="w-3.5 h-3.5 text-amber-400" />}
               <span>{isPlayingInline ? 'Close Player' : sermon.mediaType === 'audio' ? 'Listen Now' : 'Watch Now'}</span>
             </button>
           )}
 
           <button
             onClick={handleOpenInScriptures}
-            className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 border border-blue-400/30 flex items-center gap-1.5 transition-all active:scale-95"
+            className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-500/25 border border-amber-400/30 flex items-center gap-1.5 transition-all active:scale-95"
           >
             <span>Go to Sermons</span>
             <ExternalLink className="w-3 h-3" />
@@ -455,17 +455,17 @@ export const NewMemberDriftCard: React.FC<NewMemberProps> = ({ member }) => {
   };
 
   return (
-    <div className="rounded-3xl bg-gradient-to-br from-purple-950/40 via-[#0a0c24]/95 to-pink-950/30 border border-purple-500/30 p-4 sm:p-5 shadow-2xl space-y-3.5 backdrop-blur-xl relative overflow-hidden animate-fade-in">
+    <div className="rounded-3xl bg-gradient-to-br from-orange-950/40 via-[#0a0c24]/95 to-pink-950/30 border border-orange-500/30 p-4 sm:p-5 shadow-2xl space-y-3.5 backdrop-blur-xl relative overflow-hidden animate-fade-in">
       {/* Glow */}
-      <div className="absolute top-0 right-0 w-36 h-36 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-36 h-36 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header */}
       <div className="flex items-center justify-between gap-2">
-        <span className="px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 text-[11px] font-bold uppercase tracking-wider border border-purple-500/30 flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+        <span className="px-2.5 py-1 rounded-full bg-orange-500/20 text-orange-300 text-[11px] font-bold uppercase tracking-wider border border-orange-500/30 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-orange-400" />
           <span>New Member Joining</span>
         </span>
-        <span className="text-[10px] text-purple-300/80 font-bold px-2 py-0.5 rounded-md bg-purple-500/10">
+        <span className="text-[10px] text-orange-300/80 font-bold px-2 py-0.5 rounded-md bg-orange-500/10">
           Welcome to the Family
         </span>
       </div>
@@ -483,7 +483,7 @@ export const NewMemberDriftCard: React.FC<NewMemberProps> = ({ member }) => {
           <div className="flex items-center gap-1.5">
             <h4 
               onClick={handleOpenProfile}
-              className="text-sm sm:text-base font-bold text-white hover:text-purple-300 cursor-pointer transition-colors truncate"
+              className="text-sm sm:text-base font-bold text-white hover:text-orange-300 cursor-pointer transition-colors truncate"
             >
               {activeMember.name}
             </h4>
@@ -496,8 +496,8 @@ export const NewMemberDriftCard: React.FC<NewMemberProps> = ({ member }) => {
       </div>
 
       {/* Welcome Note Banner */}
-      <div className="p-3 rounded-2xl bg-purple-950/30 border border-purple-500/20 text-xs text-purple-200 flex items-start gap-2.5">
-        <MessageCircle className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+      <div className="p-3 rounded-2xl bg-orange-950/30 border border-orange-500/20 text-xs text-orange-200 flex items-start gap-2.5">
+        <MessageCircle className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
         <p className="leading-relaxed">
           <strong className="text-white">Welcome note: </strong>
           "We are so blessed to have you in fellowship! Leave a warm greeting or drop a scripture blessing to make them feel right at home."
@@ -505,8 +505,8 @@ export const NewMemberDriftCard: React.FC<NewMemberProps> = ({ member }) => {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-between pt-2 border-t border-purple-500/15 gap-2 flex-wrap">
-        <div className="text-[11px] text-purple-300 font-semibold flex items-center gap-1.5">
+      <div className="flex items-center justify-between pt-2 border-t border-orange-500/15 gap-2 flex-wrap">
+        <div className="text-[11px] text-orange-300 font-semibold flex items-center gap-1.5">
           <Heart className={`w-3.5 h-3.5 ${hasWelcomed ? 'text-pink-400 fill-pink-400' : 'text-pink-400/60'}`} />
           <span>{welcomeCount} members welcomed</span>
         </div>
@@ -517,7 +517,7 @@ export const NewMemberDriftCard: React.FC<NewMemberProps> = ({ member }) => {
             className={`px-4 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 ${
               hasWelcomed
                 ? 'bg-pink-600 text-white shadow-lg shadow-pink-600/30'
-                : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white shadow-md'
+                : 'bg-gradient-to-r from-orange-600 to-pink-600 hover:from-orange-500 hover:to-pink-500 text-white shadow-md'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />

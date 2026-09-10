@@ -76,21 +76,21 @@ export const AppUpdateModal: React.FC = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="relative w-full max-w-sm bg-gradient-to-b from-[#090d22] to-[#040614] border-2 border-indigo-500/30 rounded-3xl shadow-2xl shadow-indigo-900/40 overflow-hidden flex flex-col"
+        className="relative w-full max-w-sm bg-gradient-to-b from-[#090d22] to-[#040614] border-2 border-yellow-500/30 rounded-3xl shadow-2xl shadow-yellow-900/40 overflow-hidden flex flex-col"
       >
         {/* Header Graphic */}
-        <div className="bg-indigo-600/20 p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div className="bg-yellow-600/20 p-6 flex flex-col items-center justify-center text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-[#090d22] to-transparent opacity-80" />
           <motion.div 
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-12 -right-12 w-32 h-32 bg-indigo-500/20 blur-3xl rounded-full"
+            className="absolute -top-12 -right-12 w-32 h-32 bg-yellow-500/20 blur-3xl rounded-full"
           />
-          <div className="relative z-10 w-16 h-16 bg-gradient-to-tr from-indigo-600 to-blue-400 rounded-2xl shadow-lg flex items-center justify-center mb-4 transform -rotate-6">
+          <div className="relative z-10 w-16 h-16 bg-gradient-to-tr from-yellow-600 to-amber-400 rounded-2xl shadow-lg flex items-center justify-center mb-4 transform -rotate-6">
             <Zap className="w-8 h-8 text-white fill-white/20" />
           </div>
           <h2 className="relative z-10 text-xl font-black text-white tracking-tight">Major Update Available</h2>
-          <p className="relative z-10 text-indigo-200 text-sm font-medium mt-1">
+          <p className="relative z-10 text-yellow-200 text-sm font-medium mt-1">
             Version {updateInfo.version} is ready!
           </p>
         </div>
@@ -120,7 +120,7 @@ export const AppUpdateModal: React.FC = () => {
             <button
               onClick={handleDownloadUpdate}
               disabled={isDownloading}
-              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-70 disabled:scale-100"
+              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 disabled:opacity-70 disabled:scale-100"
             >
               {isDownloading ? (
                 <>

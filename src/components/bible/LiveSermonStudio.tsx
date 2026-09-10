@@ -601,10 +601,10 @@ export function LiveSermonStudio() {
       )}
 
       {/* Header & Section Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-blue-500/30 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-500/30 pb-4">
         <div>
           <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
-            <Video className="w-6 h-6 text-blue-400" />
+            <Video className="w-6 h-6 text-amber-400" />
             Live Sermon Studio & Archive
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
@@ -618,7 +618,7 @@ export function LiveSermonStudio() {
             onClick={() => setActiveTab('live')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'live'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/40'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/40'
                 : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -633,7 +633,7 @@ export function LiveSermonStudio() {
             }}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'archive'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/40'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/40'
                 : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -645,7 +645,7 @@ export function LiveSermonStudio() {
             onClick={() => setActiveTab('upload')}
             className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'upload'
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 border border-blue-400/40'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/30 border border-amber-400/40'
                 : 'bg-white/5 text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
@@ -659,9 +659,9 @@ export function LiveSermonStudio() {
       {activeTab === 'live' && (
         <div className="space-y-6">
           {/* Sermon Details Form */}
-          <div className="bg-[#090d24]/90 border border-blue-500/30 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
-            <h3 className="text-base sm:text-lg font-bold text-blue-200 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-400" />
+          <div className="bg-[#090d24]/90 border border-amber-500/30 rounded-2xl p-4 sm:p-6 space-y-4 shadow-xl">
+            <h3 className="text-base sm:text-lg font-bold text-amber-200 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-400" />
               Sermon Details & Metadata
             </h3>
 
@@ -673,7 +673,7 @@ export function LiveSermonStudio() {
                   value={sermonTitle}
                   onChange={e => setSermonTitle(e.target.value)}
                   placeholder="e.g. Walking in Grace - Chapter 3"
-                  className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                  className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -684,7 +684,7 @@ export function LiveSermonStudio() {
                   value={scriptureRef}
                   onChange={e => setScriptureRef(e.target.value)}
                   placeholder="e.g. John 3:1-21 or Romans 8:28"
-                  className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                  className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -695,7 +695,7 @@ export function LiveSermonStudio() {
                   value={speakerName}
                   onChange={e => setSpeakerName(e.target.value)}
                   placeholder="e.g. Pastor Paul / Elder David"
-                  className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                  className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -706,16 +706,16 @@ export function LiveSermonStudio() {
                   value={channelName}
                   onChange={e => setChannelName(e.target.value)}
                   placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
-                  className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                  className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
               </div>
             </div>
 
             {/* Series Container Connection Suite */}
-            <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
+            <div className="bg-amber-950/40 border border-amber-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300">
+                  <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300">
                     <Layers className="w-4 h-4" />
                   </div>
                   <div>
@@ -731,7 +731,7 @@ export function LiveSermonStudio() {
                     onChange={e => setIsSeries(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                  <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600"></div>
                   <span className="ml-2 text-xs font-semibold text-slate-200">
                     {isSeries ? 'Series Enabled' : 'Single Sermon'}
                   </span>
@@ -739,7 +739,7 @@ export function LiveSermonStudio() {
               </div>
 
               {isSeries ? (
-                <div className="space-y-3 pt-2 border-t border-blue-500/20">
+                <div className="space-y-3 pt-2 border-t border-amber-500/20">
                   {existingSeriesContainers.length > 0 && (
                     <div>
                       <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -759,7 +759,7 @@ export function LiveSermonStudio() {
                             }
                           }
                         }}
-                        className="w-full bg-[#0a1033] border border-blue-500/40 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                        className="w-full bg-[#0a1033] border border-amber-500/40 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                       >
                         <option value="">-- Or type custom series name below --</option>
                         {existingSeriesContainers.map(c => (
@@ -786,7 +786,7 @@ export function LiveSermonStudio() {
                           }
                         }}
                         placeholder="e.g. Kingdom Authority & Spiritual Warfare"
-                        className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                        className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <div>
@@ -794,23 +794,23 @@ export function LiveSermonStudio() {
                         Part / Episode #
                       </label>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-blue-300 font-bold">Part</span>
+                        <span className="text-xs text-amber-300 font-bold">Part</span>
                         <input
                           type="number"
                           min={1}
                           value={seriesPart}
                           onChange={e => setSeriesPart(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                          className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
+                          className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-amber-400"
                         />
                       </div>
                     </div>
                   </div>
 
                   {seriesName && (
-                    <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-400/30 flex items-start gap-2.5">
-                      <Layers className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                    <div className="p-3 rounded-xl bg-amber-900/30 border border-amber-400/30 flex items-start gap-2.5">
+                      <Layers className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                       <div className="text-xs text-slate-300 space-y-0.5">
-                        <p className="font-semibold text-blue-200">
+                        <p className="font-semibold text-amber-200">
                           Container Preview: <span className="text-white">"{seriesName}"</span> • Part {seriesPart}
                         </p>
                         <p className="text-[11px] text-slate-400">
@@ -834,15 +834,15 @@ export function LiveSermonStudio() {
                 onChange={e => setSermonNotes(e.target.value)}
                 placeholder="Key takeaways, key scriptures, sermon notes..."
                 rows={2}
-                className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
               />
             </div>
 
             {/* Cover Image / Unsplash Picker */}
-            <div className="space-y-2 pt-2 border-t border-blue-500/20">
+            <div className="space-y-2 pt-2 border-t border-amber-500/20">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                  <ImageIcon className="w-3.5 h-3.5 text-blue-400" />
+                  <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
                   Cover Image (Thumbnail)
                 </label>
                 <button
@@ -860,7 +860,7 @@ export function LiveSermonStudio() {
                   value={thumbnailUrl}
                   onChange={e => setThumbnailUrl(e.target.value)}
                   placeholder="Paste custom cover image URL or pick below..."
-                  className="flex-1 bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                  className="flex-1 bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-amber-400"
                 />
                 {thumbnailUrl && (
                   <button
@@ -875,7 +875,7 @@ export function LiveSermonStudio() {
 
               {/* Unsplash Dynamic Search Panel */}
               {showUnsplashPicker && (
-                <div className="p-3 bg-blue-950/80 border border-blue-500/30 rounded-2xl space-y-3">
+                <div className="p-3 bg-amber-950/80 border border-amber-500/30 rounded-2xl space-y-3">
                   <div className="flex gap-2">
                     <div className="relative flex-1">
                       <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
@@ -885,7 +885,7 @@ export function LiveSermonStudio() {
                         onChange={e => setUnsplashQuery(e.target.value)}
                         onKeyDown={e => e.key === "Enter" && (e.preventDefault(), searchUnsplash())}
                         placeholder="Search Pexels (e.g. prayer, cross, pulpit, choir)..."
-                        className="w-full pl-8 pr-3 py-1.5 bg-blue-900/40 border border-blue-400/30 rounded-xl text-white text-xs placeholder-slate-400 focus:outline-none focus:border-amber-400"
+                        className="w-full pl-8 pr-3 py-1.5 bg-amber-900/40 border border-amber-400/30 rounded-xl text-white text-xs placeholder-slate-400 focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <button
@@ -906,7 +906,7 @@ export function LiveSermonStudio() {
                         <button
                           type="button"
                           onClick={() => searchUnsplash("worship bible")}
-                          className="text-xs text-blue-300 hover:text-white underline"
+                          className="text-xs text-amber-300 hover:text-white underline"
                         >
                           Load popular worship & church images
                         </button>
@@ -939,7 +939,7 @@ export function LiveSermonStudio() {
 
               {/* Thumbnail Preview Badge */}
               {thumbnailUrl && (
-                <div className="flex items-center gap-3 p-2 bg-blue-950/40 border border-blue-500/20 rounded-xl">
+                <div className="flex items-center gap-3 p-2 bg-amber-950/40 border border-amber-500/20 rounded-xl">
                   <img src={thumbnailUrl} alt="Thumbnail preview" className="w-16 h-10 object-cover rounded-lg border border-white/10" />
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-semibold text-white truncate">Active Cover Preview</p>
@@ -951,7 +951,7 @@ export function LiveSermonStudio() {
           </div>
 
           {/* Live Video Camera Viewfinder */}
-          <div className="relative bg-black rounded-3xl overflow-hidden border border-blue-500/40 shadow-2xl aspect-video max-h-[500px] flex items-center justify-center">
+          <div className="relative bg-black rounded-3xl overflow-hidden border border-amber-500/40 shadow-2xl aspect-video max-h-[500px] flex items-center justify-center">
             <video
               ref={videoRef}
               autoPlay
@@ -962,7 +962,7 @@ export function LiveSermonStudio() {
 
             {!isLive && (
               <div className="text-center p-6 space-y-3 pb-8">
-                <div className="w-16 h-16 rounded-full bg-blue-600/20 border border-blue-400/30 flex items-center justify-center text-blue-400 mx-auto">
+                <div className="w-16 h-16 rounded-full bg-amber-600/20 border border-amber-400/30 flex items-center justify-center text-amber-400 mx-auto">
                   <Video className="w-8 h-8" />
                 </div>
                 <h4 className="text-base sm:text-lg font-bold text-white">Live Camera Standby</h4>
@@ -971,7 +971,7 @@ export function LiveSermonStudio() {
                 </p>
                 <button
                   onClick={startLive}
-                  className="mt-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-500/30 transition-all active:scale-95 flex items-center gap-2 mx-auto"
+                  className="mt-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/30 transition-all active:scale-95 flex items-center gap-2 mx-auto"
                 >
                   <Video className="w-4 h-4" />
                   <span>Start Camera</span>
@@ -1049,17 +1049,17 @@ export function LiveSermonStudio() {
             <div>
               <p className="text-xs sm:text-sm text-slate-300">
                 Archived sermons are persistently saved in your database. Push any recording over to the{' '}
-                <strong className="text-blue-300">Scriptures (Podcasts & Sermons)</strong> tab for your community to stream!
+                <strong className="text-amber-300">Scriptures (Podcasts & Sermons)</strong> tab for your community to stream!
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {/* Toggle between All and Containers */}
-              <div className="flex bg-black/40 border border-blue-500/30 rounded-xl p-1">
+              <div className="flex bg-black/40 border border-amber-500/30 rounded-xl p-1">
                 <button
                   onClick={() => setArchiveSubView('all')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     archiveSubView === 'all'
-                      ? 'bg-blue-600 text-white shadow'
+                      ? 'bg-amber-600 text-white shadow'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -1069,7 +1069,7 @@ export function LiveSermonStudio() {
                   onClick={() => setArchiveSubView('containers')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                     archiveSubView === 'containers'
-                      ? 'bg-blue-600 text-white shadow'
+                      ? 'bg-amber-600 text-white shadow'
                       : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -1090,7 +1090,7 @@ export function LiveSermonStudio() {
 
               <button
                 onClick={fetchSermons}
-                className="flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 transition-colors p-2 bg-white/5 rounded-xl border border-white/10"
+                className="flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 transition-colors p-2 bg-white/5 rounded-xl border border-white/10"
                 title="Refresh"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${loadingArchive ? 'animate-spin' : ''}`} />
@@ -1100,11 +1100,11 @@ export function LiveSermonStudio() {
 
           {loadingArchive ? (
             <div className="flex justify-center py-12">
-              <RefreshCw className="w-6 h-6 animate-spin text-blue-400" />
+              <RefreshCw className="w-6 h-6 animate-spin text-amber-400" />
             </div>
           ) : sermons.length === 0 ? (
-            <div className="text-center py-16 bg-[#090d24]/60 border border-blue-500/20 rounded-3xl p-8 space-y-3">
-              <FileVideo className="w-12 h-12 text-blue-400/50 mx-auto" />
+            <div className="text-center py-16 bg-[#090d24]/60 border border-amber-500/20 rounded-3xl p-8 space-y-3">
+              <FileVideo className="w-12 h-12 text-amber-400/50 mx-auto" />
               <h3 className="text-lg font-bold text-white">No Archived Sermons Yet</h3>
               <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
                 Record your first live sermon in the 'Go Live / Record' tab, or upload video/audio files in the 'Upload Media' tab.
@@ -1114,7 +1114,7 @@ export function LiveSermonStudio() {
             /* Series Containers Subview */
             <div className="space-y-4">
               {existingSeriesContainers.length === 0 ? (
-                <div className="p-8 text-center bg-[#090d24]/60 border border-blue-500/20 rounded-2xl text-slate-400 text-xs">
+                <div className="p-8 text-center bg-[#090d24]/60 border border-amber-500/20 rounded-2xl text-slate-400 text-xs">
                   No sermons have been assigned to a series container yet. Edit existing sermons or record a new sermon with "Series Enabled" to create a container.
                 </div>
               ) : (
@@ -1123,12 +1123,12 @@ export function LiveSermonStudio() {
                   return (
                     <div
                       key={container.name}
-                      className="rounded-2xl border border-blue-500/30 bg-[#090d24]/90 overflow-hidden shadow-xl"
+                      className="rounded-2xl border border-amber-500/30 bg-[#090d24]/90 overflow-hidden shadow-xl"
                     >
                       {/* Container Header */}
-                      <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-blue-950/40 to-indigo-950/20">
+                      <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-amber-950/40 to-yellow-950/20">
                         <div className="flex items-start gap-3">
-                          <div className="p-2.5 rounded-xl bg-blue-600/20 border border-blue-400/30 text-blue-300 shrink-0">
+                          <div className="p-2.5 rounded-xl bg-amber-600/20 border border-amber-400/30 text-amber-300 shrink-0">
                             <Layers className="w-5 h-5" />
                           </div>
                           <div>
@@ -1136,10 +1136,10 @@ export function LiveSermonStudio() {
                               <h3 className="text-base sm:text-lg font-bold text-white">
                                 {container.name}
                               </h3>
-                              <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-500/30">
+                              <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/30">
                                 {container.count} {container.count === 1 ? 'Episode' : 'Episodes'}
                               </span>
-                              <span className="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+                              <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
                                 {container.channel}
                               </span>
                             </div>
@@ -1159,7 +1159,7 @@ export function LiveSermonStudio() {
                               setIsSeries(true);
                               setActiveTab('live');
                             }}
-                            className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all flex items-center gap-1"
+                            className="px-3 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all flex items-center gap-1"
                           >
                             <Sparkles className="w-3 h-3" />
                             <span>Record Part {container.maxPart + 1}</span>
@@ -1184,13 +1184,13 @@ export function LiveSermonStudio() {
                                 key={item.id}
                                 className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all ${
                                   isSelected
-                                    ? 'bg-[#0e1642] border-blue-400'
-                                    : 'bg-white/5 border-white/5 hover:border-blue-500/30'
+                                    ? 'bg-[#0e1642] border-amber-400'
+                                    : 'bg-white/5 border-white/5 hover:border-amber-500/30'
                                 }`}
                               >
                                 <div className="space-y-1">
                                   <div className="flex items-center gap-2">
-                                    <span className="px-2 py-0.5 rounded-md bg-blue-500/30 text-blue-200 text-xs font-extrabold">
+                                    <span className="px-2 py-0.5 rounded-md bg-amber-500/30 text-amber-200 text-xs font-extrabold">
                                       Part {item.seriesPart || idx + 1}
                                     </span>
                                     <h4 className="text-xs sm:text-sm font-bold text-white">{item.title}</h4>
@@ -1202,7 +1202,7 @@ export function LiveSermonStudio() {
                                   </div>
                                   <p className="text-[11px] text-slate-400">
                                     {item.speaker && <span>{item.speaker}</span>}
-                                    {item.scriptureRef && <span className="text-indigo-300 font-medium"> • {item.scriptureRef}</span>}
+                                    {item.scriptureRef && <span className="text-yellow-300 font-medium"> • {item.scriptureRef}</span>}
                                   </p>
                                 </div>
 
@@ -1217,7 +1217,7 @@ export function LiveSermonStudio() {
 
                                   <button
                                     onClick={() => handlePushToScripturesTab(item)}
-                                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1 shadow"
+                                    className="px-2.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-1 shadow"
                                   >
                                     <Send className="w-3 h-3" />
                                     <span>Push</span>
@@ -1251,8 +1251,8 @@ export function LiveSermonStudio() {
                     key={sermon.id}
                     className={`rounded-2xl border transition-all overflow-hidden ${
                       isSelected
-                        ? 'bg-[#0d1338] border-blue-400 shadow-xl shadow-blue-500/20'
-                        : 'bg-[#090d24]/80 border-white/10 hover:border-blue-500/40'
+                        ? 'bg-[#0d1338] border-amber-400 shadow-xl shadow-amber-500/20'
+                        : 'bg-[#090d24]/80 border-white/10 hover:border-amber-500/40'
                     }`}
                   >
                     <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -1262,16 +1262,16 @@ export function LiveSermonStudio() {
                           <h3 className="text-base sm:text-lg font-bold text-white truncate">
                             {sermon.title}
                           </h3>
-                          <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider border border-blue-500/30">
+                          <span className="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider border border-amber-500/30">
                             {sermon.mediaType || 'Video'}
                           </span>
                           {sermon.channel && (
-                            <span className="px-2 py-0.5 rounded-md bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/30">
+                            <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-300 text-[10px] font-bold border border-orange-500/30">
                               {sermon.channel}
                             </span>
                           )}
                           {sermon.series && (
-                            <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-[10px] font-bold border border-indigo-500/30 flex items-center gap-1">
+                            <span className="px-2 py-0.5 rounded-md bg-yellow-500/20 text-yellow-300 text-[10px] font-bold border border-yellow-500/30 flex items-center gap-1">
                               <Layers className="w-2.5 h-2.5" />
                               <span>{sermon.series}{sermon.seriesPart ? ` (Part ${sermon.seriesPart})` : ''}</span>
                             </span>
@@ -1285,7 +1285,7 @@ export function LiveSermonStudio() {
                         </div>
 
                         {sermon.scriptureRef && (
-                          <p className="text-xs font-semibold text-indigo-300 flex items-center gap-1">
+                          <p className="text-xs font-semibold text-yellow-300 flex items-center gap-1">
                             <BookOpen className="w-3.5 h-3.5" />
                             <span>Scripture: {sermon.scriptureRef}</span>
                           </p>
@@ -1308,7 +1308,7 @@ export function LiveSermonStudio() {
                           onClick={() => setSelectedSermon(isSelected ? null : sermon)}
                           className={`px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 ${
                             isSelected
-                              ? 'bg-blue-600 text-white'
+                              ? 'bg-amber-600 text-white'
                               : 'bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10'
                           }`}
                           title="Play preview"
@@ -1320,7 +1320,7 @@ export function LiveSermonStudio() {
                         {/* Push to Scriptures Tab Button */}
                         <button
                           onClick={() => handlePushToScripturesTab(sermon)}
-                          className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 border border-blue-400/40 flex items-center gap-1.5 transition-all active:scale-95 whitespace-nowrap"
+                          className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-500/25 border border-amber-400/40 flex items-center gap-1.5 transition-all active:scale-95 whitespace-nowrap"
                           title="Push and view in Scriptures tab under Podcasts & Sermons"
                         >
                           <Send className="w-3.5 h-3.5" />
@@ -1330,7 +1330,7 @@ export function LiveSermonStudio() {
                         {/* Push to Course Lesson Button */}
                         <button
                           onClick={() => setPushingSermon(sermon)}
-                          className="p-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 transition-all text-xs"
+                          className="p-2 rounded-xl bg-orange-600/20 hover:bg-orange-600/30 text-orange-300 border border-orange-500/30 transition-all text-xs"
                           title="Attach to a course lesson in Course Studio"
                         >
                           <Layers className="w-4 h-4" />
@@ -1349,7 +1349,7 @@ export function LiveSermonStudio() {
                         {sermon.mediaUrl && (
                           <button
                             onClick={() => downloadSermon(sermon)}
-                            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-blue-400 border border-white/10 transition-all"
+                            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-amber-400 border border-white/10 transition-all"
                             title="Download file"
                           >
                             <Download className="w-4 h-4" />
@@ -1392,9 +1392,9 @@ export function LiveSermonStudio() {
 
       {/* 3. Direct Upload Section */}
       {activeTab === 'upload' && (
-        <form onSubmit={handleDirectUpload} className="bg-[#090d24]/90 border border-blue-500/30 rounded-3xl p-6 space-y-4 shadow-xl">
+        <form onSubmit={handleDirectUpload} className="bg-[#090d24]/90 border border-amber-500/30 rounded-3xl p-6 space-y-4 shadow-xl">
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <Upload className="w-5 h-5 text-blue-400" />
+            <Upload className="w-5 h-5 text-amber-400" />
             Upload Video or Audio Sermon into Archive
           </h3>
           <p className="text-xs text-slate-400">
@@ -1407,7 +1407,7 @@ export function LiveSermonStudio() {
               type="file"
               accept="video/*,audio/*"
               onChange={e => setUploadFile(e.target.files?.[0] || null)}
-              className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500"
+              className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-white hover:file:bg-amber-500"
             />
           </div>
 
@@ -1419,7 +1419,7 @@ export function LiveSermonStudio() {
                 value={uploadTitle}
                 onChange={e => setUploadTitle(e.target.value)}
                 placeholder="e.g. The Power of Faith"
-                className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -1429,7 +1429,7 @@ export function LiveSermonStudio() {
                 value={uploadScripture}
                 onChange={e => setUploadScripture(e.target.value)}
                 placeholder="e.g. Hebrews 11:1"
-                className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -1439,7 +1439,7 @@ export function LiveSermonStudio() {
                 value={uploadSpeaker}
                 onChange={e => setUploadSpeaker(e.target.value)}
                 placeholder="e.g. Pastor John"
-                className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
               />
             </div>
             <div>
@@ -1449,16 +1449,16 @@ export function LiveSermonStudio() {
                 value={uploadChannel}
                 onChange={e => setUploadChannel(e.target.value)}
                 placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
-                className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
               />
             </div>
           </div>
 
           {/* Series Container Connection Suite for Upload */}
-          <div className="bg-blue-950/40 border border-blue-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
+          <div className="bg-amber-950/40 border border-amber-500/30 rounded-2xl p-3.5 sm:p-4 space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-blue-500/20 text-blue-300">
+                <div className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300">
                   <Layers className="w-4 h-4" />
                 </div>
                 <div>
@@ -1474,7 +1474,7 @@ export function LiveSermonStudio() {
                   onChange={e => setUploadIsSeries(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                <div className="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600"></div>
                 <span className="ml-2 text-xs font-semibold text-slate-200">
                   {uploadIsSeries ? 'Series Enabled' : 'Single Sermon'}
                 </span>
@@ -1482,7 +1482,7 @@ export function LiveSermonStudio() {
             </div>
 
             {uploadIsSeries ? (
-              <div className="space-y-3 pt-2 border-t border-blue-500/20">
+              <div className="space-y-3 pt-2 border-t border-amber-500/20">
                 {existingSeriesContainers.length > 0 && (
                   <div>
                     <label className="block text-xs font-semibold text-slate-300 mb-1">
@@ -1502,7 +1502,7 @@ export function LiveSermonStudio() {
                           }
                         }
                       }}
-                      className="w-full bg-[#0a1033] border border-blue-500/40 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                      className="w-full bg-[#0a1033] border border-amber-500/40 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                     >
                       <option value="">-- Or type custom series container name below --</option>
                       {existingSeriesContainers.map(c => (
@@ -1529,7 +1529,7 @@ export function LiveSermonStudio() {
                         }
                       }}
                       placeholder="e.g. Gospel Foundations"
-                      className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                      className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                     />
                   </div>
                   <div>
@@ -1537,23 +1537,23 @@ export function LiveSermonStudio() {
                       Part / Episode #
                     </label>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-blue-300 font-bold">Part</span>
+                      <span className="text-xs text-amber-300 font-bold">Part</span>
                       <input
                         type="number"
                         min={1}
                         value={uploadSeriesPart}
                         onChange={e => setUploadSeriesPart(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                        className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
+                        className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-amber-400"
                       />
                     </div>
                   </div>
                 </div>
 
                 {uploadSeries && (
-                  <div className="p-3 rounded-xl bg-blue-900/30 border border-blue-400/30 flex items-start gap-2.5">
-                    <Layers className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                  <div className="p-3 rounded-xl bg-amber-900/30 border border-amber-400/30 flex items-start gap-2.5">
+                    <Layers className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                     <div className="text-xs text-slate-300 space-y-0.5">
-                      <p className="font-semibold text-blue-200">
+                      <p className="font-semibold text-amber-200">
                         Container Preview: <span className="text-white">"{uploadSeries}"</span> • Part {uploadSeriesPart}
                       </p>
                       <p className="text-[11px] text-slate-400">
@@ -1577,14 +1577,14 @@ export function LiveSermonStudio() {
               onChange={e => setUploadDescription(e.target.value)}
               placeholder="Notes, reflections, scripture insights..."
               rows={2}
-              className="w-full bg-blue-950/50 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-blue-400"
+              className="w-full bg-amber-950/50 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm placeholder-slate-500 focus:outline-none focus:border-amber-400"
             />
           </div>
 
           <button
             type="submit"
             disabled={!uploadFile || uploadProgress}
-            className="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-white font-bold text-xs sm:text-sm shadow-xl shadow-amber-500/30 transition-all flex items-center justify-center gap-2"
           >
             {uploadProgress ? (
               <>
@@ -1604,9 +1604,9 @@ export function LiveSermonStudio() {
       {/* Push to Course Lesson Modal */}
       {pushingSermon && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-md bg-[#090d24] border border-blue-500/40 rounded-3xl p-6 space-y-4 text-white shadow-2xl">
-            <h3 className="text-base font-bold text-blue-200 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-purple-400" />
+          <div className="w-full max-w-md bg-[#090d24] border border-amber-500/40 rounded-3xl p-6 space-y-4 text-white shadow-2xl">
+            <h3 className="text-base font-bold text-amber-200 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-orange-400" />
               Attach Sermon to Course Lesson
             </h3>
             <p className="text-xs text-slate-400">
@@ -1618,7 +1618,7 @@ export function LiveSermonStudio() {
               <select
                 value={targetCourseId}
                 onChange={e => setTargetCourseId(e.target.value)}
-                className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2.5 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
               >
                 <option value="">Choose course...</option>
                 {courses.map(course => (
@@ -1641,7 +1641,7 @@ export function LiveSermonStudio() {
                 type="button"
                 onClick={handlePushToCourse}
                 disabled={!targetCourseId || isPushingToCourse}
-                className="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-50 text-white text-xs font-bold shadow-lg transition-all"
+                className="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white text-xs font-bold shadow-lg transition-all"
               >
                 {isPushingToCourse ? 'Attaching...' : 'Push to Course'}
               </button>
@@ -1653,9 +1653,9 @@ export function LiveSermonStudio() {
       {/* Edit Sermon Modal */}
       {editingSermon && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-md bg-[#090d24] border border-blue-500/40 rounded-3xl p-6 space-y-4 text-white shadow-2xl">
-            <h3 className="text-base font-bold text-blue-200 flex items-center gap-2">
-              <Edit2 className="w-5 h-5 text-blue-400" />
+          <div className="w-full max-w-md bg-[#090d24] border border-amber-500/40 rounded-3xl p-6 space-y-4 text-white shadow-2xl">
+            <h3 className="text-base font-bold text-amber-200 flex items-center gap-2">
+              <Edit2 className="w-5 h-5 text-amber-400" />
               Edit Sermon Details
             </h3>
 
@@ -1666,7 +1666,7 @@ export function LiveSermonStudio() {
                   type="text"
                   value={editingSermon.title}
                   onChange={e => setEditingSermon({ ...editingSermon, title: e.target.value })}
-                  className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                  className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   required
                 />
               </div>
@@ -1677,7 +1677,7 @@ export function LiveSermonStudio() {
                   type="text"
                   value={editingSermon.scriptureRef || ''}
                   onChange={e => setEditingSermon({ ...editingSermon, scriptureRef: e.target.value })}
-                  className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                  className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                 />
               </div>
 
@@ -1688,7 +1688,7 @@ export function LiveSermonStudio() {
                     type="text"
                     value={editingSermon.speaker || ''}
                     onChange={e => setEditingSermon({ ...editingSermon, speaker: e.target.value })}
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   />
                 </div>
                 <div>
@@ -1697,7 +1697,7 @@ export function LiveSermonStudio() {
                     type="text"
                     value={editingSermon.channel || ''}
                     onChange={e => setEditingSermon({ ...editingSermon, channel: e.target.value })}
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   />
                 </div>
               </div>
@@ -1709,7 +1709,7 @@ export function LiveSermonStudio() {
                     type="text"
                     value={editingSermon.series || ''}
                     onChange={e => setEditingSermon({ ...editingSermon, series: e.target.value })}
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   />
                 </div>
                 <div>
@@ -1719,7 +1719,7 @@ export function LiveSermonStudio() {
                     min={1}
                     value={editingSermon.seriesPart || 1}
                     onChange={e => setEditingSermon({ ...editingSermon, seriesPart: parseInt(e.target.value, 10) || 1 })}
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                   />
                 </div>
               </div>
@@ -1730,7 +1730,7 @@ export function LiveSermonStudio() {
                   value={editingSermon.description || ''}
                   onChange={e => setEditingSermon({ ...editingSermon, description: e.target.value })}
                   rows={3}
-                  className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
+                  className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3 py-2 text-white text-xs sm:text-sm"
                 />
               </div>
 
@@ -1744,7 +1744,7 @@ export function LiveSermonStudio() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg"
+                  className="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg"
                 >
                   Save Changes
                 </button>
@@ -1757,7 +1757,7 @@ export function LiveSermonStudio() {
       {/* Recording Verification & Approval Modal */}
       {draftForVerification && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="w-full max-w-2xl bg-[#090d24] border-2 border-blue-500/50 rounded-3xl p-6 sm:p-7 space-y-5 text-white shadow-2xl max-h-[82vh] overflow-y-auto pb-28 sm:pb-8">
+          <div className="w-full max-w-2xl bg-[#090d24] border-2 border-amber-500/50 rounded-3xl p-6 sm:p-7 space-y-5 text-white shadow-2xl max-h-[82vh] overflow-y-auto pb-28 sm:pb-8">
             {/* Header */}
             <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
               <div>
@@ -1774,7 +1774,7 @@ export function LiveSermonStudio() {
               </div>
 
               <div className="text-right">
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-blue-950/80 border border-blue-400/30 text-blue-300">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-400/30 text-amber-300">
                   {formatDuration(draftForVerification.duration)} • {draftForVerification.fileSizeMb} MB
                 </span>
               </div>
@@ -1785,7 +1785,7 @@ export function LiveSermonStudio() {
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
                 Recording Preview
               </label>
-              <div className="bg-black rounded-2xl overflow-hidden border border-blue-500/30 shadow-inner">
+              <div className="bg-black rounded-2xl overflow-hidden border border-amber-500/30 shadow-inner">
                 <video
                   controls
                   src={draftForVerification.previewUrl}
@@ -1811,7 +1811,7 @@ export function LiveSermonStudio() {
                       })
                     }
                     placeholder="Enter sermon title..."
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                     required
                   />
                 </div>
@@ -1830,7 +1830,7 @@ export function LiveSermonStudio() {
                       })
                     }
                     placeholder="e.g. John 3:16, Romans 8:1"
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -1850,7 +1850,7 @@ export function LiveSermonStudio() {
                       })
                     }
                     placeholder="e.g. Pastor Paul"
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                   />
                 </div>
 
@@ -1868,7 +1868,7 @@ export function LiveSermonStudio() {
                       })
                     }
                     placeholder="e.g. Aura Community Pulpit, Dr. Tony Evans"
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -1888,7 +1888,7 @@ export function LiveSermonStudio() {
                       })
                     }
                     placeholder="e.g. Sunday Live / Gospel Foundations"
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                   />
                 </div>
                 <div>
@@ -1905,7 +1905,7 @@ export function LiveSermonStudio() {
                         seriesPart: parseInt(e.target.value, 10) || 1
                       })
                     }
-                    className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-blue-400"
+                    className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm font-bold focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -1924,7 +1924,7 @@ export function LiveSermonStudio() {
                   }
                   placeholder="Summary, key truths, outline..."
                   rows={2}
-                  className="w-full bg-blue-950/60 border border-blue-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-blue-400"
+                  className="w-full bg-amber-950/60 border border-amber-500/30 rounded-xl px-3.5 py-2 text-white text-xs sm:text-sm focus:outline-none focus:border-amber-400"
                 />
               </div>
             </div>

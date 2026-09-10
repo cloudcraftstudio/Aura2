@@ -226,7 +226,7 @@ export const VideoCallModal: React.FC = () => {
             />
           </div>
 
-          <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] text-blue-300">
+          <div className="absolute top-2 left-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[10px] text-amber-300">
             <Radio className="w-2.5 h-2.5 animate-pulse text-emerald-400" />
             {isConnected ? formatTimer(callDuration) : 'Calling...'}
           </div>
@@ -337,7 +337,7 @@ export const VideoCallModal: React.FC = () => {
                 className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all flex items-center gap-1 text-xs"
                 title={layoutMode === 'spotlight' ? 'Switch to Side-by-Side Grid' : 'Switch to Spotlight View'}
               >
-                {layoutMode === 'spotlight' ? <LayoutGrid className="w-4 h-4 text-blue-400" /> : <Square className="w-4 h-4 text-emerald-400" />}
+                {layoutMode === 'spotlight' ? <LayoutGrid className="w-4 h-4 text-amber-400" /> : <Square className="w-4 h-4 text-emerald-400" />}
                 <span className="text-[10px] hidden md:inline">{layoutMode === 'spotlight' ? 'Grid' : 'Spotlight'}</span>
               </button>
             )}
@@ -443,7 +443,7 @@ export const VideoCallModal: React.FC = () => {
                   title={isViewSwapped ? 'Switch back: Show remote user in main view' : 'Show yourself in main view'}
                   className="absolute top-3 sm:top-4 left-3 sm:left-4 px-3 py-1.5 rounded-xl bg-black/70 hover:bg-black/90 text-white text-xs font-medium border border-white/15 backdrop-blur-md flex items-center gap-1.5 transition-all shadow-lg z-20"
                 >
-                  <ArrowLeftRight className="w-3.5 h-3.5 text-blue-400" />
+                  <ArrowLeftRight className="w-3.5 h-3.5 text-amber-400" />
                   <span className="hidden sm:inline">{isViewSwapped ? 'Reset View' : 'Swap View'}</span>
                 </button>
               )}
@@ -516,7 +516,7 @@ export const VideoCallModal: React.FC = () => {
                           onClick={handleCameraFlip}
                           title="Switch / Flip Camera"
                           className={`p-1 rounded-lg hover:bg-white/20 text-white transition-colors ${
-                            isSwitchingCamera ? 'animate-spin text-blue-400' : ''
+                            isSwitchingCamera ? 'animate-spin text-amber-400' : ''
                           }`}
                         >
                           <RefreshCw className="w-3.5 h-3.5" />
@@ -610,7 +610,7 @@ export const VideoCallModal: React.FC = () => {
                     title="Switch / Flip Camera"
                     className="p-1.5 rounded-lg hover:bg-white/20 text-white transition-colors"
                   >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isSwitchingCamera ? 'animate-spin text-blue-400' : ''}`} />
+                    <RefreshCw className={`w-3.5 h-3.5 ${isSwitchingCamera ? 'animate-spin text-amber-400' : ''}`} />
                   </button>
                   <button
                     onClick={() => setIsMirrored((m) => !m)}
@@ -661,7 +661,7 @@ export const VideoCallModal: React.FC = () => {
               id="switch-camera-btn"
               onClick={handleCameraFlip}
               className={`p-3.5 sm:p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 hover:text-white flex items-center justify-center transition-all ${
-                isSwitchingCamera ? 'ring-2 ring-blue-400' : ''
+                isSwitchingCamera ? 'ring-2 ring-amber-400' : ''
               }`}
               title={
                 availableCameras.length > 1
@@ -669,7 +669,7 @@ export const VideoCallModal: React.FC = () => {
                   : 'Flip front / back camera'
               }
             >
-              <RefreshCw className={`w-5 h-5 ${isSwitchingCamera ? 'animate-spin text-blue-400' : ''}`} />
+              <RefreshCw className={`w-5 h-5 ${isSwitchingCamera ? 'animate-spin text-amber-400' : ''}`} />
             </button>
           )}
 
@@ -679,7 +679,7 @@ export const VideoCallModal: React.FC = () => {
             onClick={toggleSpeaker}
             className={`p-3.5 sm:p-4 rounded-2xl flex items-center justify-center transition-all ${
               isSpeakerOn
-                ? 'bg-blue-600/25 text-blue-400 border border-blue-500/40 shadow-lg'
+                ? 'bg-amber-600/25 text-amber-400 border border-amber-500/40 shadow-lg'
                 : 'bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400'
             }`}
             title={isSpeakerOn ? 'Speakerphone On (Loudspeaker)' : 'Speakerphone Off (Earpiece)'}
@@ -693,7 +693,7 @@ export const VideoCallModal: React.FC = () => {
             onClick={toggleScreenShare}
             className={`p-3.5 sm:p-4 rounded-2xl flex items-center justify-center transition-all ${
               isScreenSharing
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40 border border-blue-400'
+                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/40 border border-amber-400'
                 : 'bg-white/5 hover:bg-white/10 border border-white/10 text-white'
             }`}
             title="Share Screen"
@@ -711,7 +711,7 @@ export const VideoCallModal: React.FC = () => {
                 })
               );
             }}
-            className="p-3.5 sm:p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-blue-400 hover:text-white flex items-center justify-center transition-all hidden sm:flex"
+            className="p-3.5 sm:p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-amber-400 hover:text-white flex items-center justify-center transition-all hidden sm:flex"
             title="Invite to Call"
           >
             <Share2 className="w-5 h-5" />

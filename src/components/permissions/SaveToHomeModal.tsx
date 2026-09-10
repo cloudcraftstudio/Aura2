@@ -56,7 +56,7 @@ export const SaveToHomeModal: React.FC = () => {
         {/* Header */}
         <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/5 flex-shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-purple-600/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
+            <div className="w-8 h-8 rounded-xl bg-orange-600/20 border border-orange-500/30 flex items-center justify-center text-orange-400">
               <Smartphone className="w-4 h-4" />
             </div>
             <div>
@@ -75,10 +75,10 @@ export const SaveToHomeModal: React.FC = () => {
         {/* Modal Body */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 min-h-0">
           {/* App Card Preview */}
-          <div className="p-4 rounded-2xl bg-gradient-to-tr from-blue-950/60 to-purple-950/60 border border-white/15 flex items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-500 to-indigo-600 p-0.5 shadow-xl flex-shrink-0">
+          <div className="p-4 rounded-2xl bg-gradient-to-tr from-amber-950/60 to-orange-950/60 border border-white/15 flex items-center gap-4">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 p-0.5 shadow-xl flex-shrink-0">
               <div className="w-full h-full rounded-[14px] bg-[#05060f] flex items-center justify-center">
-                <Sparkles className="w-8 h-8 text-blue-400 animate-pulse" />
+                <Sparkles className="w-8 h-8 text-amber-400 animate-pulse" />
               </div>
             </div>
             <div className="min-w-0">
@@ -94,7 +94,7 @@ export const SaveToHomeModal: React.FC = () => {
           {/* Benefits Grid */}
           <div className="grid grid-cols-2 gap-2.5">
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <div className="flex items-center gap-1.5 text-blue-400 text-xs font-bold">
+              <div className="flex items-center gap-1.5 text-amber-400 text-xs font-bold">
                 <Zap className="w-3.5 h-3.5" />
                 <span>Instant Launch</span>
               </div>
@@ -110,7 +110,7 @@ export const SaveToHomeModal: React.FC = () => {
             </div>
 
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 space-y-1">
-              <div className="flex items-center gap-1.5 text-purple-400 text-xs font-bold">
+              <div className="flex items-center gap-1.5 text-orange-400 text-xs font-bold">
                 <Video className="w-3.5 h-3.5" />
                 <span>Full-Screen Calls</span>
               </div>
@@ -130,18 +130,18 @@ export const SaveToHomeModal: React.FC = () => {
           {isIos ? (
             <div className="p-4 rounded-2xl bg-white/5 border border-white/15 space-y-3">
               <h5 className="text-xs font-bold text-white flex items-center gap-1.5">
-                <Share2 className="w-4 h-4 text-blue-400" />
+                <Share2 className="w-4 h-4 text-amber-400" />
                 <span>How to Add on iPhone / iPad (Safari):</span>
               </h5>
 
               <ol className="space-y-2.5 text-xs text-slate-200">
                 <li className="flex items-start gap-2.5 p-2 rounded-xl bg-black/40 border border-white/10">
-                  <span className="w-5 h-5 rounded-full bg-blue-600/30 text-blue-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
+                  <span className="w-5 h-5 rounded-full bg-amber-600/30 text-amber-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
                     1
                   </span>
                   <div className="flex-1">
                     <span>Tap the </span>
-                    <strong className="text-blue-300 inline-flex items-center gap-1">
+                    <strong className="text-amber-300 inline-flex items-center gap-1">
                       Share button <Share2 className="w-3.5 h-3.5 inline" />
                     </strong>
                     <span> in Safari toolbar (at the bottom or top of your browser).</span>
@@ -149,19 +149,19 @@ export const SaveToHomeModal: React.FC = () => {
                 </li>
 
                 <li className="flex items-start gap-2.5 p-2 rounded-xl bg-black/40 border border-white/10">
-                  <span className="w-5 h-5 rounded-full bg-blue-600/30 text-blue-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
+                  <span className="w-5 h-5 rounded-full bg-amber-600/30 text-amber-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
                     2
                   </span>
                   <div className="flex-1">
                     <span>Scroll down the menu list and select </span>
-                    <strong className="text-purple-300 inline-flex items-center gap-1">
+                    <strong className="text-orange-300 inline-flex items-center gap-1">
                       Add to Home Screen <PlusSquare className="w-3.5 h-3.5 inline" />
                     </strong>.
                   </div>
                 </li>
 
                 <li className="flex items-start gap-2.5 p-2 rounded-xl bg-black/40 border border-white/10">
-                  <span className="w-5 h-5 rounded-full bg-blue-600/30 text-blue-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
+                  <span className="w-5 h-5 rounded-full bg-amber-600/30 text-amber-300 font-bold flex items-center justify-center flex-shrink-0 text-[11px]">
                     3
                   </span>
                   <div className="flex-1">
@@ -212,7 +212,7 @@ export const SaveToHomeModal: React.FC = () => {
                   id="install-pwa-button"
                   type="button"
                   onClick={promptSaveToHome}
-                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 border border-blue-400/40 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-98"
+                  className="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold text-xs shadow-lg shadow-amber-500/20 border border-amber-400/40 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-98"
                 >
                   <Download className="w-4 h-4" />
                   <span>Save / Install Web PWA to Home Screen</span>
@@ -222,7 +222,7 @@ export const SaveToHomeModal: React.FC = () => {
               <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 leading-relaxed">
                 <p className="font-semibold text-white mb-1">Android & Chrome Tip:</p>
                 <p className="text-[11px] text-slate-400">
-                  If prompted, click &ldquo;Install&rdquo;. You can also tap Chrome&rsquo;s 3-dot menu <strong className="text-white">⋮</strong> and choose <strong className="text-blue-300">&ldquo;Install app&rdquo;</strong> or <strong className="text-blue-300">&ldquo;Add to Home Screen&rdquo;</strong>.
+                  If prompted, click &ldquo;Install&rdquo;. You can also tap Chrome&rsquo;s 3-dot menu <strong className="text-white">⋮</strong> and choose <strong className="text-amber-300">&ldquo;Install app&rdquo;</strong> or <strong className="text-amber-300">&ldquo;Add to Home Screen&rdquo;</strong>.
                 </p>
               </div>
             </div>

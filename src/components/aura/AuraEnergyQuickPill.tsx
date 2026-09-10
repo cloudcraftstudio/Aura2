@@ -12,7 +12,7 @@ export const AuraEnergyQuickPill: React.FC = () => {
         soundEffects.playTap();
         openHub();
       }}
-      className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-indigo-500/10 to-blue-500/10 hover:from-amber-500/20 hover:to-blue-500/20 border border-amber-500/30 text-amber-200 transition-all active:scale-95 group shadow-[0_0_12px_rgba(245,158,11,0.15)] cursor-pointer"
+      className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-amber-500/10 hover:from-amber-500/20 hover:to-amber-500/20 border border-amber-500/30 text-amber-200 transition-all active:scale-95 group shadow-[0_0_12px_rgba(245,158,11,0.15)] cursor-pointer"
       title="Aura Energy & Live Wallpaper Settings"
     >
       <div className="relative flex items-center justify-center">

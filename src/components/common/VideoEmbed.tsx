@@ -108,7 +108,7 @@ export const VideoEmbed: React.FC<VideoEmbedProps> = ({
           {video.type === 'youtube' ? (
             <Youtube className="w-4 h-4 text-red-400 shrink-0" />
           ) : (
-            <VideoIcon className="w-4 h-4 text-blue-400 shrink-0" />
+            <VideoIcon className="w-4 h-4 text-amber-400 shrink-0" />
           )}
           <span className="truncate font-medium text-slate-200">
             {video.type === 'youtube'
@@ -135,7 +135,7 @@ export const VideoEmbed: React.FC<VideoEmbedProps> = ({
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 hover:text-white transition-colors text-xs font-semibold shrink-0 border border-blue-500/20 shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 hover:text-white transition-colors text-xs font-semibold shrink-0 border border-amber-500/20 shadow-sm"
         >
           <span>Watch on YouTube</span>
           <ExternalLink className="w-3 h-3" />

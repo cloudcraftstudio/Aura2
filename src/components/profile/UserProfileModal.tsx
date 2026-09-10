@@ -22,8 +22,8 @@ import {
   Sliders,
   ChevronRight,
   Heart,
-  ShieldAlert,
   BookOpen,
+  ShieldAlert,
   PhoneCall,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -40,6 +40,7 @@ import { UniversalUnsplashModal } from '../common/UniversalUnsplashModal';
 interface UserProfileModalProps {
   onClose: () => void;
   onTriggerMatrixSplash?: () => void;
+  onOpenGospelTract?: () => void;
   onOpenShare?: () => void;
   onStudyPassage?: (ref: string) => void;
 }
@@ -58,6 +59,7 @@ const COVER_BANNER_PRESETS = ALL_CHRISTIAN_PRESET_IMAGES;
 export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   onClose,
   onTriggerMatrixSplash,
+  onOpenGospelTract,
   onOpenShare,
   onStudyPassage,
 }) => {
@@ -250,13 +252,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
         {/* Header */}
         <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/5 flex-shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+            <div className="w-8 h-8 rounded-xl bg-amber-600/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
               {activeTab === 'gospel' ? (
                 <Heart className="w-4 h-4 text-rose-400" />
               ) : activeTab === 'permissions' ? (
-                <Sliders className="w-4 h-4 text-indigo-400" />
+                <Sliders className="w-4 h-4 text-yellow-400" />
               ) : (
-                <User className="w-4 h-4 text-blue-400" />
+                <User className="w-4 h-4 text-amber-400" />
               )}
             </div>
             <div>
@@ -298,7 +300,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'profile'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/40'
+                ? 'bg-amber-600 text-white shadow-md shadow-amber-500/25 border border-amber-400/40'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
             }`}
           >
@@ -314,7 +316,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap relative ${
               activeTab === 'gospel'
-                ? 'bg-gradient-to-r from-rose-600 to-indigo-600 text-white shadow-md shadow-rose-500/25 border border-rose-400/40'
+                ? 'bg-gradient-to-r from-rose-600 to-yellow-600 text-white shadow-md shadow-rose-500/25 border border-rose-400/40'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
             }`}
           >
@@ -333,7 +335,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             }}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'permissions'
-                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/25 border border-indigo-400/40'
+                ? 'bg-yellow-600 text-white shadow-md shadow-yellow-500/25 border border-yellow-400/40'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
             }`}
           >
@@ -356,7 +358,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
           /* Tab 3: Device Permissions View */
           <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 scrollbar-thin">
             {/* WhatsApp-Style Calling Status Card */}
-            <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-slate-900/60 to-blue-950/40 border border-emerald-500/30 space-y-3">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-slate-900/60 to-amber-950/40 border border-emerald-500/30 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
@@ -404,7 +406,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             <div className="p-5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-blue-400" />
+                  <Sliders className="w-4 h-4 text-amber-400" />
                   <span className="text-xs font-bold text-white">App Permissions & Device Access</span>
                 </div>
                 <button
@@ -413,7 +415,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     stopCamera();
                     openPermissionsModal();
                   }}
-                  className="text-[11px] font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                  className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
                 >
                   <span>Open Full Manager</span>
                   <ChevronRight className="w-3 h-3" />
@@ -422,7 +424,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-[11px]">
                 <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1.5">
-                  <Video className="w-5 h-5 text-blue-400" />
+                  <Video className="w-5 h-5 text-amber-400" />
                   <span className="text-[10px] text-slate-300 font-medium">Camera</span>
                   <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${cameraStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
                     {cameraStatus === 'granted' ? 'Allowed' : 'Prompt'}
@@ -430,7 +432,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
 
                 <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1.5">
-                  <Mic className="w-5 h-5 text-indigo-400" />
+                  <Mic className="w-5 h-5 text-yellow-400" />
                   <span className="text-[10px] text-slate-300 font-medium">Microphone</span>
                   <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full ${micStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
                     {micStatus === 'granted' ? 'Allowed' : 'Prompt'}
@@ -454,11 +456,11 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       openSaveToHomeModal();
                     }
                   }}
-                  className="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer hover:bg-purple-900/40 transition-colors"
+                  className="p-3 rounded-xl bg-orange-950/30 border border-orange-500/30 flex flex-col items-center justify-center text-center gap-1.5 cursor-pointer hover:bg-orange-900/40 transition-colors"
                 >
-                  <Smartphone className="w-5 h-5 text-purple-400" />
-                  <span className="text-[10px] text-purple-200 font-medium">Home App</span>
-                  <span className="text-[9px] font-bold text-purple-300 underline">
+                  <Smartphone className="w-5 h-5 text-orange-400" />
+                  <span className="text-[10px] text-orange-200 font-medium">Home App</span>
+                  <span className="text-[9px] font-bold text-orange-300 underline">
                     {isAndroid ? 'Android APK' : isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Install PWA'}
                   </span>
                 </div>
@@ -466,7 +468,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
             </div>
 
             {/* Save or Install Aura App Card (With Android Direct APK Link) */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-purple-950/30 to-black/50 border border-emerald-500/30 space-y-3">
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-orange-950/30 to-black/50 border border-emerald-500/30 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
@@ -511,25 +513,25 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     stopCamera();
                     openSaveToHomeModal();
                   }}
-                  className="py-2.5 px-3 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 border border-purple-500/40 text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-98"
+                  className="py-2.5 px-3 rounded-xl bg-orange-600/20 hover:bg-orange-600/30 text-orange-200 border border-orange-500/40 text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-98"
                 >
-                  <Smartphone className="w-3.5 h-3.5 text-purple-400" />
+                  <Smartphone className="w-3.5 h-3.5 text-orange-400" />
                   <span>Save PWA to Home Screen</span>
                 </button>
               </div>
             </div>
 
-            {/* Matrix Digital Rain Splash Trigger */}
+            {/* Christian Sanctuary & Lion of Judah Splash Trigger */}
             {onTriggerMatrixSplash && (
-              <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/20 space-y-2">
+              <div className="p-4 rounded-2xl bg-black/40 border border-amber-500/20 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-emerald-400 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
-                    <span>Visual Matrix Rain Splash</span>
+                  <span className="text-xs font-bold text-amber-400 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+                    <span>Christian Sanctuary & Lion of Judah Splash</span>
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-300">
-                  Experience the full-screen cyberpunk Matrix digital rain transition animation with green code drops.
+                  Experience the full-screen cinematic Christian splash screen with the roaring Lion of Judah, descending heavenly light rays, Holy Spirit dove, prayer hands, and scriptures for the broken.
                 </p>
                 <button
                   type="button"
@@ -538,10 +540,37 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     onClose();
                     onTriggerMatrixSplash();
                   }}
+                  className="w-full py-2.5 px-4 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Launch Christian Splash Screen (Lion of Judah)</span>
+                </button>
+              </div>
+            )}
+
+            {/* Gospel Tract Trigger */}
+            {onOpenGospelTract && (
+              <div className="p-4 rounded-2xl bg-black/40 border border-emerald-500/20 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-emerald-400 flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-emerald-400 animate-pulse" />
+                    <span>The Greatest News</span>
+                  </span>
+                </div>
+                <p className="text-[11px] text-slate-300">
+                  Read and share the core message of the Gospel.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    stopCamera();
+                    onClose();
+                    onOpenGospelTract();
+                  }}
                   className="w-full py-2.5 px-4 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Launch Matrix Digital Splash Screen</span>
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Read Gospel Tract</span>
                 </button>
               </div>
             )}
@@ -570,7 +599,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       <p className="text-[11px] text-slate-300">@{handle || 'handle'}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] text-blue-300 font-medium italic opacity-70">
+                  <span className="text-[10px] text-amber-300 font-medium italic opacity-70">
                     Live Preview
                   </span>
                 </div>
@@ -580,7 +609,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5 text-blue-400" />
+                    <Layers className="w-3.5 h-3.5 text-amber-400" />
                     <span>Profile Cover Image</span>
                   </label>
                   <span className="text-[10px] text-slate-400">Shown at the top of your profile</span>
@@ -595,7 +624,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   onDragLeave={() => setIsDraggingBanner(false)}
                   onDrop={handleBannerDrop}
                   className={`p-3 rounded-xl border-2 border-dashed transition-all flex flex-col sm:flex-row items-center justify-between gap-3 ${
-                    isDraggingBanner ? 'border-blue-400 bg-blue-500/20' : 'border-white/15 bg-black/30'
+                    isDraggingBanner ? 'border-amber-400 bg-amber-500/20' : 'border-white/15 bg-black/30'
                   }`}
                 >
                   <input
@@ -617,7 +646,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         setUnsplashTarget('banner');
                         setIsUnsplashOpen(true);
                       }}
-                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-blue-500/20"
+                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-amber-500/20"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                       <span>Pexels Cover</span>
@@ -625,7 +654,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     <button
                       type="button"
                       onClick={() => bannerFileInputRef.current?.click()}
-                      className="px-3.5 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                      className="px-3.5 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all"
                     >
                       <Upload className="w-3.5 h-3.5" />
                       <span>Browse Image</span>
@@ -649,7 +678,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                    <ImageIcon className="w-3.5 h-3.5 text-blue-400" />
+                    <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
                     <span>Profile Avatar Photo</span>
                   </label>
                   <span className="text-[10px] text-slate-400">Upload, snap, or select</span>
@@ -663,7 +692,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       <button
                         type="button"
                         onClick={takeSnapshot}
-                        className="px-3.5 py-1.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg flex items-center gap-1.5"
+                        className="px-3.5 py-1.5 rounded-full bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-lg flex items-center gap-1.5"
                       >
                         <Camera className="w-3.5 h-3.5" />
                         <span>Snap Photo</span>
@@ -690,14 +719,14 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       onClick={() => fileInputRef.current?.click()}
                       className={`relative group cursor-pointer rounded-2xl p-1.5 transition-all border-2 ${
                         isDraggingAvatar
-                          ? 'border-blue-400 bg-blue-500/20 scale-105'
-                          : 'border-white/15 hover:border-blue-400/60 bg-black/40'
+                          ? 'border-amber-400 bg-amber-500/20 scale-105'
+                          : 'border-white/15 hover:border-amber-400/60 bg-black/40'
                       }`}
                       title="Click or drop an image file here"
                     >
                       <Avatar src={avatarUrl || user.avatarUrl} name={name || user.name} size="xl" status={status} />
                       <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-[10px] font-semibold gap-1 backdrop-blur-xs">
-                        <Upload className="w-4 h-4 text-blue-400" />
+                        <Upload className="w-4 h-4 text-amber-400" />
                         <span>Change</span>
                       </div>
                     </div>
@@ -720,7 +749,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                             setUnsplashTarget('avatar');
                             setIsUnsplashOpen(true);
                           }}
-                          className="px-3 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-blue-500/20"
+                          className="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-amber-500/20"
                         >
                           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
                           <span>Pexels Portrait</span>
@@ -729,7 +758,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         <button
                           type="button"
                           onClick={() => fileInputRef.current?.click()}
-                          className="flex-1 py-2 px-3 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
+                          className="flex-1 py-2 px-3 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                         >
                           <Upload className="w-3.5 h-3.5" />
                           <span>Upload File</span>
@@ -741,7 +770,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           className="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all"
                           title="Take selfie with camera"
                         >
-                          <Camera className="w-3.5 h-3.5 text-indigo-400" />
+                          <Camera className="w-3.5 h-3.5 text-yellow-400" />
                           <span className="hidden sm:inline">Camera</span>
                         </button>
                       </div>
@@ -751,7 +780,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         value={avatarUrl}
                         onChange={(e) => setAvatarUrl(e.target.value)}
                         placeholder="Or paste avatar image URL"
-                        className="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white text-[11px] focus:outline-none focus:border-blue-400 truncate"
+                        className="w-full px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-white text-[11px] focus:outline-none focus:border-amber-400 truncate"
                       />
                     </div>
                   </div>
@@ -770,7 +799,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           setAvatarUrl(preset);
                         }}
                         className={`relative w-8 h-8 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all ${
-                          avatarUrl === preset ? 'border-blue-400 scale-110 shadow-md shadow-blue-500/40' : 'border-transparent opacity-60 hover:opacity-100'
+                          avatarUrl === preset ? 'border-amber-400 scale-110 shadow-md shadow-amber-500/40' : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                       >
                         <img src={preset} alt={`Preset ${i}`} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
@@ -786,7 +815,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       className="px-2.5 h-8 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-slate-300 flex items-center gap-1 transition-all flex-shrink-0"
                       title="Generate random bot avatar"
                     >
-                      <RefreshCw className="w-3 h-3 text-blue-400" />
+                      <RefreshCw className="w-3 h-3 text-amber-400" />
                       <span>Random</span>
                     </button>
                   </div>
@@ -803,7 +832,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
                   />
                 </div>
                 <div>
@@ -815,7 +844,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     required
                     value={handle}
                     onChange={(e) => setHandle(e.target.value.replace('@', ''))}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400 font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400 font-mono"
                   />
                 </div>
               </div>
@@ -829,7 +858,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Share a short bio or what you're working on..."
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400 resize-none"
+                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400 resize-none"
                 />
               </div>
 
@@ -841,7 +870,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value as UserStatus)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#090d22] border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 rounded-xl bg-[#090d22] border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
                   >
                     <option value="online">🟢 Online</option>
                     <option value="busy">🔴 In Call / Busy</option>
@@ -858,7 +887,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     value={statusMessage}
                     onChange={(e) => setStatusMessage(e.target.value)}
                     placeholder="e.g. Collaborating on Aura ✨"
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-blue-400"
+                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -867,10 +896,10 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-blue-400" />
+                    <span className="w-2 h-2 rounded-full bg-amber-400" />
                     <span>Account Security & Login Protection</span>
                   </label>
-                  <span className="text-[10px] text-blue-300 font-medium">
+                  <span className="text-[10px] text-amber-300 font-medium">
                     {user.authProvider === 'google' ? 'Google Account' : user.hasPassword ? 'Password Protected' : 'Email Login'}
                   </span>
                 </div>
@@ -888,7 +917,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 </div>
               </div>
 
-              {/* Matrix Protocol Splash Screen Quick Launch */}
+              {/* Christian Splash Screen Quick Launch */}
               {onTriggerMatrixSplash && (
                 <div className="pt-2">
                   <button
@@ -898,13 +927,13 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       onClose();
                       onTriggerMatrixSplash();
                     }}
-                    className="w-full py-2.5 px-3.5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center justify-between transition-all"
+                    className="w-full py-2.5 px-3.5 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold flex items-center justify-between transition-all"
                   >
                     <span className="flex items-center gap-2">
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>Replay Matrix Digital Splash Screen</span>
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Replay Christian Splash Screen (Lion of Judah)</span>
                     </span>
-                    <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40">
+                    <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40">
                       Launch
                     </span>
                   </button>
@@ -913,15 +942,15 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
               {/* Invite & Share Action Card */}
               {onOpenShare && (
-                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-600/15 via-indigo-600/15 to-purple-600/15 border border-blue-500/30 flex items-center justify-between gap-3">
+                <div className="p-3.5 rounded-2xl bg-gradient-to-r from-amber-600/15 via-yellow-600/15 to-orange-600/15 border border-amber-500/30 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <div className="w-9 h-9 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 flex-shrink-0">
+                    <div className="w-9 h-9 rounded-xl bg-amber-600/20 border border-amber-500/40 flex items-center justify-center text-amber-400 flex-shrink-0">
                       <Share2 className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
                       <p className="text-xs font-bold text-white flex items-center gap-1.5 truncate">
                         <span>Invite Friends & Share App</span>
-                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/30 text-blue-300 font-mono">
+                        <span className="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/30 text-amber-300 font-mono">
                           QR + Link
                         </span>
                       </p>
@@ -936,7 +965,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       stopCamera();
                       onOpenShare();
                     }}
-                    className="px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md shadow-blue-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all active:scale-95"
+                    className="px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold shadow-md shadow-amber-500/30 flex items-center gap-1.5 flex-shrink-0 transition-all active:scale-95"
                   >
                     <QrCode className="w-3.5 h-3.5" />
                     <span>Share</span>
@@ -948,7 +977,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sliders className="w-4 h-4 text-blue-400" />
+                    <Sliders className="w-4 h-4 text-amber-400" />
                     <span className="text-xs font-bold text-white">App Permissions & Device Access</span>
                   </div>
                   <button
@@ -957,7 +986,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       stopCamera();
                       openPermissionsModal();
                     }}
-                    className="text-[11px] font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                    className="text-[11px] font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1"
                   >
                     <span>Manage</span>
                     <ChevronRight className="w-3 h-3" />
@@ -966,7 +995,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
                   <div className="p-2 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1">
-                    <Video className="w-4 h-4 text-blue-400" />
+                    <Video className="w-4 h-4 text-amber-400" />
                     <span className="text-[10px] text-slate-300 font-medium">Camera</span>
                     <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${cameraStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
                       {cameraStatus === 'granted' ? 'Allowed' : 'Prompt'}
@@ -974,7 +1003,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   </div>
 
                   <div className="p-2 rounded-xl bg-black/40 border border-white/10 flex flex-col items-center justify-center text-center gap-1">
-                    <Mic className="w-4 h-4 text-indigo-400" />
+                    <Mic className="w-4 h-4 text-yellow-400" />
                     <span className="text-[10px] text-slate-300 font-medium">Mic</span>
                     <span className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${micStatus === 'granted' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-300'}`}>
                       {micStatus === 'granted' ? 'Allowed' : 'Prompt'}
@@ -998,11 +1027,11 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                         openSaveToHomeModal();
                       }
                     }}
-                    className="p-2 rounded-xl bg-purple-950/30 border border-purple-500/30 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:bg-purple-900/40 transition-colors"
+                    className="p-2 rounded-xl bg-orange-950/30 border border-orange-500/30 flex flex-col items-center justify-center text-center gap-1 cursor-pointer hover:bg-orange-900/40 transition-colors"
                   >
-                    <Smartphone className="w-4 h-4 text-purple-400" />
-                    <span className="text-[10px] text-purple-200 font-medium">Home App</span>
-                    <span className="text-[9px] font-bold text-purple-300 underline">
+                    <Smartphone className="w-4 h-4 text-orange-400" />
+                    <span className="text-[10px] text-orange-200 font-medium">Home App</span>
+                    <span className="text-[9px] font-bold text-orange-300 underline">
                       {isAndroid ? 'Android APK' : isStandalone || pwaStatus === 'installed' ? 'Installed' : 'Add App'}
                     </span>
                   </div>
@@ -1022,7 +1051,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold shadow-lg shadow-blue-500/25 border border-blue-400/30 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+                className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-white text-xs font-bold shadow-lg shadow-amber-500/25 border border-amber-400/30 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 <span>{isSaving ? 'Saving...' : 'Save Changes'}</span>
@@ -1039,7 +1068,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   onClose();
                   openAuthModal();
                 }}
-                className="px-6 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-lg"
+                className="px-6 py-2.5 rounded-xl bg-amber-600 text-white text-xs font-bold shadow-lg"
               >
                 Sign In / Onboard Now
               </button>

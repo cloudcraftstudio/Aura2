@@ -61,7 +61,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
         className="w-full max-w-md rounded-[28px] bg-[#0c1024]/95 border border-white/20 shadow-[0_20px_70px_rgba(0,0,0,0.85)] p-6 text-white relative overflow-hidden backdrop-blur-2xl"
       >
         {/* Glow ambient accent */}
-        <div className="absolute -top-20 -right-20 w-44 h-44 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-20 -right-20 w-44 h-44 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* Close Button */}
         <button
@@ -117,12 +117,12 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
                   avatarUrl: acc.avatarUrl,
                 });
               }}
-              className="w-full p-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-blue-500/40 text-left transition-all flex items-center justify-between group active:scale-[0.99]"
+              className="w-full p-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.09] border border-white/10 hover:border-amber-500/40 text-left transition-all flex items-center justify-between group active:scale-[0.99]"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <Avatar src={acc.avatarUrl} name={acc.name} size="md" />
                 <div className="min-w-0">
-                  <p className="text-xs font-bold text-white group-hover:text-blue-300 transition-colors truncate">
+                  <p className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors truncate">
                     {acc.name}
                   </p>
                   <p className="text-[11px] text-slate-400 truncate">{acc.email}</p>
@@ -141,9 +141,9 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               onSubmit={handleCustomSubmit}
-              className="p-3.5 rounded-2xl bg-white/5 border border-blue-500/30 space-y-3 mb-4"
+              className="p-3.5 rounded-2xl bg-white/5 border border-amber-500/30 space-y-3 mb-4"
             >
-              <div className="flex items-center justify-between text-xs text-blue-300 font-semibold">
+              <div className="flex items-center justify-between text-xs text-amber-300 font-semibold">
                 <span>Sign in with specific Gmail / Google account</span>
                 <button
                   type="button"
@@ -164,7 +164,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
                   placeholder="yourname@gmail.com"
                   value={customEmail}
                   onChange={(e) => setCustomEmail(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
@@ -177,13 +177,13 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
                   placeholder="Your Name"
                   value={customName}
                   onChange={(e) => setCustomName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-blue-400"
+                  className="w-full px-3 py-2 rounded-xl bg-black/40 border border-white/15 text-white placeholder:text-slate-500 text-xs focus:outline-none focus:border-amber-400"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md shadow-amber-500/20 transition-all flex items-center justify-center gap-1.5"
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Continue with this account</span>
@@ -198,7 +198,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
               }}
               className="w-full py-2.5 px-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-slate-300 hover:text-white transition-colors flex items-center justify-center gap-2 mb-4"
             >
-              <UserPlus className="w-3.5 h-3.5 text-blue-400" />
+              <UserPlus className="w-3.5 h-3.5 text-amber-400" />
               <span>Use another Google account</span>
             </button>
           )}
