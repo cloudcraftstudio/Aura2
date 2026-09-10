@@ -94,42 +94,10 @@ export const UniversalUnsplashModal: React.FC<UniversalUnsplashModalProps> = ({
         }
       }
 
-      // 2. Direct client fallback with access key
-      const clientKey =
-        import.meta.env.VITE_UNSPLASH_ACCESS_KEY ||
-        '6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0';
-
-      if (clientKey) {
-        const endpoint = searchTerm.trim()
-          ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-              searchTerm
-            )}&per_page=28&orientation=landscape&client_id=${clientKey}`
-          : `https://api.unsplash.com/photos/random?count=28&orientation=landscape&client_id=${clientKey}`;
-
-        const res = await fetch(endpoint);
-        if (res.ok) {
-          const data = await res.json();
-          const photos = searchTerm.trim() ? data.results : data;
-          if (Array.isArray(photos) && photos.length > 0) {
-            setResults(
-              photos.map((p: any) => ({
-                id: p.id,
-                url: p.urls?.regular || p.urls?.full || p.urls?.small,
-                thumb: p.urls?.small || p.urls?.thumb,
-                author: p.user?.name || 'Unsplash Creator',
-                description: p.alt_description || p.description,
-              }))
-            );
-            setIsLoading(false);
-            return;
-          }
-        }
-      }
-
-      // 3. Fallback to curated preset photos
+      // 2. Fallback to curated preset photos
       setResults(getPresetFallback(searchTerm));
     } catch (err) {
-      console.warn('Unsplash search fallback to presets:', err);
+      console.warn('Image search fallback to presets:', err);
       setResults(getPresetFallback(searchTerm));
     } finally {
       setIsLoading(false);

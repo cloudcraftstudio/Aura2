@@ -86,14 +86,13 @@ export function LiveSermonStudio() {
     if (!q) return;
     setIsSearchingUnsplash(true);
     try {
-      const apiKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || "6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0";
-      const res = await fetch(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(q)}&per_page=12&client_id=${apiKey}`);
+      const res = await fetch(`/api/unsplash/search?query=${encodeURIComponent(q)}`);
       if (res.ok) {
         const data = await res.json();
         setUnsplashResults(data.results || []);
       }
     } catch (err) {
-      console.error("Unsplash search failed:", err);
+      console.error("Image search failed:", err);
     } finally {
       setIsSearchingUnsplash(false);
     }

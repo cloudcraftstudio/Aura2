@@ -618,21 +618,17 @@ async function startServer() {
   });
 
   // --- Pexels Image Proxy ---
-  app.get('/api/unsplash/search', async (req, res) => {
-    const query = (req.query.query as string) || '';
+  app.get(['/api/unsplash/search', '/api/pexels/search', '/api/images/search'], async (req, res) => {
+    const query = ((req.query.query as string) || (req.query.q as string) || '').trim();
     const accessKey =
       process.env.PEXELS_API_KEY ||
       process.env.VITE_PEXELS_API_KEY ||
-      '';
-
-    if (!accessKey) {
-      return res.status(401).json({ error: 'Pexels API key not configured on server' });
-    }
+      'cY6ajm4oZeTHCoKHGCVYvizEkWs0KGf9VU4jJ8K50AKAmeESWfqk0rkM';
 
     try {
-      const endpoint = query.trim()
-        ? `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=24`
-        : `https://api.pexels.com/v1/curated?per_page=24`;
+      const endpoint = query
+        ? `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=30`
+        : `https://api.pexels.com/v1/curated?per_page=30`;
 
       const response = await fetch(endpoint, {
         headers: {
@@ -647,12 +643,25 @@ async function startServer() {
         if (Array.isArray(photos) && photos.length > 0) {
           const results = photos.map((p: any) => ({
             id: p.id.toString(),
-            url: p.src.large,
-            thumb: p.src.medium,
-            author: p.photographer,
+            url: p.src?.large || p.src?.original || p.src?.medium,
+            thumb: p.src?.medium || p.src?.small,
+            author: p.photographer || 'Pexels Creator',
+            photographer_url: p.photographer_url,
+            alt_description: p.alt || `${query || 'Worship'} background`,
+            urls: {
+              regular: p.src?.large || p.src?.original,
+              full: p.src?.original,
+              small: p.src?.medium || p.src?.small,
+              thumb: p.src?.small || p.src?.tiny || p.src?.medium,
+            },
+            user: {
+              name: p.photographer || 'Pexels Creator',
+            },
           }));
           return res.json({ results });
         }
+      } else {
+        console.warn(`Pexels API returned status ${response.status}`);
       }
     } catch (err: any) {
       console.warn('Pexels upstream fetch error, using curated presets:', err.message);
