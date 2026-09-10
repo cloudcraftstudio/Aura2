@@ -52,54 +52,22 @@ export const UnsplashSearch: React.FC<UnsplashSearchProps> = ({
     setIsLoading(true);
     
     try {
-      // 1. Try server-side proxy endpoint first (safe, doesn't expose key)
-      try {
-        const proxyRes = await fetch(`/api/unsplash/search?query=${encodeURIComponent(searchTerm)}`);
-        if (proxyRes.ok) {
-          const proxyData = await proxyRes.json();
-          if (proxyData.results && proxyData.results.length > 0) {
-            setResults(proxyData.results);
-            setIsLoading(false);
-            return;
-          }
-        }
-      } catch (proxyErr) {
-        // Fall through to direct key check
-      }
-
-      // 2. Direct client-side key fallback
-      const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || '6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0';
-      if (accessKey) {
-        const endpoint = searchTerm.trim() 
-          ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(searchTerm)}&per_page=24&orientation=landscape`
-          : `https://api.unsplash.com/photos/random?count=24&orientation=landscape`;
-
-        const res = await fetch(endpoint, {
-          headers: {
-            Authorization: `Client-ID ${accessKey}`
-          }
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          const photos = searchTerm.trim() ? data.results : data;
-          if (Array.isArray(photos) && photos.length > 0) {
-            setResults(photos.map((p: any) => ({
-              id: p.id,
-              url: p.urls.regular,
-              thumb: p.urls.small,
-              author: p.user?.name || 'Unsplash Creator'
-            })));
-            setIsLoading(false);
-            return;
-          }
+      // 1. Force server-side proxy endpoint (protects API key)
+      const proxyRes = await fetch(`/api/unsplash/search?query=${encodeURIComponent(searchTerm)}`);
+      
+      if (proxyRes.ok) {
+        const proxyData = await proxyRes.json();
+        if (proxyData.results && proxyData.results.length > 0) {
+          setResults(proxyData.results);
+          setIsLoading(false);
+          return;
         }
       }
-
-      // 3. Fallback smoothly to curated preset library
+      
+      // 2. Fallback smoothly to curated preset library if API fails or returns no results
       setResults(fallbackSearch(searchTerm));
     } catch (err) {
-      console.warn('Unsplash search fallback to presets:', err);
+      console.warn('Unsplash search failed, falling back to presets:', err);
       setResults(fallbackSearch(searchTerm));
     } finally {
       setIsLoading(false);

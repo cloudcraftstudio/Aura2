@@ -885,7 +885,7 @@ export function LiveSermonStudio() {
                         value={unsplashQuery}
                         onChange={e => setUnsplashQuery(e.target.value)}
                         onKeyDown={e => e.key === "Enter" && (e.preventDefault(), searchUnsplash())}
-                        placeholder="Search Unsplash (e.g. prayer, cross, pulpit, choir)..."
+                        placeholder="Search Pexels (e.g. prayer, cross, pulpit, choir)..."
                         className="w-full pl-8 pr-3 py-1.5 bg-blue-900/40 border border-blue-400/30 rounded-xl text-white text-xs placeholder-slate-400 focus:outline-none focus:border-amber-400"
                       />
                     </div>

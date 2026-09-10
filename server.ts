@@ -617,40 +617,45 @@ async function startServer() {
     res.json(signals);
   });
 
-  // --- Unsplash Image Proxy ---
+  // --- Pexels Image Proxy ---
   app.get('/api/unsplash/search', async (req, res) => {
     const query = (req.query.query as string) || '';
     const accessKey =
-      process.env.UNSPLASH_ACCESS_KEY ||
-      process.env.VITE_UNSPLASH_ACCESS_KEY ||
-      '6Zm1K6Y5nxJekPjGCydKDtCqh7m5PteXt9yHSeWS6q0';
+      process.env.PEXELS_API_KEY ||
+      process.env.VITE_PEXELS_API_KEY ||
+      '';
+
+    if (!accessKey) {
+      return res.status(401).json({ error: 'Pexels API key not configured on server' });
+    }
 
     try {
       const endpoint = query.trim()
-        ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=24&orientation=landscape`
-        : `https://api.unsplash.com/photos/random?count=24&orientation=landscape`;
+        ? `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=24`
+        : `https://api.pexels.com/v1/curated?per_page=24`;
 
       const response = await fetch(endpoint, {
         headers: {
-          Authorization: `Client-ID ${accessKey}`,
+          Authorization: accessKey,
         },
       });
 
       if (response.ok) {
         const data = await response.json();
-        const photos = query.trim() ? data.results : data;
+        const photos = data.photos || [];
+
         if (Array.isArray(photos) && photos.length > 0) {
           const results = photos.map((p: any) => ({
-            id: p.id,
-            url: p.urls?.regular || p.urls?.full || p.urls?.small,
-            thumb: p.urls?.small || p.urls?.thumb,
-            author: p.user?.name || 'Unsplash Creator',
+            id: p.id.toString(),
+            url: p.src.large,
+            thumb: p.src.medium,
+            author: p.photographer,
           }));
           return res.json({ results });
         }
       }
     } catch (err: any) {
-      console.warn('Unsplash upstream fetch error, using curated presets:', err.message);
+      console.warn('Pexels upstream fetch error, using curated presets:', err.message);
     }
 
     // Graceful fallback if Unsplash rate-limited or offline

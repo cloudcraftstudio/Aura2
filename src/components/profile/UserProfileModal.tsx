@@ -620,7 +620,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md shadow-blue-500/20"
                     >
                       <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                      <span>Unsplash Cover</span>
+                      <span>Pexels Cover</span>
                     </button>
                     <button
                       type="button"
@@ -723,7 +723,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                           className="px-3 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-md shadow-blue-500/20"
                         >
                           <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                          <span>Unsplash Portrait</span>
+                          <span>Pexels Portrait</span>
                         </button>
 
                         <button

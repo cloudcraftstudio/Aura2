@@ -460,7 +460,7 @@ export const StoriesReel: React.FC = () => {
                     soundEffects.playTap();
                     setStoryImageUrl(url);
                   }}
-                  placeholder="Search Unsplash for an image..."
+                  placeholder="Search Pexels for an image..."
                 />
               </div>
 

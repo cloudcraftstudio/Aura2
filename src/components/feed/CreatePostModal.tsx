@@ -726,7 +726,7 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({
                       prev.includes(url) ? prev.filter((u) => u !== url) : [...prev, url]
                     );
                   }}
-                  placeholder="Search Unsplash for an image..."
+                  placeholder="Search Pexels for an image..."
                 />
               </div>
 
