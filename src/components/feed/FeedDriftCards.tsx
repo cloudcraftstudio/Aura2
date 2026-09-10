@@ -94,7 +94,40 @@ export const PrayerDriftCard: React.FC<{ index?: number }> = () => {
 
   const handleGoToWall = () => {
     soundEffects.playTap();
-    window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'bible' } }));
+    try {
+      localStorage.setItem('aura_study_initial_tab', 'prayers');
+      localStorage.setItem('aura_target_prayer_id', prayer.id);
+      sessionStorage.setItem('aura_target_prayer_id', prayer.id);
+    } catch {}
+    window.dispatchEvent(
+      new CustomEvent('navigate_tab', {
+        detail: {
+          tab: 'bible',
+          subtab: 'prayers',
+          prayerId: prayer.id,
+          prayer,
+        },
+      })
+    );
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('switch_study_tab', {
+          detail: {
+            tab: 'prayers',
+            prayerId: prayer.id,
+            prayer,
+          },
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent('target_prayer', {
+          detail: {
+            prayerId: prayer.id,
+            prayer,
+          },
+        })
+      );
+    }, 60);
   };
 
   return (
@@ -238,7 +271,40 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
 
   const handleOpenInScriptures = () => {
     soundEffects.playTap();
-    window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'bible' } }));
+    try {
+      localStorage.setItem('aura_study_initial_tab', 'pulpit');
+      localStorage.setItem('aura_target_sermon_id', sermon.id);
+      sessionStorage.setItem('aura_target_sermon_id', sermon.id);
+    } catch {}
+    window.dispatchEvent(
+      new CustomEvent('navigate_tab', {
+        detail: {
+          tab: 'bible',
+          subtab: 'pulpit',
+          sermonId: sermon.id,
+          sermon,
+        },
+      })
+    );
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('switch_study_tab', {
+          detail: {
+            tab: 'pulpit',
+            sermonId: sermon.id,
+            sermon,
+          },
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent('open_sermon', {
+          detail: {
+            sermonId: sermon.id,
+            sermon,
+          },
+        })
+      );
+    }, 60);
   };
 
   const formatMinSec = (secs?: number) => {
@@ -570,16 +636,29 @@ export const GroupActivityDriftCard: React.FC<GroupActivityProps> = () => {
           <span>{count} members attending</span>
         </span>
 
-        <button
-          onClick={handleRsvp}
-          className={`px-4 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 ${
-            hasRsvpd
-              ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
-              : 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30'
-          }`}
-        >
-          <span>{hasRsvpd ? '✓ RSVP Confirmed' : 'RSVP & Join'}</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleRsvp}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 ${
+              hasRsvpd
+                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                : 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30'
+            }`}
+          >
+            <span>{hasRsvpd ? '✓ RSVP Confirmed' : 'RSVP & Join'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              soundEffects.playTap();
+              window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'recovery' } }));
+            }}
+            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1 transition-all"
+          >
+            <span>Fellowship</span>
+            <ArrowRight className="w-3 h-3" />
+          </button>
+        </div>
       </div>
     </div>
   );

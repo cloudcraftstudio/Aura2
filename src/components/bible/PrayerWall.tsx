@@ -19,40 +19,82 @@ interface PrayerItem {
 
 const STORAGE_KEY = 'aura_church_prayer_wall';
 
+const INITIAL_DEFAULT_PRAYERS: PrayerItem[] = [
+  {
+    id: 'prayer-tex-1',
+    authorName: 'Pastor Tex Jenkins',
+    authorHandle: 'tex',
+    isAnonymous: false,
+    category: 'Healing',
+    content: 'Lifting up all families walking through seasons of recovery and illness. May God grant supernatural peace, divine healing, and restore joy unto every broken heart today!',
+    prayedCount: 42,
+    prayedUsers: [],
+    isAnswered: false,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 'prayer-community-2',
+    authorName: 'Daphne & Family',
+    authorHandle: 'daphne',
+    isAnonymous: false,
+    category: 'Praise',
+    content: 'Asking for continued prayers for my mother recovery. We felt God peace through every test and doctor report this week!',
+    prayedCount: 29,
+    prayedUsers: [],
+    isAnswered: true,
+    praiseUpdate: 'Doctors confirmed stable progress! Thank you church family for lifting us up.',
+    createdAt: new Date(Date.now() - 3600000).toISOString()
+  },
+  {
+    id: 'p-1',
+    authorName: 'Church Family',
+    authorHandle: 'church',
+    isAnonymous: false,
+    category: 'Praise',
+    content: 'Praising God for His abundant grace and for our Wednesday and Sunday gatherings in the Word!',
+    prayedCount: 14,
+    prayedUsers: [],
+    isAnswered: true,
+    praiseUpdate: 'Thank you for continuing to lift up the leadership and congregation in prayer.',
+    createdAt: new Date(Date.now() - 86400000).toISOString(),
+  },
+  {
+    id: 'p-2',
+    authorName: 'Anonymous Member',
+    authorHandle: 'anonymous',
+    isAnonymous: true,
+    category: 'Healing',
+    content: 'Please pray for physical healing and strength for a family member recovering this week.',
+    prayedCount: 8,
+    prayedUsers: [],
+    isAnswered: false,
+    createdAt: new Date().toISOString(),
+  }
+];
+
 export const PrayerWall: React.FC = () => {
   const { user } = useAuth();
   const [prayers, setPrayers] = useState<PrayerItem[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch {}
-    return [
-      {
-        id: 'p-1',
-        authorName: 'Church Family',
-        authorHandle: 'church',
-        isAnonymous: false,
-        category: 'Praise',
-        content: 'Praising God for His abundant grace and for our Wednesday and Sunday gatherings in the Word!',
-        prayedCount: 14,
-        prayedUsers: [],
-        isAnswered: true,
-        praiseUpdate: 'Thank you for continuing to lift up the leadership and congregation in prayer.',
-        createdAt: new Date(Date.now() - 86400000).toISOString(),
-      },
-      {
-        id: 'p-2',
-        authorName: 'Anonymous Member',
-        authorHandle: 'anonymous',
-        isAnonymous: true,
-        category: 'Healing',
-        content: 'Please pray for physical healing and strength for a family member recovering this week.',
-        prayedCount: 8,
-        prayedUsers: [],
-        isAnswered: false,
-        createdAt: new Date().toISOString(),
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Ensure default Tex prayer is accessible
+          const hasTex = parsed.some(p => p.id === 'prayer-tex-1');
+          return hasTex ? parsed : [INITIAL_DEFAULT_PRAYERS[0], ...parsed];
+        }
       }
-    ];
+    } catch {}
+    return INITIAL_DEFAULT_PRAYERS;
+  });
+
+  const [highlightedPrayerId, setHighlightedPrayerId] = useState<string | null>(() => {
+    try {
+      return sessionStorage.getItem('aura_target_prayer_id') || localStorage.getItem('aura_target_prayer_id');
+    } catch {
+      return null;
+    }
   });
 
   const [filter, setFilter] = useState<string>('all');
@@ -61,6 +103,69 @@ export const PrayerWall: React.FC = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [showPraiseModal, setShowPraiseModal] = useState<string | null>(null);
   const [praiseText, setPraiseText] = useState('');
+
+  // Listen for target_prayer events dispatched from NewsFeed shortcut links
+  useEffect(() => {
+    const handleTargetPrayer = (e: Event) => {
+      const custom = e as CustomEvent<{ prayerId: string; prayer?: PrayerItem }>;
+      const targetId = custom.detail?.prayerId;
+      if (!targetId) return;
+
+      if (custom.detail.prayer) {
+        setPrayers(prev => {
+          if (prev.some(p => p.id === targetId)) return prev;
+          return [custom.detail.prayer!, ...prev];
+        });
+      }
+
+      setFilter('all');
+      setHighlightedPrayerId(targetId);
+
+      setTimeout(() => {
+        const el = document.getElementById(`prayer-card-${targetId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 150);
+
+      setTimeout(() => {
+        setHighlightedPrayerId(prev => (prev === targetId ? null : prev));
+        try {
+          sessionStorage.removeItem('aura_target_prayer_id');
+          localStorage.removeItem('aura_target_prayer_id');
+        } catch {}
+      }, 7000);
+    };
+
+    window.addEventListener('target_prayer', handleTargetPrayer);
+    return () => window.removeEventListener('target_prayer', handleTargetPrayer);
+  }, []);
+
+  // On initial mount if target prayer was stored
+  useEffect(() => {
+    if (highlightedPrayerId) {
+      setFilter('all');
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`prayer-card-${highlightedPrayerId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 250);
+
+      const clearTimer = setTimeout(() => {
+        setHighlightedPrayerId(null);
+        try {
+          sessionStorage.removeItem('aura_target_prayer_id');
+          localStorage.removeItem('aura_target_prayer_id');
+        } catch {}
+      }, 7000);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(clearTimer);
+      };
+    }
+  }, [highlightedPrayerId]);
 
   useEffect(() => {
     try {
@@ -232,16 +337,33 @@ export const PrayerWall: React.FC = () => {
         {filteredPrayers.map((prayer) => {
           const userHasPrayed = user ? prayer.prayedUsers.includes(user.id) : false;
           const isOwner = user && (user.handle === prayer.authorHandle || user.handle === 'tex');
+          const isTargeted = highlightedPrayerId === prayer.id;
 
           return (
             <div
               key={prayer.id}
-              className={`p-4 sm:p-5 rounded-2xl border transition-all ${
-                prayer.isAnswered
+              id={`prayer-card-${prayer.id}`}
+              className={`p-4 sm:p-5 rounded-2xl border transition-all duration-500 relative overflow-hidden ${
+                isTargeted
+                  ? 'ring-2 ring-amber-400 border-amber-400 bg-gradient-to-br from-amber-950/50 via-slate-900 to-amber-950/30 shadow-[0_0_35px_rgba(245,158,11,0.35)] scale-[1.01]'
+                  : prayer.isAnswered
                   ? 'bg-emerald-950/20 border-emerald-500/30'
                   : 'bg-slate-900/50 border-white/10 hover:border-blue-500/30'
               }`}
             >
+              {/* Targeted Banner from NewsFeed shortcut */}
+              {isTargeted && (
+                <div className="mb-3.5 pb-2.5 border-b border-amber-500/30 flex items-center justify-between gap-2 flex-wrap animate-fade-in">
+                  <div className="flex items-center gap-2">
+                    <span className="animate-pulse bg-gradient-to-r from-amber-500 to-yellow-400 text-black text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                      <span>🎯 Targeted Prayer Request</span>
+                    </span>
+                    <span className="text-xs text-amber-300/90 font-semibold">Opened from NewsFeed Shortcut</span>
+                  </div>
+                  <span className="text-[10px] text-amber-400/80 font-mono">ID: {prayer.id}</span>
+                </div>
+              )}
+
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold text-xs">

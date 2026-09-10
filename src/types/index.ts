@@ -104,6 +104,7 @@ export interface SocialPost {
   savedByUserIds: string[];
   createdAt: number;
   isPendingSync?: boolean;
+  category?: string;
 }
 
 export interface StorySlide {

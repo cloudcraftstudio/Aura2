@@ -95,18 +95,78 @@ export function BibleStudy() {
     fetchCourses();
 
     const handleSwitchStudyTab = (e: Event) => {
-      const customEvent = e as CustomEvent<{ tab: string; reference?: string }>;
+      const customEvent = e as CustomEvent<{
+        tab: string;
+        reference?: string;
+        prayerId?: string;
+        prayer?: any;
+        sermonId?: string;
+        sermon?: any;
+      }>;
       const target = customEvent.detail?.tab;
-      if (target === "prayer" || target === "prayers") setActiveTab("prayers");
-      else if (target === "courses") setActiveTab("courses");
-      else if (target === "study") setActiveTab("study");
-      else if (target === "pulpit" || target === "podcasts") setActiveTab("pulpit");
-      else if (target === "reader" || target === "bible") setActiveTab("reader");
+      if (target === "prayer" || target === "prayers") {
+        setActiveTab("prayers");
+        if (customEvent.detail?.prayerId) {
+          try {
+            sessionStorage.setItem("aura_target_prayer_id", customEvent.detail.prayerId);
+            localStorage.setItem("aura_target_prayer_id", customEvent.detail.prayerId);
+          } catch {}
+          setTimeout(() => {
+            window.dispatchEvent(
+              new CustomEvent("target_prayer", {
+                detail: {
+                  prayerId: customEvent.detail.prayerId,
+                  prayer: customEvent.detail.prayer,
+                },
+              })
+            );
+          }, 80);
+        }
+      } else if (target === "courses") {
+        setActiveTab("courses");
+      } else if (target === "study") {
+        setActiveTab("study");
+        if (customEvent.detail?.reference) {
+          const spaceIdx = customEvent.detail.reference.lastIndexOf(" ");
+          if (spaceIdx !== -1) {
+            const b = customEvent.detail.reference.slice(0, spaceIdx);
+            const [c, v] = customEvent.detail.reference.slice(spaceIdx + 1).split(":");
+            if (b && c) {
+              fetchStudyBreakdown(b, c, v ? v.split("-")[0] : "1");
+            }
+          }
+        }
+      } else if (target === "pulpit" || target === "podcasts") {
+        setActiveTab("pulpit");
+        if (customEvent.detail?.sermonId || customEvent.detail?.sermon) {
+          try {
+            localStorage.setItem(
+              "aura_target_sermon_id",
+              customEvent.detail.sermonId || customEvent.detail.sermon?.id
+            );
+          } catch {}
+          setTimeout(() => {
+            window.dispatchEvent(
+              new CustomEvent("open_sermon", {
+                detail: {
+                  sermonId: customEvent.detail.sermonId,
+                  sermon: customEvent.detail.sermon,
+                },
+              })
+            );
+          }, 80);
+        }
+      } else if (target === "reader" || target === "bible") {
+        setActiveTab("reader");
+      }
     };
 
     window.addEventListener("aura_switch_study_tab", handleSwitchStudyTab);
     window.addEventListener("switch_study_tab", handleSwitchStudyTab);
-    return () => window.removeEventListener("aura_switch_study_tab", handleSwitchStudyTab);
+    return () => {
+      window.removeEventListener("aura_switch_study_tab", handleSwitchStudyTab);
+      window.removeEventListener("switch_study_tab", handleSwitchStudyTab);
+    };
   }, []);
 
   const fetchCourses = async () => {

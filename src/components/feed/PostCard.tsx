@@ -9,12 +9,17 @@ import {
   Clock,
   MoreVertical,
   Trash2,
-  Edit3
+  Edit3,
+  ArrowRight,
+  ExternalLink,
+  BookOpen,
+  Sparkles
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { SocialPost } from '../../types';
 import { useSocial } from '../../context/SocialContext';
 import { useAuth } from '../../context/AuthContext';
+import { soundEffects } from '../../services/audio';
 import { Avatar } from '../common/Avatar';
 import { ImageLightboxModal } from '../common/ImageLightboxModal';
 import { AsyncMedia } from '../common/AsyncMedia';
@@ -52,6 +57,186 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
   );
 
   const isLiked = user ? post.likedByUserIds.includes(user.id) : false;
+
+  // Shortcut link targets for Prayer Wall, Sermons, Scripture, Devotionals, and Recovery
+  const isPrayerPost =
+    post.category === 'Prayer & Worship' ||
+    post.tags?.some((t) =>
+      ['prayer', 'prayers', 'prayerwall', 'healing', 'intercession'].includes(t.toLowerCase())
+    ) ||
+    post.content.toLowerCase().includes('#prayer') ||
+    post.content.toLowerCase().includes('[prayer') ||
+    post.content.toLowerCase().includes('prayer request');
+
+  const isSermonPost =
+    post.category === 'Sermons' ||
+    post.tags?.some((t) =>
+      ['sermon', 'sermons', 'pulpit', 'podcast', 'sermonindex'].includes(t.toLowerCase())
+    ) ||
+    post.content.toLowerCase().includes('#sermon') ||
+    post.content.toLowerCase().includes('#pulpit');
+
+  const scriptureMatch = post.content.match(/\b([1-3]?\s?[A-Za-z]+)\s+(\d+):(\d+)(-\d+)?\b/);
+  const isScripturePost =
+    !isSermonPost &&
+    (!!scriptureMatch ||
+      post.tags?.some((t) => ['scripture', 'bible', 'verse'].includes(t.toLowerCase())));
+
+  const isDevotionalPost =
+    post.tags?.some((t) => ['devotional', 'dailydevotional'].includes(t.toLowerCase())) ||
+    post.content.toLowerCase().includes('#devotional');
+
+  const isRecoveryPost =
+    post.category === 'Recovery & Testimony' ||
+    post.tags?.some((t) => ['recovery', 'fellowship', 'group'].includes(t.toLowerCase())) ||
+    post.content.toLowerCase().includes('#recovery');
+
+  const handleGoToPrayerWall = () => {
+    soundEffects.playTap();
+    const targetPrayerId = `prayer-post-${post.id}`;
+    const prayerItem = {
+      id: targetPrayerId,
+      authorName: post.authorName,
+      authorHandle: post.authorHandle,
+      isAnonymous: false,
+      category: 'General' as const,
+      content: post.content.replace(/#\w+/g, '').trim(),
+      prayedCount: post.likesCount || 1,
+      prayedUsers: [],
+      isAnswered: false,
+      createdAt: post.createdAt,
+    };
+
+    try {
+      localStorage.setItem('aura_study_initial_tab', 'prayers');
+      localStorage.setItem('aura_target_prayer_id', targetPrayerId);
+      sessionStorage.setItem('aura_target_prayer_id', targetPrayerId);
+    } catch {}
+
+    window.dispatchEvent(
+      new CustomEvent('navigate_tab', {
+        detail: {
+          tab: 'bible',
+          subtab: 'prayers',
+          prayerId: targetPrayerId,
+          prayer: prayerItem,
+        },
+      })
+    );
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('switch_study_tab', {
+          detail: {
+            tab: 'prayers',
+            prayerId: targetPrayerId,
+            prayer: prayerItem,
+          },
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent('target_prayer', {
+          detail: {
+            prayerId: targetPrayerId,
+            prayer: prayerItem,
+          },
+        })
+      );
+    }, 60);
+  };
+
+  const handleGoToSermons = () => {
+    soundEffects.playTap();
+    const sermonId = `sermon-post-${post.id}`;
+    const sermonItem = {
+      id: sermonId,
+      title: post.content.slice(0, 75).trim() + (post.content.length > 75 ? '...' : ''),
+      speaker: post.authorName,
+      format: (post.mediaUrls?.some((u) => isDirectVideoUrl(u)) ? 'video' : 'audio') as 'audio' | 'video',
+      source: 'community' as const,
+      mediaUrl: post.mediaUrls?.[0],
+      duration: '25 min',
+    };
+
+    try {
+      localStorage.setItem('aura_study_initial_tab', 'pulpit');
+      localStorage.setItem('aura_target_sermon_id', sermonId);
+      sessionStorage.setItem('aura_target_sermon_id', sermonId);
+    } catch {}
+
+    window.dispatchEvent(
+      new CustomEvent('navigate_tab', {
+        detail: {
+          tab: 'bible',
+          subtab: 'pulpit',
+          sermonId,
+          sermon: sermonItem,
+        },
+      })
+    );
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('switch_study_tab', {
+          detail: {
+            tab: 'pulpit',
+            sermonId,
+            sermon: sermonItem,
+          },
+        })
+      );
+      window.dispatchEvent(
+        new CustomEvent('open_sermon', {
+          detail: {
+            sermonId,
+            sermon: sermonItem,
+          },
+        })
+      );
+    }, 60);
+  };
+
+  const handleGoToBible = () => {
+    soundEffects.playTap();
+    const ref = scriptureMatch ? scriptureMatch[0] : undefined;
+    window.dispatchEvent(
+      new CustomEvent('navigate_tab', {
+        detail: {
+          tab: 'bible',
+          subtab: ref ? 'study' : 'reader',
+          reference: ref,
+        },
+      })
+    );
+    if (ref) {
+      setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent('switch_study_tab', {
+            detail: {
+              tab: 'study',
+              reference: ref,
+            },
+          })
+        );
+      }, 60);
+    }
+  };
+
+  const handleTagClick = (tag: string) => {
+    soundEffects.playTap();
+    const clean = tag.toLowerCase().replace('#', '').trim();
+    if (['prayer', 'prayers', 'prayerwall', 'healing'].includes(clean)) {
+      handleGoToPrayerWall();
+    } else if (['sermon', 'sermons', 'pulpit', 'podcast'].includes(clean)) {
+      handleGoToSermons();
+    } else if (['devotional', 'dailydevotional'].includes(clean)) {
+      window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'devotional' } }));
+    } else if (['recovery', 'fellowship'].includes(clean)) {
+      window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'recovery' } }));
+    } else if (['scripture', 'bible', 'verse'].includes(clean)) {
+      handleGoToBible();
+    } else {
+      window.dispatchEvent(new CustomEvent('set_feed_filter', { detail: { filter: tag } }));
+    }
+  };
 
   React.useEffect(() => {
     const handleOpenPost = (e: Event) => {
@@ -236,11 +421,73 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[11px] font-medium text-blue-400/90 hover:text-blue-300 cursor-pointer"
+                onClick={() => handleTagClick(tag)}
+                className="text-[11px] font-medium text-blue-400/90 hover:text-blue-300 hover:underline cursor-pointer"
               >
                 #{tag}
               </span>
             ))}
+          </div>
+        )}
+
+        {/* Deep-link Shortcut Action Badges */}
+        {(isPrayerPost || isSermonPost || isScripturePost || isDevotionalPost || isRecoveryPost) && (
+          <div className="flex flex-wrap items-center gap-2 mt-3 pt-2.5 border-t border-white/5">
+            {isPrayerPost && (
+              <button
+                onClick={handleGoToPrayerWall}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/35 text-amber-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+              >
+                <span>🙏 Open on Prayer Wall</span>
+                <ArrowRight className="w-3 h-3 text-amber-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            )}
+
+            {isSermonPost && (
+              <button
+                onClick={handleGoToSermons}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/35 text-blue-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+              >
+                <span>🎙️ Open in Pulpit / Sermons</span>
+                <ArrowRight className="w-3 h-3 text-blue-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            )}
+
+            {isScripturePost && (
+              <button
+                onClick={handleGoToBible}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/15 hover:bg-indigo-500/25 border border-indigo-500/35 text-indigo-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+              >
+                <span>📖 Open {scriptureMatch ? scriptureMatch[0] : 'in Bible Study'}</span>
+                <ArrowRight className="w-3 h-3 text-indigo-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            )}
+
+            {isDevotionalPost && (
+              <button
+                onClick={() => {
+                  soundEffects.playTap();
+                  window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'devotional' } }));
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/35 text-purple-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+              >
+                <span>✨ Daily Devotional</span>
+                <ArrowRight className="w-3 h-3 text-purple-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            )}
+
+            {isRecoveryPost && (
+              <button
+                onClick={() => {
+                  soundEffects.playTap();
+                  window.dispatchEvent(new CustomEvent('navigate_tab', { detail: { tab: 'recovery' } }));
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/35 text-emerald-300 text-xs font-bold transition-all active:scale-95 shadow-sm group"
+              >
+                <span>🤝 Fellowship & Recovery</span>
+                <ArrowRight className="w-3 h-3 text-emerald-400 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            )}
           </div>
         )}
       </div>

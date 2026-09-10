@@ -72,9 +72,31 @@ function MainApp() {
 
   React.useEffect(() => {
     const handleTabNav = (e: Event) => {
-      const customEvent = e as CustomEvent<{ tab: 'feed' | 'bible' | 'chat' | 'studio' }>;
+      const customEvent = e as CustomEvent<{
+        tab: 'feed' | 'bible' | 'chat' | 'studio' | 'recovery' | 'devotional';
+        subtab?: string;
+        prayerId?: string;
+        sermonId?: string;
+        reference?: string;
+        [key: string]: any;
+      }>;
       if (customEvent.detail?.tab) {
         setActiveTab(customEvent.detail.tab);
+        if (customEvent.detail.subtab) {
+          try {
+            localStorage.setItem('aura_study_initial_tab', customEvent.detail.subtab);
+          } catch {}
+          setTimeout(() => {
+            window.dispatchEvent(
+              new CustomEvent('switch_study_tab', {
+                detail: {
+                  tab: customEvent.detail.subtab,
+                  ...customEvent.detail,
+                },
+              })
+            );
+          }, 60);
+        }
       }
     };
     const handleOpenShare = (e: Event) => {

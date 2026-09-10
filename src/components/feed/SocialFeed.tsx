@@ -36,8 +36,26 @@ export const SocialFeed: React.FC = () => {
       }
       setIsCreateModalOpen(true);
     };
+
+    const handleSetFilter = (e: Event) => {
+      const customEvent = e as CustomEvent<{ filter?: string }>;
+      if (customEvent.detail?.filter) {
+        const clean = customEvent.detail.filter.replace('#', '').trim();
+        const found = TAG_FILTERS.find((t) => t.toLowerCase() === clean.toLowerCase());
+        if (found) {
+          setActiveFilter(found);
+        } else {
+          setActiveFilter(clean);
+        }
+      }
+    };
+
     window.addEventListener('open_create_post', handleOpenCreatePost);
-    return () => window.removeEventListener('open_create_post', handleOpenCreatePost);
+    window.addEventListener('set_feed_filter', handleSetFilter);
+    return () => {
+      window.removeEventListener('open_create_post', handleOpenCreatePost);
+      window.removeEventListener('set_feed_filter', handleSetFilter);
+    };
   }, []);
 
   const filteredPosts = posts.filter((post) => {

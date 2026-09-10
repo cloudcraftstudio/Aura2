@@ -79,6 +79,14 @@ export function PodcastFeed({
   const [selectedSeries, setSelectedSeries] = useState<string>("all");
   const [activeSeriesContainer, setActiveSeriesContainer] = useState<string | null>(null);
 
+  const [highlightedSermonId, setHighlightedSermonId] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('aura_target_sermon_id') || sessionStorage.getItem('aura_target_sermon_id');
+    } catch {
+      return null;
+    }
+  });
+
   useEffect(() => {
     const handleOpenSermon = (e: Event) => {
       const custom = e as CustomEvent<{ sermonId?: string; videoId?: string; sermon?: SermonItem; series?: string }>;
@@ -86,17 +94,58 @@ export function PodcastFeed({
         setSelectedSeries(custom.detail.series);
         setActiveSeriesContainer(custom.detail.series);
       }
-      if (custom.detail?.sermon) {
-        if (custom.detail.sermon.format === "video") {
-          setSelectedVideo(custom.detail.sermon);
+      const targetSermon = custom.detail?.sermon || sermons.find(s => s.id === custom.detail?.sermonId);
+      const targetId = custom.detail?.sermonId || targetSermon?.id;
+
+      if (targetSermon) {
+        if (targetSermon.format === "video") {
+          setSelectedVideo(targetSermon);
         } else {
-          handlePlayAudio(custom.detail.sermon);
+          handlePlayAudio(targetSermon);
         }
+      }
+
+      if (targetId) {
+        setHighlightedSermonId(targetId);
+        setTimeout(() => {
+          const el = document.getElementById(`sermon-card-${targetId}`);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 200);
+
+        setTimeout(() => {
+          setHighlightedSermonId(prev => (prev === targetId ? null : prev));
+          try {
+            localStorage.removeItem('aura_target_sermon_id');
+            sessionStorage.removeItem('aura_target_sermon_id');
+          } catch {}
+        }, 7000);
       }
     };
     window.addEventListener("open_sermon", handleOpenSermon);
     return () => window.removeEventListener("open_sermon", handleOpenSermon);
-  }, []);
+  }, [sermons]);
+
+  useEffect(() => {
+    if (highlightedSermonId && sermons.length > 0) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`sermon-card-${highlightedSermonId}`);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 250);
+
+      const clearTimer = setTimeout(() => {
+        setHighlightedSermonId(null);
+        try {
+          localStorage.removeItem('aura_target_sermon_id');
+          sessionStorage.removeItem('aura_target_sermon_id');
+        } catch {}
+      }, 7000);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(clearTimer);
+      };
+    }
+  }, [highlightedSermonId, sermons]);
 
   const fetchAllSermons = async () => {
     setLoading(true);
@@ -545,14 +594,28 @@ export function PodcastFeed({
           {filtered.map((sermon, idx) => {
             const cover = sermon.thumbnailUrl || sermon.speakerImage || FALLBACK_COVERS[idx % FALLBACK_COVERS.length];
             const isCurrent = activeItem?.id === sermon.id;
+            const isTargeted = highlightedSermonId === sermon.id;
 
-                        if (sermon.format === "video") {
+            if (sermon.format === "video") {
               return (
                 <div
                   key={sermon.id}
+                  id={`sermon-card-${sermon.id}`}
                   onClick={() => setSelectedVideo(sermon)}
-                  className="cursor-pointer bg-slate-900/70 backdrop-blur-md border border-white/10 hover:border-blue-500/50 rounded-3xl overflow-hidden shadow-xl transition-all flex flex-col justify-between group"
+                  className={`cursor-pointer bg-slate-900/70 backdrop-blur-md border rounded-3xl overflow-hidden shadow-xl transition-all duration-500 flex flex-col justify-between group relative ${
+                    isTargeted
+                      ? "ring-2 ring-blue-400 border-blue-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
+                      : "border-white/10 hover:border-blue-500/50"
+                  }`}
                 >
+                  {isTargeted && (
+                    <div className="bg-blue-600/40 border-b border-blue-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-blue-200 animate-fade-in">
+                      <span className="flex items-center gap-1.5 animate-pulse">
+                        <span>🎯 Targeted Sermon Exposition</span>
+                      </span>
+                      <span className="text-[10px] text-blue-300 font-mono">From Feed Shortcut</span>
+                    </div>
+                  )}
                   <div>
                     <div className="relative w-full aspect-video bg-black overflow-hidden">
                       <img
@@ -645,8 +708,23 @@ export function PodcastFeed({
             return (
               <div
                 key={sermon.id}
-                className={"bg-slate-900/60 backdrop-blur-md border rounded-3xl overflow-hidden shadow-xl transition-all group flex flex-col justify-between " + (isCurrent ? "border-blue-500/80 ring-2 ring-blue-500/20" : "border-white/10 hover:border-blue-500/40")}
+                id={`sermon-card-${sermon.id}`}
+                className={`bg-slate-900/60 backdrop-blur-md border rounded-3xl overflow-hidden shadow-xl transition-all duration-500 group flex flex-col justify-between relative ${
+                  isTargeted
+                    ? "ring-2 ring-blue-400 border-blue-400 shadow-[0_0_35px_rgba(59,130,246,0.45)] scale-[1.01]"
+                    : isCurrent
+                    ? "border-blue-500/80 ring-2 ring-blue-500/20"
+                    : "border-white/10 hover:border-blue-500/40"
+                }`}
               >
+                {isTargeted && (
+                  <div className="bg-blue-600/40 border-b border-blue-500/50 px-4 py-2 flex items-center justify-between text-xs font-bold text-blue-200 animate-fade-in">
+                    <span className="flex items-center gap-1.5 animate-pulse">
+                      <span>🎯 Targeted Sermon Exposition</span>
+                    </span>
+                    <span className="text-[10px] text-blue-300 font-mono">From Feed Shortcut</span>
+                  </div>
+                )}
                 <div>
                   <div className="relative w-full h-44 bg-slate-950 overflow-hidden">
                     <img
