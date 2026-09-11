@@ -226,9 +226,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
           </div>
 
           {errorMessage && (
-            <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-2 text-red-400 text-sm">
-              <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-              <p>{errorMessage}</p>
+            <div className="mb-6 p-3 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start justify-between gap-2 text-red-400 text-sm">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                <p>{errorMessage}</p>
+              </div>
+              <button 
+                type="button" 
+                onClick={() => setErrorMessage(null)} 
+                className="text-red-400 hover:text-white p-0.5 rounded transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
             </div>
           )}
 

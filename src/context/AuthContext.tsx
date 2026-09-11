@@ -8,6 +8,8 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   signInWithCredential,
   GoogleAuthProvider,
@@ -182,19 +184,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithGoogle = async () => {
     try {
       if (Capacitor.isNativePlatform()) {
-        const result = await FirebaseAuthentication.signInWithGoogle();
-        if (result.credential?.idToken) {
-           const credential = GoogleAuthProvider.credential(result.credential.idToken);
-           const authResult = await signInWithCredential(auth, credential);
-           await syncFirebaseUserToDb(authResult.user, { authProvider: 'google' });
-           return { success: true };
+        try {
+          const result = await FirebaseAuthentication.signInWithGoogle();
+          if (result.credential?.idToken) {
+            const credential = GoogleAuthProvider.credential(result.credential.idToken);
+            const authResult = await signInWithCredential(auth, credential);
+            await syncFirebaseUserToDb(authResult.user, { authProvider: 'google' });
+            return { success: true };
+          }
+        } catch (nativeErr: any) {
+          console.warn('Native Google Auth failed or not implemented, falling back to web popup:', nativeErr);
+          // Fall through to standard web auth
         }
-        throw new Error('No credential returned from native Google sign in.');
-      } else {
-        const result = await signInWithPopup(auth, googleProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
-        return { success: true };
       }
+      
+      const result = await signInWithPopup(auth, googleProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -203,19 +209,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithFacebook = async () => {
     try {
       if (Capacitor.isNativePlatform()) {
-        const result = await FirebaseAuthentication.signInWithFacebook();
-        if (result.credential?.accessToken) {
+        try {
+          const result = await FirebaseAuthentication.signInWithFacebook();
+          if (result.credential?.accessToken) {
             const credential = FacebookAuthProvider.credential(result.credential.accessToken);
             const authResult = await signInWithCredential(auth, credential);
             await syncFirebaseUserToDb(authResult.user, { authProvider: 'facebook' });
             return { success: true };
+          }
+        } catch (nativeErr: any) {
+          console.warn('Native Facebook Auth failed, falling back to web popup:', nativeErr);
         }
-        throw new Error('No credential returned from native Facebook sign in.');
-      } else {
-        const result = await signInWithPopup(auth, facebookProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
-        return { success: true };
       }
+      
+      const result = await signInWithPopup(auth, facebookProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -224,19 +233,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signInWithGithub = async () => {
     try {
       if (Capacitor.isNativePlatform()) {
-         const result = await FirebaseAuthentication.signInWithGithub();
-         if (result.credential?.accessToken) {
-             const credential = GithubAuthProvider.credential(result.credential.accessToken);
-             const authResult = await signInWithCredential(auth, credential);
-             await syncFirebaseUserToDb(authResult.user, { authProvider: 'github' });
-             return { success: true };
-         }
-         throw new Error('No credential returned from native Github sign in.');
-      } else {
-        const result = await signInWithPopup(auth, githubProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
-        return { success: true };
+        try {
+          const result = await FirebaseAuthentication.signInWithGithub();
+          if (result.credential?.accessToken) {
+            const credential = GithubAuthProvider.credential(result.credential.accessToken);
+            const authResult = await signInWithCredential(auth, credential);
+            await syncFirebaseUserToDb(authResult.user, { authProvider: 'github' });
+            return { success: true };
+          }
+        } catch (nativeErr: any) {
+          console.warn('Native Github Auth failed, falling back to web popup:', nativeErr);
+        }
       }
+      
+      const result = await signInWithPopup(auth, githubProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
