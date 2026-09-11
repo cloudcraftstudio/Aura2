@@ -61,7 +61,7 @@ export const IncomingCallBanner: React.FC = () => {
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.5 }}
-          className="relative z-10 pt-12 sm:pt-16 px-6 flex flex-col items-center text-center"
+          className="relative z-10 pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),4rem)] px-6 flex flex-col items-center text-center"
         >
           {/* Security & Call Type Capsule */}
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/40 border border-white/15 backdrop-blur-xl mb-6 shadow-lg shadow-black/50">

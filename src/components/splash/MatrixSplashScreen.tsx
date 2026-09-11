@@ -282,7 +282,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(3,4,11,0.85)_85%)]" />
 
       {/* Top Header: Unmistakable Christian Identity & Quick Enter Button */}
-      <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-[max(env(safe-area-inset-top),2rem)] sm:pt-[max(env(safe-area-inset-top),2.5rem)] border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
+      <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),3.25rem)] border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
         <div className="flex items-center gap-2 sm:gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0">
             <span className="font-serif font-black text-base">✝</span>
