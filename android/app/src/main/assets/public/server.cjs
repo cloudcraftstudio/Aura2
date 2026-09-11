@@ -4,6 +4,9 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -20,6 +23,73 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
+
+// package.json
+var require_package = __commonJS({
+  "package.json"(exports2, module2) {
+    module2.exports = {
+      name: "aura",
+      private: true,
+      version: "1.0.6",
+      type: "module",
+      scripts: {
+        dev: "tsx server.ts",
+        build: "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
+        "release:ota": `npm run build && cd dist && zip -r ../public/dist.zip . -x '*.zip' && cd .. && node -e "require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.zip' }))"`,
+        start: "node dist/server.cjs",
+        preview: "vite preview",
+        clean: "rm -rf dist server.js",
+        lint: "tsc --noEmit",
+        "sync-sermons": "tsx scripts/sync-youtube-sermons.ts"
+      },
+      dependencies: {
+        "@capacitor-community/native-audio": "^8.0.0",
+        "@capacitor/android": "^8.5.0",
+        "@capacitor/app": "^8.1.1",
+        "@capacitor/cli": "^7.6.8",
+        "@capacitor/core": "^8.5.0",
+        "@capacitor/filesystem": "^8.1.3",
+        "@capacitor/push-notifications": "^8.1.2",
+        "@capgo/capacitor-incoming-call-kit": "^8.2.7",
+        "@capgo/capacitor-updater": "^8.51.15",
+        "@google/genai": "^2.4.0",
+        "@tailwindcss/vite": "^4.1.14",
+        "@types/canvas-confetti": "^1.9.0",
+        "@types/multer": "^2.2.0",
+        "@vitejs/plugin-react": "^5.0.4",
+        bcrypt: "^6.0.0",
+        "better-sqlite3": "^12.11.1",
+        "canvas-confetti": "^1.9.4",
+        "date-fns": "^4.4.0",
+        dotenv: "^17.2.3",
+        express: "^4.21.2",
+        firebase: "^12.18.0",
+        jsonwebtoken: "^9.0.3",
+        "lucide-react": "^0.546.0",
+        motion: "^12.23.24",
+        multer: "^2.2.0",
+        react: "^19.0.1",
+        "react-dom": "^19.0.1",
+        vite: "^6.2.3",
+        "web-push": "^3.6.7"
+      },
+      devDependencies: {
+        "@capacitor/assets": "^3.0.5",
+        "@types/express": "^4.17.21",
+        "@types/node": "^22.14.0",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.5",
+        autoprefixer: "^10.4.21",
+        esbuild: "^0.25.0",
+        sharp: "^0.35.4",
+        tailwindcss: "^4.1.14",
+        tsx: "^4.21.0",
+        typescript: "~5.8.2",
+        vite: "^6.2.3"
+      }
+    };
+  }
+});
 
 // services/youtubeFeedService.ts
 var import_https = __toESM(require("https"), 1);
@@ -119,6 +189,176 @@ function fetchXml(url) {
     }).on("error", reject);
   });
 }
+var CURATED_MINISTRY_FALLBACK = [
+  {
+    id: "yt-drtony-1",
+    title: "Kingdom Authority: Reclaiming What the Enemy Stole (Part 1)",
+    speaker: "Dr. Tony Evans",
+    speakerSlug: "drtonyevans",
+    speakerTitle: "The Urban Alternative",
+    channel: "Dr. Tony Evans",
+    series: "Kingdom Authority & Spiritual Warfare",
+    seriesPart: 1,
+    summary: "Dr. Tony Evans explains the divine legal right and biblical authority believers have in Jesus Christ over adversary strongholds.",
+    duration: "28:45",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "V5f_Gg873_8",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 12).toISOString(),
+    topics: [{ name: "Kingdom Authority", slug: "kingdom-authority" }]
+  },
+  {
+    id: "yt-drtony-2",
+    title: "Operating Under Heaven's Jurisdiction (Part 2)",
+    speaker: "Dr. Tony Evans",
+    speakerSlug: "drtonyevans",
+    speakerTitle: "The Urban Alternative",
+    channel: "Dr. Tony Evans",
+    series: "Kingdom Authority & Spiritual Warfare",
+    seriesPart: 2,
+    summary: "Discover how alignment with God's sovereignty unlocks victory, spiritual breakthrough, and generational blessing.",
+    duration: "32:10",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "vB0jKx9bK0E",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 48).toISOString(),
+    topics: [{ name: "Kingdom Authority", slug: "kingdom-authority" }]
+  },
+  {
+    id: "yt-drtony-3",
+    title: "Breaking Generational Chains Through Christ (Part 3)",
+    speaker: "Dr. Tony Evans",
+    speakerSlug: "drtonyevans",
+    speakerTitle: "The Urban Alternative",
+    channel: "Dr. Tony Evans",
+    series: "Kingdom Authority & Spiritual Warfare",
+    seriesPart: 3,
+    summary: "Breaking spiritual bonds and stepping into the full liberty purchased at the cross of Calvary.",
+    duration: "30:15",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "9bZkp7q19f0",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 96).toISOString(),
+    topics: [{ name: "Kingdom Authority", slug: "kingdom-authority" }]
+  },
+  {
+    id: "yt-luke-1",
+    title: "Walking in the Light of Christ (Part 1)",
+    speaker: "Pastor Luke Shope",
+    speakerSlug: "lighthousewinc",
+    speakerTitle: "Lighthouse Baptist Church \u2022 Winchester, VA",
+    channel: "Lighthouse Baptist Church",
+    series: "Sunday Sanctuary Expositions",
+    seriesPart: 1,
+    summary: "An urgent, verse-by-verse exposition of 1 John 1 on walking in fellowship, truth, and genuine repentance before God.",
+    duration: "41:20",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "jNQXAC9IVRw",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 24).toISOString(),
+    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
+  },
+  {
+    id: "yt-luke-2",
+    title: "The Cleansing Blood and Assurance of Salvation (Part 2)",
+    speaker: "Pastor Luke Shope",
+    speakerSlug: "lighthousewinc",
+    speakerTitle: "Lighthouse Baptist Church \u2022 Winchester, VA",
+    channel: "Lighthouse Baptist Church",
+    series: "Sunday Sanctuary Expositions",
+    seriesPart: 2,
+    summary: "Living with unshakable biblical confidence in Christ's completed work on Calvary and the power of the cross.",
+    duration: "38:50",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "e-ORhEE9VVg",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 72).toISOString(),
+    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
+  },
+  {
+    id: "yt-pauley-1",
+    title: "The Lord Is My Shepherd: Never in Want (Part 1)",
+    speaker: "Scott Pauley",
+    speakerSlug: "etj",
+    speakerTitle: "Enjoying The Journey",
+    channel: "Scott Pauley",
+    series: "Enjoying The Journey - Psalm 23",
+    seriesPart: 1,
+    summary: "Dr. Scott Pauley walks through Psalm 23:1 exploring the sufficiency of Christ for every season of soul thirst.",
+    duration: "15:30",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: false,
+    youtubeId: "kJQP7kiw5Fk",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 36).toISOString(),
+    topics: [{ name: "Psalm 23", slug: "psalm-23" }]
+  },
+  {
+    id: "yt-pauley-2",
+    title: "He Leads Me Beside Still Waters (Part 2)",
+    speaker: "Scott Pauley",
+    speakerSlug: "etj",
+    speakerTitle: "Enjoying The Journey",
+    channel: "Scott Pauley",
+    series: "Enjoying The Journey - Psalm 23",
+    seriesPart: 2,
+    summary: "Finding divine quietness, peace that passes all understanding, and restoration for the weary believer.",
+    duration: "16:45",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: false,
+    youtubeId: "L_LUpnjgPso",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 84).toISOString(),
+    topics: [{ name: "Psalm 23", slug: "psalm-23" }]
+  },
+  {
+    id: "yt-ru-1",
+    title: "From Bondage to Freedom: The Principle of Strongholds",
+    speaker: "RU Recovery Ministries",
+    speakerSlug: "rurecoveryprogram",
+    speakerTitle: "Faith-Based Addiction Recovery",
+    channel: "RU Recovery Ministries",
+    series: "Path to Freedom Expositions",
+    seriesPart: 1,
+    summary: "Biblical truth and victorious discipleship overcoming alcohol, drug, and behavioral bondage through Jesus Christ.",
+    duration: "34:10",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: false,
+    youtubeId: "fJ9rUzIMcZQ",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 36e5 * 120).toISOString(),
+    topics: [{ name: "Recovery", slug: "recovery" }]
+  }
+];
 function parseXml(xml, ch) {
   const list = [];
   const entries = xml.match(/<entry>([\s\S]*?)<\/entry>/g) || [];
@@ -132,12 +372,37 @@ function parseXml(xml, ch) {
     const title = titleMatch[1].replace(/<!\[CDATA\[(.*?)\]\]>/g, "$1").trim();
     const publishedAt = pubMatch ? pubMatch[1].trim() : (/* @__PURE__ */ new Date()).toISOString();
     const summary = descMatch ? descMatch[1].slice(0, 200).trim() + "..." : "";
+    let series;
+    let seriesPart;
+    const partMatch = title.match(/part\s*(\d+)/i) || title.match(/pt\.?\s*(\d+)/i) || title.match(/#(\d+)/);
+    if (partMatch) {
+      seriesPart = parseInt(partMatch[1], 10);
+    }
+    if (title.toLowerCase().includes("kingdom") || ch.name.includes("Tony Evans")) {
+      series = "Kingdom Authority & Spiritual Warfare";
+    } else if (title.toLowerCase().includes("journey") || ch.name.includes("Scott Pauley")) {
+      series = "Enjoying The Journey - Psalms";
+    } else if (ch.name.includes("Lighthouse")) {
+      series = "Sunday Sanctuary Expositions";
+    } else if (ch.name.includes("Elevation") || ch.name.includes("Furtick")) {
+      series = "Faith & Breakthrough";
+    } else if (ch.name.includes("Reformers") || ch.name.includes("RU Recovery")) {
+      series = "Path to Freedom Expositions";
+    } else if (title.includes(" | ") || title.includes(" - ")) {
+      const parts = title.split(/[|\-]/);
+      if (parts.length > 1 && parts[0].trim().length > 3 && parts[0].trim().length < 35) {
+        series = parts[0].trim();
+      }
+    }
     list.push({
       id: `yt-${youtubeId}`,
       title,
       speaker: ch.speaker,
       speakerSlug: ch.handle.replace("@", "").toLowerCase(),
       speakerTitle: ch.speakerTitle,
+      channel: ch.name,
+      series,
+      seriesPart,
       summary: summary || `Broadcast from ${ch.name}`,
       mediaType: "video",
       format: "video",
@@ -157,30 +422,41 @@ async function getLiveMinistryFeed() {
   if (cachedFeed.length > 0 && now - lastFetch < TTL) {
     return cachedFeed;
   }
-  const promises = MONITORED_CHANNELS.map(async (ch) => {
-    try {
-      const xml = await fetchXml(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`);
-      return parseXml(xml, ch);
-    } catch {
-      return [];
+  try {
+    const promises = MONITORED_CHANNELS.map(async (ch) => {
+      try {
+        const xml = await fetchXml(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`);
+        return parseXml(xml, ch);
+      } catch {
+        return [];
+      }
+    });
+    const results = await Promise.all(promises);
+    const parsedAll = results.flat();
+    const combinedMap = /* @__PURE__ */ new Map();
+    for (const item of CURATED_MINISTRY_FALLBACK) {
+      combinedMap.set(item.id, item);
     }
-  });
-  const results = await Promise.all(promises);
-  const homeChurch = results[0] || [];
-  const others = results.slice(1).flat();
-  others.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
-  const combined = [...homeChurch, ...others];
-  if (combined.length > 0) {
-    cachedFeed = combined;
-    lastFetch = now;
+    for (const item of parsedAll) {
+      combinedMap.set(item.id, item);
+    }
+    const combined = Array.from(combinedMap.values());
+    combined.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+    if (combined.length > 0) {
+      cachedFeed = combined;
+      lastFetch = now;
+    }
+    return cachedFeed.length > 0 ? cachedFeed : CURATED_MINISTRY_FALLBACK;
+  } catch (err) {
+    console.warn("Using curated fallback sermons feed:", err);
+    return CURATED_MINISTRY_FALLBACK;
   }
-  return cachedFeed;
 }
 
 // server.ts
 var import_web_push = __toESM(require("web-push"), 1);
 var import_express4 = __toESM(require("express"), 1);
-var import_path6 = __toESM(require("path"), 1);
+var import_path7 = __toESM(require("path"), 1);
 
 // server/db.ts
 var import_fs = __toESM(require("fs"), 1);
@@ -486,6 +762,48 @@ var JSONDatabase = class _JSONDatabase {
     this.scheduleSave();
     return newPost;
   }
+  syncClientPosts(clientPosts) {
+    if (!Array.isArray(clientPosts)) return { added: 0, total: this.data.posts.length, addedPosts: [] };
+    let added = 0;
+    const addedPosts = [];
+    const existingIds = new Set(this.data.posts.map((p) => p.id));
+    const existingContents = new Set(this.data.posts.map((p) => (p.content || "").trim().toLowerCase()));
+    for (const cp of clientPosts) {
+      if (!cp) continue;
+      const content = (cp.content || "").trim();
+      const mediaUrls = Array.isArray(cp.mediaUrls) ? cp.mediaUrls : [];
+      if (!content && mediaUrls.length === 0) continue;
+      if (cp.id && existingIds.has(cp.id)) continue;
+      if (content && existingContents.has(content.toLowerCase())) continue;
+      const newPost = {
+        id: cp.id || `post_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+        authorId: cp.authorId || "user_tex",
+        authorName: cp.authorName || "Tex",
+        authorHandle: cp.authorHandle || "texxx360",
+        authorAvatar: cp.authorAvatar || "https://api.dicebear.com/7.x/bottts/svg?seed=lightsouttattootex@gmail.com",
+        content,
+        mediaUrls,
+        tags: Array.isArray(cp.tags) ? cp.tags : [],
+        location: cp.location || "",
+        likesCount: typeof cp.likesCount === "number" ? cp.likesCount : 0,
+        likedByUserIds: Array.isArray(cp.likedByUserIds) ? cp.likedByUserIds : [],
+        commentsCount: Array.isArray(cp.comments) ? cp.comments.length : cp.commentsCount || 0,
+        comments: Array.isArray(cp.comments) ? cp.comments : [],
+        sharesCount: typeof cp.sharesCount === "number" ? cp.sharesCount : 0,
+        savedByUserIds: Array.isArray(cp.savedByUserIds) ? cp.savedByUserIds : [],
+        createdAt: typeof cp.createdAt === "number" ? cp.createdAt : Date.parse(cp.createdAt || cp.timestamp) || Date.now()
+      };
+      this.data.posts.unshift(newPost);
+      existingIds.add(newPost.id);
+      if (content) existingContents.add(content.toLowerCase());
+      addedPosts.push(newPost);
+      added++;
+    }
+    if (added > 0) {
+      this.scheduleSave();
+    }
+    return { added, total: this.data.posts.length, addedPosts };
+  }
   deletePost(id) {
     if (!id || typeof id !== "string" || id.trim() === "" || id === "undefined" || id === "null") {
       console.warn("[SECURITY] Aborted invalid post deletion with empty/malformed ID:", id);
@@ -499,8 +817,8 @@ var JSONDatabase = class _JSONDatabase {
     }
     const filtered = this.data.posts.filter((p) => p.id !== id);
     const diff = initialLen - filtered.length;
-    if (diff !== 1) {
-      console.error(`[CRITICAL] Deletion bounds check failed! Expected diff of 1, got ${diff}. Aborting to protect database.`);
+    if (diff < 1) {
+      console.error(`[CRITICAL] Deletion bounds check failed! Expected diff >= 1, got ${diff}. Aborting to protect database.`);
       return false;
     }
     try {
@@ -513,6 +831,16 @@ var JSONDatabase = class _JSONDatabase {
     this.scheduleSave();
     console.log(`[AUDIT] Successfully deleted single post ${id}. Remaining posts: ${filtered.length}`);
     return true;
+  }
+  updatePost(id, updates) {
+    const post = this.getPostById(id);
+    if (!post) return null;
+    if (updates.content !== void 0) post.content = updates.content;
+    if (updates.mediaUrls !== void 0) post.mediaUrls = updates.mediaUrls;
+    if (updates.tags !== void 0) post.tags = updates.tags;
+    if (updates.location !== void 0) post.location = updates.location;
+    this.scheduleSave();
+    return post;
   }
   toggleLikePost(postId, userId) {
     const post = this.getPostById(postId);
@@ -998,14 +1326,20 @@ var db = new JSONDatabase();
 // routes/bible.ts
 var import_express = require("express");
 
-// data/bible/kjv_loader.ts
+// server/bible/kjv_loader.ts
 var import_fs2 = __toESM(require("fs"), 1);
 var import_path2 = __toESM(require("path"), 1);
 var KJVLoader = class {
   constructor() {
     this.bible = null;
     this.books = [];
-    this.bibleFilePath = import_path2.default.join(process.cwd(), "data", "bible", "kjv.json");
+    const serverKjvPath = import_path2.default.join(process.cwd(), "server", "bible", "kjv.json");
+    if (import_fs2.default.existsSync(serverKjvPath)) {
+      this.bibleFilePath = serverKjvPath;
+    } else {
+      const dataKjvPath = import_path2.default.join(process.cwd(), "data", "bible", "kjv.json");
+      this.bibleFilePath = import_fs2.default.existsSync(dataKjvPath) ? dataKjvPath : serverKjvPath;
+    }
   }
   load() {
     if (import_fs2.default.existsSync(this.bibleFilePath)) {
@@ -1127,7 +1461,7 @@ var KJVLoader = class {
       book: cleanBook,
       chapter: chNum,
       verse: vNum,
-      text: `For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.`
+      text: `Verse not found.`
     };
   }
   search(query, maxResults = 25) {
@@ -1467,8 +1801,8 @@ Provide an exhaustive, deeply informative, and eloquent response. Quote key KJV 
     } catch (e) {
       console.warn("Cache lookup failed:", e);
     }
-    const verseData = kjvLoader.getVerse(verseRef);
-    const passageText = verseData?.text || `"Thy word is a lamp unto my feet, and a light unto my path." \u2014 ${verseRef} (King James Version)`;
+    const verseData = await kjvLoader.getOrFetchVerse(book, chapter, verse);
+    const passageText = verseData?.text && verseData.text !== "Verse not found." ? verseData.text : `"${book} ${chapter}:${verse}" \u2014 King James Version`;
     const bookMeta = BOOK_METADATA[book] || {
       author: "Biblical Author",
       era: "Biblical Antiquity",
@@ -1480,6 +1814,7 @@ Provide an exhaustive, deeply informative, and eloquent response. Quote key KJV 
       try {
         const prompt = `Provide a comprehensive scholarly study breakdown for the scripture passage: "${verseRef}": "${passageText}".
 Return a JSON object with:
+- passageText: explicitly and exactly the exact text: ${passageText}
 - bookSummary: { author, era, audience }
 - historicalContext: { mindsetThen, originalIssue }
 - hebrewGreekBites: array of { word, definition, language }
@@ -1796,8 +2131,8 @@ When we examine the scriptures concerning your inquiry, the Word of God reveals 
 
 // routes/bible.ts
 var import_multer = __toESM(require("multer"), 1);
-var import_path3 = __toESM(require("path"), 1);
-var import_fs3 = __toESM(require("fs"), 1);
+var import_path4 = __toESM(require("path"), 1);
+var import_fs4 = __toESM(require("fs"), 1);
 
 // services/sermonIndexService.ts
 var BIBLE_BOOK_TO_CODE = {
@@ -2649,16 +2984,268 @@ async function synthesizeBibleAudio(rawText) {
   }
 }
 
+// services/youtubeSyncService.ts
+var import_fs3 = __toESM(require("fs"), 1);
+var import_path3 = __toESM(require("path"), 1);
+var UPLOAD_YOUTUBE_DIRS = [
+  import_path3.default.join(process.cwd(), "public", "uploads", "youtube_series"),
+  "/home/ubuntu/Aura-prod/public/uploads/youtube_series",
+  "/app/applet/public/uploads/youtube_series"
+];
+var PRIMARY_YOUTUBE_DIR = import_path3.default.join(process.cwd(), "public", "uploads", "youtube_series");
+var MEDIA_URL_PREFIX = "/uploads/youtube_series";
+function parseSermonFilename(filename) {
+  const ext = import_path3.default.extname(filename);
+  let base = import_path3.default.basename(filename, ext).trim();
+  base = base.replace(/\[[a-zA-Z0-9_\-\s]{6,}\]$/g, "").trim();
+  base = base.replace(/\([0-9]{3,4}p\)/gi, "").trim();
+  base = base.replace(/\[[0-9]{3,4}p\]/gi, "").trim();
+  base = base.replace(/\(official\s*(?:video|audio)?\)/gi, "").trim();
+  let normalized = base.replace(/\s*[–—]\s*/g, " - ").replace(/\s*\|\s*/g, " - ").trim();
+  let channel = "YouTube Series";
+  let series = "";
+  let seriesPart = 1;
+  let speaker = "Community Ministry";
+  let title = base;
+  let scriptureRef = "";
+  let description = "YouTube sermon series recording";
+  const partMatch = normalized.match(/(?:Principle|Part|Pt\.?|Episode|Ep\.?|Session|Week|Lesson)\s*(\d+)/i);
+  if (partMatch) {
+    seriesPart = parseInt(partMatch[1], 10);
+  }
+  if (/pathway\s*to\s*recovery|recovery|spiritual\s*principle/i.test(normalized) || /principle\s*\d+/i.test(normalized)) {
+    series = "Pathway to Recovery";
+    channel = "Pathway to Recovery";
+    speaker = "Tex";
+  }
+  if (/tony\s*evans/i.test(normalized)) {
+    speaker = "Dr. Tony Evans";
+    channel = "Dr. Tony Evans";
+  }
+  if (/charles\s*stanley/i.test(normalized)) {
+    speaker = "Dr. Charles Stanley";
+    channel = "In Touch Ministries";
+  }
+  if (/lighthouse\s*baptist/i.test(normalized)) {
+    channel = "Lighthouse Baptist Church";
+    speaker = "Pastor Paul";
+  }
+  const parts = normalized.split(/\s+-\s+/).map((p) => p.trim()).filter(Boolean);
+  if (parts.length >= 5) {
+    channel = parts[0] || channel;
+    series = parts[1] || series;
+    title = parts[3] || parts[2];
+    speaker = parts[4] || speaker;
+  } else if (parts.length === 4) {
+    if (/part|principle|ep/i.test(parts[1])) {
+      series = parts[0];
+      title = parts[2];
+      speaker = parts[3];
+    } else {
+      channel = parts[0];
+      series = parts[1];
+      title = parts[2];
+      speaker = parts[3];
+    }
+  } else if (parts.length === 3) {
+    if (/part|principle/i.test(parts[2])) {
+      series = parts[0];
+      title = parts[1];
+    } else {
+      series = parts[0];
+      title = parts[1];
+      speaker = parts[2];
+    }
+  } else if (parts.length === 2) {
+    if (speaker !== "Community Ministry" && !series) {
+      title = parts[1];
+    } else {
+      speaker = parts[0];
+      title = parts[1];
+    }
+  }
+  title = title.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  if (!series && /principle\s*\d+/i.test(title)) {
+    series = "Pathway to Recovery";
+  }
+  const mediaType = ext.toLowerCase() === ".mp3" || ext.toLowerCase() === ".m4a" || ext.toLowerCase() === ".wav" ? "audio" : "video";
+  return {
+    title,
+    speaker,
+    series,
+    seriesPart,
+    channel,
+    mediaType,
+    scriptureRef,
+    description: `${description} - ${title}`
+  };
+}
+function syncYoutubeSermons(db2) {
+  const result = {
+    success: true,
+    directory: PRIMARY_YOUTUBE_DIR,
+    totalFiles: 0,
+    addedCount: 0,
+    existingCount: 0,
+    addedTitles: [],
+    allFoundFiles: [],
+    errors: [],
+    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+  };
+  let activeDir = PRIMARY_YOUTUBE_DIR;
+  for (const candidate of UPLOAD_YOUTUBE_DIRS) {
+    if (import_fs3.default.existsSync(candidate)) {
+      activeDir = candidate;
+      break;
+    }
+  }
+  if (!import_fs3.default.existsSync(activeDir)) {
+    try {
+      import_fs3.default.mkdirSync(activeDir, { recursive: true });
+      console.log(`[YouTube Sync] Created directory: ${activeDir}`);
+    } catch (e) {
+      console.error(`[YouTube Sync] Failed to create dir: ${activeDir}`, e);
+      result.errors.push(`Directory creation error: ${e.message}`);
+      result.success = false;
+      return result;
+    }
+  }
+  result.directory = activeDir;
+  let fileList = [];
+  try {
+    fileList = import_fs3.default.readdirSync(activeDir);
+  } catch (e) {
+    result.errors.push(`Failed to read directory: ${e.message}`);
+    result.success = false;
+    return result;
+  }
+  const mediaFiles = fileList.filter((f) => {
+    if (f.startsWith(".")) return false;
+    return /\.(mp4|mkv|webm|mov|avi|mp3|m4a|wav|m4v)$/i.test(f);
+  });
+  result.totalFiles = mediaFiles.length;
+  result.allFoundFiles = mediaFiles;
+  if (mediaFiles.length === 0) {
+    console.log(`[YouTube Sync] No video or audio files in ${activeDir}. Ready for files.`);
+    return result;
+  }
+  console.log(`[YouTube Sync] Found ${mediaFiles.length} media files in ${activeDir}. Cataloguing...`);
+  const existingSermons = db2.getAllSermons();
+  for (const file of mediaFiles) {
+    try {
+      const mediaUrl = `${MEDIA_URL_PREFIX}/${file}`;
+      const existing = existingSermons.find(
+        (s) => s.mediaUrl === mediaUrl || s.mediaUrl?.endsWith(`/${file}`)
+      );
+      if (existing) {
+        result.existingCount++;
+        continue;
+      }
+      if (activeDir !== PRIMARY_YOUTUBE_DIR && !import_fs3.default.existsSync(import_path3.default.join(PRIMARY_YOUTUBE_DIR, file))) {
+        try {
+          if (!import_fs3.default.existsSync(PRIMARY_YOUTUBE_DIR)) {
+            import_fs3.default.mkdirSync(PRIMARY_YOUTUBE_DIR, { recursive: true });
+          }
+          const srcFile = import_path3.default.join(activeDir, file);
+          const destFile = import_path3.default.join(PRIMARY_YOUTUBE_DIR, file);
+          import_fs3.default.copyFileSync(srcFile, destFile);
+        } catch (copyErr) {
+          console.warn(`[YouTube Sync] Note: could not copy to primary uploads dir:`, copyErr);
+        }
+      }
+      const meta = parseSermonFilename(file);
+      const dateRecorded = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+      db2.createSermon(
+        meta.title,
+        meta.speaker,
+        meta.series || void 0,
+        meta.scriptureRef || void 0,
+        meta.description,
+        meta.mediaType,
+        mediaUrl,
+        60,
+        // estimate duration default (can be updated by playback)
+        dateRecorded,
+        "",
+        // thumbnailUrl
+        meta.channel,
+        meta.seriesPart
+      );
+      result.addedCount++;
+      result.addedTitles.push(`${meta.title} (${meta.series || meta.channel}, Part ${meta.seriesPart})`);
+      console.log(`[YouTube Sync] \u2705 Catalogued: "${meta.title}" -> Channel: ${meta.channel}, Series: ${meta.series}, Part: ${meta.seriesPart}, Speaker: ${meta.speaker}`);
+    } catch (itemErr) {
+      console.error(`[YouTube Sync] Error processing file "${file}":`, itemErr);
+      result.errors.push(`File "${file}": ${itemErr.message}`);
+    }
+  }
+  console.log(`[YouTube Sync] Complete! Added: ${result.addedCount}, Existing: ${result.existingCount}, Total: ${result.totalFiles}`);
+  return result;
+}
+var watcherInitialized = false;
+var lastKnownFileCount = -1;
+function startYoutubeFolderWatcher(db2) {
+  if (watcherInitialized) return;
+  watcherInitialized = true;
+  console.log(`[YouTube Sync] Initializing real-time folder scanner on startup...`);
+  try {
+    const initialSync = syncYoutubeSermons(db2);
+    lastKnownFileCount = initialSync.totalFiles;
+  } catch (e) {
+    console.error(`[YouTube Sync] Initial startup sync error:`, e);
+  }
+  for (const dir of UPLOAD_YOUTUBE_DIRS) {
+    if (import_fs3.default.existsSync(dir)) {
+      try {
+        let debounceTimer = null;
+        import_fs3.default.watch(dir, (_eventType, filename) => {
+          if (filename && (filename.startsWith(".") || !/\.(mp4|mkv|webm|mov|avi|mp3|m4a|wav|m4v)$/i.test(filename))) {
+            return;
+          }
+          if (debounceTimer) clearTimeout(debounceTimer);
+          debounceTimer = setTimeout(() => {
+            console.log(`[YouTube Sync] Folder change detected in ${dir}! Running sync now...`);
+            syncYoutubeSermons(db2);
+          }, 1500);
+        });
+        console.log(`[YouTube Sync] Watching directory for live additions: ${dir}`);
+      } catch (watchErr) {
+        console.warn(`[YouTube Sync] fs.watch not supported on ${dir}:`, watchErr);
+      }
+    }
+  }
+  setInterval(() => {
+    try {
+      let activeDir = PRIMARY_YOUTUBE_DIR;
+      for (const d of UPLOAD_YOUTUBE_DIRS) {
+        if (import_fs3.default.existsSync(d)) {
+          activeDir = d;
+          break;
+        }
+      }
+      if (import_fs3.default.existsSync(activeDir)) {
+        const currentFiles = import_fs3.default.readdirSync(activeDir).filter((f) => !f.startsWith(".") && /\.(mp4|mkv|webm|mov|avi|mp3|m4a|wav|m4v)$/i.test(f));
+        if (currentFiles.length !== lastKnownFileCount) {
+          console.log(`[YouTube Sync Heartbeat] File count changed from ${lastKnownFileCount} to ${currentFiles.length}. Running sync...`);
+          lastKnownFileCount = currentFiles.length;
+          syncYoutubeSermons(db2);
+        }
+      }
+    } catch (heartbeatErr) {
+    }
+  }, 1e4);
+}
+
 // routes/bible.ts
 var router = (0, import_express.Router)();
 var kjvLoader2 = new kjv_loader_default();
 kjvLoader2.load();
-var uploadDir = import_path3.default.join(process.cwd(), "public", "uploads", "sermons");
-if (!import_fs3.default.existsSync(uploadDir)) import_fs3.default.mkdirSync(uploadDir, { recursive: true });
+var uploadDir = import_path4.default.join(process.cwd(), "public", "uploads", "sermons");
+if (!import_fs4.default.existsSync(uploadDir)) import_fs4.default.mkdirSync(uploadDir, { recursive: true });
 var storage = import_multer.default.diskStorage({
   destination: (_req, _file, cb) => cb(null, uploadDir),
   filename: (_req, file, cb) => {
-    const ext = import_path3.default.extname(file.originalname) || ".webm";
+    const ext = import_path4.default.extname(file.originalname) || ".webm";
     cb(null, `sermon_${Date.now()}_${Math.random().toString(36).substring(2, 8)}${ext}`);
   }
 });
@@ -2901,9 +3488,9 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
   router.post("/media/upload", upload.single("file"), (req, res) => {
     try {
       if (!req.file) return res.status(400).json({ error: "No file uploaded" });
-      const { title, speaker, series, scriptureRef, description, duration, thumbnailUrl } = req.body;
+      const { title, speaker, series, seriesPart, channel, scriptureRef, description, duration, thumbnailUrl } = req.body;
       const mediaUrl = `/uploads/sermons/${req.file.filename}`;
-      const ext = import_path3.default.extname(req.file.originalname).toLowerCase();
+      const ext = import_path4.default.extname(req.file.originalname).toLowerCase();
       const mediaType = [".mp3", ".m4a", ".wav"].includes(ext) ? "audio" : "video";
       const sermon = db2.createSermon(
         title || req.file.originalname.replace(/\.[^/.]+$/, ""),
@@ -2915,7 +3502,9 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
         mediaUrl,
         duration ? parseInt(duration, 10) : void 0,
         (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-        thumbnailUrl || void 0
+        thumbnailUrl || void 0,
+        channel || void 0,
+        seriesPart ? parseInt(seriesPart, 10) : void 0
       );
       res.status(201).json({ sermon, mediaUrl, url: mediaUrl });
     } catch (error) {
@@ -2942,7 +3531,7 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
     }
   });
   router.post("/sermons", (req, res) => {
-    const { title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
+    const { title, speaker, series, seriesPart, channel, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
     if (!title) return res.status(400).json({ error: "Title is required" });
     try {
       const sermon = db2.createSermon(
@@ -2955,7 +3544,9 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
         mediaUrl || "",
         duration,
         dateRecorded || (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-        thumbnailUrl || void 0
+        thumbnailUrl || void 0,
+        channel || void 0,
+        seriesPart ? parseInt(seriesPart, 10) : void 0
       );
       res.status(201).json(sermon);
     } catch (error) {
@@ -2976,10 +3567,10 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
       const existing = db2.getSermonById(req.params.id);
       if (!existing) return res.status(404).json({ error: "Sermon not found" });
       if (existing.mediaUrl && existing.mediaUrl.startsWith("/uploads/sermons/")) {
-        const filePath = import_path3.default.join(process.cwd(), "public", existing.mediaUrl);
-        if (import_fs3.default.existsSync(filePath)) {
+        const filePath = import_path4.default.join(process.cwd(), "public", existing.mediaUrl);
+        if (import_fs4.default.existsSync(filePath)) {
           try {
-            import_fs3.default.unlinkSync(filePath);
+            import_fs4.default.unlinkSync(filePath);
           } catch (e) {
             console.warn("Failed to delete file from disk:", e);
           }
@@ -2991,6 +3582,20 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
       res.status(500).json({ error: "Failed to delete sermon" });
     }
   });
+  const handleSync = (_req, res) => {
+    try {
+      const syncResult = syncYoutubeSermons(db2);
+      res.json({
+        message: syncResult.addedCount > 0 ? `Successfully synced ${syncResult.addedCount} new YouTube sermons into database!` : `Sync completed. No new sermon files found (${syncResult.existingCount} already catalogued).`,
+        ...syncResult
+      });
+    } catch (e) {
+      console.error("[Sync Route Error]:", e);
+      res.status(500).json({ error: e.message || "Failed to sync sermons" });
+    }
+  };
+  router.post("/sermons/sync", handleSync);
+  router.get("/sermons/sync", handleSync);
   router.post("/sermons/:id/push-to-course", (req, res) => {
     const { courseId, lessonTitle } = req.body;
     if (!courseId) return res.status(400).json({ error: "courseId is required" });
@@ -3091,7 +3696,7 @@ God's holy Word speaks with living power to this inquiry. In 2 Timothy 3:16-17, 
   return router;
 }
 
-// data/bible/models.ts
+// server/bible/models.ts
 var import_better_sqlite3 = __toESM(require("better-sqlite3"), 1);
 var import_crypto = require("crypto");
 var BibleStudyDB = class {
@@ -3204,14 +3809,14 @@ var BibleStudyDB = class {
     this.db.close();
   }
   // Sermon operations
-  createSermon(title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl) {
+  createSermon(title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, channel, seriesPart) {
     const id = (0, import_crypto.randomUUID)();
     const now = (/* @__PURE__ */ new Date()).toISOString();
     const stmt = this.db.prepare(
-      "INSERT INTO sermons_podcasts (id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO sermons_podcasts (id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, channel, seriesPart, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    stmt.run(id, title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, now, now);
-    return { id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, createdAt: now, updatedAt: now };
+    stmt.run(id, title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, channel || null, seriesPart || null, now, now);
+    return { id, title, speaker, series, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl, channel, seriesPart, createdAt: now, updatedAt: now };
   }
   getAllSermons() {
     const stmt = this.db.prepare("SELECT * FROM sermons_podcasts ORDER BY dateRecorded DESC, createdAt DESC");
@@ -3247,11 +3852,13 @@ var BibleStudyDB = class {
     const dateRecorded = updates.dateRecorded !== void 0 ? updates.dateRecorded : existing.dateRecorded;
     const thumbnailUrl = updates.thumbnailUrl !== void 0 ? updates.thumbnailUrl : existing.thumbnailUrl;
     const courseLessonId = updates.courseLessonId !== void 0 ? updates.courseLessonId : existing.courseLessonId;
+    const channel = updates.channel !== void 0 ? updates.channel : existing.channel;
+    const seriesPart = updates.seriesPart !== void 0 ? updates.seriesPart : existing.seriesPart;
     const now = (/* @__PURE__ */ new Date()).toISOString();
     const stmt = this.db.prepare(
-      "UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, thumbnailUrl = ?, courseLessonId = ?, updatedAt = ? WHERE id = ?"
+      "UPDATE sermons_podcasts SET title = ?, speaker = ?, series = ?, scriptureRef = ?, description = ?, mediaType = ?, mediaUrl = ?, duration = ?, dateRecorded = ?, thumbnailUrl = ?, courseLessonId = ?, channel = ?, seriesPart = ?, updatedAt = ? WHERE id = ?"
     );
-    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, courseLessonId || null, now, id);
+    stmt.run(title, speaker || null, series || null, scriptureRef || null, description || null, mediaType || null, mediaUrl || null, duration || null, dateRecorded || null, thumbnailUrl || null, courseLessonId || null, channel || null, seriesPart || null, now, id);
     return this.getSermonById(id);
   }
   deleteSermon(id) {
@@ -3260,12 +3867,12 @@ var BibleStudyDB = class {
   }
 };
 
-// data/bible/init.ts
+// server/bible/init.ts
 var import_better_sqlite32 = __toESM(require("better-sqlite3"), 1);
-var import_fs4 = __toESM(require("fs"), 1);
-var import_path4 = __toESM(require("path"), 1);
+var import_fs5 = __toESM(require("fs"), 1);
+var import_path5 = __toESM(require("path"), 1);
 
-// data/bible/seed.ts
+// server/bible/seed.ts
 function seedBibleCourses(db2) {
   const existingCourses = db2.getAllCourses();
   if (existingCourses.length > 0) {
@@ -3327,11 +3934,18 @@ function seedBibleCourses(db2) {
   );
 }
 
-// data/bible/init.ts
+// server/bible/init.ts
 function initializeBibleDB(dbPath) {
+  const dir = import_path5.default.dirname(dbPath);
+  if (!import_fs5.default.existsSync(dir)) {
+    import_fs5.default.mkdirSync(dir, { recursive: true });
+  }
   const db2 = new import_better_sqlite32.default(dbPath);
-  const schemaPath = import_path4.default.join(process.cwd(), "data", "bible", "schema.sql");
-  const schema = import_fs4.default.readFileSync(schemaPath, "utf-8");
+  let schemaPath = import_path5.default.join(process.cwd(), "server", "bible", "schema.sql");
+  if (!import_fs5.default.existsSync(schemaPath)) {
+    schemaPath = import_path5.default.join(process.cwd(), "data", "bible", "schema.sql");
+  }
+  const schema = import_fs5.default.readFileSync(schemaPath, "utf-8");
   db2.exec(schema);
   const bibleDB = new BibleStudyDB(dbPath);
   seedBibleCourses(bibleDB);
@@ -3632,9 +4246,9 @@ var AuthService = class {
 var import_express3 = require("express");
 
 // server/recoveryService.ts
-var import_fs5 = __toESM(require("fs"), 1);
-var import_path5 = __toESM(require("path"), 1);
-var RECOVERY_DATA_FILE = import_path5.default.join(process.cwd(), "data", "recovery_data.json");
+var import_fs6 = __toESM(require("fs"), 1);
+var import_path6 = __toESM(require("path"), 1);
+var RECOVERY_DATA_FILE = import_path6.default.join(process.cwd(), "data", "recovery_data.json");
 var liveParticipants = /* @__PURE__ */ new Map();
 var liveSignals = /* @__PURE__ */ new Map();
 function getInitialMeetings() {
@@ -3802,8 +4416,8 @@ var RecoveryService = class {
   }
   loadState() {
     try {
-      if (import_fs5.default.existsSync(RECOVERY_DATA_FILE)) {
-        const raw = import_fs5.default.readFileSync(RECOVERY_DATA_FILE, "utf-8");
+      if (import_fs6.default.existsSync(RECOVERY_DATA_FILE)) {
+        const raw = import_fs6.default.readFileSync(RECOVERY_DATA_FILE, "utf-8");
         const parsed = JSON.parse(raw);
         if (parsed.meetings && parsed.meetings.length > 0) {
           return parsed;
@@ -3863,11 +4477,11 @@ var RecoveryService = class {
   }
   saveState(stateToSave) {
     try {
-      const dir = import_path5.default.dirname(RECOVERY_DATA_FILE);
-      if (!import_fs5.default.existsSync(dir)) {
-        import_fs5.default.mkdirSync(dir, { recursive: true });
+      const dir = import_path6.default.dirname(RECOVERY_DATA_FILE);
+      if (!import_fs6.default.existsSync(dir)) {
+        import_fs6.default.mkdirSync(dir, { recursive: true });
       }
-      import_fs5.default.writeFileSync(RECOVERY_DATA_FILE, JSON.stringify(stateToSave || this.state, null, 2), "utf-8");
+      import_fs6.default.writeFileSync(RECOVERY_DATA_FILE, JSON.stringify(stateToSave || this.state, null, 2), "utf-8");
     } catch (e) {
       console.error("[RecoveryService] Failed to save recovery_data.json:", e);
     }
@@ -4156,7 +4770,7 @@ var RecoveryService = class {
 };
 var recoveryService = new RecoveryService();
 
-// src/data/recoveryPrinciples.ts
+// src/content/recoveryPrinciples.ts
 var CORE_BIBLICAL_RECOVERY_PRINCIPLES = [
   {
     step: 1,
@@ -4400,7 +5014,7 @@ var CORE_BIBLICAL_RECOVERY_PRINCIPLES = [
   }
 ];
 
-// src/data/recoveryTeachings.ts
+// src/content/recoveryTeachings.ts
 var RECOVERY_TEACHINGS_DATA = [
   {
     id: "rec_teach_1",
@@ -4796,59 +5410,75 @@ function createRecoveryRoutes() {
 
 // server.ts
 var import_better_sqlite33 = __toESM(require("better-sqlite3"), 1);
-var import_fs6 = __toESM(require("fs"), 1);
+var import_fs7 = __toESM(require("fs"), 1);
 async function startServer() {
   const app = (0, import_express4.default)();
   const PORT = 3e3;
   app.use(import_express4.default.json({ limit: "25mb" }));
   app.use(import_express4.default.urlencoded({ extended: true, limit: "25mb" }));
-  app.get(["/uploads/sermons/:filename", "/public/uploads/sermons/:filename"], (req, res) => {
-    const filename = import_path6.default.basename(req.params.filename);
-    const mediaPath = import_path6.default.join(process.cwd(), "public", "uploads", "sermons", filename);
-    if (!import_fs6.default.existsSync(mediaPath)) {
-      return res.status(404).json({ error: "Media file not found" });
-    }
-    const stat = import_fs6.default.statSync(mediaPath);
-    const fileSize = stat.size;
-    const range = req.headers.range;
-    const ext = import_path6.default.extname(filename).toLowerCase();
-    const mimeTypes = {
-      ".mp4": "video/mp4",
-      ".webm": "video/webm",
-      ".mp3": "audio/mpeg",
-      ".wav": "audio/wav",
-      ".m4a": "audio/mp4"
-    };
-    const contentType = mimeTypes[ext] || "application/octet-stream";
-    if (range) {
-      const parts = range.replace(/bytes=/, "").split("-");
-      const start = parseInt(parts[0], 10);
-      const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-      if (start >= fileSize) {
-        res.status(416).send("Requested range not satisfiable\n" + start + " >= " + fileSize);
-        return;
+  app.get(
+    [
+      "/uploads/sermons/:filename",
+      "/public/uploads/sermons/:filename",
+      "/uploads/youtube_series/:filename",
+      "/public/uploads/youtube_series/:filename"
+    ],
+    (req, res) => {
+      const filename = import_path7.default.basename(req.params.filename);
+      const isYouTube = req.path.includes("youtube_series");
+      const folder = isYouTube ? "youtube_series" : "sermons";
+      let mediaPath = import_path7.default.join(process.cwd(), "public", "uploads", folder, filename);
+      if (!import_fs7.default.existsSync(mediaPath) && isYouTube) {
+        const alt = import_path7.default.join("/home/ubuntu/Aura-prod/public/uploads/youtube_series", filename);
+        if (import_fs7.default.existsSync(alt)) {
+          mediaPath = alt;
+        }
       }
-      const chunksize = end - start + 1;
-      const file = import_fs6.default.createReadStream(mediaPath, { start, end });
-      const head = {
-        "Content-Range": `bytes ${start}-${end}/${fileSize}`,
-        "Accept-Ranges": "bytes",
-        "Content-Length": chunksize,
-        "Content-Type": contentType
+      if (!import_fs7.default.existsSync(mediaPath)) {
+        return res.status(404).json({ error: "Media file not found" });
+      }
+      const stat = import_fs7.default.statSync(mediaPath);
+      const fileSize = stat.size;
+      const range = req.headers.range;
+      const ext = import_path7.default.extname(filename).toLowerCase();
+      const mimeTypes = {
+        ".mp4": "video/mp4",
+        ".webm": "video/webm",
+        ".mp3": "audio/mpeg",
+        ".wav": "audio/wav",
+        ".m4a": "audio/mp4"
       };
-      res.writeHead(206, head);
-      file.pipe(res);
-    } else {
-      const head = {
-        "Content-Length": fileSize,
-        "Content-Type": contentType,
-        "Accept-Ranges": "bytes"
-      };
-      res.writeHead(200, head);
-      import_fs6.default.createReadStream(mediaPath).pipe(res);
+      const contentType = mimeTypes[ext] || "application/octet-stream";
+      if (range) {
+        const parts = range.replace(/bytes=/, "").split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        if (start >= fileSize) {
+          res.status(416).send("Requested range not satisfiable\n" + start + " >= " + fileSize);
+          return;
+        }
+        const chunksize = end - start + 1;
+        const file = import_fs7.default.createReadStream(mediaPath, { start, end });
+        const head = {
+          "Content-Range": `bytes ${start}-${end}/${fileSize}`,
+          "Accept-Ranges": "bytes",
+          "Content-Length": chunksize,
+          "Content-Type": contentType
+        };
+        res.writeHead(206, head);
+        file.pipe(res);
+      } else {
+        const head = {
+          "Content-Length": fileSize,
+          "Content-Type": contentType,
+          "Accept-Ranges": "bytes"
+        };
+        res.writeHead(200, head);
+        import_fs7.default.createReadStream(mediaPath).pipe(res);
+      }
     }
-  });
-  app.use("/uploads", import_express4.default.static(import_path6.default.join(process.cwd(), "public", "uploads")));
+  );
+  app.use("/uploads", import_express4.default.static(import_path7.default.join(process.cwd(), "public", "uploads")));
   app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -4864,6 +5494,15 @@ async function startServer() {
   app.get("/api/system/info", (req, res) => {
     const stats = db.getSystemStats();
     res.json(stats);
+  });
+  app.get("/api/system/version", (req, res) => {
+    const pkg = require_package();
+    res.json({
+      version: pkg.version || "1.0.6",
+      downloadUrl: "https://aura.webcraftstudio.cloud/aura.apk",
+      forceUpdate: false,
+      releaseNotes: "New Golden Lion App Icon, Top Status Bar visual fixes, and stability improvements. Please download this update to apply the new native icon!"
+    });
   });
   app.get("/api/system/export-db", (req, res) => {
     const fullDb = db.exportFullDatabase();
@@ -4933,6 +5572,12 @@ async function startServer() {
     });
     res.status(201).json(newPost);
   });
+  app.patch("/api/posts/:id", (req, res) => {
+    const { content, mediaUrls, tags, location } = req.body;
+    const updatedPost = db.updatePost(req.params.id, { content, mediaUrls, tags, location });
+    if (!updatedPost) return res.status(404).json({ error: "Post not found" });
+    res.json({ post: updatedPost });
+  });
   app.delete("/api/posts/:id", (req, res) => {
     const success = db.deletePost(req.params.id);
     if (!success) return res.status(404).json({ error: "Post not found" });
@@ -4960,6 +5605,24 @@ async function startServer() {
     const result = db.toggleBookmarkPost(req.params.id, userId);
     if (!result) return res.status(404).json({ error: "Post not found" });
     res.json(result);
+  });
+  app.post("/api/sync/restore-client-cache", (req, res) => {
+    try {
+      const { posts } = req.body;
+      console.log(`[SYNC RECOVERY] Received ${Array.isArray(posts) ? posts.length : 0} candidate posts from client device.`);
+      const result = db.syncClientPosts(posts || []);
+      console.log(`[SYNC RECOVERY] Result: ${result.added} added, total now: ${result.total}`);
+      res.json({
+        success: true,
+        added: result.added,
+        total: result.total,
+        posts: result.addedPosts,
+        message: `Successfully recovered and saved ${result.added} post(s) into server database.`
+      });
+    } catch (err) {
+      console.error("[SYNC RECOVERY ERROR]", err);
+      res.status(500).json({ error: err.message || "Failed to sync client cache" });
+    }
   });
   app.get("/api/stories", (req, res) => {
     const stories = db.getStories();
@@ -5062,7 +5725,7 @@ async function startServer() {
   const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY || "OCB5cJ_HHQhpQX5kcRdf4jr_hMBhnGPdsV52v2M76SA";
   const VAPID_MAILTO = process.env.VAPID_MAILTO || "mailto:admin@cloudcraftstudio.com";
   import_web_push.default.setVapidDetails(VAPID_MAILTO, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
-  const authDb = new import_better_sqlite33.default(import_path6.default.join(process.cwd(), "data", "auth.db"));
+  const authDb = new import_better_sqlite33.default(import_path7.default.join(process.cwd(), "data", "auth.db"));
   authDb.exec(`
     CREATE TABLE IF NOT EXISTS push_subscriptions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -5115,7 +5778,7 @@ async function startServer() {
         };
         import_web_push.default.sendNotification(pushSubscription, JSON.stringify(payload), {
           urgency: "high",
-          TTL: 60
+          TTL: 86400
         }).catch((err) => {
           if (err.statusCode === 404 || err.statusCode === 410) {
             authDb.prepare("DELETE FROM push_subscriptions WHERE endpoint = ?").run(sub.endpoint);
@@ -5126,6 +5789,58 @@ async function startServer() {
       console.error("Error dispatching push notifications:", err);
     }
   };
+  const broadcastPush = async (payload) => {
+    try {
+      const subs = authDb.prepare("SELECT * FROM push_subscriptions").all();
+      if (!subs || subs.length === 0) return;
+      for (const sub of subs) {
+        const pushSubscription = {
+          endpoint: sub.endpoint,
+          keys: {
+            p256dh: sub.p256dh,
+            auth: sub.auth
+          }
+        };
+        import_web_push.default.sendNotification(pushSubscription, JSON.stringify(payload), {
+          urgency: "high",
+          TTL: 86400
+        }).catch((err) => {
+          if (err.statusCode === 404 || err.statusCode === 410) {
+            authDb.prepare("DELETE FROM push_subscriptions WHERE endpoint = ?").run(sub.endpoint);
+          }
+        });
+      }
+    } catch (err) {
+      console.error("Error broadcasting push notification:", err);
+    }
+  };
+  app.post("/api/push/test-daily-verse", (req, res) => {
+    const { userId } = req.body;
+    const devotionalVerses = [
+      { ref: "Joshua 1:9", text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go." },
+      { ref: "Philippians 4:13", text: "I can do all things through Christ who strengthens me." },
+      { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart and lean not on your own understanding." },
+      { ref: "Psalm 23:1", text: "The Lord is my shepherd; I lack nothing." },
+      { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him." },
+      { ref: "Isaiah 40:31", text: "Those who hope in the Lord will renew their strength. They will soar on wings like eagles." },
+      { ref: "Jeremiah 29:11", text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future." }
+    ];
+    const picked = devotionalVerses[Math.floor(Math.random() * devotionalVerses.length)];
+    const payload = {
+      type: "DAILY_DEVOTIONAL",
+      action: "devotional",
+      title: `\u{1F4D6} Verse of the Day: ${picked.ref}`,
+      body: `"${picked.text}"`,
+      url: "/?tab=devotional",
+      tag: "daily-devotional"
+    };
+    if (userId) {
+      sendPushToUser(userId, payload);
+    } else {
+      broadcastPush(payload);
+    }
+    res.json({ success: true, message: "Daily verse push dispatched", verse: picked });
+  });
   app.post("/api/push/test-call", (req, res) => {
     const { userId, isVideo } = req.body;
     if (!userId) return res.status(400).json({ error: "userId is required" });
@@ -5250,35 +5965,56 @@ async function startServer() {
     const signals = db.getCallSignals(req.params.roomId, excludeSenderId, since);
     res.json(signals);
   });
-  app.get("/api/unsplash/search", async (req, res) => {
+  app.get(["/api/unsplash/search", "/api/pexels/search", "/api/images/search"], async (req, res) => {
+    const query = (req.query.query || req.query.q || "").trim();
+    const accessKey = process.env.PEXELS_API_KEY || process.env.VITE_PEXELS_API_KEY || "cY6ajm4oZeTHCoKHGCVYvizEkWs0KGf9VU4jJ8K50AKAmeESWfqk0rkM";
     try {
-      const query = req.query.query || "";
-      const accessKey = process.env.UNSPLASH_ACCESS_KEY || process.env.VITE_UNSPLASH_ACCESS_KEY;
-      if (!accessKey) {
-        return res.status(200).json({ results: [], noKey: true });
-      }
-      const endpoint = query.trim() ? `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=24&orientation=landscape` : `https://api.unsplash.com/photos/random?count=24&orientation=landscape`;
+      const endpoint = query ? `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=30` : `https://api.pexels.com/v1/curated?per_page=30`;
       const response = await fetch(endpoint, {
         headers: {
-          Authorization: `Client-ID ${accessKey}`
+          Authorization: accessKey
         }
       });
-      if (!response.ok) {
-        return res.status(response.status).json({ error: "Unsplash upstream error" });
+      if (response.ok) {
+        const data = await response.json();
+        const photos = data.photos || [];
+        if (Array.isArray(photos) && photos.length > 0) {
+          const results = photos.map((p) => ({
+            id: p.id.toString(),
+            url: p.src?.large || p.src?.original || p.src?.medium,
+            thumb: p.src?.medium || p.src?.small,
+            author: p.photographer || "Pexels Creator",
+            photographer_url: p.photographer_url,
+            alt_description: p.alt || `${query || "Worship"} background`,
+            urls: {
+              regular: p.src?.large || p.src?.original,
+              full: p.src?.original,
+              small: p.src?.medium || p.src?.small,
+              thumb: p.src?.small || p.src?.tiny || p.src?.medium
+            },
+            user: {
+              name: p.photographer || "Pexels Creator"
+            }
+          }));
+          return res.json({ results });
+        }
+      } else {
+        console.warn(`Pexels API returned status ${response.status}`);
       }
-      const data = await response.json();
-      const photos = query.trim() ? data.results : data;
-      const results = Array.isArray(photos) ? photos.map((p) => ({
-        id: p.id,
-        url: p.urls.regular,
-        thumb: p.urls.small,
-        author: p.user?.name || "Unsplash Creator"
-      })) : [];
-      return res.json({ results });
     } catch (err) {
-      console.error("Unsplash proxy error:", err);
-      return res.status(500).json({ error: "Failed to fetch from Unsplash" });
+      console.warn("Pexels upstream fetch error, using curated presets:", err.message);
     }
+    const CURATED_FALLBACK = [
+      { id: "curated_1", url: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&auto=format&fit=crop&q=80", author: "Benjamin Davies" },
+      { id: "curated_2", url: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&auto=format&fit=crop&q=80", author: "Aaron Burden" },
+      { id: "curated_3", url: "https://images.unsplash.com/photo-1519817650390-64a93db51149?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1519817650390-64a93db51149?w=400&auto=format&fit=crop&q=80", author: "Patrick Fore" },
+      { id: "curated_4", url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format&fit=crop&q=80", author: "Sean Oulashin" },
+      { id: "curated_5", url: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400&auto=format&fit=crop&q=80", author: "Eberhard Grossgasteiger" },
+      { id: "curated_6", url: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=400&auto=format&fit=crop&q=80", author: "Ben White" },
+      { id: "curated_7", url: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=400&auto=format&fit=crop&q=80", author: "Mohamed Nohassi" },
+      { id: "curated_8", url: "https://images.unsplash.com/photo-1445445290350-18a3b86e0b5b?w=1200&auto=format&fit=crop&q=80", thumb: "https://images.unsplash.com/photo-1445445290350-18a3b86e0b5b?w=400&auto=format&fit=crop&q=80", author: "Priscilla Du Preez" }
+    ];
+    return res.json({ results: CURATED_FALLBACK, fallback: true });
   });
   app.post("/api/bible-study/generate", async (req, res) => {
     try {
@@ -5392,11 +6128,12 @@ async function startServer() {
     }
   });
   try {
-    const bibleDbPath = import_path6.default.join(process.cwd(), "data", "bible", "bible_study.db");
+    const bibleDbPath = import_path7.default.join(process.cwd(), "data", "bible", "bible_study.db");
     initializeBibleDB(bibleDbPath);
     const bibleDB = new BibleStudyDB(bibleDbPath);
     const bibleRoutes = createBibleRoutes(bibleDB);
     app.use("/api/bible", bibleRoutes);
+    startYoutubeFolderWatcher(bibleDB);
     app.get("/api/bible/community/sermons", async (_req, res) => {
       try {
         const feed = await getLiveMinistryFeed();
@@ -5410,10 +6147,10 @@ async function startServer() {
     console.error("Failed to initialize Bible Study DB:", err);
   }
   try {
-    const authDbPath = import_path6.default.join(process.cwd(), "data", "auth.db");
+    const authDbPath = import_path7.default.join(process.cwd(), "data", "auth.db");
     const authDb2 = new import_better_sqlite33.default(authDbPath);
-    const schemaPath = import_path6.default.join(process.cwd(), "data", "auth_schema.sql");
-    const schema = import_fs6.default.readFileSync(schemaPath, "utf-8");
+    const schemaPath = import_path7.default.join(process.cwd(), "data", "auth_schema.sql");
+    const schema = import_fs7.default.readFileSync(schemaPath, "utf-8");
     authDb2.exec(schema);
     const authService = new AuthService(authDb2);
     const authRoutes = createAuthRoutes(authService);
@@ -5427,8 +6164,27 @@ async function startServer() {
   } catch (err) {
     console.error("Failed to initialize Recovery routes:", err);
   }
-  const isProd = process.env.NODE_ENV === "production" || !process.env.VITE_DEV;
-  if (!isProd) {
+  app.get("/api/app-update/version", (req, res) => {
+    try {
+      const manifestPath = import_path7.default.join(process.cwd(), "public", "update-manifest.json");
+      if (import_fs7.default.existsSync(manifestPath)) {
+        return res.json(JSON.parse(import_fs7.default.readFileSync(manifestPath, "utf8")));
+      }
+      res.json({ version: "1.0.0", url: "https://aura.webcraftstudio.cloud/dist.zip" });
+    } catch (e) {
+      res.status(500).json({ error: "Failed to read manifest" });
+    }
+  });
+  app.get("/aura.apk", (req, res) => {
+    const apkPath = import_path7.default.join(process.cwd(), "dist", "aura.apk");
+    if (import_fs7.default.existsSync(apkPath)) {
+      res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
+      res.setHeader("Content-Type", "application/vnd.android.package-archive");
+      return res.sendFile(apkPath);
+    }
+    res.status(404).send("APK not found");
+  });
+  if (process.env.NODE_ENV !== "production") {
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
@@ -5436,30 +6192,15 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = import_path6.default.join(process.cwd(), "dist");
-    app.get("/api/app-update/version", (req, res) => {
-      try {
-        const manifestPath = import_path6.default.join(process.cwd(), "public", "update-manifest.json");
-        if (import_fs6.default.existsSync(manifestPath)) {
-          return res.json(JSON.parse(import_fs6.default.readFileSync(manifestPath, "utf8")));
-        }
-        res.json({ version: "1.0.0", url: "https://webcraftstudio.cloud/dist.zip" });
-      } catch (e) {
-        res.status(500).json({ error: "Failed to read manifest" });
-      }
-    });
-    app.get("/aura.apk", (req, res) => {
-      const apkPath = import_path6.default.join(process.cwd(), "dist", "aura.apk");
-      if (import_fs6.default.existsSync(apkPath)) {
-        res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
-        res.setHeader("Content-Type", "application/vnd.android.package-archive");
-        return res.sendFile(apkPath);
-      }
-      res.status(404).send("APK not found");
-    });
+    const distPath = import_path7.default.join(process.cwd(), "dist");
     app.use(import_express4.default.static(distPath));
     app.get("*", (req, res) => {
-      res.sendFile(import_path6.default.join(distPath, "index.html"));
+      const indexPath = import_path7.default.join(distPath, "index.html");
+      if (import_fs7.default.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send("Application build not found. Please build the frontend first.");
+      }
     });
   }
   app.listen(PORT, "0.0.0.0", () => {

@@ -1,7 +1,7 @@
 {
   "name": "aura",
   "private": true,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
@@ -16,6 +16,7 @@
   "dependencies": {
     "@capacitor-community/native-audio": "^8.0.0",
     "@capacitor/android": "^8.5.0",
+    "@capacitor/app": "^8.1.1",
     "@capacitor/cli": "^7.6.8",
     "@capacitor/core": "^8.5.0",
     "@capacitor/filesystem": "^8.1.3",
