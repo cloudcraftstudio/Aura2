@@ -125,9 +125,14 @@ export const GlobalAlertBanner: React.FC = () => {
     return 0;
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (updateInfo?.downloadUrl) {
-      window.location.href = updateInfo.downloadUrl;
+      if (Capacitor.isNativePlatform()) {
+        const { Browser } = await import('@capacitor/browser');
+        await Browser.open({ url: updateInfo.downloadUrl });
+      } else {
+        window.location.href = updateInfo.downloadUrl;
+      }
     }
   };
 
