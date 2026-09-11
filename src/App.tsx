@@ -63,13 +63,7 @@ function MainApp() {
   const [shareModalType, setShareModalType] = useState<'general' | 'call' | 'chat'>('general');
   const [shareRoomId, setShareRoomId] = useState<string | undefined>();
   const [shareInitialContent, setShareInitialContent] = useState<string | undefined>();
-  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(() => {
-    try {
-      return !sessionStorage.getItem('aura_splash_entered');
-    } catch {
-      return true;
-    }
-  });
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(false);
 
   const [showGospelTract, setShowGospelTract] = useState(false);
 
@@ -167,34 +161,6 @@ function MainApp() {
       sessionStorage.setItem('aura_splash_entered', 'true');
     } catch {}
     setShowSplashScreen(false);
-    
-    // Check if we should show the Gospel Tract
-    let shouldShowGospel = true;
-    if (user) {
-      try {
-        const hasSeen = localStorage.getItem('aura_gospel_seen');
-        if (hasSeen === 'true') {
-          shouldShowGospel = false;
-        }
-      } catch {}
-    } else {
-      // For guests, we show it on repeat, maybe check session storage so it's not every single refresh
-      try {
-        const hasSeenThisSession = sessionStorage.getItem('aura_gospel_session');
-        if (hasSeenThisSession === 'true') {
-          shouldShowGospel = false;
-        } else {
-          sessionStorage.setItem('aura_gospel_session', 'true');
-        }
-      } catch {}
-    }
-
-    if (shouldShowGospel) {
-      setShowGospelTract(true);
-    } else if (!user) {
-      // Fallback if they skipped tract this session but aren't logged in
-      setIsAuthModalOpen(true);
-    }
   };
 
   const handleReplayMatrix = () => {

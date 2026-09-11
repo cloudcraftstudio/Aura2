@@ -182,11 +182,12 @@ class SoundEffectsService {
   }
 
   public stopRingtone() {
+    const wasRinging = !!this.ringtoneInterval;
     if (this.ringtoneInterval) {
       clearInterval(this.ringtoneInterval);
       this.ringtoneInterval = null;
     }
-    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    if (wasRinging && typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       try {
         navigator.vibrate(0);
       } catch {}

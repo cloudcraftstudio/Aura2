@@ -9,7 +9,10 @@ interface AsyncMediaProps extends React.MediaHTMLAttributes<HTMLMediaElement> {
 }
 
 export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, className, alt, controls, playsInline, autoPlay, poster }) => {
-  const [resolvedSrc, setResolvedSrc] = useState<string>(src && typeof src === 'string' ? src.trim() : '');
+  const isLocal = Boolean(src && typeof src === 'string' && src.trim().startsWith('localmedia://'));
+  const [resolvedSrc, setResolvedSrc] = useState<string>(
+    isLocal ? '' : (src && typeof src === 'string' ? src.trim() : '')
+  );
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -25,20 +28,29 @@ export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, classNam
     const trimmedSrc = src.trim();
 
     if (trimmedSrc.startsWith('localmedia://')) {
+      // Clear resolvedSrc immediately to prevent invalid URI request in DOM
+      setResolvedSrc('');
+      setError(false);
       const id = trimmedSrc.replace(/^localmedia:\/\/(video|image)\//, '');
       mediaCache.getMedia(id).then(blob => {
         if (!isMounted) return;
         if (blob) {
           objectUrl = URL.createObjectURL(blob);
           setResolvedSrc(objectUrl);
+          setError(false);
         } else {
+          setResolvedSrc('');
           setError(true);
         }
       }).catch(() => {
-        if (isMounted) setError(true);
+        if (isMounted) {
+          setResolvedSrc('');
+          setError(true);
+        }
       });
     } else {
       setResolvedSrc(trimmedSrc);
+      setError(false);
     }
 
     return () => {
@@ -51,13 +63,13 @@ export const AsyncMedia: React.FC<AsyncMediaProps> = ({ src, mediaType, classNam
 
   if (error) {
     return (
-      <div className={`flex items-center justify-center bg-zinc-900 ${className}`}>
-        <span className="text-zinc-500 text-xs">Media not found</span>
+      <div className={`flex items-center justify-center bg-zinc-900/50 rounded-xl p-3 text-center ${className}`}>
+        <span className="text-zinc-500 text-xs">Media unavailable</span>
       </div>
     );
   }
 
-  if (!resolvedSrc || resolvedSrc.trim() === '') {
+  if (!resolvedSrc || resolvedSrc.trim() === '' || resolvedSrc.startsWith('localmedia://')) {
     return null;
   }
 

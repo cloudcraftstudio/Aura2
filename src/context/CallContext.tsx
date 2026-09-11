@@ -330,32 +330,39 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCallDuration(0);
   };
 
+  const isTerminatingRef = useRef(false);
   const handleCallTermination = () => {
-    if (callTimeoutRef.current) {
-      clearTimeout(callTimeoutRef.current);
-      callTimeoutRef.current = null;
-    }
-    stopDurationTimer();
-    soundEffects.stopRingtone();
-    if (activeCallRef.current?.roomId) {
-      callKitService.endCall(activeCallRef.current.roomId);
-    }
-    if (incomingCallRef.current?.roomId) {
-      callKitService.endCall(incomingCallRef.current.roomId);
-    }
-    setActiveCall(null);
-    setIncomingCall(null);
-    setLocalStream(null);
-    setRemoteStream(null);
-    setIsPipMode(false);
-    setIsScreenSharing(false);
-    setIsAudioMuted(false);
-    setIsVideoMuted(false);
-    
-    if (webrtcRef.current) {
-      try {
-        webrtcRef.current.endCall(false); // don't broadcast, just cleanup local WebRTC to kill ghost audio
-      } catch (e) {}
+    if (isTerminatingRef.current) return;
+    isTerminatingRef.current = true;
+    try {
+      if (callTimeoutRef.current) {
+        clearTimeout(callTimeoutRef.current);
+        callTimeoutRef.current = null;
+      }
+      stopDurationTimer();
+      soundEffects.stopRingtone();
+      if (activeCallRef.current?.roomId) {
+        callKitService.endCall(activeCallRef.current.roomId);
+      }
+      if (incomingCallRef.current?.roomId) {
+        callKitService.endCall(incomingCallRef.current.roomId);
+      }
+      setActiveCall(null);
+      setIncomingCall(null);
+      setLocalStream(null);
+      setRemoteStream(null);
+      setIsPipMode(false);
+      setIsScreenSharing(false);
+      setIsAudioMuted(false);
+      setIsVideoMuted(false);
+      
+      if (webrtcRef.current) {
+        try {
+          webrtcRef.current.endCall(false); // don't broadcast, just cleanup local WebRTC to kill ghost audio
+        } catch (e) {}
+      }
+    } finally {
+      isTerminatingRef.current = false;
     }
   };
 

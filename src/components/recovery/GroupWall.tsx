@@ -54,7 +54,7 @@ export const GroupWall: React.FC<GroupWallProps> = ({ group, onBack, onUpdate, o
       id: 'post_' + Date.now(),
       author: user?.name || 'Anonymous',
       authorId: user?.id || 'anon',
-      avatar: user?.avatarUrl || user?.photoURL || '',
+      avatar: user?.avatarUrl || (user as any)?.photoURL || '',
       initial: (user?.name || 'A').charAt(0),
       time: 'Just now',
       content: postText,
@@ -212,7 +212,7 @@ export const GroupWall: React.FC<GroupWallProps> = ({ group, onBack, onUpdate, o
             {/* Create Post Input */}
             <div className="p-4 bg-white/5 border border-white/10 rounded-2xl">
               <div className="flex gap-3">
-                <Avatar src={user?.photoURL} name={user?.name} size="sm" />
+                <Avatar src={user?.avatarUrl || (user as any)?.photoURL} name={user?.name} size="sm" />
                 <div className="flex-1">
                   <textarea 
                     value={postText}

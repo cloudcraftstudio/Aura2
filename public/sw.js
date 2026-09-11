@@ -1,5 +1,5 @@
 // Aura PWA Service Worker for Offline Caching and Push Notifications
-const CACHE_NAME = 'aura-pwa-v3';
+const CACHE_NAME = 'aura-pwa-v6';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

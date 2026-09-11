@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx server.ts",
     "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
-    "release:ota": "npm run build && cd dist && zip -r ../public/dist.zip . -x '*.zip' && cd .. && node -e \"require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.zip' }))\"",
+    "release:ota": "npm run build && cd dist && tar --exclude='*.tar.gz' -czf ../public/dist.tar.gz . && cd .. && node -e \"require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.tar.gz' }))\"",
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",

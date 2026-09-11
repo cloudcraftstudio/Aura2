@@ -20,6 +20,7 @@ import { Play,
   Upload,
   Volume2,
   Share2, Image as ImageIcon, Search } from "lucide-react";
+import { AsyncMedia } from '../common/AsyncMedia';
 
 interface Sermon {
   id: string;
@@ -1373,9 +1374,10 @@ export function LiveSermonStudio() {
                         {sermon.mediaType === 'audio' ? (
                           <audio controls autoPlay className="w-full" src={sermon.mediaUrl} />
                         ) : (
-                          <video
+                          <AsyncMedia
                             controls
                             autoPlay
+                            mediaType="video"
                             className="w-full rounded-2xl bg-black max-h-[420px]"
                             src={sermon.mediaUrl}
                           />

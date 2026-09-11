@@ -700,47 +700,57 @@ export class WebRTCManager {
     }
   }
 
+  private isEndingCall = false;
+
   public endCall(broadcast: boolean = true) {
-    if (this.pollingInterval) {
-      clearInterval(this.pollingInterval);
-      this.pollingInterval = null;
-    }
+    if (this.isEndingCall) return;
+    this.isEndingCall = true;
 
-    if (this.currentRoomId) {
-      // Notify server call has ended
-      fetch(`/api/calls/${this.currentRoomId}/status`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'ended' }),
-      }).catch(() => {});
-    }
+    try {
+      if (this.pollingInterval) {
+        clearInterval(this.pollingInterval);
+        this.pollingInterval = null;
+      }
 
-    if (this.peerAnimFrameId) {
-      cancelAnimationFrame(this.peerAnimFrameId);
-      this.peerAnimFrameId = null;
-    }
-    if (this.peerAudioCtx) {
-      try {
-        this.peerAudioCtx.close();
-      } catch (e) {}
-      this.peerAudioCtx = null;
-    }
+      const hadActiveSession = !!this.currentRoomId;
+      if (this.currentRoomId && broadcast) {
+        // Notify server call has ended
+        fetch(`/api/calls/${this.currentRoomId}/status`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'ended' }),
+        }).catch(() => {});
+      }
 
-    this.stopLocalMedia();
+      if (this.peerAnimFrameId) {
+        cancelAnimationFrame(this.peerAnimFrameId);
+        this.peerAnimFrameId = null;
+      }
+      if (this.peerAudioCtx) {
+        try {
+          this.peerAudioCtx.close();
+        } catch (e) {}
+        this.peerAudioCtx = null;
+      }
 
-    if (this.peerConnection) {
-      try {
-        this.peerConnection.close();
-      } catch (e) {}
-      this.peerConnection = null;
-    }
+      this.stopLocalMedia();
 
-    this.currentRoomId = null;
-    this.isScreenSharing = false;
-    this.pendingCandidates = [];
+      if (this.peerConnection) {
+        try {
+          this.peerConnection.close();
+        } catch (e) {}
+        this.peerConnection = null;
+      }
 
-    if (this.config.onCallEnded) {
-      this.config.onCallEnded();
+      this.currentRoomId = null;
+      this.isScreenSharing = false;
+      this.pendingCandidates = [];
+
+      if (broadcast && hadActiveSession && this.config.onCallEnded) {
+        this.config.onCallEnded();
+      }
+    } finally {
+      this.isEndingCall = false;
     }
   }
 

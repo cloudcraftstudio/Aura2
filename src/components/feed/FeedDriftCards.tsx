@@ -7,6 +7,7 @@ import {
 import confetti from 'canvas-confetti';
 import { soundEffects } from '../../services/audio';
 import { Avatar } from '../common/Avatar';
+import { AsyncMedia } from '../common/AsyncMedia';
 import { UserProfile } from '../../types';
 
 // ==========================================
@@ -377,7 +378,13 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
           {sermon.mediaType === 'audio' ? (
             <audio controls autoPlay src={sermon.mediaUrl} className="w-full" />
           ) : (
-            <video controls autoPlay src={sermon.mediaUrl} className="w-full max-h-56 rounded-xl bg-black" />
+            <AsyncMedia
+              src={sermon.mediaUrl}
+              mediaType="video"
+              controls
+              autoPlay
+              className="w-full max-h-56 rounded-xl bg-black"
+            />
           )}
         </div>
       )}
