@@ -7,8 +7,8 @@ android {
         applicationId "com.aura.social"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "1.0.6"
+        versionCode 7
+        versionName "1.0.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -56,6 +56,8 @@ try {
 
 configurations.all {
     resolutionStrategy {
+        force "com.squareup.okhttp3:okhttp:4.12.0"
+        force "com.squareup.okhttp3:okhttp-android:4.12.0"
         force "androidx.core:core:1.15.0"
         force "androidx.core:core-ktx:1.15.0"
         force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
