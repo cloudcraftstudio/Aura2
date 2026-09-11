@@ -175,17 +175,20 @@ export const RecoveryDashboard: React.FC = () => {
                   setTempDate(savedDate);
                   setIsEditingDate(true);
                 }}
-                className="text-left flex items-center gap-3 p-3 pr-10 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors shrink-0 relative group w-full sm:w-auto"
+                className="text-left flex items-center gap-3 p-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors shrink-0 relative group w-full sm:w-auto"
               >
-                <div className="absolute top-3 right-3">
-                  <Pencil className="w-4 h-4 text-slate-400 opacity-60" />
+                <div className="relative">
+                  <div className={`w-14 h-14 rounded-xl ${chip.color} border-4 ${chip.border} flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.3)] shrink-0`}>
+                    <span className={`text-xl font-black ${chip.text}`}>
+                      {daysClean}
+                    </span>
+                  </div>
+                  {/* Pencil badge overlapping the number chip */}
+                  <div className="absolute -bottom-2 -right-2 w-7 h-7 bg-slate-800 rounded-full border border-white/20 flex items-center justify-center shadow-lg group-hover:bg-slate-700 transition-colors">
+                    <Pencil className="w-3.5 h-3.5 text-slate-300" />
+                  </div>
                 </div>
-                <div className={`w-14 h-14 rounded-full ${chip.color} border-4 ${chip.border} flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.3)] shrink-0`}>
-                  <span className={`text-xl font-black ${chip.text}`}>
-                    {daysClean}
-                  </span>
-                </div>
-                <div>
+                <div className="ml-2">
                   <span className="block text-sm font-bold text-white uppercase tracking-wider">Days Clean</span>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider ${chip.color} ${chip.text} border border-white/20`}>
