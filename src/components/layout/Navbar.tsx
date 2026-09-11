@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full pt-[calc(env(safe-area-inset-top,0px)+12px)] pb-3 px-3 sm:px-6 bg-[#05060f]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg">
+    <header className="sticky top-0 z-40 w-full pt-[max(env(safe-area-inset-top),2rem)] sm:pt-[max(env(safe-area-inset-top),2rem)] pb-3 px-3 sm:px-6 bg-[#05060f]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Brand Logo & Live Badge */}
         <div className="flex items-center gap-2.5 flex-shrink-0">
