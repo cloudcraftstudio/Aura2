@@ -127,11 +127,17 @@ export const GlobalAlertBanner: React.FC = () => {
 
   const handleDownload = async () => {
     if (updateInfo?.downloadUrl) {
-      if (Capacitor.isNativePlatform()) {
-        const { Browser } = await import('@capacitor/browser');
-        await Browser.open({ url: updateInfo.downloadUrl });
-      } else {
-        window.location.href = updateInfo.downloadUrl;
+      const url = updateInfo.downloadUrl;
+      try {
+        if (Capacitor.isNativePlatform()) {
+          const { Browser } = await import('@capacitor/browser');
+          await Browser.open({ url });
+        } else {
+          window.open(url, '_blank') || (window.location.href = url);
+        }
+      } catch (e) {
+        console.warn('Browser.open failed, falling back to window.open:', e);
+        window.open(url, '_blank') || (window.location.href = url);
       }
     }
   };

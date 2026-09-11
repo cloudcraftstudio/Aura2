@@ -81,6 +81,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     let unsubscribeUsers: (() => void) | undefined;
 
+    // Handle redirect result for mobile web auth
+    getRedirectResult(auth).then(async (result) => {
+      if (result?.user) {
+        // We can't know the exact provider easily here without parsing credentials, 
+        // but syncFirebaseUserToDb will merge safely.
+        await syncFirebaseUserToDb(result.user, { authProvider: 'social' });
+      }
+    }).catch((err) => {
+      console.error('Redirect auth error:', err);
+    });
+
     const unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         // Listen to all users only when authenticated
@@ -198,9 +209,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const result = await signInWithPopup(auth, googleProvider);
-      await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
-      return { success: true };
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, googleProvider);
+        return { success: true };
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
+        return { success: true };
+      }
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -222,9 +239,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const result = await signInWithPopup(auth, facebookProvider);
-      await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
-      return { success: true };
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, facebookProvider);
+        return { success: true };
+      } else {
+        const result = await signInWithPopup(auth, facebookProvider);
+        await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
+        return { success: true };
+      }
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -246,9 +269,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const result = await signInWithPopup(auth, githubProvider);
-      await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
-      return { success: true };
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        await signInWithRedirect(auth, githubProvider);
+        return { success: true };
+      } else {
+        const result = await signInWithPopup(auth, githubProvider);
+        await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
+        return { success: true };
+      }
     } catch (err: any) {
       return { success: false, error: err.message };
     }
