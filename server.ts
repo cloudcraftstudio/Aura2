@@ -928,8 +928,11 @@ async function startServer() {
 
   // APK Download Route
   app.get("/aura.apk", (req, res) => {
-    const apkPath = path.join(process.cwd(), "dist", "aura.apk");
-    if (fs.existsSync(apkPath)) {
+    const distApk = path.join(process.cwd(), "dist", "aura.apk");
+    const publicApk = path.join(process.cwd(), "public", "aura.apk");
+    const apkPath = fs.existsSync(distApk) ? distApk : fs.existsSync(publicApk) ? publicApk : null;
+    
+    if (apkPath) {
       res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
       res.setHeader("Content-Type", "application/vnd.android.package-archive");
       return res.sendFile(apkPath);

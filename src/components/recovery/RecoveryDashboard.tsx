@@ -168,19 +168,19 @@ export const RecoveryDashboard: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 shrink-0 relative group">
-                <button 
-                  onClick={() => {
-                    const savedDate = user?.cleanDate || localStorage.getItem('aura_clean_date') || new Date().toISOString().split('T')[0];
-                    setTempDate(savedDate);
-                    setIsEditingDate(true);
-                  }}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-slate-800 rounded-full border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-slate-700"
-                >
-                  <Pencil className="w-3 h-3 text-slate-300" />
-                </button>
-                <div className={`w-14 h-14 rounded-full ${chip.color} border-4 ${chip.border} flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.3)]`}>
+            <div className="flex flex-col gap-2 w-full sm:w-auto">
+              <button 
+                onClick={() => {
+                  const savedDate = user?.cleanDate || localStorage.getItem('aura_clean_date') || new Date().toISOString().split('T')[0];
+                  setTempDate(savedDate);
+                  setIsEditingDate(true);
+                }}
+                className="text-left flex items-center gap-3 p-3 pr-10 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors shrink-0 relative group w-full sm:w-auto"
+              >
+                <div className="absolute top-3 right-3">
+                  <Pencil className="w-4 h-4 text-slate-400 opacity-60" />
+                </div>
+                <div className={`w-14 h-14 rounded-full ${chip.color} border-4 ${chip.border} flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.3)] shrink-0`}>
                   <span className={`text-xl font-black ${chip.text}`}>
                     {daysClean}
                   </span>
@@ -193,7 +193,7 @@ export const RecoveryDashboard: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           )}
         </div>
