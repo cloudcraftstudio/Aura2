@@ -126,7 +126,7 @@ async function startServer() {
     const pkg = require('./package.json');
     res.json({
       version: pkg.version || '1.0.7',
-      downloadUrl: '/aura.apk',
+      downloadUrl: 'https://webcraftstudio.cloud/aura.apk',
       forceUpdate: false,
       releaseNotes: 'Massive update: Added new Group Community Walls, Recovery Journals, and fixed a critical bug causing a blank blue screen on launch. Please download this update for the best experience!'
     });
