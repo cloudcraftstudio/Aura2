@@ -1,12 +1,11 @@
 // Aura PWA Service Worker for Offline Caching and Push Notifications
-const CACHE_NAME = 'aura-pwa-v3';
+const CACHE_NAME = 'aura-pwa-v6';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
   '/favicon.svg',
-  '/icons/icon-192.svg',
-  '/icons/icon-512.svg'
+  '/icons/icon.jpg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -84,8 +83,8 @@ self.addEventListener('push', (event) => {
     const isVideo = data.isVideo !== false;
     const callOptions = {
       body: data.body || `${data.callerName || 'Someone'} is calling you on Aura...`,
-      icon: data.callerAvatar || data.icon || '/icons/icon-192.svg',
-      badge: '/icons/icon-192.svg',
+      icon: data.callerAvatar || data.icon || '/icons/icon.jpg',
+      badge: '/icons/icon.jpg',
       tag: data.roomId ? `call_${data.roomId}` : 'incoming_call',
       renotify: true,
       requireInteraction: true,
@@ -125,8 +124,8 @@ self.addEventListener('push', (event) => {
         if (data.isMissed) {
           return self.registration.showNotification(`Missed Call from ${data.callerName || 'Someone'}`, {
             body: 'Tap to view in Aura and call back',
-            icon: data.callerAvatar || '/icons/icon-192.svg',
-            badge: '/icons/icon-192.svg',
+            icon: data.callerAvatar || '/icons/icon.jpg',
+            badge: '/icons/icon.jpg',
             tag: `missed_${data.roomId || Date.now()}`,
             data: { url: '/?tab=chat' }
           });
@@ -139,8 +138,8 @@ self.addEventListener('push', (event) => {
   // Standard Notification Event
   const options = {
     body: data.body || 'New message on Aura',
-    icon: data.icon || '/icons/icon-192.svg',
-    badge: '/icons/icon-192.svg',
+    icon: data.icon || '/icons/icon.jpg',
+    badge: '/icons/icon.jpg',
     vibrate: [200, 100, 200],
     data: { url: data.url || data.actionId || '/' },
     actions: [

@@ -6,5 +6,15 @@
 	"server": {
 		"url": "https://webcraftstudio.cloud",
 		"cleartext": true
+	},
+	"plugins": {
+		"FirebaseAuthentication": {
+			"skipNativeAuth": false,
+			"providers": [
+				"google.com",
+				"facebook.com",
+				"github.com"
+			]
+		}
 	}
 }

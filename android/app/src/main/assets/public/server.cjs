@@ -30,12 +30,12 @@ var require_package = __commonJS({
     module2.exports = {
       name: "aura",
       private: true,
-      version: "1.0.6",
+      version: "1.0.7",
       type: "module",
       scripts: {
         dev: "tsx server.ts",
         build: "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --outfile=dist/server.cjs",
-        "release:ota": `npm run build && cd dist && zip -r ../public/dist.zip . -x '*.zip' && cd .. && node -e "require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.zip' }))"`,
+        "release:ota": `npm run build && cd dist && tar --exclude='*.tar.gz' -czf ../public/dist.tar.gz . && cd .. && node -e "require('fs').writeFileSync('public/update-manifest.json', JSON.stringify({ version: Date.now().toString(), url: 'https://aura.webcraftstudio.cloud/dist.tar.gz' }))"`,
         start: "node dist/server.cjs",
         preview: "vite preview",
         clean: "rm -rf dist server.js",
@@ -47,6 +47,7 @@ var require_package = __commonJS({
         "@capacitor-firebase/authentication": "^8.5.1",
         "@capacitor/android": "^8.5.0",
         "@capacitor/app": "^8.1.1",
+        "@capacitor/browser": "^8.0.4",
         "@capacitor/cli": "^7.6.8",
         "@capacitor/core": "^8.5.0",
         "@capacitor/filesystem": "^8.1.3",
@@ -5499,10 +5500,10 @@ async function startServer() {
   app.get("/api/system/version", (req, res) => {
     const pkg = require_package();
     res.json({
-      version: pkg.version || "1.0.6",
-      downloadUrl: "https://aura.webcraftstudio.cloud/aura.apk",
+      version: pkg.version || "1.0.7",
+      downloadUrl: "https://webcraftstudio.cloud/aura.apk",
       forceUpdate: false,
-      releaseNotes: "New Golden Lion App Icon, Top Status Bar visual fixes, and stability improvements. Please download this update to apply the new native icon!"
+      releaseNotes: "Massive update: Added new Group Community Walls, Recovery Journals, and fixed a critical bug causing a blank blue screen on launch. Please download this update for the best experience!"
     });
   });
   app.get("/api/system/export-db", (req, res) => {
@@ -6198,6 +6199,9 @@ async function startServer() {
     const distPath = import_path7.default.join(process.cwd(), "dist");
     app.use(import_express4.default.static(distPath));
     app.get("*", (req, res) => {
+      if (req.path.startsWith("/assets/") || req.path.match(/\.(js|css|png|jpg|jpeg|svg|gif|ico|woff|woff2|ttf|eot)$/)) {
+        return res.status(404).send("Asset not found. It may have been removed in a newer build.");
+      }
       const indexPath = import_path7.default.join(distPath, "index.html");
       if (import_fs7.default.existsSync(indexPath)) {
         res.sendFile(indexPath);

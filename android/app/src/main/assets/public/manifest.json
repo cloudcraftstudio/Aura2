@@ -4,27 +4,51 @@
   "description": "Real-time chat, HD WebRTC calling, social photo feed, and daily inspiration.",
   "icons": [
     {
-      "src": "/icons/icon-192.svg",
-      "type": "image/svg+xml",
+      "src": "assets/icons/icon-48.webp",
+      "type": "image/png",
+      "sizes": "48x48",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-72.webp",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-96.webp",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128.webp",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-192.webp",
+      "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-512.svg",
-      "type": "image/svg+xml",
-      "sizes": "512x512",
-      "purpose": "any"
+      "src": "assets/icons/icon-256.webp",
+      "type": "image/png",
+      "sizes": "256x256",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-maskable.svg",
-      "type": "image/svg+xml",
+      "src": "assets/icons/icon-512.webp",
+      "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "start_url": "/",
-  "background_color": "#05060f",
-  "theme_color": "#05060f",
+  "background_color": "#0d0802",
+  "theme_color": "#0d0802",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/"
