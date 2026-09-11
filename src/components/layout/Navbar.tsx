@@ -26,6 +26,8 @@ interface NavbarProps {
   onOpenNotifications?: () => void;
 }
 
+import { GlobalAlertBanner } from './GlobalAlertBanner';
+
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
@@ -66,8 +68,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),3.25rem)] pb-3 px-3 sm:px-6 bg-[#05060f]/90 backdrop-blur-2xl border-b border-white/10 shadow-lg">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 w-full flex flex-col shadow-lg">
+      <GlobalAlertBanner />
+      <div className="w-full pb-3 px-3 pt-3 sm:px-6 bg-[#05060f]/90 backdrop-blur-2xl border-b border-white/10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Brand Logo & Live Badge */}
         <div className="flex items-center gap-2.5 flex-shrink-0">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 p-[1.5px] shadow-lg shadow-amber-500/25">
@@ -213,6 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           setIsSuperDrawerOpen(false);
         }}
       />
+      </div>
     </header>
   );
 };

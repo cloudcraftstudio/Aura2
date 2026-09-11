@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Sparkles, Heart, BookOpen, Music, Users, ArrowLeft, Pencil } from 'lucide-react';
+import { Shield, Sparkles, Heart, BookOpen, Music, Users, ArrowLeft, Pencil, Mic , Plus } from 'lucide-react';
 import { BiblicalPrinciples } from './BiblicalPrinciples';
 import { RecoveryAudioFeed } from './RecoveryAudioFeed';
 import { RecoveryJournal } from './RecoveryJournal';
 import { MeetingCountdownTimer } from './MeetingCountdownTimer';
 import { RecoveryMeetingRoom } from './RecoveryMeetingRoom';
+import { GroupWall } from './GroupWall';
 import { RecoveryMeeting } from '../../types/recovery';
 import { useAuth } from '../../context/AuthContext';
 
 export const RecoveryDashboard: React.FC = () => {
   const { user, updateProfile } = useAuth();
   
-  const [activeTab, setActiveTab] = useState<'principles' | 'audio' | 'journal' | 'meetings'>(() => {
+  const [activeTab, setActiveTab] = useState<'principles' | 'audio' | 'journal' | 'groups'>(() => {
     try {
       const saved = localStorage.getItem('aura_recovery_tab');
       return (saved as any) || 'principles';
@@ -19,6 +20,55 @@ export const RecoveryDashboard: React.FC = () => {
       return 'principles';
     }
   });
+
+  const [activeGroup, setActiveGroup] = useState<any>(null);
+  
+  const [supportGroups, setSupportGroups] = useState<any[]>(() => {
+    try {
+      const saved = localStorage.getItem('aura_support_groups');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return [
+      { id: 'g1', name: 'Walking in Faith', description: 'A daily support group for establishing strong habits, staying accountable, and walking out your recovery journey together.', members: 142, icon: 'heart', color: 'from-blue-500 to-indigo-600' },
+      { id: 'g2', name: "Men's Purity", description: 'Dedicated to overcoming lust, pornography, and strongholds through radical accountability and Scripture.', members: 89, icon: 'shield', color: 'from-emerald-500 to-teal-600' }
+    ];
+  });
+  
+  useEffect(() => {
+    localStorage.setItem('aura_support_groups', JSON.stringify(supportGroups));
+  }, [supportGroups]);
+
+  const [isCreatingGroup, setIsCreatingGroup] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupDesc, setNewGroupDesc] = useState('');
+
+  const handleCreateGroup = () => {
+    if (!newGroupName.trim()) return;
+    const newGroup = {
+      id: 'g' + Date.now(),
+      name: newGroupName,
+      description: newGroupDesc,
+      members: 1,
+      icon: 'shield', // Default
+      color: 'from-purple-500 to-pink-600', // Default
+      createdAt: Date.now()
+    };
+    setSupportGroups(prev => [newGroup, ...prev]);
+    setIsCreatingGroup(false);
+    setNewGroupName('');
+    setNewGroupDesc('');
+  };
+  
+  const handleDeleteGroup = (id: string) => {
+    setSupportGroups(prev => prev.filter(g => g.id !== id));
+    if (activeGroup?.id === id) setActiveGroup(null);
+  };
+  
+  const handleUpdateGroup = (id: string, updates: any) => {
+    setSupportGroups(prev => prev.map(g => g.id === id ? { ...g, ...updates } : g));
+    if (activeGroup?.id === id) setActiveGroup(prev => ({ ...prev, ...updates }));
+  };
+
 
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [tempDate, setTempDate] = useState('');
@@ -51,14 +101,18 @@ export const RecoveryDashboard: React.FC = () => {
   };
 
   const getMilestoneChip = (days: number) => {
-    if (days >= 365 * 2) return { name: `${Math.floor(days/365)} Years`, color: 'bg-yellow-700', text: 'text-yellow-100', border: 'border-yellow-600' };
-    if (days >= 365) return { name: '1 Year', color: 'bg-yellow-600', text: 'text-black', border: 'border-yellow-400' };
-    if (days >= 270) return { name: '9 Months', color: 'bg-purple-600', text: 'text-white', border: 'border-purple-400' };
-    if (days >= 180) return { name: '6 Months', color: 'bg-blue-600', text: 'text-white', border: 'border-blue-400' };
-    if (days >= 90) return { name: '90 Days', color: 'bg-emerald-600', text: 'text-white', border: 'border-emerald-400' };
-    if (days >= 60) return { name: '60 Days', color: 'bg-amber-500', text: 'text-black', border: 'border-amber-300' };
-    if (days >= 30) return { name: '30 Days', color: 'bg-red-600', text: 'text-white', border: 'border-red-400' };
-    if (days > 0) return { name: '24 Hours', color: 'bg-slate-200', text: 'text-black', border: 'border-white' };
+    const years = Math.floor(days / 365);
+    if (years >= 2) return { name: `${years} Years`, color: 'bg-yellow-700', text: 'text-yellow-100', border: 'border-yellow-600' };
+    if (years === 1) return { name: '1 Year', color: 'bg-yellow-600', text: 'text-black', border: 'border-yellow-400' };
+    
+    const months = Math.floor(days / 30);
+    if (months >= 9) return { name: `${months} Months`, color: 'bg-purple-600', text: 'text-white', border: 'border-purple-400' };
+    if (months >= 6) return { name: `${months} Months`, color: 'bg-blue-600', text: 'text-white', border: 'border-blue-400' };
+    if (months >= 3) return { name: `${months} Months`, color: 'bg-emerald-600', text: 'text-white', border: 'border-emerald-400' };
+    if (months === 2) return { name: `2 Months`, color: 'bg-amber-500', text: 'text-black', border: 'border-amber-300' };
+    if (months === 1) return { name: `1 Month`, color: 'bg-red-600', text: 'text-white', border: 'border-red-400' };
+    
+    if (days > 0) return { name: `${days} Days`, color: 'bg-slate-200', text: 'text-black', border: 'border-white' };
     return { name: 'Just for Today', color: 'bg-slate-800', text: 'text-white', border: 'border-slate-600' };
   };
 
@@ -77,6 +131,20 @@ export const RecoveryDashboard: React.FC = () => {
       localStorage.setItem('aura_recovery_tab', activeTab);
     } catch {}
   }, [activeTab]);
+
+  useEffect(() => {
+    const handleSwitchTab = (e: Event) => {
+      const event = e as CustomEvent<{ tab: any }>;
+      if (event.detail?.tab) {
+        setActiveTab(event.detail.tab);
+      }
+    };
+    
+    window.addEventListener('switch_recovery_tab', handleSwitchTab);
+    return () => {
+      window.removeEventListener('switch_recovery_tab', handleSwitchTab);
+    };
+  }, []);
 
   const [meetings, setMeetings] = useState<RecoveryMeeting[]>([]);
   const [activeMeeting, setActiveMeeting] = useState<RecoveryMeeting | null>(null);
@@ -235,28 +303,120 @@ export const RecoveryDashboard: React.FC = () => {
         </button>
 
         <button
-          onClick={() => setActiveTab('meetings')}
+          onClick={() => setActiveTab('groups')}
           className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold whitespace-nowrap transition-all shadow-sm ${
-            activeTab === 'meetings'
+            activeTab === 'groups'
               ? 'bg-amber-600 text-white shadow-amber-500/30'
               : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
           }`}
         >
           <Users className="w-4 h-4" />
-          Live Meetings
+          Groups & Meetings
         </button>
       </div>
+
+      {/* Create Group Modal */}
+      {isCreatingGroup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 w-full max-w-md shadow-2xl">
+            <h3 className="text-xl font-bold text-white mb-4">Create Support Group</h3>
+            
+            <div className="space-y-4 mb-6">
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-1">Group Name</label>
+                <input
+                  type="text"
+                  value={newGroupName}
+                  onChange={e => setNewGroupName(e.target.value)}
+                  placeholder="e.g. Daily Devotionals"
+                  className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-slate-300 mb-1">Description</label>
+                <textarea
+                  value={newGroupDesc}
+                  onChange={e => setNewGroupDesc(e.target.value)}
+                  placeholder="What is this group about?"
+                  rows={3}
+                  className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-500 resize-none"
+                />
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <button 
+                onClick={() => setIsCreatingGroup(false)}
+                className="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleCreateGroup}
+                disabled={!newGroupName.trim()}
+                className="flex-1 py-3 px-4 rounded-xl font-bold text-black bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:hover:bg-amber-500 transition-colors"
+              >
+                Create Group
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content Area */}
       <div className="min-h-[500px]">
         {activeTab === 'principles' && <BiblicalPrinciples />}
         {activeTab === 'journal' && <RecoveryJournal />}
         {activeTab === 'audio' && <RecoveryAudioFeed />}
-        {activeTab === 'meetings' && (
+        {activeTab === 'groups' && (
           <div className="space-y-6">
+            {activeGroup ? (
+              <GroupWall group={activeGroup} onBack={() => setActiveGroup(null)} onDelete={() => handleDeleteGroup(activeGroup.id)} onUpdate={(updates: any) => handleUpdateGroup(activeGroup.id, updates)} />
+            ) : (
+              <>
+            {/* Regular Groups */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-black text-white flex items-center gap-2">
+                  <Users className="w-5 h-5 text-amber-400" />
+                  Support Groups
+                </h2>
+                <button onClick={() => setIsCreatingGroup(true)} className="flex items-center gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-400 text-black px-3 py-1.5 rounded-full transition-colors">
+                  <Plus className="w-3.5 h-3.5" />
+                  Create Group
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {supportGroups.map(g => (
+                  <div key={g.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors cursor-pointer group">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center border shadow-lg ${g.profileImage ? 'p-0 overflow-hidden border-white/20' : g.color.replace('from-', 'bg-').split(' ')[0] + '/20 border-' + g.color.replace('from-', '').split('-')[0] + '-500/30'}`}>
+                        {g.profileImage ? (
+                          <img src={g.profileImage} alt={g.name} className="w-full h-full object-cover" />
+                        ) : g.icon === 'heart' ? (
+                          <Heart className={`w-5 h-5 ${g.color.includes('blue') ? 'text-blue-400' : 'text-amber-400'}`} />
+                        ) : (
+                          <Shield className={`w-5 h-5 ${g.color.includes('emerald') ? 'text-emerald-400' : 'text-amber-400'}`} />
+                        )}
+                      </div>
+                      <span className="text-xs font-bold text-slate-400 bg-slate-800 px-2 py-1 rounded-full">{g.members} Members</span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">{g.name}</h3>
+                    <p className="text-sm text-slate-400 mb-4 line-clamp-2">{g.description}</p>
+                    <button 
+                      onClick={() => setActiveGroup(g)}
+                      className="w-full py-2 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-sm transition-colors border border-white/10">
+                      View Group
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="mb-6 p-6 rounded-3xl bg-amber-950/20 border border-amber-500/30">
               <h2 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                <Users className="w-5 h-5 text-amber-400" />
+                <Mic className="w-5 h-5 text-amber-400" />
                 Live Fellowship Rooms
               </h2>
               <p className="text-sm text-slate-400">
@@ -283,6 +443,8 @@ export const RecoveryDashboard: React.FC = () => {
                   />
                 ))}
               </div>
+            )}
+            </>
             )}
           </div>
         )}

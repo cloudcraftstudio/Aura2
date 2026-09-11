@@ -28,7 +28,7 @@ import { PermissionBanner } from './components/permissions/PermissionBanner';
 import { PermissionsModal } from './components/permissions/PermissionsModal';
 import { SaveToHomeModal } from './components/permissions/SaveToHomeModal';
 import { AndroidApkModal } from './components/permissions/AndroidApkModal';
-import { AppUpdateModal } from './components/permissions/AppUpdateModal';
+
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { AuraEnergyProvider } from './context/AuraEnergyContext';
 import { AuraLiveWallpaper } from './components/aura/AuraLiveWallpaper';
@@ -91,17 +91,32 @@ function MainApp() {
         setActiveTab(customEvent.detail.tab);
         if (customEvent.detail.subtab) {
           try {
-            localStorage.setItem('aura_study_initial_tab', customEvent.detail.subtab);
+            if (customEvent.detail.tab === 'recovery') {
+              localStorage.setItem('aura_recovery_tab', customEvent.detail.subtab);
+            } else {
+              localStorage.setItem('aura_study_initial_tab', customEvent.detail.subtab);
+            }
           } catch {}
           setTimeout(() => {
-            window.dispatchEvent(
-              new CustomEvent('switch_study_tab', {
-                detail: {
-                  tab: customEvent.detail.subtab,
-                  ...customEvent.detail,
-                },
-              })
-            );
+            if (customEvent.detail.tab === 'recovery') {
+              window.dispatchEvent(
+                new CustomEvent('switch_recovery_tab', {
+                  detail: {
+                    tab: customEvent.detail.subtab,
+                    ...customEvent.detail,
+                  },
+                })
+              );
+            } else {
+              window.dispatchEvent(
+                new CustomEvent('switch_study_tab', {
+                  detail: {
+                    tab: customEvent.detail.subtab,
+                    ...customEvent.detail,
+                  },
+                })
+              );
+            }
           }, 60);
         }
       }
@@ -254,8 +269,7 @@ function MainApp() {
       {/* Direct Android APK Install Warning & Procedure Modal */}
       <AndroidApkModal isOpen={isAndroidApkModalOpen} onClose={closeAndroidApkModal} />
 
-      {/* Native App Updates OTA Checking Modal */}
-      <AppUpdateModal />
+
 
       {/* User Profile Modal (Self) */}
       {isProfileOpen && (

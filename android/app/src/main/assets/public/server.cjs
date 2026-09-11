@@ -44,6 +44,7 @@ var require_package = __commonJS({
       },
       dependencies: {
         "@capacitor-community/native-audio": "^8.0.0",
+        "@capacitor-firebase/authentication": "^8.5.1",
         "@capacitor/android": "^8.5.0",
         "@capacitor/app": "^8.1.1",
         "@capacitor/cli": "^7.6.8",
@@ -6176,8 +6177,10 @@ async function startServer() {
     }
   });
   app.get("/aura.apk", (req, res) => {
-    const apkPath = import_path7.default.join(process.cwd(), "dist", "aura.apk");
-    if (import_fs7.default.existsSync(apkPath)) {
+    const distApk = import_path7.default.join(process.cwd(), "dist", "aura.apk");
+    const publicApk = import_path7.default.join(process.cwd(), "public", "aura.apk");
+    const apkPath = import_fs7.default.existsSync(distApk) ? distApk : import_fs7.default.existsSync(publicApk) ? publicApk : null;
+    if (apkPath) {
       res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
       res.setHeader("Content-Type", "application/vnd.android.package-archive");
       return res.sendFile(apkPath);

@@ -1,12 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserStatus } from '../types';
 import { auth, db, googleProvider, facebookProvider, githubProvider } from '../lib/firebase';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
+import { Capacitor } from '@capacitor/core';
 import { 
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  signInWithCredential,
+  GoogleAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
   updateProfile as updateFirebaseAuthProfile,
@@ -175,9 +179,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
-      return { success: true };
+      if (Capacitor.isNativePlatform()) {
+        const result = await FirebaseAuthentication.signInWithGoogle();
+        if (result.credential?.idToken) {
+           const credential = GoogleAuthProvider.credential(result.credential.idToken);
+           const authResult = await signInWithCredential(auth, credential);
+           await syncFirebaseUserToDb(authResult.user, { authProvider: 'google' });
+           return { success: true };
+        }
+        throw new Error('No credential returned from native Google sign in.');
+      } else {
+        const result = await signInWithPopup(auth, googleProvider);
+        await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
+        return { success: true };
+      }
     } catch (err: any) {
       return { success: false, error: err.message };
     }

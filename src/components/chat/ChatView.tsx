@@ -139,6 +139,19 @@ export const ChatView: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const handleOpenConv = (e: any) => {
+      if (e.detail?.id) {
+        setActiveConversationId(e.detail.id);
+        if (window.innerWidth < 768) {
+          setMobileShowChatRoom(true);
+        }
+      }
+    };
+    window.addEventListener('open_chat_conversation', handleOpenConv);
+    return () => window.removeEventListener('open_chat_conversation', handleOpenConv);
+  }, [setActiveConversationId]);
+
   // Immediate instant scroll to bottom on mount, conversation switch, or mobile transition
   useEffect(() => {
     scrollToBottom(false);
@@ -376,30 +389,42 @@ export const ChatView: React.FC = () => {
             
             <div className="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
               {/* Tex / My Story Avatar */}
-              <button
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent('open_create_story_modal'));
-                }}
-                className="flex flex-col items-center gap-1 flex-shrink-0 group focus:outline-none"
-                title="Add to Your Story"
-              >
+              <div className="flex flex-col items-center gap-1 flex-shrink-0 group">
                 <div className="relative">
-                  <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-yellow-500 to-orange-500 group-hover:scale-105 transition-transform">
+                  <button
+                    onClick={() => {
+                      const myStoryIdx = (stories || []).findIndex(s => user && s.userId === user.id);
+                      if (myStoryIdx !== -1) {
+                        setSelectedStoryIndex(myStoryIdx);
+                      } else {
+                        window.dispatchEvent(new CustomEvent('open_create_story_modal'));
+                      }
+                    }}
+                    title={(stories || []).some(s => user && s.userId === user.id) ? "View your story" : "Add to Your Story"}
+                    className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-amber-500 via-yellow-500 to-orange-500 group-hover:scale-105 transition-transform focus:outline-none block"
+                  >
                     <Avatar
                       src={user?.avatarUrl}
                       name={user?.name || 'You'}
                       size="md"
                       className="w-full h-full rounded-full border-2 border-[#090d22] object-cover"
                     />
-                  </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-amber-600 rounded-full border-2 border-[#090d22] flex items-center justify-center text-white text-[10px] font-black">
+                  </button>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.dispatchEvent(new CustomEvent('open_create_story_modal'));
+                    }}
+                    title="Add to Your Story"
+                    className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-amber-600 hover:bg-amber-500 rounded-full border-2 border-[#090d22] flex items-center justify-center text-white text-[10px] font-black transition-colors focus:outline-none"
+                  >
                     +
-                  </div>
+                  </button>
                 </div>
-                <span className="text-[10px] font-medium text-slate-300 max-w-[52px] truncate text-center">
+                <span className="text-[10px] font-medium text-slate-300 max-w-[52px] truncate text-center pointer-events-none">
                   Your Story
                 </span>
-              </button>
+              </div>
 
               {/* Real Active Contacts (Daphne, Skylor, Kimberly, etc.) */}
               {allUsers

@@ -52,13 +52,47 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [conversations, setConversations] = useState<Conversation[]>(() => {
     const loaded = offlineStorage.load<Conversation[]>(STORAGE_KEYS.CONVERSATIONS, []);
-    return (loaded || []).filter(
+    let filtered = (loaded || []).filter(
       (c) =>
         c &&
         !c.id.startsWith('conv_alex_') &&
         c.id !== 'conv_design_circle' &&
         !c.participantIds?.some((id) => ['user_alex', 'user_maya', 'user_liam', 'user_elena'].includes(id))
     );
+    
+    // Ensure default groups are present
+    const defaultGroups = [
+      {
+        id: 'group_walking_in_faith',
+        isGroup: true,
+        name: 'Walking in Faith',
+        avatar: 'https://images.unsplash.com/photo-1470115636492-6d2b56f91465?w=200&q=80',
+        participantIds: [],
+        participants: [],
+        unreadCount: 0,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      },
+      {
+        id: 'group_mens_purity',
+        isGroup: true,
+        name: "Men's Purity",
+        avatar: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=200&q=80',
+        participantIds: [],
+        participants: [],
+        unreadCount: 0,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      }
+    ];
+    
+    defaultGroups.forEach(dg => {
+      if (!filtered.some(c => c.id === dg.id)) {
+        filtered.push(dg as any);
+      }
+    });
+    
+    return filtered;
   });
 
   const [messages, setMessages] = useState<Record<string, ChatMessage[]>>(() => {
@@ -80,6 +114,28 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [activeTypingUsers, setActiveTypingUsers] = useState<string[]>([]);
 
+  useEffect(() => {
+    const handleOpenConv = (e: any) => {
+      const convId = e.detail?.id;
+      const fallbackGroup = e.detail?.fallbackGroup;
+      if (convId) {
+        if (fallbackGroup) {
+          setConversations(prev => {
+            if (!prev.some(c => c.id === convId)) {
+              const newConvs = [fallbackGroup, ...prev];
+              // offlineStorage.save(STORAGE_KEYS.CONVERSATIONS, newConvs); // Can't easily use this if offlineStorage is out of scope here
+              return newConvs;
+            }
+            return prev;
+          });
+        }
+        setActiveConversationId(convId);
+      }
+    };
+    window.addEventListener('open_chat_conversation', handleOpenConv);
+    return () => window.removeEventListener('open_chat_conversation', handleOpenConv);
+  }, []);
+
   // Fetch conversations from server
   const refreshConversations = async () => {
     try {
@@ -92,6 +148,39 @@ export const ChatProvider: React.FC<{ children: React.ReactNode }> = ({ children
             c.id !== 'conv_design_circle' &&
             !c.participantIds?.some((id) => ['user_alex', 'user_maya', 'user_liam', 'user_elena'].includes(id))
         );
+        
+        // Ensure default groups are present
+        const defaultGroups = [
+          {
+            id: 'group_walking_in_faith',
+            isGroup: true,
+            name: 'Walking in Faith',
+            avatar: 'https://images.unsplash.com/photo-1470115636492-6d2b56f91465?w=200&q=80',
+            participantIds: [],
+            participants: [],
+            unreadCount: 0,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+          },
+          {
+            id: 'group_mens_purity',
+            isGroup: true,
+            name: "Men's Purity",
+            avatar: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=200&q=80',
+            participantIds: [],
+            participants: [],
+            unreadCount: 0,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+          }
+        ];
+        
+        defaultGroups.forEach(dg => {
+          if (!cleanConvs.some(c => c.id === dg.id)) {
+            cleanConvs.push(dg as any);
+          }
+        });
+
         setConversations(cleanConvs);
         offlineStorage.save(STORAGE_KEYS.CONVERSATIONS, cleanConvs);
       }
