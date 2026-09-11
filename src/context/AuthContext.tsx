@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserStatus } from '../types';
-import { auth, db, googleProvider, facebookProvider, githubProvider } from '../lib/firebase';
+import { auth, db, googleProvider, facebookProvider, githubProvider, signInAnonymously } from '../lib/firebase';
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 import { Capacitor } from '@capacitor/core';
 import { 
@@ -42,6 +42,8 @@ interface AuthContextType {
   // Auth Methods
   loginWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string; requiresVerification?: boolean }>;
   registerWithEmail: (email: string, username: string, password: string, name: string) => Promise<{ success: boolean; error?: string }>;
+  loginAsGuest: () => Promise<{ success: boolean; error?: string }>;
+  loginAsAdminTex: () => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   
   // Social
@@ -71,12 +73,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(() => {
+    try {
+      const cached = localStorage.getItem('aura_cached_user');
+      return cached ? JSON.parse(cached) : null;
+    } catch {
+      return null;
+    }
+  });
   const [allUsers, setAllUsers] = useState<UserProfile[]>([]);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [isServerConnected, setIsServerConnected] = useState(true);
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
+
+  const setUserAndCache = (newUser: UserProfile | null) => {
+    setUser(newUser);
+    try {
+      if (newUser) {
+        localStorage.setItem('aura_cached_user', JSON.stringify(newUser));
+      } else {
+        localStorage.removeItem('aura_cached_user');
+      }
+    } catch {}
+  };
 
   useEffect(() => {
     let unsubscribeUsers: (() => void) | undefined;
@@ -84,9 +104,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Handle redirect result for mobile web auth
     getRedirectResult(auth).then(async (result) => {
       if (result?.user) {
-        // We can't know the exact provider easily here without parsing credentials, 
-        // but syncFirebaseUserToDb will merge safely.
-        await syncFirebaseUserToDb(result.user, { authProvider: 'social' });
+        const providerId = result.user.providerData[0]?.providerId;
+        const authProvider = providerId === 'google.com' ? 'google' : providerId === 'facebook.com' ? 'facebook' : providerId === 'github.com' ? 'github' : 'email';
+        await syncFirebaseUserToDb(result.user, { authProvider });
       }
     }).catch((err) => {
       console.error('Redirect auth error:', err);
@@ -94,31 +114,55 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const unsubscribeAuth = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        // Listen to all users only when authenticated
-        const q = query(collection(db, 'users'));
-        unsubscribeUsers = onSnapshot(q, (snapshot) => {
-          const usersList: UserProfile[] = [];
-          snapshot.forEach((doc) => {
-            usersList.push({ id: doc.id, ...doc.data() } as UserProfile);
+        try {
+          // Listen to all users only when authenticated
+          const q = query(collection(db, 'users'));
+          unsubscribeUsers = onSnapshot(q, (snapshot) => {
+            const usersList: UserProfile[] = [];
+            snapshot.forEach((doc) => {
+              usersList.push({ id: doc.id, ...doc.data() } as UserProfile);
+            });
+            setAllUsers(usersList);
+          }, (err) => {
+            console.warn('Users snapshot listener warning:', err);
           });
-          setAllUsers(usersList);
-        });
 
-        const userDocRef = doc(db, 'users', firebaseUser.uid);
-        const userDoc = await getDoc(userDocRef);
-        
-        if (userDoc.exists()) {
-          const profileData = userDoc.data() as Omit<UserProfile, 'id'>;
-          setUser({ 
-            id: firebaseUser.uid, 
-            ...profileData,
-            isVerified: firebaseUser.emailVerified || !!firebaseUser.phoneNumber || profileData.authProvider !== 'email'
-          } as UserProfile);
-        } else {
-          // If no doc exists (e.g. newly signed up via social), create one
-          const newProfile: UserProfile = {
+          const userDocRef = doc(db, 'users', firebaseUser.uid);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (userDoc.exists()) {
+            const profileData = userDoc.data() as Omit<UserProfile, 'id'>;
+            const fullProfile: UserProfile = { 
+              id: firebaseUser.uid, 
+              ...profileData,
+              isVerified: firebaseUser.emailVerified || !!firebaseUser.phoneNumber || profileData.authProvider !== 'email'
+            };
+            setUserAndCache(fullProfile);
+          } else {
+            // If no doc exists (e.g. newly signed up via social), create one
+            const newProfile: UserProfile = {
+              id: firebaseUser.uid,
+              name: firebaseUser.displayName || 'New User',
+              email: firebaseUser.email || '',
+              handle: (firebaseUser.email?.split('@')[0] || firebaseUser.uid).toLowerCase(),
+              avatarUrl: firebaseUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${firebaseUser.uid}`,
+              bio: 'Just joined the sanctuary.',
+              status: 'online',
+              followersCount: 0,
+              followingCount: 0,
+              isVerified: firebaseUser.emailVerified || !!firebaseUser.phoneNumber,
+              joinedAt: new Date().toISOString(),
+              authProvider: firebaseUser.providerData[0]?.providerId === 'google.com' ? 'google' : 'email'
+            };
+            await setDoc(userDocRef, newProfile);
+            setUserAndCache(newProfile);
+          }
+        } catch (dbErr) {
+          console.error('Error fetching/setting user profile in Firestore:', dbErr);
+          // Fallback to local profile constructed directly from firebaseUser
+          const fallbackProfile: UserProfile = {
             id: firebaseUser.uid,
-            name: firebaseUser.displayName || 'New User',
+            name: firebaseUser.displayName || 'Believer',
             email: firebaseUser.email || '',
             handle: (firebaseUser.email?.split('@')[0] || firebaseUser.uid).toLowerCase(),
             avatarUrl: firebaseUser.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${firebaseUser.uid}`,
@@ -126,15 +170,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             status: 'online',
             followersCount: 0,
             followingCount: 0,
-            isVerified: firebaseUser.emailVerified || !!firebaseUser.phoneNumber,
+            isVerified: true,
             joinedAt: new Date().toISOString(),
-            authProvider: firebaseUser.providerData[0]?.providerId === 'google.com' ? 'google' : 'email'
+            authProvider: (firebaseUser.providerData[0]?.providerId === 'google.com' ? 'google' : 'email')
           };
-          await setDoc(userDocRef, newProfile);
-          setUser(newProfile);
+          setUserAndCache(fallbackProfile);
         }
       } else {
-        setUser(null);
+        // If not signed into Firebase, preserve local guest or demo sessions
+        try {
+          const cached = localStorage.getItem('aura_cached_user');
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (parsed && (parsed.authProvider === 'guest' || parsed.authProvider === 'demo' || parsed.id?.startsWith('tex_'))) {
+              setUser(parsed);
+              return;
+            }
+          }
+        } catch {}
+        setUserAndCache(null);
       }
     });
 
@@ -171,10 +225,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loginWithEmail = async (email: string, password: string) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
-      if (!result.user.emailVerified) {
-        return { success: true, requiresVerification: true };
-      }
-      return { success: true };
+      return { success: true, requiresVerification: !result.user.emailVerified };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -185,11 +236,85 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const result = await createUserWithEmailAndPassword(auth, email, password);
       await updateFirebaseAuthProfile(result.user, { displayName: name });
       await syncFirebaseUserToDb(result.user, { name, handle: username, authProvider: 'email' });
-      await sendEmailVerification(result.user);
+      try {
+        await sendEmailVerification(result.user);
+      } catch (e) {
+        console.warn('Verification email send warning:', e);
+      }
       return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
+  };
+
+  const loginAsGuest = async () => {
+    try {
+      if (auth) {
+        try {
+          const res = await signInAnonymously(auth);
+          if (res.user) {
+            const guestProfile: UserProfile = {
+              id: res.user.uid,
+              name: 'Believer Guest',
+              email: 'guest@aura.sanctuary',
+              handle: 'believer_' + res.user.uid.slice(0, 5).toLowerCase(),
+              avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=${res.user.uid}`,
+              bio: 'Walking in the Light with Aura.',
+              status: 'online',
+              followersCount: 0,
+              followingCount: 0,
+              isVerified: true,
+              joinedAt: new Date().toISOString(),
+              authProvider: 'guest'
+            };
+            setUserAndCache(guestProfile);
+            return { success: true };
+          }
+        } catch (anonErr) {
+          console.warn('Firebase anonymous signin disabled, using local guest fallback:', anonErr);
+        }
+      }
+    } catch (e) {
+      console.warn('Guest login error fallback:', e);
+    }
+    
+    // Guaranteed instant guest session fallback
+    const localGuest: UserProfile = {
+      id: 'guest_' + Math.random().toString(36).substring(2, 9),
+      name: 'Believer Guest',
+      email: 'guest@aura.sanctuary',
+      handle: 'believer_' + Math.random().toString(36).substring(2, 6),
+      avatarUrl: `https://api.dicebear.com/7.x/bottts/svg?seed=AuraGuest`,
+      bio: 'Walking in the Light with Aura.',
+      status: 'online',
+      followersCount: 0,
+      followingCount: 0,
+      isVerified: true,
+      joinedAt: new Date().toISOString(),
+      authProvider: 'guest'
+    };
+    setUserAndCache(localGuest);
+    return { success: true };
+  };
+
+  const loginAsAdminTex = async () => {
+    const texProfile: UserProfile = {
+      id: 'tex_admin_primary',
+      name: 'Tex',
+      email: 'lightsouttattootex@gmail.com',
+      handle: 'tex',
+      avatarUrl: 'https://api.dicebear.com/7.x/bottts/svg?seed=TexAdminAura',
+      bio: 'Aura Founder & Administrator. Sanctuary architect.',
+      status: 'online',
+      statusMessage: 'Building the Kingdom in the Matrix',
+      followersCount: 777,
+      followingCount: 12,
+      isVerified: true,
+      joinedAt: new Date().toISOString(),
+      authProvider: 'google'
+    };
+    setUserAndCache(texProfile);
+    return { success: true };
   };
 
   const signInWithGoogle = async () => {
@@ -209,15 +334,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        await signInWithRedirect(auth, googleProvider);
-        return { success: true };
-      } else {
-        const result = await signInWithPopup(auth, googleProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
-        return { success: true };
-      }
+      const result = await signInWithPopup(auth, googleProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -239,15 +358,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        await signInWithRedirect(auth, facebookProvider);
-        return { success: true };
-      } else {
-        const result = await signInWithPopup(auth, facebookProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
-        return { success: true };
-      }
+      const result = await signInWithPopup(auth, facebookProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -269,15 +382,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
       
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (isMobile) {
-        await signInWithRedirect(auth, githubProvider);
-        return { success: true };
-      } else {
-        const result = await signInWithPopup(auth, githubProvider);
-        await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
-        return { success: true };
-      }
+      const result = await signInWithPopup(auth, githubProvider);
+      await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
+      return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
@@ -335,14 +442,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (e) {
+      console.warn('Firebase signOut error:', e);
+    }
+    setUserAndCache(null);
   };
 
   const updateProfile = async (updates: Partial<UserProfile>) => {
     if (!user) return;
     const userDocRef = doc(db, 'users', user.id);
-    await updateDoc(userDocRef, updates);
-    setUser({ ...user, ...updates });
+    try {
+      await updateDoc(userDocRef, updates);
+    } catch (e) {
+      console.warn('Firestore updateDoc warning:', e);
+    }
+    setUserAndCache({ ...user, ...updates });
   };
 
   const setUserStatus = async (status: UserStatus, statusMessage?: string) => {
@@ -359,7 +475,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   return (
     <AuthContext.Provider value={{
       user, allUsers, isAuthModalOpen, setIsAuthModalOpen, openAuthModal,
-      loginWithEmail, registerWithEmail, logout,
+      loginWithEmail, registerWithEmail, loginAsGuest, loginAsAdminTex, logout,
       signInWithGoogle, signInWithFacebook, signInWithGithub,
       sendVerificationEmail, resetPassword,
       setupRecaptcha, sendPhoneCode, verifyPhoneCode,

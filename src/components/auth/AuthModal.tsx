@@ -13,8 +13,8 @@ interface AuthModalProps {
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMode = 'signup' }) => {
   const { 
-    registerWithEmail, loginWithEmail, signInWithGoogle, 
-    signInWithFacebook, signInWithGithub, sendVerificationEmail, 
+    registerWithEmail, loginWithEmail, loginAsGuest, loginAsAdminTex,
+    signInWithGoogle, signInWithFacebook, signInWithGithub, sendVerificationEmail, 
     resetPassword, setupRecaptcha, sendPhoneCode, verifyPhoneCode 
   } = useAuth();
   
@@ -56,7 +56,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
     setIsSubmitting(true);
     const result = await registerWithEmail(email.trim(), username.trim(), password, name.trim());
     if (result.success) {
-      setMode('verify');
+      onClose();
     } else {
       setErrorMessage(result.error || 'Registration failed.');
     }
@@ -74,11 +74,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
     setIsSubmitting(true);
     const result = await loginWithEmail(email.trim(), password);
     if (result.success) {
-      if (result.requiresVerification) {
-        setMode('verify');
-      } else {
-        onClose();
-      }
+      onClose();
     } else {
       setErrorMessage(result.error || 'Login failed.');
     }
@@ -139,6 +135,32 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
       onClose();
     } else {
       setErrorMessage(result?.error || `${provider} login failed.`);
+    }
+    setIsSubmitting(false);
+  };
+
+  const handleGuestLogin = async () => {
+    soundEffects.playTap();
+    setErrorMessage(null);
+    setIsSubmitting(true);
+    const result = await loginAsGuest();
+    if (result.success) {
+      onClose();
+    } else {
+      setErrorMessage(result.error || 'Guest login failed.');
+    }
+    setIsSubmitting(false);
+  };
+
+  const handleAdminTexLogin = async () => {
+    soundEffects.playTap();
+    setErrorMessage(null);
+    setIsSubmitting(true);
+    const result = await loginAsAdminTex();
+    if (result.success) {
+      onClose();
+    } else {
+      setErrorMessage(result.error || 'Admin login failed.');
     }
     setIsSubmitting(false);
   };
@@ -420,14 +442,47 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-3">
+              <div className="mb-4">
                 <button
+                  type="button"
                   onClick={() => handleSocialLogin('google')}
                   disabled={isSubmitting}
-                  className="py-2.5 bg-white text-black font-bold rounded-xl hover:bg-gray-100 transition-all text-sm flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-white text-slate-900 font-semibold rounded-xl hover:bg-slate-100 active:scale-[0.99] transition-all text-sm flex items-center justify-center gap-3 shadow-sm disabled:opacity-50"
                 >
-                  Google
+                  <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                  </svg>
+                  Continue with Google
                 </button>
+              </div>
+
+              <div className="space-y-2 mb-5">
+                <button
+                  type="button"
+                  onClick={handleGuestLogin}
+                  disabled={isSubmitting}
+                  className="w-full py-2.5 px-4 bg-gradient-to-r from-amber-500/15 via-yellow-500/20 to-amber-500/15 hover:from-amber-500/25 hover:to-yellow-500/25 text-amber-300 font-semibold rounded-xl border border-amber-500/30 active:scale-[0.99] transition-all text-sm flex items-center justify-center gap-2.5 shadow-sm"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-400" />
+                  Instant Believer Access (Enter Sanctuary Now)
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleAdminTexLogin}
+                  disabled={isSubmitting}
+                  className="w-full py-2 px-3 bg-purple-950/40 hover:bg-purple-900/50 text-purple-300 hover:text-purple-200 font-medium rounded-xl border border-purple-500/30 active:scale-[0.99] transition-all text-xs flex items-center justify-center gap-2"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
+                  Fast Admin Sign In (Tex)
+                </button>
+              </div>
+
+              {/* Providers commented out until configured in Firebase Console credentials:
+              <div className="grid grid-cols-2 gap-3 mb-3">
                 <button
                   onClick={() => handleSocialLogin('facebook')}
                   disabled={isSubmitting}
@@ -443,9 +498,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
                   GitHub
                 </button>
                 <button
-                  onClick={() => {
-                    alert("TikTok Auth requires custom OpenID Connect setup in Firebase Console. Using standard providers.");
-                  }}
                   disabled={isSubmitting}
                   className="py-2.5 bg-[#010101] text-white font-bold border border-white/20 rounded-xl hover:bg-[#010101]/80 transition-all text-sm flex items-center justify-center gap-2"
                 >
@@ -458,6 +510,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
               >
                 <Phone className="w-4 h-4" /> Phone Number
               </button>
+              */}
 
               <div className="text-center">
                 <button

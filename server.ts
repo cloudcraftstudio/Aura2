@@ -12,7 +12,7 @@ import { createRecoveryRoutes } from './routes/recovery';
 import Database from 'better-sqlite3';
 import fs from 'fs';
 import { synthesizeBibleAudio } from './server/audioService';
-import { startYoutubeFolderWatcher } from './services/youtubeSyncService';
+import { startYoutubeFolderWatcher, syncYoutubeSermons } from './services/youtubeSyncService';
 
 async function startServer() {
   const app = express();
@@ -135,6 +135,35 @@ async function startServer() {
   app.get('/api/system/export-db', (req, res) => {
     const fullDb = db.exportFullDatabase();
     res.json(fullDb);
+  });
+
+  app.get('/api/system/diagnostics', (req, res) => {
+    const stats = db.getSystemStats();
+    const mem = process.memoryUsage();
+    res.json({
+      status: 'operational',
+      uptimeSeconds: Math.floor(process.uptime()),
+      nodeVersion: process.version,
+      memory: {
+        rssMb: Math.round(mem.rss / 1024 / 1024),
+        heapUsedMb: Math.round(mem.heapUsed / 1024 / 1024),
+        heapTotalMb: Math.round(mem.heapTotal / 1024 / 1024)
+      },
+      stats,
+      serverTime: new Date().toISOString()
+    });
+  });
+
+  app.post('/api/system/sync-sermons', (req, res) => {
+    try {
+      const bibleDbPath = path.join(process.cwd(), 'data', 'bible', 'bible_study.db');
+      const bDB = new BibleStudyDB(bibleDbPath);
+      const result = syncYoutubeSermons(bDB);
+      res.json({ success: true, result });
+    } catch (err: any) {
+      console.error('[API sync-sermons Error]:', err);
+      res.status(500).json({ error: err.message || 'Sync failed' });
+    }
   });
 
   // --- Auth & Users API ---

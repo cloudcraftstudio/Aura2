@@ -4,6 +4,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   GithubAuthProvider,
+  signInAnonymously,
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -24,6 +25,7 @@ export const db = getFirestore(app, "ai-studio-aurav2-4b529a4c-9ac3-4405-afd7-dd
 export const googleProvider = new GoogleAuthProvider();
 export const facebookProvider = new FacebookAuthProvider();
 export const githubProvider = new GithubAuthProvider();
+export { signInAnonymously };
 // TikTok requires custom OIDC setup which isn't standard in basic Firebase JS SDK without setup in console
 // We will focus on the main ones: Email, Phone, Google, Facebook, Github
 

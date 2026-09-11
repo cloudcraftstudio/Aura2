@@ -1,7 +1,14 @@
 import { UserProfile, SocialPost, UserStory, Conversation, ChatMessage, PostComment } from "../types";
 
 export const getApiBase = () => {
-  return "https://webcraftstudio.cloud/api";
+  if (typeof window !== 'undefined') {
+    const custom = (import.meta as any).env?.VITE_API_URL;
+    if (custom) {
+      return custom.replace(/\/$/, '') + '/api';
+    }
+    return '/api';
+  }
+  return '/api';
 };
 
 class ApiService {
