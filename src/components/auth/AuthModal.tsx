@@ -157,7 +157,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.95, opacity: 0, y: 20 }}
-        className="relative w-full max-w-md glass-card rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+        className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto glass-card rounded-3xl shadow-2xl border border-white/10"
       >
         <button
           onClick={onClose}
@@ -167,7 +167,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
         </button>
 
         <div className="p-6 sm:p-8">
-          <div className="text-center mb-8">
+          <div className="text-center mb-5 sm:mb-6">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-yellow-600/20 flex items-center justify-center mx-auto mb-4 border border-amber-500/30 shadow-[0_0_30px_rgba(245,158,11,0.2)]">
               <Sparkles className="w-8 h-8 text-amber-400" />
             </div>
@@ -185,6 +185,44 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, initialMo
               {mode === 'verify' && (phone ? 'Enter the 6-digit code we sent.' : 'We sent a verification link to your email.')}
               {mode === 'forgot' && 'Enter your email to receive a reset link.'}
             </p>
+          </div>
+
+          {/* Top Mode Switcher: Create Account vs Sign In */}
+          <div className="p-1 bg-white/5 border border-white/10 rounded-2xl flex gap-1 mb-6">
+            <button
+              type="button"
+              id="auth-toggle-signup"
+              onClick={() => {
+                soundEffects.playTap();
+                setMode('signup');
+                setErrorMessage(null);
+              }}
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                mode === 'signup'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.3)]'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Create Account</span>
+            </button>
+            <button
+              type="button"
+              id="auth-toggle-login"
+              onClick={() => {
+                soundEffects.playTap();
+                setMode('login');
+                setErrorMessage(null);
+              }}
+              className={`flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                mode === 'login'
+                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.3)]'
+                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Sign In</span>
+            </button>
           </div>
 
           {errorMessage && (
