@@ -126,7 +126,7 @@ async function startServer() {
     const pkg = require('./package.json');
     res.json({
       version: pkg.version || '1.0.8',
-      downloadUrl: 'https://aura.webcraftstudio.cloud/aura.apk',
+      downloadUrl: 'https://aura.webcraftstudio.cloud/api/download/apk',
       forceUpdate: false,
       releaseNotes: 'Massive update: Added new Group Community Walls, Recovery Journals, and fixed a critical bug causing a blank blue screen on launch. Please download this update for the best experience!'
     });
@@ -956,7 +956,7 @@ async function startServer() {
   });
 
   // APK Download Route
-  app.get("/aura.apk", (req, res) => {
+  app.get("/api/download/apk", (req, res) => {
     const distApk = path.join(process.cwd(), "dist", "aura.apk");
     const publicApk = path.join(process.cwd(), "public", "aura.apk");
     const apkPath = fs.existsSync(distApk) ? distApk : fs.existsSync(publicApk) ? publicApk : null;

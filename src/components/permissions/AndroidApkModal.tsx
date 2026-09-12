@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { soundEffects } from '../../services/audio';
 
-export const ANDROID_APK_DOWNLOAD_URL = 'https://aura.webcraftstudio.cloud/aura.apk';
+export const ANDROID_APK_DOWNLOAD_URL = 'https://aura.webcraftstudio.cloud/api/download/apk';
 
 interface AndroidApkModalProps {
   isOpen: boolean;
