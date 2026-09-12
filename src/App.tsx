@@ -63,9 +63,26 @@ function MainApp() {
   const [shareModalType, setShareModalType] = useState<'general' | 'call' | 'chat'>('general');
   const [shareRoomId, setShareRoomId] = useState<string | undefined>();
   const [shareInitialContent, setShareInitialContent] = useState<string | undefined>();
-  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(false);
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem('aura_splash_entered') !== 'true';
+    } catch {
+      return false;
+    }
+  });
 
   const [showGospelTract, setShowGospelTract] = useState(false);
+
+  React.useEffect(() => {
+    if (!showSplashScreen) {
+      try {
+        const hasSeenGospel = localStorage.getItem('aura_gospel_seen');
+        if (!hasSeenGospel) {
+          setShowGospelTract(true);
+        }
+      } catch {}
+    }
+  }, [showSplashScreen]);
 
   const { user, isAuthModalOpen, setIsAuthModalOpen } = useAuth();
   const { isNotificationsOpen, closeNotifications, openNotifications } = useNotifications();

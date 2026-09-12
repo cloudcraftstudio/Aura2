@@ -97,7 +97,7 @@ export const GlobalAlertBanner: React.FC = () => {
             setUpdateInfo(data);
             setBannerState('update_available');
           } else {
-            setBannerState('up_to_date');
+            setBannerState('idle');
             setTimeout(() => {
               setBannerState('idle');
             }, 6000);

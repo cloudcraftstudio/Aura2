@@ -23,7 +23,7 @@ import {
   ConfirmationResult,
   User as FirebaseUser
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, updateDoc, onSnapshot, collection, query, getDocs } from 'firebase/firestore';
+import { doc, setDoc, getDoc, updateDoc, onSnapshot, collection, query, getDocs, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { notificationService } from '../services/notifications';
 
 declare global {
@@ -468,8 +468,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const getUserById = (id: string) => allUsers.find(u => u.id === id);
 
   const followUser = async (targetUserId: string) => {
-    // simplified mock return, actual would update followers/following lists
-    return true;
+    if (!user) return false;
+    const isFollowing = user.followingUserIds?.includes(targetUserId);
+    const newFollowing = isFollowing
+      ? (user.followingUserIds || []).filter((id) => id !== targetUserId)
+      : [...(user.followingUserIds || []), targetUserId];
+
+    try {
+      const userRef = doc(db, 'users', user.id);
+      const targetUserRef = doc(db, 'users', targetUserId);
+      
+      // Update current user
+      await updateDoc(userRef, {
+        followingUserIds: isFollowing ? arrayRemove(targetUserId) : arrayUnion(targetUserId)
+      });
+      
+      // Get target user to update their followers count
+      const targetDoc = await getDoc(targetUserRef);
+      if (targetDoc.exists()) {
+        const targetData = targetDoc.data();
+        const currentFollowers = targetData.followersCount || 0;
+        await updateDoc(targetUserRef, {
+          followersCount: isFollowing ? Math.max(0, currentFollowers - 1) : currentFollowers + 1
+        });
+      }
+
+      setUserAndCache({ ...user, followingUserIds: newFollowing });
+      return true;
+    } catch (e) {
+      console.error('Error following user:', e);
+      return false;
+    }
   };
 
   return (

@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { soundEffects } from '../../services/audio';
 
-export const ANDROID_APK_DOWNLOAD_URL = 'https://webcraftstudio.cloud/aura.apk';
+export const ANDROID_APK_DOWNLOAD_URL = 'https://aura.webcraftstudio.cloud/aura.apk';
 
 interface AndroidApkModalProps {
   isOpen: boolean;
@@ -208,7 +208,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({ isOpen, onClos
             )}
 
             <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-              <span>Direct Link: <a href={ANDROID_APK_DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline hover:text-emerald-300">webcraftstudio.cloud/aura.apk</a></span>
+              <span>Direct Link: <a href={ANDROID_APK_DOWNLOAD_URL} target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline hover:text-emerald-300">aura.webcraftstudio.cloud/aura.apk</a></span>
               <button
                 type="button"
                 onClick={onClose}

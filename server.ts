@@ -125,8 +125,8 @@ async function startServer() {
     // The client will compare this against its built-in __APP_VERSION__
     const pkg = require('./package.json');
     res.json({
-      version: pkg.version || '1.0.7',
-      downloadUrl: 'https://webcraftstudio.cloud/aura.apk',
+      version: pkg.version || '1.0.8',
+      downloadUrl: 'https://aura.webcraftstudio.cloud/aura.apk',
       forceUpdate: false,
       releaseNotes: 'Massive update: Added new Group Community Walls, Recovery Journals, and fixed a critical bug causing a blank blue screen on launch. Please download this update for the best experience!'
     });

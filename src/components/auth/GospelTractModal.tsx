@@ -97,7 +97,7 @@ export const GospelTractModal: React.FC<GospelTractModalProps> = ({ isOpen, onCl
           
           {/* Header */}
           <div className="relative p-6 flex flex-col items-center text-center border-b border-amber-500/10">
-            {user && (
+            {(user && !!localStorage.getItem('aura_gospel_seen')) && (
               <button
                 onClick={onClose}
                 className="absolute top-4 right-4 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
