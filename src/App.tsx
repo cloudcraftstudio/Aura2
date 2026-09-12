@@ -269,6 +269,10 @@ function MainApp() {
             setActiveTab('bible');
             window.dispatchEvent(new CustomEvent('navigate_bible_study', { detail: { reference: ref } }));
           }}
+          onViewPublicProfile={() => {
+            setIsProfileOpen(false);
+            if (user) setViewingUserId(user.id);
+          }}
         />
       )}
 

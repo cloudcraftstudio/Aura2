@@ -32,6 +32,7 @@ import { useSocial } from '../../context/SocialContext';
 import { Avatar } from '../common/Avatar';
 import { formatDistanceToNow } from 'date-fns';
 import { DEFAULT_PRESET_COVER } from '../../content/presetImages';
+import { StoryViewerModal } from '../stories/StoryViewerModal';
 
 interface MemberProfileModalProps {
   userId: string;
@@ -49,12 +50,13 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
   const { user: currentUser, allUsers, followUser } = useAuth();
   const { startDirectConversation, setActiveConversationId } = useChat();
   const { startCall } = useCall();
-  const { posts, likePost } = useSocial();
+  const { posts, likePost, stories } = useSocial();
 
   const [activeTab, setActiveTab] = useState<'posts' | 'about'>('posts');
   const [copiedLink, setCopiedLink] = useState(false);
   const [isFollowLoading, setIsFollowLoading] = useState(false);
   const [zoomImage, setZoomImage] = useState<string | null>(null);
+  const [viewStory, setViewStory] = useState(false);
 
   const targetUser = allUsers.find((u) => u.id === userId);
 
@@ -67,6 +69,10 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
 
   // Filter posts by this user
   const userPosts = posts.filter((p) => p.authorId === targetUser.id);
+  
+  // Find active story
+  const targetStoryIndex = (stories || []).findIndex((s) => s.userId === targetUser.id);
+  const hasActiveStory = targetStoryIndex !== -1;
 
   const handleToggleFollow = async () => {
     if (isFollowLoading) return;
@@ -179,16 +185,45 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
           </div>
 
           {/* Profile Content Body */}
+          {/* Optional: Add a text prompt for their story */}
+          {hasActiveStory && (
+            <div className="px-5 sm:px-6 mb-2">
+              <button
+                onClick={() => setViewStory(true)}
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 transition-all text-amber-300 shadow-inner group"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full border-2 border-amber-400 p-0.5 overflow-hidden">
+                    <img src={targetUser.avatarUrl} alt={targetUser.name} className="w-full h-full object-cover rounded-full" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs font-bold leading-tight group-hover:text-amber-200 transition-colors">Watch {targetUser.name.split(' ')[0]}'s Story</p>
+                    <p className="text-[10px] opacity-70">Active right now</p>
+                  </div>
+                </div>
+                <div className="w-6 h-6 rounded-full bg-amber-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Maximize2 className="w-3 h-3 text-amber-400" />
+                </div>
+              </button>
+            </div>
+          )}
+
           <div className="px-5 sm:px-6 pb-6 pt-0 flex-1">
             {/* Avatar & Action Buttons Bar */}
             <div className="flex items-end justify-between -mt-16 sm:-mt-20 mb-4 relative z-20">
               {/* Full Unclipped Circular Avatar with Ring */}
               <div
                 className="relative cursor-pointer group"
-                onClick={() => setZoomImage(targetUser.avatarUrl)}
-                title="Click to view full photo"
+                onClick={() => {
+                  if (hasActiveStory) {
+                    setViewStory(true);
+                  } else {
+                    setZoomImage(targetUser.avatarUrl);
+                  }
+                }}
+                title={hasActiveStory ? "View Active Story" : "Click to view full photo"}
               >
-                <div className="p-1.5 rounded-full bg-[#0c1024] shadow-2xl ring-4 ring-[#0c1024]">
+                <div className={`p-1.5 rounded-full bg-[#0c1024] shadow-2xl ${hasActiveStory ? 'ring-4 ring-amber-500 ring-offset-2 ring-offset-[#0c1024]' : 'ring-4 ring-[#0c1024]'}`}>
                   <Avatar
                     src={targetUser.avatarUrl}
                     name={targetUser.name}
@@ -497,6 +532,24 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
           </div>
         </div>
       </motion.div>
+
+      {/* Story Viewer Overlay */}
+      {viewStory && hasActiveStory && (
+        <StoryViewerModal
+          initialStoryIndex={targetStoryIndex}
+          onClose={() => setViewStory(false)}
+          onOpenChat={() => {
+            setViewStory(false);
+            onClose();
+            // Optional: Start conversation if not self
+            if (!isSelf) {
+              startDirectConversation(targetUser.id).then((convId) => {
+                if (convId) setActiveConversationId(convId);
+              });
+            }
+          }}
+        />
+      )}
     </div>
   );
 };

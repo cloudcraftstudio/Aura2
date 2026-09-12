@@ -43,6 +43,7 @@ interface UserProfileModalProps {
   onOpenGospelTract?: () => void;
   onOpenShare?: () => void;
   onStudyPassage?: (ref: string) => void;
+  onViewPublicProfile?: () => void;
 }
 
 const AVATAR_PRESETS = [
@@ -62,6 +63,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
   onOpenGospelTract,
   onOpenShare,
   onStudyPassage,
+  onViewPublicProfile,
 }) => {
   const { user, updateProfile, logout, openAuthModal } = useAuth();
   const {
@@ -599,9 +601,18 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                       <p className="text-[11px] text-slate-300">@{handle || 'handle'}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] text-amber-300 font-medium italic opacity-70">
-                    Live Preview
-                  </span>
+                  {onViewPublicProfile && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onViewPublicProfile();
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[10px] font-bold border border-white/20 shadow-sm transition-all"
+                    >
+                      View Public Profile
+                    </button>
+                  )}
                 </div>
               </div>
 
