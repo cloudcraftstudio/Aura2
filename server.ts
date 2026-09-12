@@ -310,12 +310,11 @@ async function startServer() {
   });
 
   app.post('/api/stories', (req, res) => {
-    const { userId, mediaUrl, caption } = req.body;
+    const { userId, mediaUrl, caption, userName, userAvatar } = req.body;
     if (!userId || !mediaUrl) {
       return res.status(400).json({ error: 'userId and mediaUrl are required' });
     }
-    const story = db.createStory(userId, mediaUrl, caption);
-    if (!story) return res.status(404).json({ error: 'User not found' });
+    const story = db.createStory(userId, mediaUrl, caption, userName, userAvatar);
     res.status(201).json(story);
   });
 

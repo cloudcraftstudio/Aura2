@@ -102,7 +102,14 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             !['user_alex', 'user_maya', 'user_liam', 'user_elena'].includes(s.userId) &&
             !['story_1', 'story_2', 'story_3'].includes(s.id)
         );
-        setStories(cleanStories);
+        setStories((prev) => {
+          // Preserve any optimistic story from current user created in the last 30s so it never vanishes
+          const serverStoryIds = new Set(cleanStories.map((s) => s.id));
+          const pendingLocal = prev.filter(
+            (s) => !serverStoryIds.has(s.id) && Date.now() - s.createdAt < 30000 && s.userId === user?.id
+          );
+          return [...pendingLocal, ...cleanStories];
+        });
         offlineStorage.save(STORAGE_KEYS.STORIES, cleanStories);
       }
     } catch (err) {
@@ -397,7 +404,7 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       }
     });
 
-    const savedStory = await api.createStory(user.id, mediaUrl, caption);
+    const savedStory = await api.createStory(user.id, mediaUrl, caption, user.name, user.avatarUrl);
     if (savedStory) {
       setStories((prev) => {
         const idx = prev.findIndex((s) => s.userId === user.id || s.id === savedStory.id);

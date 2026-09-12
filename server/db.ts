@@ -801,9 +801,31 @@ class JSONDatabase {
     return consolidatedStories;
   }
 
-  public createStory(userId: string, mediaUrl: string, caption?: string): DBStory | null {
-    const author = this.getUserById(userId);
-    if (!author) return null;
+  public createStory(
+    userId: string,
+    mediaUrl: string,
+    caption?: string,
+    userName?: string,
+    userAvatar?: string
+  ): DBStory {
+    let author = this.getUserById(userId);
+    if (!author && userName) {
+      author = this.createUser({
+        id: userId,
+        name: userName,
+        handle: userName.toLowerCase().replace(/[^a-z0-9]/g, '') || `user_${userId.slice(-4)}`,
+        email: `${userId}@aura.social`,
+        avatarUrl: userAvatar || '',
+        bio: '',
+        status: 'online',
+        followersCount: 0,
+        followingCount: 0,
+        joinedAt: new Date().toISOString(),
+      });
+    }
+
+    const authorName = author?.name || userName || 'Community Member';
+    const authorAvatar = author?.avatarUrl || userAvatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${userId}`;
 
     const cutoff = Date.now() - 24 * 60 * 60 * 1000;
     const now = Date.now();
@@ -832,6 +854,10 @@ class JSONDatabase {
           },
         ];
       }
+      // Update author profile details if available
+      if (authorName) existingStory.userName = authorName;
+      if (authorAvatar) existingStory.userAvatar = authorAvatar;
+
       // Append the new slide (photo/caption) to the existing story bundle
       existingStory.slides.push(newSlide);
       existingStory.mediaUrl = mediaUrl;
@@ -846,8 +872,8 @@ class JSONDatabase {
       const newStory: DBStory = {
         id: `story_${now}_${Math.random().toString(36).substr(2, 4)}`,
         userId,
-        userName: author.name,
-        userAvatar: author.avatarUrl,
+        userName: authorName,
+        userAvatar: authorAvatar,
         mediaUrl,
         caption,
         createdAt: now,

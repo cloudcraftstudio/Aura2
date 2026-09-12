@@ -190,10 +190,16 @@ class ApiService {
     return this.request<UserStory[]>("/stories");
   }
 
-  public async createStory(userId: string, mediaUrl: string, caption?: string): Promise<UserStory | null> {
+  public async createStory(
+    userId: string,
+    mediaUrl: string,
+    caption?: string,
+    userName?: string,
+    userAvatar?: string
+  ): Promise<UserStory | null> {
     return this.request<UserStory>("/stories", {
       method: "POST",
-      body: JSON.stringify({ userId, mediaUrl, caption }),
+      body: JSON.stringify({ userId, mediaUrl, caption, userName, userAvatar }),
     });
   }
 

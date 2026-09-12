@@ -543,8 +543,8 @@ export const MemberProfileModal: React.FC<MemberProfileModalProps> = ({
             onClose();
             // Optional: Start conversation if not self
             if (!isSelf) {
-              startDirectConversation(targetUser.id).then((convId) => {
-                if (convId) setActiveConversationId(convId);
+              startDirectConversation(targetUser).then((conv) => {
+                if (conv?.id) setActiveConversationId(conv.id);
               });
             }
           }}
