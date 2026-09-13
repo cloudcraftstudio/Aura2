@@ -63,7 +63,7 @@ export function PodcastFeed({
 }) {
   const [sermons, setSermons] = useState<SermonItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [formatFilter, setFormatFilter] = useState<"audio" | "video">("audio");
+  const [formatFilter, setFormatFilter] = useState<"all" | "audio" | "video">("all");
   const [sourceFilter, setSourceFilter] = useState<"all" | "community" | "sermonindex" | "stories">("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchQuery, setSearchQuery] = useState("");
@@ -382,8 +382,16 @@ export function PodcastFeed({
             <div className="inline-flex p-1.5 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/15 shadow-2xl gap-1">
               <button
                 type="button"
+                onClick={() => setFormatFilter("all")}
+                className={"flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "all" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
+              >
+                <Layers className="w-4 h-4" />
+                <span>All Formats</span>
+              </button>
+              <button
+                type="button"
                 onClick={() => setFormatFilter("audio")}
-                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "audio" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
+                className={"flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "audio" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
               >
                 <Headphones className="w-4 h-4" />
                 <span>Audio Sermons</span>
@@ -391,7 +399,7 @@ export function PodcastFeed({
               <button
                 type="button"
                 onClick={() => setFormatFilter("video")}
-                className={"flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "video" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
+                className={"flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all " + (formatFilter === "video" ? "bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg shadow-amber-500/30 scale-[1.02]" : "text-slate-400 hover:text-white")}
               >
                 <Video className="w-4 h-4" />
                 <span>Video Sermons</span>

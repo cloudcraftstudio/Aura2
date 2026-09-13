@@ -15,7 +15,6 @@ import {
   Compass
 } from 'lucide-react';
 import { soundEffects } from '../../services/audio';
-import { LionOfJudahLogo } from '../common/LionOfJudahLogo';
 
 interface MatrixSplashScreenProps {
   onEnter: () => void;
@@ -100,6 +99,18 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       setScriptureIndex((prev) => (prev + 1) % SCRIPTURES_FOR_THE_BROKEN.length);
     }, 6500);
     return () => clearInterval(scriptureTimer);
+  }, []);
+
+  // Auto-cycle emblem graphics
+  useEffect(() => {
+    const graphicsSequence: GraphicTheme[] = ['custom', 'lion', 'dove', 'prayer', 'cross'];
+    const graphicTimer = setInterval(() => {
+      setActiveGraphic((current) => {
+        const nextIndex = (graphicsSequence.indexOf(current) + 1) % graphicsSequence.length;
+        return graphicsSequence[nextIndex];
+      });
+    }, 4500); // Change graphic every 4.5 seconds
+    return () => clearInterval(graphicTimer);
   }, []);
 
   // Heavenly Light Rays & Ascending Golden Embers Canvas
@@ -285,8 +296,16 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       {/* Top Header: Unmistakable Christian Identity & Quick Enter Button */}
       <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-[max(env(safe-area-inset-top),1.25rem)] sm:pt-[max(env(safe-area-inset-top),1.5rem)] border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0 overflow-hidden relative p-0.5">
-            <LionOfJudahLogo className="w-full h-full object-contain" idPrefix="splash-header-lion-" />
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0 overflow-hidden relative">
+            <img
+              src="/icon.png"
+              alt="Aura Icon"
+              className="w-full h-full object-cover rounded-xl absolute inset-0 z-10"
+              onError={(e) => {
+                (e.currentTarget as HTMLElement).style.display = 'none';
+              }}
+            />
+            <span className="font-serif font-black text-base">✝</span>
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
@@ -326,39 +345,44 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       <div className="relative z-10 w-full flex-1 overflow-y-auto overscroll-contain px-3 sm:px-6 py-3 sm:py-5 flex flex-col items-center [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <div className="my-auto flex flex-col items-center text-center max-w-xl px-2 w-full space-y-3.5 sm:space-y-4">
         {/* Emblem Showcase: Lion of Judah, Holy Dove, Praying Hands, Calvary Cross */}
-        <div className="relative group">
+        <div className="relative group min-h-[160px] sm:min-h-[220px] flex items-center justify-center">
           {/* Celestial Halo & Radiant Beams */}
           <div className="absolute -inset-8 rounded-full bg-gradient-to-b from-amber-400/25 via-yellow-500/15 to-transparent blur-2xl animate-pulse pointer-events-none" />
 
           {/* Graphic Container with SVG Artwork or Custom Splash */}
-          <motion.div
-            key={activeGraphic}
-            initial={{ scale: 0.85, opacity: 0, y: 10 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.85, opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className={`relative ${
-              activeGraphic === 'custom'
-                ? 'w-36 h-36 sm:w-48 sm:h-48'
-                : 'w-28 h-28 sm:w-36 sm:h-36'
-            } rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20 overflow-hidden transition-all duration-300`}
-          >
-            {activeGraphic === 'custom' && (
-              <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-2xl">
-                <img
-                  src="/splashscreen.png"
-                  alt="Aura Sanctuary Splash"
-                  className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
-                  onError={() => {
-                    setActiveGraphic('lion');
-                  }}
-                />
-              </div>
-            )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeGraphic}
+              initial={{ scale: 0.85, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className={`relative ${
+                activeGraphic === 'custom'
+                  ? 'w-40 h-40 sm:w-52 sm:h-52'
+                  : 'w-32 h-32 sm:w-40 sm:h-40'
+              } rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20 overflow-visible transition-all duration-300`}
+            >
+              {activeGraphic === 'custom' && (
+                <div className="relative w-full h-full flex flex-col items-center justify-center rounded-2xl overflow-hidden">
+                  <img
+                    src="/splashscreen.png"
+                    alt="Aura Sanctuary Splash"
+                    className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src = '/icon.png';
+                    }}
+                  />
+                </div>
+              )}
 
             {activeGraphic === 'lion' && (
-              <div className="relative w-full h-full flex flex-col items-center justify-center">
-                <LionOfJudahLogo className="w-20 h-20 sm:w-26 sm:h-26 hover:scale-105" idPrefix="splash-main-lion-" />
+              <div className="relative w-full h-full flex flex-col items-center justify-center rounded-2xl overflow-hidden p-2">
+                <img 
+                  src="/icon.png" 
+                  alt="Lion of Judah"
+                  className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(251,191,36,0.7)] transition-transform hover:scale-105"
+                />
               </div>
             )}
 
@@ -367,7 +391,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Descending Holy Spirit Dove SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(255,255,255,0.9)]"
+                  className="w-24 h-24 sm:w-32 sm:h-32 drop-shadow-[0_0_20px_rgba(255,255,255,0.9)]"
                 >
                   <defs>
                     <linearGradient id="doveWhite" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -399,7 +423,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Praying Hands of Mercy SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(251,191,36,0.7)]"
+                  className="w-24 h-24 sm:w-32 sm:h-32 drop-shadow-[0_0_20px_rgba(251,191,36,0.7)]"
                 >
                   <defs>
                     <linearGradient id="handsGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -430,7 +454,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
                 {/* Calvary Cross of Light SVG */}
                 <svg
                   viewBox="0 0 100 100"
-                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_24px_rgba(251,191,36,0.9)]"
+                  className="w-24 h-24 sm:w-32 sm:h-32 drop-shadow-[0_0_24px_rgba(251,191,36,0.9)]"
                 >
                   <defs>
                     <linearGradient id="crossGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -453,7 +477,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
             )}
 
             {/* Badass Emblem Title Badge */}
-            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-black text-[10px] tracking-wider uppercase shadow-xl flex items-center gap-1.5 whitespace-nowrap">
+            <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-black text-[11px] sm:text-xs tracking-wider uppercase shadow-xl flex items-center justify-center gap-1.5 whitespace-nowrap z-10 border border-amber-200">
               {activeGraphic === 'custom' && <span>✨ AURA SANCTUARY</span>}
               {activeGraphic === 'lion' && <span>🦁 LION OF JUDAH</span>}
               {activeGraphic === 'dove' && <span>🕊️ HOLY SPIRIT</span>}
@@ -461,88 +485,25 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
               {activeGraphic === 'cross' && <span>✝️ CALVARY CROSS</span>}
             </div>
           </motion.div>
-        </div>
-
-        {/* Interactive Graphic Selector Tabs (Lets the user switch between Badass Christian graphics) */}
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="flex items-center justify-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md overflow-x-auto max-w-full"
-        >
-          <button
-            type="button"
-            onClick={() => setActiveGraphic('custom')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeGraphic === 'custom'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <span>✨ Splash</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveGraphic('lion')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeGraphic === 'lion'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <span>🦁 Lion</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveGraphic('dove')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeGraphic === 'dove'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <span>🕊️ Dove</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveGraphic('prayer')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeGraphic === 'prayer'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <span>🙏 Prayer</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveGraphic('cross')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeGraphic === 'cross'
-                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <span>✝️ Cross</span>
-          </button>
-
-          {/* Sound Roar Button */}
-          <button
-            type="button"
-            onClick={handleTriggerRoar}
-            title="Hear the Roar of Judah"
-            className="p-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 ml-1"
-          >
-            <Volume2 className={`w-3.5 h-3.5 ${isAudioPlaying ? 'animate-bounce text-yellow-300' : ''}`} />
-          </button>
+          </AnimatePresence>
         </div>
 
         {/* App Title & Mission Statement */}
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-black uppercase tracking-widest">
+        <div className="space-y-1.5 pt-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-black uppercase tracking-widest relative">
             <span>⚔️ AURA CHRISTIAN COMMUNITY ⚔️</span>
+            {/* Embedded Sound Button */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTriggerRoar();
+              }}
+              className="absolute -right-10 top-1/2 -translate-y-1/2 p-1.5 rounded-full hover:bg-amber-500/20 text-amber-400 transition-colors"
+              title="Hear the Roar"
+            >
+              <Volume2 className={`w-3.5 h-3.5 ${isAudioPlaying ? 'animate-bounce text-amber-300' : ''}`} />
+            </button>
           </div>
           <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white drop-shadow-[0_0_30px_rgba(245,158,11,0.5)]">
             FELLOWSHIP & TRUTH

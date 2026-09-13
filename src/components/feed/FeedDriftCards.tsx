@@ -220,30 +220,30 @@ interface SermonItem {
 
 const FALLBACK_SERMONS: SermonItem[] = [
   {
-    id: 'sermon-tony-evans',
-    title: 'Kingdom Authority & Overcoming Spiritual Warfare',
-    speaker: 'Dr. Tony Evans',
-    channel: 'Dr. Tony Evans',
-    series: 'Kingdom Foundations',
-    seriesPart: 2,
-    scriptureRef: 'Ephesians 6:10-18',
-    description: 'Pastor Tony Evans breaks down how God equips believers to stand firm against darkness through faith, prayer, and the armor of God.',
-    mediaType: 'video',
-    mediaUrl: 'https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4',
-    duration: 1845
+    id: "yt-luke-1",
+    title: "Walking in the Light of Christ (Part 1)",
+    speaker: "Pastor Luke Shope",
+    channel: "Lighthouse Baptist Church",
+    series: "Sunday Sanctuary Expositions",
+    seriesPart: 1,
+    scriptureRef: "1 John 1",
+    description: "An urgent, verse-by-verse exposition of 1 John 1 on walking in fellowship, truth, and genuine repentance before God.",
+    mediaType: "video",
+    mediaUrl: "",
+    duration: 2480
   },
   {
-    id: 'sermon-pulpit-live',
-    title: 'The Unshakable Kingdom: Grace in Trials',
-    speaker: 'Pastor Paul',
-    channel: 'Aura Community Pulpit',
-    series: 'Walking in the Spirit',
-    seriesPart: 1,
-    scriptureRef: 'Hebrews 12:28-29',
-    description: 'Discover the enduring peace of receiving a kingdom that cannot be shaken, offering our God acceptable worship with reverence and awe.',
-    mediaType: 'audio',
-    mediaUrl: 'https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/bensound-goinghigher.mp3',
-    duration: 1420
+    id: "yt-luke-2",
+    title: "The Cleansing Blood and Assurance of Salvation (Part 2)",
+    speaker: "Pastor Luke Shope",
+    channel: "Lighthouse Baptist Church",
+    series: "Sunday Sanctuary Expositions",
+    seriesPart: 2,
+    scriptureRef: "1 John 1",
+    description: "Living with unshakable biblical confidence in Christ's completed work on Calvary and the power of the cross.",
+    mediaType: "video",
+    mediaUrl: "",
+    duration: 2330
   }
 ];
 
@@ -254,13 +254,14 @@ export const SermonDriftCard: React.FC<{ index?: number }> = () => {
   useEffect(() => {
     const fetchRecentSermon = async () => {
       try {
-        const res = await fetch('/api/bible/sermons');
+        // We fetch from community sermons to ensure we get the Lighthouse sermons
+        const res = await fetch('/api/bible/community/sermons');
         if (res.ok) {
           const list = await res.json();
           if (Array.isArray(list) && list.length > 0) {
-            // Prefer a Tony Evans sermon or the latest one
-            const tony = list.find(s => s.speaker?.toLowerCase().includes('tony') || s.channel?.toLowerCase().includes('tony'));
-            setSermon(tony || list[0]);
+            // Prefer Lighthouse sermons
+            const lighthouse = list.find(s => s.channel?.toLowerCase().includes('lighthouse'));
+            setSermon(lighthouse || list[0]);
           }
         }
       } catch (e) {

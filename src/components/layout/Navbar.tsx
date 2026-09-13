@@ -17,7 +17,6 @@ import { DailyMotivationModal } from '../feed/DailyMotivationModal';
 import { SuperAdminDrawer } from './SuperAdminDrawer';
 import { AuraEnergyQuickPill } from '../aura/AuraEnergyQuickPill';
 import { SparkGridIcon } from '../common/SparkGridIcon';
-import { LionOfJudahLogo } from '../common/LionOfJudahLogo';
 
 interface NavbarProps {
   activeTab: 'feed' | 'bible' | 'chat' | 'studio' | 'devotional' | 'recovery';
@@ -83,7 +82,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Aura Sanctuary - Lion of Judah"
           >
             <div className="w-full h-full rounded-[14px] bg-[#05060f]/90 backdrop-blur-md flex items-center justify-center overflow-hidden relative p-1 transition-transform group-hover:scale-105">
-              <LionOfJudahLogo className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.7)]" idPrefix="nav-lion-" />
+              <img
+                src="/icon.png"
+                alt="Aura Logo"
+                className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.7)]"
+                onError={(e) => {
+                  (e.currentTarget as HTMLElement).style.display = 'none';
+                }}
+              />
             </div>
           </div>
           <div>
