@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Send, Sparkles, CheckCircle2, User, ShieldCheck, MessageSquare } from 'lucide-react';
+import { Heart, Send, Sparkles, CheckCircle2, User, ShieldCheck, MessageSquare, Edit2, Trash2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { soundEffects } from '../../services/audio';
 
@@ -112,6 +112,29 @@ export const PrayerWall: React.FC = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [showPraiseModal, setShowPraiseModal] = useState<string | null>(null);
   const [praiseText, setPraiseText] = useState('');
+  
+  const [editingPrayerId, setEditingPrayerId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState('');
+
+  const startEditing = (prayer: PrayerItem) => {
+    setEditingPrayerId(prayer.id);
+    setEditContent(prayer.content);
+  };
+
+  const handleUpdatePrayer = (prayerId: string) => {
+    if (!editContent.trim()) return;
+    setPrayers(prev => prev.map(p => 
+      p.id === prayerId ? { ...p, content: editContent.trim() } : p
+    ));
+    setEditingPrayerId(null);
+    setEditContent('');
+  };
+
+  const handleDeletePrayer = (prayerId: string) => {
+    if (confirm("Are you sure you want to remove this prayer request?")) {
+      setPrayers(prev => prev.filter(p => p.id !== prayerId));
+    }
+  };
 
   // Listen for target_prayer events dispatched from NewsFeed shortcut links
   useEffect(() => {
@@ -405,9 +428,34 @@ export const PrayerWall: React.FC = () => {
               </div>
 
               {/* Prayer Content */}
-              <p className="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed">
-                {prayer.content}
-              </p>
+              {editingPrayerId === prayer.id ? (
+                <div className="mt-3 space-y-2">
+                  <textarea
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-amber-500/50 resize-none min-h-[100px]"
+                    placeholder="Edit your prayer request..."
+                  />
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => setEditingPrayerId(null)}
+                      className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-bold text-slate-300 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => handleUpdatePrayer(prayer.id)}
+                      className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-xs font-bold text-white shadow-sm transition-colors"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed whitespace-pre-wrap">
+                  {prayer.content}
+                </p>
+              )}
 
               {/* Answered Praise Report Box */}
               {prayer.praiseUpdate && (
@@ -420,8 +468,9 @@ export const PrayerWall: React.FC = () => {
               )}
 
               {/* Footer Actions */}
-              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                <button
+              <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
                   onClick={() => handlePrayFor(prayer.id)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     userHasPrayed
@@ -437,14 +486,35 @@ export const PrayerWall: React.FC = () => {
                   </span>
                 </button>
 
-                {isOwner && !prayer.isAnswered && (
-                  <button
-                    onClick={() => setShowPraiseModal(prayer.id)}
-                    className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20"
-                  >
-                    <CheckCircle2 className="w-3 h-3" />
-                    Share Praise Report
-                  </button>
+                  {isOwner && !prayer.isAnswered && (
+                    <button
+                      onClick={() => setShowPraiseModal(prayer.id)}
+                      className="text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20"
+                    >
+                      <CheckCircle2 className="w-3 h-3" />
+                      Share Praise Report
+                    </button>
+                  )}
+                </div>
+
+                {/* Edit / Delete Actions */}
+                {isOwner && (
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <button
+                      onClick={() => startEditing(prayer)}
+                      className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                      title="Edit prayer"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleDeletePrayer(prayer.id)}
+                      className="p-2 rounded-xl bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition-colors"
+                      title="Delete prayer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 )}
               </div>
 
