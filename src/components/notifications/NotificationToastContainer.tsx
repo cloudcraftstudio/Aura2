@@ -15,14 +15,27 @@ export const NotificationToastContainer: React.FC<NotificationToastContainerProp
   const { setActiveConversationId } = useChat();
 
   useEffect(() => {
-    const unsub = notificationService.subscribe((notif) => {
-      setToasts((prev) => [notif, ...prev.slice(0, 4)]);
+    const unsub = notificationService.subscribe((payload) => {
+      const notifId = payload.id || `notif_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      const appNotif: AppNotification = {
+        id: notifId,
+        type: payload.type,
+        title: payload.title,
+        body: payload.body,
+        avatar: payload.avatar,
+        timestamp: payload.timestamp || Date.now(),
+        isRead: payload.isRead || false,
+        actionId: payload.data?.actionId || payload.data?.postId || payload.data?.conversationId,
+      };
+      setToasts((prev) => [appNotif, ...prev.slice(0, 4)]);
       // Auto dismiss after 4.5 seconds
       setTimeout(() => {
-        setToasts((current) => current.filter((t) => t.id !== notif.id));
+        setToasts((current) => current.filter((t) => t.id !== notifId));
       }, 4500);
     });
-    return () => unsub();
+    return () => {
+      unsub();
+    };
   }, []);
 
   const removeToast = (id: string) => {

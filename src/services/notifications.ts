@@ -1,10 +1,16 @@
-export type NotificationType = 'message' | 'call' | 'story' | 'system' | 'like' | 'comment';
+export type NotificationType = 'message' | 'chat' | 'call' | 'story' | 'system' | 'like' | 'comment' | 'follow';
 
-interface NotificationPayload {
+export interface NotificationPayload {
+  id?: string;
   type: NotificationType;
   title: string;
   body: string;
   data?: any;
+  actionId?: string;
+  playSound?: boolean;
+  avatar?: string;
+  isRead?: boolean;
+  timestamp?: number;
 }
 
 class NotificationService {
@@ -101,7 +107,7 @@ class NotificationService {
           if ('serviceWorker' in navigator) {
             const reg = await navigator.serviceWorker.getRegistration();
             if (reg) {
-              reg.showNotification(payload.title, {
+              (reg as any).showNotification(payload.title, {
                 body: payload.body,
                 icon: '/icon.png',
                 badge: '/icon.png',

@@ -41,16 +41,30 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   // Subscribe to real-time notification events
   useEffect(() => {
     const unsub = notificationService.subscribe((incoming) => {
+      const notifId = incoming.id || `notif_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+      const appNotif: AppNotification = {
+        id: notifId,
+        type: incoming.type,
+        title: incoming.title,
+        body: incoming.body,
+        avatar: incoming.avatar,
+        timestamp: incoming.timestamp || Date.now(),
+        isRead: incoming.isRead || false,
+        actionId: incoming.data?.actionId || incoming.data?.postId || incoming.data?.conversationId,
+      };
+
       setNotifications((prev) => {
         // Prevent exact duplicate notifications
-        if (prev.some((n) => n.id === incoming.id)) {
+        if (prev.some((n) => n.id === appNotif.id)) {
           return prev;
         }
-        return [incoming, ...prev];
+        return [appNotif, ...prev];
       });
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+    };
   }, []);
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;

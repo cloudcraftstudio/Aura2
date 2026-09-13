@@ -15,12 +15,13 @@ import {
   Compass
 } from 'lucide-react';
 import { soundEffects } from '../../services/audio';
+import { LionOfJudahLogo } from '../common/LionOfJudahLogo';
 
 interface MatrixSplashScreenProps {
   onEnter: () => void;
 }
 
-type GraphicTheme = 'lion' | 'dove' | 'prayer' | 'cross';
+type GraphicTheme = 'custom' | 'lion' | 'dove' | 'prayer' | 'cross';
 
 interface ScriptureItem {
   reference: string;
@@ -81,7 +82,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
   const [isEntering, setIsEntering] = useState(false);
   const [touchCoordinates, setTouchCoordinates] = useState<{ x: number; y: number } | null>(null);
   const [scriptureIndex, setScriptureIndex] = useState(0);
-  const [activeGraphic, setActiveGraphic] = useState<GraphicTheme>('lion');
+  const [activeGraphic, setActiveGraphic] = useState<GraphicTheme>('custom');
   const [bootLogIndex, setBootLogIndex] = useState(0);
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
@@ -282,10 +283,10 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(3,4,11,0.85)_85%)]" />
 
       {/* Top Header: Unmistakable Christian Identity & Quick Enter Button */}
-      <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),3.25rem)] border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
+      <div className="relative z-20 w-full max-w-4xl flex items-center justify-between px-3 sm:px-6 pt-[max(env(safe-area-inset-top),1.25rem)] sm:pt-[max(env(safe-area-inset-top),1.5rem)] border-b border-amber-500/20 pb-2.5 flex-shrink-0 bg-[#03040b]/90 backdrop-blur-md">
         <div className="flex items-center gap-2 sm:gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0">
-            <span className="font-serif font-black text-base">✝</span>
+          <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.3)] flex-shrink-0 overflow-hidden relative p-0.5">
+            <LionOfJudahLogo className="w-full h-full object-contain" idPrefix="splash-header-lion-" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
@@ -329,66 +330,35 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
           {/* Celestial Halo & Radiant Beams */}
           <div className="absolute -inset-8 rounded-full bg-gradient-to-b from-amber-400/25 via-yellow-500/15 to-transparent blur-2xl animate-pulse pointer-events-none" />
 
-          {/* Graphic Container with SVG Artwork */}
+          {/* Graphic Container with SVG Artwork or Custom Splash */}
           <motion.div
             key={activeGraphic}
             initial={{ scale: 0.85, opacity: 0, y: 10 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20"
+            className={`relative ${
+              activeGraphic === 'custom'
+                ? 'w-36 h-36 sm:w-48 sm:h-48'
+                : 'w-28 h-28 sm:w-36 sm:h-36'
+            } rounded-3xl bg-black/60 backdrop-blur-2xl border-2 border-amber-400/50 flex flex-col items-center justify-center p-2.5 sm:p-3 shadow-[0_0_60px_rgba(245,158,11,0.45)] ring-1 ring-white/20 overflow-hidden transition-all duration-300`}
           >
+            {activeGraphic === 'custom' && (
+              <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden rounded-2xl">
+                <img
+                  src="/splashscreen.png"
+                  alt="Aura Sanctuary Splash"
+                  className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
+                  onError={() => {
+                    setActiveGraphic('lion');
+                  }}
+                />
+              </div>
+            )}
+
             {activeGraphic === 'lion' && (
               <div className="relative w-full h-full flex flex-col items-center justify-center">
-                {/* Roaring Lion of Judah Majestic SVG */}
-                <svg
-                  viewBox="0 0 100 100"
-                  className="w-20 h-20 sm:w-26 sm:h-26 drop-shadow-[0_0_20px_rgba(251,191,36,0.8)] filter transition-transform hover:scale-105"
-                >
-                  <defs>
-                    <linearGradient id="lionGold" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#fef08a" />
-                      <stop offset="45%" stopColor="#f59e0b" />
-                      <stop offset="100%" stopColor="#b45309" />
-                    </linearGradient>
-                    <linearGradient id="maneFire" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#fbbf24" />
-                      <stop offset="60%" stopColor="#d97706" />
-                      <stop offset="100%" stopColor="#78350f" />
-                    </linearGradient>
-                  </defs>
-                  {/* Radiant Sunburst Crown */}
-                  <path
-                    d="M 22 28 L 32 38 L 50 20 L 68 38 L 78 28 L 68 46 L 78 58 L 60 56 L 50 78 L 40 56 L 22 58 L 32 46 Z"
-                    fill="url(#maneFire)"
-                    opacity="0.9"
-                  />
-                  {/* Crown Jewels of the King */}
-                  <circle cx="50" cy="18" r="4" fill="#fef08a" stroke="#d97706" strokeWidth="1" />
-                  <circle cx="30" cy="24" r="3" fill="#fef08a" />
-                  <circle cx="70" cy="24" r="3" fill="#fef08a" />
-                  {/* Lion Face Contours */}
-                  <path
-                    d="M 34 42 C 34 34 42 30 50 30 C 58 30 66 34 66 42 C 68 54 62 66 50 70 C 38 66 32 54 34 42 Z"
-                    fill="url(#lionGold)"
-                  />
-                  {/* Glowing Eyes of Divine Fire */}
-                  <polygon points="41,43 45,45 42,47" fill="#ffffff" filter="drop-shadow(0 0 4px #fbbf24)" />
-                  <polygon points="59,43 55,45 58,47" fill="#ffffff" filter="drop-shadow(0 0 4px #fbbf24)" />
-                  {/* Fierce Roaring Snout & Muzzle */}
-                  <path d="M 46 51 Q 50 49 54 51 L 52 56 Q 50 58 48 56 Z" fill="#451a03" />
-                  {/* Powerful Roaring Open Jaw */}
-                  <path
-                    d="M 43 58 Q 50 56 57 58 Q 56 68 50 70 Q 44 68 43 58 Z"
-                    fill="#1f1105"
-                    stroke="#b45309"
-                    strokeWidth="1.5"
-                  />
-                  {/* Roaring Fangs */}
-                  <polygon points="45,58 47,58 46,62" fill="#fff" />
-                  <polygon points="53,58 55,58 54,62" fill="#fff" />
-                  <polygon points="48,67 50,65 52,67" fill="#fff" />
-                </svg>
+                <LionOfJudahLogo className="w-20 h-20 sm:w-26 sm:h-26 hover:scale-105" idPrefix="splash-main-lion-" />
               </div>
             )}
 
@@ -484,6 +454,7 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
 
             {/* Badass Emblem Title Badge */}
             <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 text-black font-black text-[10px] tracking-wider uppercase shadow-xl flex items-center gap-1.5 whitespace-nowrap">
+              {activeGraphic === 'custom' && <span>✨ AURA SANCTUARY</span>}
               {activeGraphic === 'lion' && <span>🦁 LION OF JUDAH</span>}
               {activeGraphic === 'dove' && <span>🕊️ HOLY SPIRIT</span>}
               {activeGraphic === 'prayer' && <span>🙏 PRAYER & MERCY</span>}
@@ -495,8 +466,20 @@ export const MatrixSplashScreen: React.FC<MatrixSplashScreenProps> = ({ onEnter 
         {/* Interactive Graphic Selector Tabs (Lets the user switch between Badass Christian graphics) */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="flex items-center justify-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md"
+          className="flex items-center justify-center gap-2 p-1.5 rounded-2xl bg-black/50 border border-white/10 backdrop-blur-md overflow-x-auto max-w-full"
         >
+          <button
+            type="button"
+            onClick={() => setActiveGraphic('custom')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeGraphic === 'custom'
+                ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <span>✨ Splash</span>
+          </button>
+
           <button
             type="button"
             onClick={() => setActiveGraphic('lion')}

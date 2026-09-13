@@ -79,29 +79,29 @@ export const GlobalAlertBanner: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-gradient-to-r from-amber-600/20 via-amber-500/20 to-amber-600/20 border-b border-amber-500/30 overflow-hidden relative z-50">
-       <div className="absolute inset-0 bg-[#05060f]/80 backdrop-blur-md" />
+    <div className="w-full bg-gradient-to-r from-amber-600/20 via-amber-500/25 to-amber-600/20 border-b border-amber-500/30 overflow-hidden relative z-50">
+       <div className="absolute inset-0 bg-[#05060f]/85 backdrop-blur-md" />
        
-       <div className="relative pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),3.25rem)] pb-2 px-4 flex items-center justify-center min-h-[55px] overflow-hidden">
+       <div 
+         className="relative w-full h-10 sm:h-11 px-4 flex items-center justify-center overflow-hidden cursor-pointer"
+         onClick={idleAlerts[idleIndex]?.action}
+       >
           {idleAlerts.length > 0 && (
-            <div 
-              className="absolute inset-0 pt-[max(env(safe-area-inset-top),3.25rem)] sm:pt-[max(env(safe-area-inset-top),3.25rem)] pb-2 flex items-center overflow-hidden cursor-pointer"
-              onClick={idleAlerts[idleIndex].action}
-            >
+            <div className="w-full h-full flex items-center overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={idleIndex}
                   initial={{ x: "100vw" }}
                   animate={{ x: "-100%" }}
                   transition={{ 
-                    duration: 30, // Slower ticker speed for larger text
+                    duration: 28, // Smooth ticker speed across center
                     ease: "linear"
                   }}
                   onAnimationComplete={nextAlert}
-                  className="flex items-center gap-3 whitespace-nowrap px-4 hover:opacity-80 transition-opacity"
+                  className="flex items-center gap-2.5 whitespace-nowrap px-4 hover:opacity-90 transition-opacity"
                 >
                   {idleAlerts[idleIndex].icon}
-                  <span className="text-base sm:text-lg font-bold text-amber-200 tracking-wide drop-shadow-md">
+                  <span className="text-sm sm:text-base font-bold text-amber-200 tracking-wide drop-shadow-md leading-none">
                     {idleAlerts[idleIndex].text}
                   </span>
                 </motion.div>

@@ -96,6 +96,43 @@ async function startServer() {
   });
 
   app.use('/uploads', express.static(path.join(process.cwd(), 'public', 'uploads')));
+  app.use('/assets', express.static(path.join(process.cwd(), 'assets')));
+  app.use('/assets', express.static(path.join(process.cwd(), 'public', 'assets')));
+
+  // Direct static resolution for custom splash screen and app icon
+  app.get(['/splashscreen.png', '/assets/splashscreen.png'], (req, res, next) => {
+    const candidates = [
+      path.join(process.cwd(), 'assets', 'splashscreen.png'),
+      path.join(process.cwd(), 'public', 'splashscreen.png'),
+      path.join(process.cwd(), 'public', 'assets', 'splashscreen.png'),
+      path.join(process.cwd(), 'dist', 'splashscreen.png'),
+    ];
+    for (const file of candidates) {
+      if (fs.existsSync(file)) {
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.setHeader('Content-Type', 'image/png');
+        return res.sendFile(file);
+      }
+    }
+    next();
+  });
+
+  app.get(['/icon.png', '/assets/icon.png'], (req, res, next) => {
+    const candidates = [
+      path.join(process.cwd(), 'assets', 'icon.png'),
+      path.join(process.cwd(), 'public', 'icon.png'),
+      path.join(process.cwd(), 'public', 'assets', 'icon.png'),
+      path.join(process.cwd(), 'dist', 'icon.png'),
+    ];
+    for (const file of candidates) {
+      if (fs.existsSync(file)) {
+        res.setHeader('Cache-Control', 'public, max-age=3600');
+        res.setHeader('Content-Type', 'image/png');
+        return res.sendFile(file);
+      }
+    }
+    next();
+  });
 
   // CORS headers
   app.use((req, res, next) => {

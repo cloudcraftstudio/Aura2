@@ -28,6 +28,14 @@ class CallKitService {
     }
   }
 
+  public async showIncomingCall(callId: string, callerName: string, callerAvatar?: string, isVideo: boolean = false) {
+    return this.displayIncomingCall({
+      id: callId,
+      contact: { id: callId, name: callerName, avatar: callerAvatar },
+      isVideo,
+    });
+  }
+
   public async endCall(callId: string) {
     console.log('Call ended:', callId);
   }

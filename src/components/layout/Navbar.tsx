@@ -17,6 +17,7 @@ import { DailyMotivationModal } from '../feed/DailyMotivationModal';
 import { SuperAdminDrawer } from './SuperAdminDrawer';
 import { AuraEnergyQuickPill } from '../aura/AuraEnergyQuickPill';
 import { SparkGridIcon } from '../common/SparkGridIcon';
+import { LionOfJudahLogo } from '../common/LionOfJudahLogo';
 
 interface NavbarProps {
   activeTab: 'feed' | 'bible' | 'chat' | 'studio' | 'devotional' | 'recovery';
@@ -74,9 +75,15 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Brand Logo & Live Badge */}
         <div className="flex items-center gap-2.5 flex-shrink-0">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-yellow-600 p-[1.5px] shadow-lg shadow-amber-500/25">
-            <div className="w-full h-full rounded-[14px] bg-[#05060f]/70 backdrop-blur-md flex items-center justify-center">
-              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 animate-pulse" />
+          <div 
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('open_splash_screen'));
+            }}
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-amber-500 via-yellow-500 to-amber-600 p-[1.5px] shadow-lg shadow-amber-500/30 overflow-hidden cursor-pointer group"
+            title="Aura Sanctuary - Lion of Judah"
+          >
+            <div className="w-full h-full rounded-[14px] bg-[#05060f]/90 backdrop-blur-md flex items-center justify-center overflow-hidden relative p-1 transition-transform group-hover:scale-105">
+              <LionOfJudahLogo className="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(251,191,36,0.7)]" idPrefix="nav-lion-" />
             </div>
           </div>
           <div>

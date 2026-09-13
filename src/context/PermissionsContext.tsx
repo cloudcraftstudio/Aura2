@@ -32,6 +32,7 @@ interface PermissionsContextType {
   closePermissionsModal: () => void;
   openSaveToHomeModal: () => void;
   closeSaveToHomeModal: () => void;
+  openAndroidApkModal: () => void;
   dismissBanner: () => void;
   restoreBanner: () => void;
   
@@ -469,6 +470,7 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         closePermissionsModal: () => setIsPermissionsModalOpen(false),
         openSaveToHomeModal: () => setIsSaveToHomeModalOpen(true),
         closeSaveToHomeModal: () => setIsSaveToHomeModalOpen(false),
+        openAndroidApkModal: () => setIsSaveToHomeModalOpen(true),
         dismissBanner,
         restoreBanner,
         isRequestingAll,

@@ -145,7 +145,7 @@ export interface CallSession {
   roomId: string;
 }
 
-export type NotificationType = 'chat' | 'call' | 'like' | 'comment' | 'follow' | 'system';
+export type NotificationType = 'chat' | 'message' | 'call' | 'story' | 'like' | 'comment' | 'follow' | 'system';
 
 export interface AppNotification {
   id: string;
