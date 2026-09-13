@@ -134,6 +134,49 @@ function fetchXml(url: string): Promise<string> {
 
 export const CURATED_MINISTRY_FALLBACK: SyncedSermonItem[] = [
   {
+    id: "yt-gaulden-1",
+    title: "Standing Firm in a Shaking World",
+    speaker: "Tyler Gaulden",
+    speakerSlug: "tylergaulden",
+    speakerTitle: "Evangelist & Speaker",
+    channel: "Tyler Gaulden",
+    series: "Revival & Awakening",
+    seriesPart: 1,
+    summary: "Evangelist Tyler Gaulden delivers a powerful, uncompromising message on holding the line for truth and revival in these last days.",
+    duration: "45:30",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "V5f_Gg873_8", // placeholder or general video id, real one would be overwritten by fetch if it works
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 3600000 * 36).toISOString(),
+    topics: [{ name: "Revival", slug: "revival" }]
+  },
+  {
+    id: "yt-gaulden-2",
+    title: "The Urgency of the Gospel",
+    speaker: "Tyler Gaulden",
+    speakerSlug: "tylergaulden",
+    speakerTitle: "Evangelist & Speaker",
+    channel: "Tyler Gaulden",
+    series: "Revival & Awakening",
+    seriesPart: 2,
+    summary: "A passionate call to evangelism and waking up the church to the urgent mission of reaching the lost.",
+    duration: "40:15",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "9bZkp7q19f0", // placeholder
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 3600000 * 84).toISOString(),
+    topics: [{ name: "Evangelism", slug: "evangelism" }]
+  },
+
+  {
     id: "yt-lighthouse-1",
     title: "Walking in the Light of Christ (Part 1)",
     speaker: "Pastor Luke Shope",
