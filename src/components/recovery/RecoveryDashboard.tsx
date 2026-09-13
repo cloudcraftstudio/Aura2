@@ -14,6 +14,11 @@ export const RecoveryDashboard: React.FC = () => {
   
   const [activeTab, setActiveTab] = useState<'principles' | 'audio' | 'journal' | 'groups'>(() => {
     try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const rtabParam = urlParams.get('rtab');
+      if (rtabParam && ['principles', 'audio', 'journal', 'groups'].includes(rtabParam)) {
+        return rtabParam as any;
+      }
       const saved = localStorage.getItem('aura_recovery_tab');
       return (saved as any) || 'principles';
     } catch {

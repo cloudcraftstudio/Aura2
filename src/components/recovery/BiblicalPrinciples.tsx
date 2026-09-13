@@ -20,7 +20,27 @@ export const BiblicalPrinciples: React.FC = () => {
   const { user } = useAuth();
   const userId = user?.id || 'guest_local';
 
-  const [expandedStep, setExpandedStep] = useState<number | null>(1);
+  const [expandedStep, setExpandedStep] = useState<number | null>(() => {
+    try {
+      const p = new URLSearchParams(window.location.search).get('p');
+      return p ? parseInt(p) : 1;
+    } catch {
+      return 1;
+    }
+  });
+
+  // Auto-scroll to expanded step on mount if we have a deep link
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('p')) {
+      setTimeout(() => {
+        const el = document.getElementById(`principle-card-${urlParams.get('p')}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 500);
+    }
+  }, []);
   const [progressMap, setProgressMap] = useState<Record<number, UserPrincipleProgress>>({});
   const [activeNotes, setActiveNotes] = useState<Record<number, string>>({});
   const [isSaving, setIsSaving] = useState<number | null>(null);
@@ -246,10 +266,10 @@ export const BiblicalPrinciples: React.FC = () => {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-base sm:text-lg font-bold text-white tracking-tight truncate">
+                    <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
                       {principle.title}
                     </h3>
-                    <p className="text-xs text-slate-400 truncate mt-0.5">
+                    <p className="text-xs text-slate-400 mt-0.5">
                       {principle.subtitle}
                     </p>
                   </div>

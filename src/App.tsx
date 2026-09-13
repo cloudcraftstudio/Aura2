@@ -43,6 +43,11 @@ function MainApp() {
   useDevotionalNotifications();
   const [activeTab, setActiveTab] = useState<'feed' | 'bible' | 'chat' | 'studio' | 'devotional' | 'recovery'>(() => {
     try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tabParam = urlParams.get('tab');
+      if (tabParam && ['feed', 'bible', 'chat', 'studio', 'devotional', 'recovery'].includes(tabParam)) {
+        return tabParam as any;
+      }
       const savedTab = localStorage.getItem('aura_active_tab');
       return (savedTab as any) || 'feed';
     } catch {
