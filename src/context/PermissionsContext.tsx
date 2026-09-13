@@ -18,7 +18,6 @@ interface PermissionsContextType {
   isBannerDismissed: boolean;
   isPermissionsModalOpen: boolean;
   isSaveToHomeModalOpen: boolean;
-  isAndroidApkModalOpen: boolean;
   
   // Actions
   requestCameraPermission: () => Promise<boolean>;
@@ -33,8 +32,6 @@ interface PermissionsContextType {
   closePermissionsModal: () => void;
   openSaveToHomeModal: () => void;
   closeSaveToHomeModal: () => void;
-  openAndroidApkModal: () => void;
-  closeAndroidApkModal: () => void;
   dismissBanner: () => void;
   restoreBanner: () => void;
   
@@ -68,7 +65,6 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
   const [isPermissionsModalOpen, setIsPermissionsModalOpen] = useState(false);
   const [isSaveToHomeModalOpen, setIsSaveToHomeModalOpen] = useState(false);
-  const [isAndroidApkModalOpen, setIsAndroidApkModalOpen] = useState(false);
   const [isRequestingAll, setIsRequestingAll] = useState(false);
 
   // Store deferred PWA install prompt
@@ -463,7 +459,6 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         isBannerDismissed,
         isPermissionsModalOpen,
         isSaveToHomeModalOpen,
-        isAndroidApkModalOpen,
         requestCameraPermission,
         requestMicPermission,
         requestMediaPermissions,
@@ -474,8 +469,6 @@ export const PermissionsProvider: React.FC<{ children: React.ReactNode }> = ({ c
         closePermissionsModal: () => setIsPermissionsModalOpen(false),
         openSaveToHomeModal: () => setIsSaveToHomeModalOpen(true),
         closeSaveToHomeModal: () => setIsSaveToHomeModalOpen(false),
-        openAndroidApkModal: () => setIsAndroidApkModalOpen(true),
-        closeAndroidApkModal: () => setIsAndroidApkModalOpen(false),
         dismissBanner,
         restoreBanner,
         isRequestingAll,

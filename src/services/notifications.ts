@@ -1,51 +1,37 @@
-import { soundEffects } from './audio';
-import { AppNotification } from '../types';
-import { PushNotifications } from '@capacitor/push-notifications';
-import { Capacitor } from '@capacitor/core';
+export type NotificationType = 'message' | 'call' | 'story' | 'system' | 'like' | 'comment';
+
+interface NotificationPayload {
+  type: NotificationType;
+  title: string;
+  body: string;
+  data?: any;
+}
 
 class NotificationService {
-  private permission: NotificationPermission | string = 'default';
-  private listeners: ((notification: AppNotification) => void)[] = [];
-
+  private permission: NotificationPermission | 'default' = 'default';
+  private subscribers: Set<(payload: NotificationPayload) => void> = new Set();
+  
   constructor() {
+    this.init();
+  }
+
+  private isIframe(): boolean {
+    if (typeof window === 'undefined') return false;
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true; // If cross-origin error, we are in an iframe
+    }
+  }
+
+  private async init() {
     if (typeof window !== 'undefined' && 'Notification' in window) {
       this.permission = Notification.permission;
     }
   }
 
-  public isIframe(): boolean {
-    try {
-      return typeof window !== 'undefined' && window.self !== window.top;
-    } catch {
-      return true;
-    }
-  }
-
   public async requestPermission(): Promise<boolean> {
-    // 1. Native Capacitor push notifications
-    if (Capacitor.isNativePlatform()) {
-      try {
-        let permStatus = await PushNotifications.checkPermissions();
-
-        if (permStatus.receive !== 'granted') {
-          permStatus = await PushNotifications.requestPermissions();
-        }
-
-        if (permStatus.receive === 'granted') {
-          try {
-            await PushNotifications.register();
-          } catch (regErr) {
-            console.warn('PushNotifications register warning:', regErr);
-          }
-          this.permission = 'granted';
-          return true;
-        }
-      } catch (e) {
-        console.warn('Capacitor Push Notifications request error:', e);
-      }
-    }
-
-    // 2. Standard Web Notification API
+    // Standard Web Notification API
     if (typeof window !== 'undefined' && 'Notification' in window) {
       if (Notification.permission === 'granted') {
         this.permission = 'granted';
@@ -75,25 +61,13 @@ class NotificationService {
   }
 
   public async getPermissionStatus(): Promise<NotificationPermission | string> {
-    // 1. Capacitor native check (Highest priority on mobile)
-    if (Capacitor.isNativePlatform()) {
-      try {
-        const status = await PushNotifications.checkPermissions();
-        if (status.receive === 'granted') return 'granted';
-        if (status.receive === 'denied') return 'denied';
-        return status.receive;
-      } catch (e) {
-        // Continue fallback
-      }
-    }
-
-    // 2. In-App persistence check
+    // In-App persistence check
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('aura_perms_notif');
       if (stored === 'granted') return 'granted';
     }
 
-    // 3. Direct Web Notification check (Synchronous & instant)
+    // Direct Web Notification check (Synchronous & instant)
     if (typeof window !== 'undefined' && 'Notification' in window) {
       if (Notification.permission === 'granted') return 'granted';
       if (Notification.permission === 'denied') {
@@ -101,120 +75,102 @@ class NotificationService {
         if (this.isIframe()) return 'granted';
         return 'denied';
       }
-      return Notification.permission;
+      return 'default';
     }
-
-    return 'prompt';
+    return 'default';
   }
 
-  public subscribe(cb: (notification: AppNotification) => void) {
-    this.listeners.push(cb);
-    return () => {
-      this.listeners = this.listeners.filter((l) => l !== cb);
-    };
+  public subscribe(callback: (payload: NotificationPayload) => void) {
+    this.subscribers.add(callback);
+    return () => this.subscribers.delete(callback);
   }
 
-  public notify(options: {
-    type: AppNotification['type'];
-    title: string;
-    body: string;
-    avatar?: string;
-    actionId?: string;
-    playSound?: boolean;
-  }) {
-    const notification: AppNotification = {
-      id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-      type: options.type,
-      title: options.title,
-      body: options.body,
-      avatar: options.avatar,
-      actionId: options.actionId,
-      timestamp: Date.now(),
-      isRead: false,
-    };
+  public async notify(payload: NotificationPayload) {
+    // 1. Trigger in-app subscribers first (Toast UI)
+    this.subscribers.forEach(cb => cb(payload));
 
-    // Play chime based on notification type
-    if (options.playSound !== false) {
-      try {
-        if (options.type === 'chat') {
-          soundEffects.playMessageReceived();
-        } else if (options.type === 'like') {
-          soundEffects.playLikeSparkle();
-        } else if (options.actionId === 'devotional-nav' || options.title.toLowerCase().includes('verse') || options.title.toLowerCase().includes('manna')) {
-          soundEffects.playHeavenlyChord();
-        } else {
-          soundEffects.playSuccessTone();
-        }
-      } catch (err) {
-        console.warn('Sound play notice:', err);
-      }
-    }
+    // 2. Play subtle notification sound
+    this.playSound(payload.type);
 
-    // Broadcast to in-app listeners
-    this.listeners.forEach((listener) => {
-      try {
-        listener(notification);
-      } catch (err) {
-        console.error('Notification listener error:', err);
-      }
-    });
-
-    // Native browser push notification if permitted
-    if (
-      typeof window !== 'undefined' &&
-      'Notification' in window &&
-      Notification.permission === 'granted'
-    ) {
-      // 1. ServiceWorkerRegistration (Required on Android Chrome & mobile PWAs)
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready
-          .then((registration) => {
-            registration.showNotification(options.title, {
-              body: options.body,
-              icon: options.avatar || '/icon.png',
-              badge: '/icon.png',
-              tag: options.type + '_' + (options.actionId || 'general'),
-              data: { url: window.location.href, actionId: options.actionId },
-            });
-          })
-          .catch(() => {
-            // Fallback to desktop constructor
-            try {
-              const nativeNotif = new Notification(options.title, {
-                body: options.body,
-                icon: options.avatar || '/icon.png',
-                tag: options.type + '_' + (options.actionId || 'general'),
-              });
-              nativeNotif.onclick = () => {
-                window.focus();
-                nativeNotif.close();
-              };
-            } catch {}
-          });
-      } else {
-        // 2. Standard desktop browser constructor
+    // 3. Trigger native OS notification if allowed and app is not focused
+    if (typeof window !== 'undefined' && document.hidden) {
+      const status = await this.getPermissionStatus();
+      if (status === 'granted' && 'Notification' in window) {
         try {
-          const nativeNotif = new Notification(options.title, {
-            body: options.body,
-            icon: options.avatar || '/icon.png',
-            tag: options.type + '_' + (options.actionId || 'general'),
+          // Check if we have a service worker for better mobile integration
+          if ('serviceWorker' in navigator) {
+            const reg = await navigator.serviceWorker.getRegistration();
+            if (reg) {
+              reg.showNotification(payload.title, {
+                body: payload.body,
+                icon: '/icon.png',
+                badge: '/icon.png',
+                vibrate: [200, 100, 200],
+                tag: payload.type, // Group similar notifications
+                data: payload.data
+              });
+              return;
+            }
+          }
+
+          // Fallback to standard web notification
+          new Notification(payload.title, {
+            body: payload.body,
+            icon: '/icon.png'
           });
-          nativeNotif.onclick = () => {
-            window.focus();
-            nativeNotif.close();
-          };
         } catch (e) {
-          console.warn('Native notification dispatch error:', e);
+          console.warn('Native notification failed:', e);
         }
       }
     }
-
-    return notification;
   }
-  // Helper to convert VAPID public key
+
+  private playSound(type: NotificationType) {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      const audio = new Audio();
+      switch (type) {
+        case 'call':
+          audio.src = '/sounds/ringtone.mp3';
+          audio.loop = true;
+          break;
+        case 'message':
+          audio.src = '/sounds/message.mp3';
+          break;
+        case 'system':
+          audio.src = '/sounds/system.mp3';
+          break;
+        default:
+          audio.src = '/sounds/pop.mp3';
+      }
+      
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          // Auto-play might be prevented by browser policy
+          console.debug('Notification sound prevented by browser:', err);
+        });
+      }
+
+      if (type === 'call') {
+        // Return a function to stop the ringtone
+        return () => {
+          audio.pause();
+          audio.currentTime = 0;
+        };
+      }
+    } catch (e) {
+      console.warn('Failed to play notification sound:', e);
+    }
+  }
+
+  // Web Push Subscription Helper
   private urlBase64ToUint8Array(base64String: string) {
     const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/\-/g, "+").replace(/_/g, "/");
+    const base64 = (base64String + padding)
+      .replace(/\-/g, "+")
+      .replace(/_/g, "/");
     const rawData = window.atob(base64);
     const outputArray = new Uint8Array(rawData.length);
     for (let i = 0; i < rawData.length; ++i) {
@@ -225,49 +181,6 @@ class NotificationService {
 
   // Register device for Android / Mobile background Push Notifications
   public async registerPushSubscription(userId: string) {
-    if (Capacitor.isNativePlatform()) {
-      try {
-        await PushNotifications.addListener('registration', async (token) => {
-          console.log('Push registration success, token: ' + token.value);
-          // Send native token to server (the server will need to support FCM token format)
-          await fetch("/api/push/subscribe", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-              userId, 
-              subscription: { 
-                endpoint: token.value, 
-                keys: { p256dh: 'fcm', auth: 'fcm' } 
-              } 
-            }),
-          });
-        });
-
-        await PushNotifications.addListener('registrationError', (error: any) => {
-          console.warn('Error on registration: ' + JSON.stringify(error));
-        });
-
-        await PushNotifications.addListener('pushNotificationReceived', (notification) => {
-          console.log('Push received: ' + JSON.stringify(notification));
-          this.notify({
-            type: 'system',
-            title: notification.title || 'Notification',
-            body: notification.body || '',
-          });
-        });
-
-        await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-          console.log('Push action performed: ' + JSON.stringify(notification));
-        });
-
-        await PushNotifications.register();
-        return { isNative: true };
-      } catch (err) {
-        console.warn('Capacitor native push registration failed:', err);
-        return null;
-      }
-    }
-
     if (
       typeof window === "undefined" ||
       !("Notification" in window) ||

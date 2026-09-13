@@ -125,6 +125,7 @@ export interface UserStory {
   createdAt: number;
   seenByUserIds: string[];
   slides?: StorySlide[];
+  isPendingSync?: boolean;
 }
 
 export type CallStatus = 'idle' | 'calling' | 'ringing' | 'connected' | 'ended' | 'declined' | 'busy';

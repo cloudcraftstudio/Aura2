@@ -1,40 +1,17 @@
-import { CapacitorUpdater } from '@capgo/capacitor-updater';
-import { Capacitor } from '@capacitor/core';
+export class AutoUpdaterService {
+  public static async init() {
+    console.log('PWA OTA updates are handled seamlessly by the Service Worker.');
+  }
 
-export async function initAutoUpdater(onUpdateReady?: () => void) {
-  if (!Capacitor.isNativePlatform()) return;
-
-  try {
-    // Notify the plugin that the current bundle loaded successfully
-    await CapacitorUpdater.notifyAppReady();
-
-    // Check your server for newer web bundles
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://aura.webcraftstudio.cloud';
-    const response = await fetch(`${baseUrl}/api/app-update/version`);
-    if (!response.ok) return;
-
-    const serverData = await response.json();
-    const currentVersion = localStorage.getItem('aura_bundle_version') || '1.0.0';
-
-    if (serverData.version && serverData.version !== currentVersion && serverData.url) {
-      console.log(`[Updater] New version found: ${serverData.version}. Downloading...`);
-
-      const version = await CapacitorUpdater.download({
-        url: serverData.url,
-        version: serverData.version,
-      });
-
-      // Save version and prompt user or set next reload
-      localStorage.setItem('aura_bundle_version', serverData.version);
-
-      if (onUpdateReady) {
-        onUpdateReady();
-      } else {
-        // Automatically switch to the new version on next app start
-        await CapacitorUpdater.set(version);
-      }
+  public static async checkForUpdates() {
+    // In a PWA context, update checking is managed by the Service Worker lifecycle
+    // (workbox-window or similar). The SW pulls the new bundle in the background.
+    console.log('Checking for updates via service worker...');
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      const reg = await navigator.serviceWorker.ready;
+      await reg.update();
+      return true;
     }
-  } catch (err) {
-    console.warn('[Updater] Auto-update check skipped:', err);
+    return false;
   }
 }

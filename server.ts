@@ -126,7 +126,6 @@ async function startServer() {
     const pkg = require('./package.json');
     res.json({
       version: pkg.version || '1.0.8',
-      downloadUrl: 'https://aura.webcraftstudio.cloud/api/download/apk',
       forceUpdate: false,
       releaseNotes: 'Massive update: Added new Group Community Walls, Recovery Journals, and fixed a critical bug causing a blank blue screen on launch. Please download this update for the best experience!'
     });
@@ -941,7 +940,7 @@ async function startServer() {
     console.error('Failed to initialize Recovery routes:', err);
   }
 
-  // --- APP OTA UPDATE & APK ROUTES ---
+  // --- APP OTA UPDATE ROUTES ---
   app.get("/api/app-update/version", (req, res) => {
     try {
       const manifestPath = path.join(process.cwd(), "public", "update-manifest.json");
@@ -952,20 +951,6 @@ async function startServer() {
     } catch (e) {
       res.status(500).json({ error: "Failed to read manifest" });
     }
-  });
-
-  // APK Download Route
-  app.get("/api/download/apk", (req, res) => {
-    const distApk = path.join(process.cwd(), "dist", "aura.apk");
-    const publicApk = path.join(process.cwd(), "public", "aura.apk");
-    const apkPath = fs.existsSync(distApk) ? distApk : fs.existsSync(publicApk) ? publicApk : null;
-    
-    if (apkPath) {
-      res.setHeader("Content-Disposition", "attachment; filename=aura.apk");
-      res.setHeader("Content-Type", "application/vnd.android.package-archive");
-      return res.sendFile(apkPath);
-    }
-    res.status(404).send("APK not found");
   });
 
   // --- VITE MIDDLEWARE SETUP ---

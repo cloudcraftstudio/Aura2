@@ -102,15 +102,66 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             !['user_alex', 'user_maya', 'user_liam', 'user_elena'].includes(s.userId) &&
             !['story_1', 'story_2', 'story_3'].includes(s.id)
         );
+        const STORY_CUTOFF = 24 * 60 * 60 * 1000;
+        const now = Date.now();
+
         setStories((prev) => {
-          // Preserve any optimistic story from current user created in the last 30s so it never vanishes
-          const serverStoryIds = new Set(cleanStories.map((s) => s.id));
-          const pendingLocal = prev.filter(
-            (s) => !serverStoryIds.has(s.id) && Date.now() - s.createdAt < 30000 && s.userId === user?.id
+          const serverMap = new Map<string, UserStory>();
+          cleanStories.forEach((s) => {
+            if (s.userId) serverMap.set(s.userId, s);
+          });
+
+          // Check if the current user has local slides or pending story that isn't on the server yet
+          const userLocalStory = prev.find(
+            (s) => s.userId === user?.id && now - s.createdAt < STORY_CUTOFF
           );
-          return [...pendingLocal, ...cleanStories];
+
+          if (userLocalStory && user) {
+            const serverUserStory = serverMap.get(user.id);
+            if (serverUserStory) {
+              // Merge any optimistic slides that might not be on the server yet
+              const existingSlideIds = new Set((serverUserStory.slides || []).map((sl) => sl.id));
+              const existingSlideUrls = new Set((serverUserStory.slides || []).map((sl) => sl.mediaUrl));
+              const mergedSlides = [...(serverUserStory.slides || [])];
+
+              if (userLocalStory.slides) {
+                for (const sl of userLocalStory.slides) {
+                  if (!existingSlideIds.has(sl.id) && !existingSlideUrls.has(sl.mediaUrl)) {
+                    mergedSlides.push(sl);
+                  }
+                }
+              }
+              serverMap.set(user.id, {
+                ...serverUserStory,
+                slides: mergedSlides,
+                mediaUrl: userLocalStory.mediaUrl || serverUserStory.mediaUrl,
+                caption: userLocalStory.caption || serverUserStory.caption,
+              });
+            } else {
+              // Server doesn't have it yet; preserve local user story for 24 hours
+              serverMap.set(user.id, userLocalStory);
+
+              // If pending sync, retry saving to server in background
+              if (userLocalStory.isPendingSync) {
+                api.createStory(user.id, userLocalStory.mediaUrl, userLocalStory.caption, user.name, user.avatarUrl)
+                  .then((synced) => {
+                    if (synced) {
+                      setStories((current) =>
+                        current.map((st) => (st.userId === user.id ? { ...synced, isPendingSync: false } : st))
+                      );
+                    }
+                  })
+                  .catch(() => {});
+              }
+            }
+          }
+
+          const combined = Array.from(serverMap.values()).filter(
+            (s) => now - s.createdAt < STORY_CUTOFF
+          );
+          offlineStorage.save(STORAGE_KEYS.STORIES, combined);
+          return combined;
         });
-        offlineStorage.save(STORAGE_KEYS.STORIES, cleanStories);
       }
     } catch (err) {
       console.warn('Feed refresh error:', err);
@@ -384,6 +435,7 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           createdAt: now,
           seenByUserIds: [user.id],
           slides: [...existingSlides, newSlide],
+          isPendingSync: true,
         };
         const updated = [...prev];
         updated[existingIndex] = updatedStory;
@@ -399,6 +451,7 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           createdAt: now,
           seenByUserIds: [user.id],
           slides: [newSlide],
+          isPendingSync: true,
         };
         return [newStory, ...prev];
       }
@@ -408,12 +461,13 @@ export const SocialProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     if (savedStory) {
       setStories((prev) => {
         const idx = prev.findIndex((s) => s.userId === user.id || s.id === savedStory.id);
+        const resolved = { ...savedStory, isPendingSync: false };
         if (idx !== -1) {
           const updated = [...prev];
-          updated[idx] = savedStory;
+          updated[idx] = resolved;
           return updated;
         }
-        return [savedStory, ...prev];
+        return [resolved, ...prev];
       });
       offlineStorage.broadcastEvent('new_story', savedStory);
     }

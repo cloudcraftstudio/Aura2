@@ -114,12 +114,8 @@ export const CallProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     };
 
-    window.addEventListener('capacitorIncomingCallAnswered', handleNativeAnswer);
-    window.addEventListener('capacitorIncomingCallDeclined', handleNativeDecline);
 
     return () => {
-      window.removeEventListener('capacitorIncomingCallAnswered', handleNativeAnswer);
-      window.removeEventListener('capacitorIncomingCallDeclined', handleNativeDecline);
     };
   }, []);
 

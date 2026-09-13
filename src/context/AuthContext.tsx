@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile, UserStatus } from '../types';
 import { auth, db, googleProvider, facebookProvider, githubProvider, signInAnonymously } from '../lib/firebase';
-import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
-import { Capacitor } from '@capacitor/core';
 import { 
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
@@ -319,21 +317,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
-      if (Capacitor.isNativePlatform()) {
-        try {
-          const result = await FirebaseAuthentication.signInWithGoogle();
-          if (result.credential?.idToken) {
-            const credential = GoogleAuthProvider.credential(result.credential.idToken);
-            const authResult = await signInWithCredential(auth, credential);
-            await syncFirebaseUserToDb(authResult.user, { authProvider: 'google' });
-            return { success: true };
-          }
-        } catch (nativeErr: any) {
-          console.warn('Native Google Auth failed or not implemented, falling back to web popup:', nativeErr);
-          // Fall through to standard web auth
-        }
-      }
-      
       const result = await signInWithPopup(auth, googleProvider);
       await syncFirebaseUserToDb(result.user, { authProvider: 'google' });
       return { success: true };
@@ -344,20 +327,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithFacebook = async () => {
     try {
-      if (Capacitor.isNativePlatform()) {
-        try {
-          const result = await FirebaseAuthentication.signInWithFacebook();
-          if (result.credential?.accessToken) {
-            const credential = FacebookAuthProvider.credential(result.credential.accessToken);
-            const authResult = await signInWithCredential(auth, credential);
-            await syncFirebaseUserToDb(authResult.user, { authProvider: 'facebook' });
-            return { success: true };
-          }
-        } catch (nativeErr: any) {
-          console.warn('Native Facebook Auth failed, falling back to web popup:', nativeErr);
-        }
-      }
-      
       const result = await signInWithPopup(auth, facebookProvider);
       await syncFirebaseUserToDb(result.user, { authProvider: 'facebook' });
       return { success: true };
@@ -368,20 +337,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGithub = async () => {
     try {
-      if (Capacitor.isNativePlatform()) {
-        try {
-          const result = await FirebaseAuthentication.signInWithGithub();
-          if (result.credential?.accessToken) {
-            const credential = GithubAuthProvider.credential(result.credential.accessToken);
-            const authResult = await signInWithCredential(auth, credential);
-            await syncFirebaseUserToDb(authResult.user, { authProvider: 'github' });
-            return { success: true };
-          }
-        } catch (nativeErr: any) {
-          console.warn('Native Github Auth failed, falling back to web popup:', nativeErr);
-        }
-      }
-      
       const result = await signInWithPopup(auth, githubProvider);
       await syncFirebaseUserToDb(result.user, { authProvider: 'github' });
       return { success: true };

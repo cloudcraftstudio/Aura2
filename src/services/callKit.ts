@@ -1,78 +1,39 @@
-import { registerPlugin } from '@capacitor/core';
-import { audioService } from './audio';
-
-// Interface for Capacitor Incoming Call Kit
-export interface IncomingCallPlugin {
-  displayIncomingCall(options: {
-    id: string;
-    name: string;
-    avatar?: string;
-    handleType?: string;
-    hasVideo?: boolean;
-    duration?: number;
-  }): Promise<void>;
-  endCall(options: { id: string }): Promise<void>;
-  openApp(): Promise<void>;
+// Interface for PWA Incoming Call Kit
+export interface CallKitContact {
+  id: string;
+  name: string;
+  avatar?: string;
 }
 
-const IncomingCall = registerPlugin<IncomingCallPlugin>('IncomingCall');
+export interface CallKitCall {
+  id: string;
+  contact: CallKitContact;
+  isVideo: boolean;
+}
 
 class CallKitService {
-  private activeIncomingCallId: string | null = null;
-  private initialized = false;
+  private isInitialized = false;
 
-  public init() {
-    if (this.initialized) return;
-    this.initialized = true;
+  public async init() {
+    if (this.isInitialized) return;
+    this.isInitialized = true;
+    console.log('PWA CallKit initialized');
+  }
 
-    // Listen for answer/decline events if running natively on Capacitor
-    try {
-      // Setup listener handlers when running on mobile
-      window.addEventListener('capacitorIncomingCallAnswered', (e: any) => {
-        console.log('Call answered via native CallKit:', e);
-        audioService.stopRingtone();
-      });
-
-      window.addEventListener('capacitorIncomingCallDeclined', (e: any) => {
-        console.log('Call declined via native CallKit:', e);
-        audioService.stopRingtone();
-        
-      });
-    } catch (err) {
-      console.warn('CallKit event listener setup error:', err);
+  public async displayIncomingCall(call: CallKitCall) {
+    if (typeof window !== 'undefined') {
+      console.log('Simulating incoming call UI for PWA:', call);
+      // In a PWA, we rely on the React IncomingCallBanner 
+      // combined with the Service Worker push event (for background wake).
     }
   }
 
-  public async showIncomingCall(roomId: string, callerName: string, callerAvatar?: string, isVideo = true) {
-    try {
-      // Play Mario ringtone on web fallback / foreground
-      audioService.startRingtone();
-
-      // Trigger native incoming call screen if running on Android/iOS Capacitor
-      this.activeIncomingCallId = roomId;
-      await IncomingCall.displayIncomingCall({
-        id: roomId,
-        name: callerName,
-        avatar: callerAvatar || '',
-        hasVideo: isVideo,
-        duration: 30000,
-      });
-    } catch (err) {
-      console.log('Native CallKit display fallback to web notification mode:', err);
-    }
+  public async endCall(callId: string) {
+    console.log('Call ended:', callId);
   }
 
-  public async endCall(roomId: string) {
-    try {
-      audioService.stopRingtone();
-      
-      if (this.activeIncomingCallId === roomId) {
-        await IncomingCall.endCall({ id: roomId });
-        this.activeIncomingCallId = null;
-      }
-    } catch (err) {
-      console.log('Native CallKit end call fallback:', err);
-    }
+  public async acceptCall(callId: string) {
+    console.log('Call accepted natively (if supported):', callId);
   }
 }
 
