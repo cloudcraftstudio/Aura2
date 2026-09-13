@@ -45,7 +45,10 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
   const [unsplashTarget, setUnsplashTarget] = useState<'youtube' | string | null>(null);
 
   // YouTube entry form state
-  const [entryMode, setEntryMode] = useState<'youtube' | 'file'>('youtube');
+  const [entryMode, setEntryMode] = useState<'youtube' | 'file' | 'channel'>('channel');
+  const [channelUrl, setChannelUrl] = useState('');
+  const [isSubmittingChannel, setIsSubmittingChannel] = useState(false);
+  const [channelFeedback, setChannelFeedback] = useState<{type: 'success' | 'error', message: string} | null>(null);
   const [ytUrl, setYtUrl] = useState('');
   const [ytTitle, setYtTitle] = useState('');
   const [ytSpeaker, setYtSpeaker] = useState('');
@@ -66,6 +69,33 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
       setYtThumbnail(`https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg`);
     }
   };
+
+  
+  const handleChannelSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!channelUrl.trim()) return;
+    setIsSubmittingChannel(true);
+    setChannelFeedback(null);
+    try {
+      const res = await fetch('/api/bible/youtube/channels', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: channelUrl.trim() }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to add channel');
+      
+      setChannelFeedback({ type: 'success', message: 'Channel/Playlist successfully added! Videos will begin appearing in the feed shortly.' });
+      setChannelUrl('');
+      // Dispatch an event to refresh feed if needed
+      window.dispatchEvent(new Event('aura_sermons_updated'));
+    } catch (err: any) {
+      setChannelFeedback({ type: 'error', message: err.message });
+    } finally {
+      setIsSubmittingChannel(false);
+    }
+  };
+
 
   const handleYouTubeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -285,6 +315,19 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
 
       {/* Segmented Mode Selector */}
       <div className="flex items-center gap-2 p-1.5 bg-slate-900/90 backdrop-blur-md rounded-2xl border border-white/10 w-fit shadow-xl">
+        
+        <button
+          type="button"
+          onClick={() => setEntryMode('channel')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+            entryMode === 'channel'
+              ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
+          <Youtube className="w-4 h-4" />
+          <span>Add Channel / Playlist</span>
+        </button>
         <button
           type="button"
           onClick={() => setEntryMode('youtube')}
@@ -294,9 +337,10 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
               : 'text-slate-400 hover:text-white'
           }`}
         >
-          <Youtube className="w-4 h-4" />
-          <span>YouTube Link / Channels</span>
+          <Link2 className="w-4 h-4" />
+          <span>Single Video</span>
         </button>
+
         <button
           type="button"
           onClick={() => setEntryMode('file')}
@@ -311,7 +355,56 @@ export function PodcastLibraryStudio({ courses }: { courses: Course[] }) {
         </button>
       </div>
 
-      {entryMode === 'youtube' ? (
+      
+      {entryMode === 'channel' ? (
+        <form
+          onSubmit={handleChannelSubmit}
+          className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 sm:p-6 space-y-5 shadow-xl"
+        >
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="flex items-center gap-2 text-indigo-400">
+              <Youtube className="w-5 h-5" />
+              <h3 className="font-bold text-sm sm:text-base text-white">Auto-Import from YouTube Channel or Playlist</h3>
+            </div>
+            <span className="text-[11px] px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-semibold">
+              Live Feed Sync
+            </span>
+          </div>
+          
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              YouTube Channel URL or Playlist URL *
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. https://www.youtube.com/@lighthousewinc OR https://www.youtube.com/playlist?list=..."
+              value={channelUrl}
+              onChange={(e) => setChannelUrl(e.target.value)}
+              className="w-full bg-black/40 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+            />
+            <p className="text-[10px] text-slate-500 mt-2">
+              The system will automatically pull the latest videos from this channel/playlist and keep the feed updated over time.
+            </p>
+          </div>
+
+          {channelFeedback && (
+            <div className={`p-3 rounded-xl text-xs font-bold ${channelFeedback.type === 'success' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
+              {channelFeedback.message}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isSubmittingChannel}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/30 disabled:opacity-50 flex items-center gap-2 transition-all active:scale-95"
+          >
+            {isSubmittingChannel ? <Loader className="w-4 h-4 animate-spin" /> : <Youtube className="w-4 h-4" />}
+            <span>{isSubmittingChannel ? 'Connecting...' : 'Subscribe to Source'}</span>
+          </button>
+        </form>
+      ) : entryMode === 'youtube' ? (
+
         <form
           onSubmit={handleYouTubeSubmit}
           className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-3xl p-5 sm:p-6 space-y-5 shadow-xl"

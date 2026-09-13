@@ -67,7 +67,34 @@ export interface Sermon {
   seriesPart?: number;
 }
 
+
+export interface YoutubeSubscription {
+  id: string;
+  name: string;
+  url: string;
+  sourceId: string;
+  sourceType: 'channel' | 'playlist';
+  defaultCover?: string;
+  createdAt: string;
+}
+
 export class BibleStudyDB {
+
+  // YouTube Subscriptions
+  addYoutubeSubscription(name: string, url: string, sourceId: string, sourceType: 'channel' | 'playlist', defaultCover?: string): YoutubeSubscription {
+    const id = require('crypto').randomUUID();
+    const now = new Date().toISOString();
+    const stmt = this.db.prepare(
+      'INSERT INTO youtube_subscriptions (id, name, url, sourceId, sourceType, defaultCover, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    );
+    stmt.run(id, name, url, sourceId, sourceType, defaultCover || null, now);
+    return { id, name, url, sourceId, sourceType, defaultCover, createdAt: now };
+  }
+
+  getYoutubeSubscriptions(): YoutubeSubscription[] {
+    return this.db.prepare('SELECT * FROM youtube_subscriptions ORDER BY createdAt DESC').all() as YoutubeSubscription[];
+  }
+
   private db: Database.Database;
 
   constructor(dbPath: string) {

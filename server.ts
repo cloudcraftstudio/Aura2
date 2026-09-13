@@ -941,7 +941,7 @@ async function startServer() {
     // Live Sync for Contemporary & Community Ministries (Lighthouse Baptist Church, etc.)
     app.get('/api/bible/community/sermons', async (_req, res) => {
       try {
-        const feed = await getLiveMinistryFeed();
+        const feed = await getLiveMinistryFeed(bibleDB);
         res.json(feed);
       } catch (err: any) {
         console.error('[Community Sermons] Error:', err);

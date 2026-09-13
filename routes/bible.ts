@@ -353,6 +353,73 @@ export function createBibleRoutes(db: BibleStudyDB): Router {
   });
 
   // POST /api/bible/sermons - Create sermon metadata record
+  
+  // POST /api/bible/youtube/channels
+  router.post('/youtube/channels', async (req, res) => {
+    const { url } = req.body;
+    if (!url) return res.status(400).json({ error: 'URL is required' });
+
+    try {
+      let sourceId = '';
+      let sourceType: 'channel' | 'playlist' = 'channel';
+      let name = 'Imported Channel';
+
+      if (url.includes('playlist?list=')) {
+        const match = url.match(/list=([A-Za-z0-9_-]+)/);
+        if (match) {
+          sourceId = match[1];
+          sourceType = 'playlist';
+          name = 'Imported Playlist';
+        }
+      } else if (url.includes('channel/')) {
+        const match = url.match(/channel\/([A-Za-z0-9_-]+)/);
+        if (match) {
+          sourceId = match[1];
+          sourceType = 'channel';
+        }
+      } else if (url.includes('@')) {
+        // Fetch to find channel ID
+        try {
+          
+          const htmlRes = await fetch(url);
+          const html = await htmlRes.text();
+          const match = html.match(/"channelId":"([^"]+)"/);
+          if (match) {
+            sourceId = match[1];
+            sourceType = 'channel';
+          }
+        } catch (e) {
+          console.error("Error fetching channel:", e);
+        }
+      }
+      
+      if (!sourceId) {
+         return res.status(400).json({ error: 'Could not extract a valid YouTube Channel ID or Playlist ID from the URL. Please provide a direct channel URL (e.g., youtube.com/channel/UC...) or playlist URL.' });
+      }
+
+      const subscription = db.addYoutubeSubscription(name, url, sourceId, sourceType, "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800");
+      
+      // Optionally trigger sync right away
+      try {
+        await syncYoutubeSermons(db);
+      } catch (e) {}
+
+      return res.json({ success: true, subscription });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Failed to add subscription' });
+    }
+  });
+
+  router.get('/youtube/channels', (req, res) => {
+    try {
+      res.json(db.getYoutubeSubscriptions());
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch subscriptions' });
+    }
+  });
+
+
   router.post('/sermons', (req: Request, res: Response) => {
     const { title, speaker, series, seriesPart, channel, scriptureRef, description, mediaType, mediaUrl, duration, dateRecorded, thumbnailUrl } = req.body;
     if (!title) return res.status(400).json({ error: 'Title is required' });

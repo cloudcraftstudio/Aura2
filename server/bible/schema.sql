@@ -74,3 +74,12 @@ CREATE TABLE IF NOT EXISTS sermons_podcasts (
 CREATE INDEX IF NOT EXISTS idx_lessons_courseId ON lessons(courseId);
 CREATE INDEX IF NOT EXISTS idx_user_progress_userId ON user_progress(userId);
 CREATE INDEX IF NOT EXISTS idx_verse_commentary_verseRef ON verse_commentary_cache(verseRef);
+CREATE TABLE IF NOT EXISTS youtube_subscriptions (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  url TEXT NOT NULL,
+  sourceId TEXT NOT NULL,
+  sourceType TEXT NOT NULL, -- 'channel' or 'playlist'
+  defaultCover TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);

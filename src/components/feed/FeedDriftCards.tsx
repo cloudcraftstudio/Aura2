@@ -220,30 +220,17 @@ interface SermonItem {
 
 const FALLBACK_SERMONS: SermonItem[] = [
   {
-    id: "yt-luke-1",
-    title: "Walking in the Light of Christ (Part 1)",
-    speaker: "Pastor Luke Shope",
-    channel: "Lighthouse Baptist Church",
-    series: "Sunday Sanctuary Expositions",
+    id: 'sermon-tony-evans',
+    title: 'Kingdom Authority & Overcoming Spiritual Warfare',
+    speaker: 'Dr. Tony Evans',
+    channel: 'Dr. Tony Evans',
+    series: 'Kingdom Foundations',
     seriesPart: 1,
-    scriptureRef: "1 John 1",
-    description: "An urgent, verse-by-verse exposition of 1 John 1 on walking in fellowship, truth, and genuine repentance before God.",
-    mediaType: "video",
-    mediaUrl: "",
-    duration: 2480
-  },
-  {
-    id: "yt-luke-2",
-    title: "The Cleansing Blood and Assurance of Salvation (Part 2)",
-    speaker: "Pastor Luke Shope",
-    channel: "Lighthouse Baptist Church",
-    series: "Sunday Sanctuary Expositions",
-    seriesPart: 2,
-    scriptureRef: "1 John 1",
-    description: "Living with unshakable biblical confidence in Christ's completed work on Calvary and the power of the cross.",
-    mediaType: "video",
-    mediaUrl: "",
-    duration: 2330
+    scriptureRef: 'Ephesians 6:10-18',
+    description: 'Pastor Tony Evans breaks down how God equips believers to stand firm against darkness through faith, prayer, and the armor of God.',
+    mediaType: 'video',
+    mediaUrl: '',
+    duration: 1845
   }
 ];
 

@@ -4,6 +4,7 @@ export interface MinistryChannel {
   name: string;
   handle: string;
   channelId: string;
+  playlistId?: string;
   speaker: string;
   speakerTitle: string;
   featured?: boolean;
@@ -133,6 +134,48 @@ function fetchXml(url: string): Promise<string> {
 
 export const CURATED_MINISTRY_FALLBACK: SyncedSermonItem[] = [
   {
+    id: "yt-lighthouse-1",
+    title: "Walking in the Light of Christ (Part 1)",
+    speaker: "Pastor Luke Shope",
+    speakerSlug: "lukeshope",
+    speakerTitle: "Lighthouse Baptist Church • Winchester, VA",
+    channel: "Lighthouse Baptist Church",
+    series: "Sanctuary Expositions",
+    seriesPart: 1,
+    summary: "An urgent, verse-by-verse exposition on walking in fellowship, truth, and genuine repentance before God.",
+    duration: "41:20",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "jNQXAC9IVRw",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
+    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
+  },
+  {
+    id: "yt-lighthouse-2",
+    title: "The Cleansing Blood and Assurance of Salvation (Part 2)",
+    speaker: "Pastor Luke Shope",
+    speakerSlug: "lukeshope",
+    speakerTitle: "Lighthouse Baptist Church • Winchester, VA",
+    channel: "Lighthouse Baptist Church",
+    series: "Sanctuary Expositions",
+    seriesPart: 2,
+    summary: "Living with unshakable biblical confidence in Christ's completed work on Calvary and the power of the cross.",
+    duration: "38:50",
+    mediaType: "video",
+    format: "video",
+    source: "community",
+    featured: true,
+    youtubeId: "e-ORhEE9VVg",
+    mediaUrl: "",
+    thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&auto=format&fit=crop&q=80",
+    publishedAt: new Date(Date.now() - 3600000 * 72).toISOString(),
+    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
+  },
+  {
     id: "yt-drtony-1",
     title: "Kingdom Authority: Reclaiming What the Enemy Stole (Part 1)",
     speaker: "Dr. Tony Evans",
@@ -194,48 +237,6 @@ export const CURATED_MINISTRY_FALLBACK: SyncedSermonItem[] = [
     thumbnailUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&auto=format&fit=crop&q=80",
     publishedAt: new Date(Date.now() - 3600000 * 96).toISOString(),
     topics: [{ name: "Kingdom Authority", slug: "kingdom-authority" }]
-  },
-  {
-    id: "yt-luke-1",
-    title: "Walking in the Light of Christ (Part 1)",
-    speaker: "Pastor Luke Shope",
-    speakerSlug: "lighthousewinc",
-    speakerTitle: "Lighthouse Baptist Church • Winchester, VA",
-    channel: "Lighthouse Baptist Church",
-    series: "Sunday Sanctuary Expositions",
-    seriesPart: 1,
-    summary: "An urgent, verse-by-verse exposition of 1 John 1 on walking in fellowship, truth, and genuine repentance before God.",
-    duration: "41:20",
-    mediaType: "video",
-    format: "video",
-    source: "community",
-    featured: true,
-    youtubeId: "jNQXAC9IVRw",
-    mediaUrl: "",
-    thumbnailUrl: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=800&auto=format&fit=crop&q=80",
-    publishedAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
-  },
-  {
-    id: "yt-luke-2",
-    title: "The Cleansing Blood and Assurance of Salvation (Part 2)",
-    speaker: "Pastor Luke Shope",
-    speakerSlug: "lighthousewinc",
-    speakerTitle: "Lighthouse Baptist Church • Winchester, VA",
-    channel: "Lighthouse Baptist Church",
-    series: "Sunday Sanctuary Expositions",
-    seriesPart: 2,
-    summary: "Living with unshakable biblical confidence in Christ's completed work on Calvary and the power of the cross.",
-    duration: "38:50",
-    mediaType: "video",
-    format: "video",
-    source: "community",
-    featured: true,
-    youtubeId: "e-ORhEE9VVg",
-    mediaUrl: "",
-    thumbnailUrl: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&auto=format&fit=crop&q=80",
-    publishedAt: new Date(Date.now() - 3600000 * 72).toISOString(),
-    topics: [{ name: "Sanctuary Expositions", slug: "sanctuary" }]
   },
   {
     id: "yt-pauley-1",
@@ -369,16 +370,44 @@ function parseXml(xml: string, ch: MinistryChannel): SyncedSermonItem[] {
   return list;
 }
 
-export async function getLiveMinistryFeed(): Promise<SyncedSermonItem[]> {
+export async function getLiveMinistryFeed(db?: any): Promise<SyncedSermonItem[]> {
   const now = Date.now();
   if (cachedFeed.length > 0 && now - lastFetch < TTL) {
     return cachedFeed;
   }
 
   try {
-    const promises = MONITORED_CHANNELS.map(async (ch) => {
+    
+    let allChannels = [...MONITORED_CHANNELS];
+    let customSubscriptions = [];
+    if (db && typeof db.getYoutubeSubscriptions === 'function') {
       try {
-        const xml = await fetchXml(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`);
+        customSubscriptions = db.getYoutubeSubscriptions();
+        const mapped = customSubscriptions.map(sub => ({
+          name: sub.name,
+          handle: sub.sourceId,
+          channelId: sub.sourceType === 'channel' ? sub.sourceId : '',
+          playlistId: sub.sourceType === 'playlist' ? sub.sourceId : '',
+          speaker: sub.name,
+          speakerTitle: "Subscribed " + sub.sourceType,
+          defaultCover: sub.defaultCover
+        }));
+        allChannels = [...allChannels, ...mapped];
+      } catch (e) {
+        console.error("Failed to load db subscriptions for feed", e);
+      }
+    }
+
+    const promises = allChannels.map(async (ch) => {
+      try {
+        let feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${ch.channelId}`;
+        if (ch.playlistId) {
+          feedUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${ch.playlistId}`;
+        } else if (!ch.channelId) {
+          return [];
+        }
+        const xml = await fetchXml(feedUrl);
+
         return parseXml(xml, ch);
       } catch {
         return [];
