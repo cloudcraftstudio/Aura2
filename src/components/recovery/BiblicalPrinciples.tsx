@@ -9,7 +9,8 @@ import {
   Volume2,
   Award,
   Save,
-  Check
+  Check,
+  Share2
 } from 'lucide-react';
 import { CORE_BIBLICAL_RECOVERY_PRINCIPLES } from '../../content/recoveryPrinciples';
 import { RecoveryPrinciple, UserPrincipleProgress } from '../../types/recovery';
@@ -137,6 +138,28 @@ export const BiblicalPrinciples: React.FC = () => {
       });
     } catch (err) {
       console.error('Failed to save principle progress:', err);
+    }
+  };
+
+
+  const handleShare = async (e: React.MouseEvent, principle: RecoveryPrinciple) => {
+    e.stopPropagation();
+    soundEffects.playTap();
+    const url = `${window.location.origin}/?tab=recovery&rtab=principles&p=${principle.step}`;
+    const shareData = {
+      title: `Principle ${principle.step}: ${principle.title}`,
+      text: `Explore the Pathway to Freedom - Principle ${principle.step}: ${principle.title}`,
+      url: url
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert('Link copied to clipboard!');
+      }
+    } catch (err) {
+      console.error('Error sharing:', err);
     }
   };
 
@@ -276,6 +299,16 @@ export const BiblicalPrinciples: React.FC = () => {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
+                  {/* Share Button */}
+                  <button
+                    type="button"
+                    onClick={(e) => handleShare(e, principle)}
+                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-amber-400 border border-white/10 transition-all"
+                    title="Share Principle"
+                  >
+                    <Share2 className="w-4 h-4" />
+                  </button>
+
                   {/* Read Aloud Button */}
                   <button
                     type="button"
