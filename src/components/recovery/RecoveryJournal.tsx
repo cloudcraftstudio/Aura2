@@ -130,6 +130,8 @@ export const RecoveryJournal: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12 relative">
+      {!isFormOpen && (
+        <>
       
       {/* Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -265,24 +267,28 @@ export const RecoveryJournal: React.FC = () => {
       </div>
 
       {/* Full Screen Distraction-Free Form */}
+      </>)}
+
       <AnimatePresence>
         {isFormOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed inset-0 z-[100] bg-[#05060f] sm:p-4 overflow-y-auto"
+            exit={{ opacity: 0, y: 20 }}
+            className="pb-24 pt-4"
           >
-            <div className="max-w-3xl mx-auto min-h-full bg-slate-900 sm:rounded-[2.5rem] p-6 sm:p-10 shadow-2xl border-0 sm:border border-white/10 relative">
-              {/* Close Button */}
-              <button
-                onClick={() => setIsFormOpen(false)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-              >
-                <X className="w-6 h-6" />
-              </button>
+            <div className="max-w-3xl mx-auto bg-slate-900/50 rounded-[2.5rem] p-4 sm:p-8 border-0 sm:border border-white/10">
+              {/* Back / Close Button */}
+              <div className="flex items-center justify-between mb-8">
+                <button
+                  onClick={() => setIsFormOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors font-bold text-sm"
+                >
+                  <X className="w-4 h-4" /> Cancel Entry
+                </button>
+              </div>
 
-              <div className="max-w-xl mx-auto space-y-10 py-8">
+              <div className="max-w-xl mx-auto space-y-10">
                 <div className="text-center space-y-2">
                   <Feather className="w-8 h-8 text-amber-400 mx-auto mb-4" />
                   <h2 className="text-2xl sm:text-3xl font-black text-white">Daily Sanctuary</h2>
