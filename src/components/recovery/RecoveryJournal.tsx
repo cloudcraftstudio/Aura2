@@ -151,6 +151,9 @@ export const RecoveryJournal: React.FC = () => {
             onClick={() => {
               soundEffects.tap();
               setIsFormOpen(true);
+              setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }, 100);
             }}
             className="w-full py-4 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 transition-all active:scale-95"
           >
@@ -275,7 +278,7 @@ export const RecoveryJournal: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="pb-24 pt-4"
+            className="pb-32 pt-6"
           >
             <div className="max-w-3xl mx-auto bg-slate-900/50 rounded-[2.5rem] p-4 sm:p-8 border-0 sm:border border-white/10">
               {/* Back / Close Button */}

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+// Audio Feed Component for Recovery
 import {
   Play,
   Pause,
@@ -31,7 +32,20 @@ export const RecoveryAudioFeed: React.FC = () => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const [volume, setVolume] = useState(0.9);
   const [isMuted, setIsMuted] = useState(false);
-  const [likedMap, setLikedMap] = useState<Record<string, boolean>>({});
+  const [likedMap, setLikedMap] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('aura_recovery_liked_teachings');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('aura_recovery_liked_teachings', JSON.stringify(likedMap));
+    } catch {}
+  }, [likedMap]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -385,7 +399,7 @@ export const RecoveryAudioFeed: React.FC = () => {
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed mb-3">
+                <p className="text-xs text-slate-300 leading-relaxed mb-3">
                   {teaching.description}
                 </p>
 
